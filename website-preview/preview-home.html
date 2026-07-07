@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Taylored Health | Executive capacity advisory</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700;800&display=swap');
+/* Taylored Health — shared design system (navy/gold capacity brand)
+   Derived from the book-page token set. No JS anywhere: nav + accordions are CSS-only. */
+:root{
+  --navy:#1E3644; --navy-deep:#0E1114; --paper:#F2F3F0; --paper-deep:#E8E9E4;
+  --cream:#F4F1EA; --ink:#0E1114; --ink-soft:#3a4a52; --ink-faint:#7d8a90;
+  --gold:#B38E5D; --gold-deep:#9a784b; --gold-soft:#cbab82;
+  --soft:#cdd2cf; --faint:#9aa6a3; --rule-d:#d6d8d0; --rule-l:rgba(179,142,93,.30);
+  --on-navy:#e8e6e0; --on-navy-soft:#b7bfc2;
+  --measure:34rem; --pad:clamp(1.25rem,5vw,4.5rem); --navh:4.25rem;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:"Manrope",system-ui,sans-serif;background:var(--paper);color:var(--ink);
+  font-size:clamp(1rem,.96rem + .2vw,1.075rem);line-height:1.72;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg{max-width:100%;height:auto;display:block}
+a{color:inherit}
+h1,h2,h3,.serif{font-family:"Playfair Display",Georgia,serif;font-weight:500;line-height:1.14;margin:0 0 1.1rem}
+h1{font-size:clamp(2.15rem,1.4rem + 4.4vw,4.15rem);letter-spacing:-.01em}
+h2{font-size:clamp(1.7rem,1.25rem + 2.4vw,2.7rem);letter-spacing:-.008em}
+h3{font-size:clamp(1.2rem,1.05rem + .8vw,1.5rem)}
+p{margin:0 0 1.15rem;max-width:var(--measure)}
+.center{text-align:center}.center p{margin-left:auto;margin-right:auto}
+.wrap{max-width:68rem;margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
+section{padding-top:clamp(3.8rem,7vh,6rem);padding-bottom:clamp(3.4rem,6.4vh,5.4rem)}
+.eyebrow{font-family:"Manrope",sans-serif;font-size:.7rem;font-weight:700;
+  letter-spacing:.16em!important;text-transform:uppercase!important;color:var(--gold);
+  margin:0 0 1.9rem;display:inline-flex;align-items:center;gap:.85em}
+.eyebrow::before{content:"";width:2.1rem;height:1px;background:var(--gold);opacity:.65}
+.modlabel{font-size:.7rem;font-weight:700;letter-spacing:.16em!important;
+  text-transform:uppercase!important;color:var(--gold);margin:0 0 1.9rem;
+  display:inline-flex;align-items:baseline;gap:.9em}
+.mnum{font-family:"Playfair Display",Georgia,serif;font-size:1rem;font-weight:500;letter-spacing:0!important}
+.deck{font-size:clamp(1.14rem,1.03rem + .6vw,1.38rem);line-height:1.55;color:var(--ink-soft);font-weight:400}
+.navy{background:var(--navy-deep);color:var(--on-navy)}
+.navy h1,.navy h2,.navy h3{color:#f4f2ec}
+.navy p{color:var(--on-navy-soft)}
+.navy .deck{color:var(--on-navy)}
+.paperbg{background:var(--paper)}
+.creambg{background:var(--cream)}
+.whitebg{background:#fff}
+.rule{width:2.6rem;height:1px;background:var(--gold);opacity:.7;margin:2.2rem 0}
+.center .rule{margin-left:auto;margin-right:auto}
+
+/* buttons */
+.btn,.btn-o{display:inline-block;font-family:"Manrope",sans-serif;font-size:.74rem;font-weight:700;
+  letter-spacing:.13em!important;text-transform:uppercase!important;text-decoration:none;
+  padding:1.02rem 1.9rem;border-radius:2px;transition:background .25s,color .25s,border-color .25s;text-align:center}
+.btn{background:var(--gold);color:#101418;border:1px solid var(--gold)}
+.btn:hover{background:var(--gold-deep);border-color:var(--gold-deep)}
+.btn-o{background:transparent;color:inherit;border:1px solid rgba(179,142,93,.55)}
+.btn-o:hover{border-color:var(--gold);color:var(--gold)}
+.cta-row{display:flex;gap:.9rem;flex-wrap:wrap;align-items:center}
+.cta-note{font-size:.86rem;color:var(--ink-faint);margin-top:.9rem}
+.navy .cta-note{color:var(--on-navy-soft)}
+.tlink{font-size:.74rem;font-weight:700;letter-spacing:.13em!important;text-transform:uppercase!important;
+  text-decoration:none;color:var(--gold);border-bottom:1px solid var(--rule-l);padding-bottom:.28em}
+.tlink:hover{border-color:var(--gold)}
+.arr{font-family:Georgia,serif}
+
+/* ===== nav (fixed, CSS-only mobile menu) ===== */
+.nav{position:fixed;top:0;left:0;right:0;z-index:60;height:var(--navh);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(1.1rem,3.5vw,2.6rem);
+  background:rgba(14,17,20,.92);-webkit-backdrop-filter:blur(9px);backdrop-filter:blur(9px);
+  border-bottom:1px solid rgba(179,142,93,.18)}
+.brand{font-family:"Manrope",sans-serif;font-weight:800;font-size:.98rem;
+  letter-spacing:.2em!important;color:#f4f2ec;text-decoration:none;white-space:nowrap}
+.brand .dot{color:var(--gold)}
+.nav .links{display:flex;align-items:center;gap:clamp(.9rem,2vw,1.7rem)}
+.nlink{font-size:.68rem;font-weight:700;letter-spacing:.14em!important;text-transform:uppercase!important;
+  color:#cfd5d8;text-decoration:none;padding:.4em 0;border-bottom:1px solid transparent;white-space:nowrap}
+.nlink:hover,.nlink.on{color:var(--gold)}
+.nlink.on{border-bottom-color:var(--rule-l)}
+.pill{font-size:.66rem;font-weight:800;letter-spacing:.13em!important;text-transform:uppercase!important;
+  color:#101418;background:var(--gold);text-decoration:none;padding:.72em 1.35em;border-radius:2px;white-space:nowrap}
+.pill:hover{background:var(--gold-soft)}
+.navtog{position:absolute;opacity:0;pointer-events:none}
+.navbtn{display:none;width:2.2rem;height:2.2rem;cursor:pointer;position:relative;z-index:62}
+.navbtn span{position:absolute;left:.35rem;right:.35rem;height:2px;background:#e8e6e0;transition:transform .3s,opacity .3s}
+.navbtn span:nth-child(1){top:.78rem}.navbtn span:nth-child(2){top:1.34rem}
+@media (max-width:920px){
+  .navbtn{display:block}
+  .nav .links{position:fixed;inset:0;top:0;padding-top:calc(var(--navh) + 1.5rem);
+    flex-direction:column;justify-content:flex-start;gap:0;background:rgba(14,17,20,.985);
+    opacity:0;pointer-events:none;transition:opacity .3s}
+  .nlink{font-size:.94rem;padding:1.05rem 0;width:min(20rem,78vw);text-align:center;
+    border-bottom:1px solid rgba(179,142,93,.14)}
+  .pill{margin-top:1.6rem;font-size:.8rem;padding:1em 2em}
+  .navtog:checked ~ .links{opacity:1;pointer-events:auto}
+  .navtog:checked ~ .navbtn span:nth-child(1){transform:translateY(.28rem) rotate(45deg)}
+  .navtog:checked ~ .navbtn span:nth-child(2){transform:translateY(-.28rem) rotate(-45deg)}
+}
+
+/* hero */
+.hero{background:var(--navy-deep);color:var(--on-navy);padding-top:calc(var(--navh) + clamp(4.2rem,11vh,8.5rem));
+  padding-bottom:clamp(4rem,10vh,7.5rem);padding-left:var(--pad);padding-right:var(--pad);position:relative;overflow:hidden}
+.hero h1{color:#f4f2ec;max-width:17ch}
+.hero .lead{font-size:clamp(1.08rem,1rem + .5vw,1.3rem);line-height:1.6;color:var(--on-navy-soft);max-width:36rem}
+.hero .eyebrow{margin-bottom:2.1rem}
+.hero-inner{max-width:68rem;margin:0 auto}
+.hero-glow{position:absolute;pointer-events:none;inset:auto -20% -55% -20%;height:80%;
+  background:radial-gradient(ellipse at 50% 100%,rgba(179,142,93,.14),transparent 62%)}
+@media (prefers-reduced-motion:no-preference){
+  .hero .eyebrow,.hero h1,.hero .lead,.hero .cta-row,.hero .rule{animation:heroin 1s cubic-bezier(.2,.7,.2,1) both}
+  .hero h1{animation-delay:.08s}.hero .lead{animation-delay:.16s}.hero .cta-row{animation-delay:.24s}.hero .rule{animation-delay:.3s}
+}
+@keyframes heroin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* cards / ladder */
+.cardgrid{display:grid;gap:1.1rem}
+.card{background:#fff;border:1px solid var(--rule-d);border-top:2px solid var(--rule-l);
+  padding:clamp(1.5rem,3vw,2.3rem);position:relative}
+.navy .card{background:rgba(255,255,255,.035);border-color:rgba(179,142,93,.22);border-top-color:rgba(179,142,93,.45)}
+.card h3{margin-bottom:.65rem}
+.card p{font-size:.98rem;line-height:1.66;color:var(--ink-soft)}
+.navy .card p{color:var(--on-navy-soft)}
+.kv{font-size:.72rem;font-weight:700;letter-spacing:.13em!important;text-transform:uppercase!important;color:var(--gold);margin-bottom:1.1rem;display:block}
+
+/* two-col editorial grid */
+.grid2{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(2rem,5vw,4.5rem);align-items:start}
+@media (max-width:840px){.grid2{grid-template-columns:1fr}}
+
+/* footer */
+.foot{background:var(--navy-deep);color:var(--on-navy-soft);padding:clamp(3.2rem,6vh,4.6rem) var(--pad) 2.4rem;
+  border-top:1px solid rgba(179,142,93,.2)}
+.foot-inner{max-width:68rem;margin:0 auto}
+.foot .brand{font-size:.9rem}
+.foot-pos{max-width:26rem;font-size:.92rem;line-height:1.7;margin:1.1rem 0 2.3rem;color:var(--on-navy-soft)}
+.foot-cols{display:flex;gap:clamp(2rem,6vw,5rem);flex-wrap:wrap;margin-bottom:2.6rem}
+.foot-col{min-width:10rem}
+.foot-h{font-size:.66rem;font-weight:800;letter-spacing:.16em!important;text-transform:uppercase!important;color:var(--gold);margin-bottom:1rem}
+.foot-col a{display:block;font-size:.9rem;color:var(--on-navy-soft);text-decoration:none;padding:.32em 0}
+.foot-col a:hover{color:#f4f2ec}
+.foot-base{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+  border-top:1px solid rgba(179,142,93,.16);padding-top:1.6rem;font-size:.8rem;color:#8a949a}
+.foot-base a{color:#8a949a;text-decoration:none}
+.foot-base a:hover{color:var(--gold)}
+@media (max-width:560px){
+  .cta-row .btn,.cta-row .btn-o{width:100%}
+}
+
+/* ---- home-specific ---- */
+.hero-home{min-height:min(88vh,56rem);display:flex;align-items:center}
+.hero-home .hero-inner{width:100%}
+.statement{max-width:24ch}
+.wheelsec .premise{font-size:clamp(1.05rem,1rem + .4vw,1.24rem);line-height:1.7;color:var(--ink-soft);max-width:40rem;margin:0 auto 2.4rem}
+.wheelfig{margin:0 auto;max-width:44rem}
+.wheelfig figcaption{font-size:.85rem;color:var(--ink-faint);text-align:center;margin-top:1.4rem;line-height:1.6}
+/* ladder rows */
+.ladder{border-top:1px solid var(--rule-d)}
+.rung{display:grid;grid-template-columns:4.5rem minmax(0,1fr) auto;gap:clamp(1rem,3vw,2.6rem);
+  align-items:baseline;padding:clamp(1.7rem,3.4vh,2.4rem) 0;border-bottom:1px solid var(--rule-d);
+  text-decoration:none;color:inherit;position:relative}
+.rung:hover .rtitle{color:var(--gold-deep)}
+.rnum{font-family:"Playfair Display",Georgia,serif;font-size:1.35rem;color:var(--gold);opacity:.85}
+.rtitle{font-family:"Playfair Display",Georgia,serif;font-size:clamp(1.35rem,1.15rem + 1vw,1.85rem);
+  line-height:1.2;margin:0 0 .45rem;transition:color .25s}
+.rbody{font-size:.98rem;line-height:1.66;color:var(--ink-soft);max-width:38rem;margin:0 0 .7rem}
+.rtag{font-size:.7rem;font-weight:700;letter-spacing:.13em!important;text-transform:uppercase!important;color:var(--gold);display:block}
+.rgo{font-family:Georgia,serif;font-size:1.4rem;color:var(--gold);align-self:center;transition:transform .25s}
+.rung:hover .rgo{transform:translateX(4px)}
+@media (max-width:700px){.rung{grid-template-columns:2.6rem minmax(0,1fr)}.rgo{display:none}}
+/* method */
+.method .grid2 p{color:var(--on-navy-soft)}
+.quote{border-left:2px solid var(--gold);padding:0.2rem 0 0.2rem 1.6rem;margin-top:2.6rem;max-width:34rem}
+.quote p{font-family:"Playfair Display",Georgia,serif;font-size:clamp(1.1rem,1rem + .7vw,1.4rem);
+  font-style:italic;line-height:1.5;color:#f4f2ec;margin-bottom:.9rem}
+.quote cite{font-style:normal;font-size:.78rem;font-weight:700;letter-spacing:.13em!important;
+  text-transform:uppercase!important;color:var(--gold)}
+/* founders */
+.duo{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,6fr);gap:clamp(2rem,5vw,4.5rem);align-items:center}
+.duo img{width:100%;filter:grayscale(12%);border:1px solid var(--rule-d)}
+.fbio{margin-bottom:2.1rem}
+.fbio h3{margin-bottom:.2rem}
+.frole{font-size:.7rem;font-weight:700;letter-spacing:.14em!important;text-transform:uppercase!important;color:var(--gold);display:block;margin-bottom:.8rem}
+.fbio p{font-size:.96rem;line-height:1.68;color:var(--ink-soft)}
+@media (max-width:840px){.duo{grid-template-columns:1fr}}
+/* closing */
+.close-cta{text-align:center}
+.close-cta h2{max-width:20ch;margin-left:auto;margin-right:auto}
+.close-cta p{margin-left:auto;margin-right:auto}
+.close-cta .cta-row{justify-content:center;margin-top:2.2rem}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="brand" href="https://taylored.health/"><b>TAYLORED</b><span class="dot">.</span></a>
+  <input type="checkbox" id="navtog" class="navtog" aria-hidden="true">
+  <label for="navtog" class="navbtn" aria-label="Menu"><span></span><span></span></label>
+  <div class="links">
+    <a class="nlink" href="https://taylored.health/executive-audit/">The Audit</a>
+    <a class="nlink" href="https://taylored.health/private-advisory/">Advisory</a>
+    <a class="nlink" href="https://taylored.health/experiences/">Events</a>
+    <a class="nlink" href="https://taylored.health/executive-os/">ExecOS</a>
+    <a class="nlink" href="https://taylored.health/the-biology-of-leadership/">Beacon</a>
+    <a class="pill" href="https://calendar.app.google/37cKK6baU2fLqhrYA">Book a conversation</a>
+  </div>
+</nav>
+
+
+<header class="hero hero-home">
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <p class="eyebrow">Executive capacity advisory &middot; New Zealand</p>
+    <h1>Capacity is the real constraint.</h1>
+    <p class="lead">Senior roles rarely break on strategy. They break on the capacity to carry them. We measure what your role takes out of you, then build what needs to sit underneath it.</p>
+    <div class="cta-row" style="margin-top:2.4rem">
+      <a class="btn" href="https://calendar.app.google/37cKK6baU2fLqhrYA">Book a conversation</a>
+      <a class="btn-o" href="#start">Where to start</a>
+    </div>
+    <p class="cta-note">Thirty minutes with Luke or Rachel. No slides, no preparation.</p>
+  </div>
+</header>
+
+<section class="whitebg wheelsec">
+  <div class="wrap center">
+    <p class="eyebrow">The capacity wheel</p>
+    <h2 class="statement" style="margin-left:auto;margin-right:auto">Capacity isn&rsquo;t a trait. It&rsquo;s a wheel, and the spin is the thing.</h2>
+    <p class="premise">Your biology shapes your leadership. Your leadership drives your behaviour. Your behaviour builds your environment, and your environment feeds straight back into your biology. Turned one way the wheel builds you. Turned the other, it empties you, faster the harder you push.</p>
+    <figure class="wheelfig">
+      <svg viewBox="-90 0 1300 1000" role="img" aria-label="The capacity wheel: Biology at the top, Leadership to the right, Behaviour at the bottom, Environment to the left, turning clockwise as a continuous loop around a central hub marked Capacity. Biology and Environment form Being; Leadership and Behaviour form Doing." font-family="Georgia, 'Times New Roman', serif"><defs><marker id="wheelarrow" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 Z" fill="#B8924A"/></marker></defs><line x1="835" y1="265" x2="365" y2="735" stroke="#B8924A" stroke-width="1" stroke-dasharray="2 9" opacity="0.4"/><text x="262" y="214" text-anchor="middle" font-size="19" letter-spacing="8" font-weight="bold" fill="#B8924A" opacity="0.85">BEING</text><text x="938" y="796" text-anchor="middle" font-size="19" letter-spacing="8" font-weight="bold" fill="#B8924A" opacity="0.85">DOING</text><circle cx="600" cy="500" r="345" fill="none" stroke="#B8924A" stroke-width="0.8" opacity="0.4"/><circle cx="600" cy="500" r="332" fill="none" stroke="#B8924A" stroke-width="3.4"/><circle cx="600" cy="500" r="200" fill="none" stroke="#B8924A" stroke-width="0.7" opacity="0.3"/><g fill="none" stroke="#B8924A" stroke-linecap="round"><path d="M 806,217 A 352,352 0 0 1 874,272" stroke-width="2.6" opacity="0.42"/><path d="M 828,178 A 384,384 0 0 1 882,222" stroke-width="1.8" opacity="0.24"/><path d="M 884,706 A 352,352 0 0 1 821,774" stroke-width="2.6" opacity="0.42"/><path d="M 921,724 A 384,384 0 0 1 858,800" stroke-width="1.8" opacity="0.24"/><path d="M 394,783 A 352,352 0 0 1 326,728" stroke-width="2.6" opacity="0.42"/><path d="M 372,822 A 384,384 0 0 1 318,778" stroke-width="1.8" opacity="0.24"/><path d="M 316,294 A 352,352 0 0 1 379,226" stroke-width="2.6" opacity="0.42"/><path d="M 279,276 A 384,384 0 0 1 342,200" stroke-width="1.8" opacity="0.24"/></g><g stroke="#B8924A" stroke-width="2" opacity="0.85"><line x1="600" y1="426" x2="600" y2="168"/><line x1="600" y1="574" x2="600" y2="832"/><line x1="526" y1="500" x2="268" y2="500"/><line x1="674" y1="500" x2="932" y2="500"/></g><g fill="none" stroke="#B8924A" stroke-width="3" opacity="0.9"><path d="M 678,210 A 300,300 0 0 1 890,422" marker-end="url(#wheelarrow)"/><path d="M 890,578 A 300,300 0 0 1 678,790" marker-end="url(#wheelarrow)"/><path d="M 522,790 A 300,300 0 0 1 310,578" marker-end="url(#wheelarrow)"/><path d="M 310,422 A 300,300 0 0 1 522,210" marker-end="url(#wheelarrow)"/></g><circle cx="600" cy="168" r="7" fill="#B8924A"/><circle cx="932" cy="500" r="7" fill="#B8924A"/><circle cx="600" cy="832" r="7" fill="#B8924A"/><circle cx="268" cy="500" r="7" fill="#B8924A"/><text x="600" y="76" text-anchor="middle" font-size="40" letter-spacing="1.5" fill="#0E2032">Biology</text><text x="978" y="512" text-anchor="start" font-size="40" letter-spacing="1.5" fill="#0E2032">Leadership</text><text x="600" y="952" text-anchor="middle" font-size="40" letter-spacing="1.5" fill="#0E2032">Behaviour</text><text x="222" y="512" text-anchor="end" font-size="40" letter-spacing="1.5" fill="#0E2032">Environment</text><circle cx="600" cy="500" r="78" fill="#F4EEE2" stroke="#B8924A" stroke-width="3.4"/><text x="600" y="494" text-anchor="middle" font-size="22" letter-spacing="3" fill="#B8924A">CAPACITY</text><text x="600" y="522" text-anchor="middle" font-size="12" letter-spacing="3" fill="#0E2032" opacity="0.6">THE SPIN</text></svg>
+      <figcaption>The Leadership Capacity Wheel. The model behind everything we do, and the subject of Rachel&rsquo;s book, <a href="https://taylored.health/the-biology-of-leadership/" style="color:var(--gold-deep)">Beacon</a>.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="paperbg" id="start">
+  <div class="wrap">
+    <p class="eyebrow">Where to start</p>
+    <h2>One method. Five ways in.</h2>
+    <p class="deck" style="margin-bottom:3rem">Everything we do measures and builds the same thing. Start where the stakes are for you.</p>
+    <div class="ladder">
+      <a class="rung" href="https://taylored.health/the-biology-of-leadership/">
+        <span class="rnum">01</span>
+        <span>
+          <h3 class="rtitle">Beacon, the book</h3>
+          <p class="rbody">Rachel is writing the thinking in the open: why capacity, not willpower, decides which leaders last. Start here if you want the ideas before any commitment.</p>
+          <span class="rtag">Free to follow &middot; Publishing 2026</span>
+        </span>
+        <span class="rgo">&rarr;</span>
+      </a>
+      <a class="rung" href="https://taylored.health/executive-audit/">
+        <span class="rnum">02</span>
+        <span>
+          <h3 class="rtitle">The Executive Audit</h3>
+          <p class="rbody">Ten weeks. Genetics, bloods, glucose and your own wearable, read personally by both founders and written up as a blueprint of your three quickest wins. The measured way in.</p>
+          <span class="rtag">$12,000 &middot; Ten weeks</span>
+        </span>
+        <span class="rgo">&rarr;</span>
+      </a>
+      <a class="rung" href="https://taylored.health/private-advisory/">
+        <span class="rnum">03</span>
+        <span>
+          <h3 class="rtitle">The Private Advisory</h3>
+          <p class="rbody">The flagship. Twelve months with both of us, built from your full diagnostic picture and recalibrated as your year unfolds. Five seats, once a year.</p>
+          <span class="rtag">By application &middot; Five seats a year</span>
+        </span>
+        <span class="rgo">&rarr;</span>
+      </a>
+      <a class="rung" href="https://taylored.health/experiences/">
+        <span class="rnum">04</span>
+        <span>
+          <h3 class="rtitle">Event consultancy</h3>
+          <p class="rbody">We design the biology of the room. Offsites, summits and board days where energy and attention hold from the first session to the last.</p>
+          <span class="rtag">By engagement</span>
+        </span>
+        <span class="rgo">&rarr;</span>
+      </a>
+      <a class="rung" href="https://taylored.health/executive-os/">
+        <span class="rnum">05</span>
+        <span>
+          <h3 class="rtitle">ExecOS</h3>
+          <p class="rbody">The software underneath all of it. Your data, your protocols and one clear directive every morning, in a system you run all year.</p>
+          <span class="rtag">Runs under every engagement</span>
+        </span>
+        <span class="rgo">&rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="navy method">
+  <div class="wrap">
+    <p class="eyebrow">How we work</p>
+    <div class="grid2">
+      <h2>We don&rsquo;t guess. We measure.</h2>
+      <div>
+        <p>Every engagement starts with data. Genetics, blood chemistry, glucose dynamics, sleep and recovery from your own wearable. Rachel reads the science. Luke turns it into a plan you can actually run inside a heavy role.</p>
+        <p>Nothing is templated and nothing is delegated. Five advisory seats a year means both of us are across every data point, every readout and every recalibration. That access is the point.</p>
+        <blockquote class="quote">
+          <p>Luke and Rachel bring science and structure to performance. They are the catalyst for change most leaders don&rsquo;t know they&rsquo;ve been looking for.</p>
+          <cite>Logan Wedgwood &middot; Managing Director</cite>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="whitebg">
+  <div class="wrap">
+    <p class="eyebrow">The two of us</p>
+    <div class="duo">
+      <img src="https://taylored.health/wp-content/uploads/2026/06/bol-leaders-duo.jpg" alt="Rachel Kelly and Luke Taylor, co-founders of Taylored Health" loading="lazy">
+      <div>
+        <div class="fbio">
+          <h3>Rachel Kelly</h3>
+          <span class="frole">Scientific director &middot; Co-founder</span>
+          <p>Geneticist and biochemist, with a career in multinational C-suite governance and a past life as a New Zealand representative gymnast. Rachel builds the scientific architecture behind every programme, and is writing <em>Beacon</em>, a book about what actually decides whether leaders last.</p>
+        </div>
+        <div class="fbio">
+          <h3>Luke Taylor</h3>
+          <span class="frole">Executive performance &middot; Co-founder</span>
+          <p>Fifteen years inside the performance biology of founders and executives. Luke built a specialist performance clinic of fifteen practitioners, scaled it and exited. A former New Zealand triathlete, he runs the diagnostics and builds the programmes.</p>
+        </div>
+        <a class="tlink" href="https://taylored.health/about/">More about us <span class="arr">&rarr;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="creambg close-cta">
+  <div class="wrap">
+    <p class="eyebrow" style="display:inline-flex">Next step</p>
+    <h2>Start with a conversation.</h2>
+    <p class="deck">Thirty minutes with Luke or Rachel. You&rsquo;ll leave with a clear read on whether this is for you, and which rung to start on.</p>
+    <div class="cta-row">
+      <a class="btn" href="https://calendar.app.google/37cKK6baU2fLqhrYA">Book a conversation</a>
+      <a class="btn-o" href="mailto:hello@taylored.health">Write to us instead</a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <a class="brand" href="https://taylored.health/"><b>TAYLORED</b><span class="dot">.</span></a>
+    <p class="foot-pos">Executive capacity advisory, New Zealand. We measure what the role takes out of you, then build the capacity to carry it.</p>
+    <div class="foot-cols">
+      <div class="foot-col">
+        <div class="foot-h">Work with us</div>
+        <a href="https://taylored.health/executive-audit/">The Executive Audit</a>
+        <a href="https://taylored.health/private-advisory/">The Private Advisory</a>
+        <a href="https://taylored.health/experiences/">Event consultancy</a>
+        <a href="https://taylored.health/executive-os/">ExecOS</a>
+      </div>
+      <div class="foot-col">
+        <div class="foot-h">The thinking</div>
+        <a href="https://taylored.health/the-biology-of-leadership/">Beacon, the book</a>
+        <a href="https://taylored.health/the-leadership-capacity-project/">The Leadership Capacity Project</a>
+        <a href="https://taylored.health/about/">About us</a>
+      </div>
+      <div class="foot-col">
+        <div class="foot-h">Contact</div>
+        <a href="mailto:hello@taylored.health">hello@taylored.health</a>
+        <a href="https://calendar.app.google/37cKK6baU2fLqhrYA">Book a conversation</a>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>&copy; Taylored Health 2026</span>
+      <span><a href="https://taylored.health/privacy-policy-2/">Privacy</a> &nbsp;&middot;&nbsp; <a href="https://taylored.health/terms-of-service/">Terms</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
