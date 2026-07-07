@@ -1,0 +1,184 @@
+{
+  "version": "v1.0",
+
+  "instrument": {
+    "draft": false,
+    "title": "Which Way Is Your Wheel Turning?",
+    "kicker": "The wheel, made personal",
+    "intro": "A four minute self read for senior leaders. Not a quiz, a mirror. Answer for the month you are actually in, not the one you intend to have. Nobody is marking this but you.",
+    "howItWorks": "Sixteen statements, in four parts, one for each point of the wheel. For each, mark how often it is true in a typical month. The statements describe the wheel turning the wrong way, so a higher answer means more drag, not more failing.",
+    "timeframeLabel": "In a typical month",
+    "scale": {
+      "min": 1,
+      "max": 4,
+      "labels": ["Rarely", "Sometimes", "Often", "Almost always"]
+    },
+    "parts": [
+      {
+        "factor": "biology",
+        "title": "Your state",
+        "lead": "The body you actually lead from. You cannot push this point directly. It is what the others produce.",
+        "kind": "outcome",
+        "statements": [
+          "By mid afternoon the tank is empty, even on a day I did everything right.",
+          "At night my mind will not switch off. Wired and tired at the same time.",
+          "I wake and do not feel restored, whatever the hours say.",
+          "I land the thing I was driving for, feel almost nothing, and reach for the next."
+        ]
+      },
+      {
+        "factor": "behaviour",
+        "title": "What you do",
+        "lead": "Your behaviour. One of the two points you can actually reach.",
+        "kind": "lever",
+        "statements": [
+          "When the load climbs, the first things I drop are the ones that keep me steady. The walk, the sleep, the movement.",
+          "I reach for the phone in the exact moment I could have recovered.",
+          "Recovery is something I hope for at the end of the day, not something I have built into it.",
+          "I push through on caffeine or willpower rather than changing anything."
+        ]
+      },
+      {
+        "factor": "environment",
+        "title": "The conditions around you",
+        "lead": "Your environment. The other point you can actually reach.",
+        "kind": "lever",
+        "statements": [
+          "I have no protected pocket of solitude that is mine and defended.",
+          "I am reachable to almost everyone, almost all of the time.",
+          "The pace and noise around me set my state, rather than me setting theirs.",
+          "I carry more than I share. The people who could steady me don't know the half of it."
+        ]
+      },
+      {
+        "factor": "leadership",
+        "title": "The calls you make",
+        "lead": "Your leadership. Like your state, an outcome of the wheel, not a lever you force.",
+        "kind": "outcome",
+        "statements": [
+          "The harder the pressure, the tighter I grip and the less I let go.",
+          "I become the bottleneck at the exact moment the team needs me freed up.",
+          "Under load I get reactive, short, or withdrawn with the people I lead.",
+          "I am hardest on the one person I never extend any grace to. Myself."
+        ]
+      }
+    ]
+  },
+
+  "scoring": {
+    "capacityDivisor": 48,
+    "factorDivisor": 12,
+    "coherenceDivisor": 50,
+    "coherenceAffectsScore": false,
+    "coherenceBase": 0.85,
+    "coherenceCoefficient": 0.15,
+    "bands": [
+      { "name": "Restore", "min": 0 },
+      { "name": "Conserve", "min": 34 },
+      { "name": "Steady", "min": 69 },
+      { "name": "Peak", "min": 85 }
+    ],
+    "dragBands": [
+      { "name": "Turning with you", "min": 16 },
+      { "name": "Starting to slip", "min": 32 },
+      { "name": "Turning against you", "min": 48 }
+    ],
+    "pushLever": {
+      "compare": ["behaviour", "environment"],
+      "tieBreak": "behaviour"
+    }
+  },
+
+  "copy": {
+    "bandReads": {
+      "Peak": "The wheel is carrying you, and carrying you well. Hold it. The work now is to protect the few things that are keeping it spinning the right way, because the wrong direction arrives quietly and by default, usually right when the load spikes.",
+      "Steady": "The wheel is carrying you more than it is costing you. Hold it. The work now is to protect the few things that are keeping it spinning the right way, because the wrong direction arrives quietly and by default, usually right when the load spikes.",
+      "Conserve": "The wheel is stalling and beginning to turn back on you. This is the most useful place to be reading this, because it is early. You can feel the drag but you are not yet underneath it. One deliberate change now is worth ten later.",
+      "Restore": "The wheel is spinning the wrong way and your own drive is feeding it, because the most driven people spin it fastest. This is not a discipline problem and it will not yield to gripping harder. It is a design problem, and that is good news, because design is fixable."
+    },
+    "leverIntro": "You cannot turn this wheel from the top. You cannot order your state to improve or force good leadership out of an empty tank. But two points are always within reach, and your scores show you which one is dragging hardest.",
+    "leverPrompts": {
+      "behaviour": {
+        "heading": "Push behaviour first",
+        "body": "Put one keystone back, at the same time every day, defended like a meeting you cannot move. The walk, the sleep window, the movement. Not all of them. One, this week."
+      },
+      "environment": {
+        "heading": "Push environment first",
+        "body": "Engineer one protected pocket and guard it. The early hour, the commute, the door closed, the notifications off. Built on purpose, not hoped for at the end of the day."
+      }
+    },
+    "bridge": {
+      "heading": "What this cannot tell you",
+      "body": "You can now feel which way your wheel is turning. What this cannot tell you is why. How fast you deplete, how slowly you recover, how hard the same pressure lands on you compared to the person beside you. That runs below the level of willpower, which is exactly why willpower never reaches it. That is the next layer down, and it is the one that turns a felt direction into a designed one.",
+      "tagline": "Not more disciplined. Better designed.",
+      "ctaLabel": "Talk to us about the Capacity Audit",
+      "ctaUrl": "https://taylored.health",
+      "footnote": "This is a mirror to think with, not a diagnosis."
+    },
+    "emailCapture": {
+      "heading": "Your read is ready",
+      "body": "Tell us where to send it and we'll keep a copy for you. You'll see it on screen right away.",
+      "emailLabel": "Email",
+      "nameLabel": "First name",
+      "button": "Show me my wheel",
+      "privacyNote": "We'll use this to send your result and occasional notes from Taylored. No spam, unsubscribe any time.",
+      "emailRequired": true
+    },
+    "resultHeading": "Your wheel",
+    "scoreCaption": "Capacity score",
+    "partBreakdownHeading": "Point by point",
+    "startButton": "Start the read",
+    "nextButton": "Next",
+    "seeResultButton": "See your wheel"
+  },
+
+  "wheel": {
+    "factorOrder": ["biology", "leadership", "behaviour", "environment"],
+    "factorAngles": { "biology": 0, "leadership": 90, "behaviour": 180, "environment": 270 },
+    "factorLabels": {
+      "biology": "Biology",
+      "leadership": "Leadership",
+      "behaviour": "Behaviour",
+      "environment": "Environment"
+    },
+    "factorColors": {
+      "biology": "#7fa07a",
+      "leadership": "#b38e5d",
+      "behaviour": "#d9c9a8",
+      "environment": "#8fb3c0"
+    },
+    "axisLabels": { "outcomes": "BEING", "levers": "DOING" },
+    "trackColor": "rgba(243,239,231,0.14)",
+    "hubColor": "#f3efe7",
+    "spokeColor": "rgba(243,239,231,0.55)",
+    "sectorSpanDegrees": 76,
+    "arcRadius": 158,
+    "arcWidth": 13,
+    "spinSpeedMap": [
+      { "score": 0, "dps": -14 },
+      { "score": 33, "dps": -4 },
+      { "score": 45, "dps": 3 },
+      { "score": 68, "dps": 12 },
+      { "score": 85, "dps": 22 },
+      { "score": 100, "dps": 34 }
+    ],
+    "wobble": {
+      "sensitivity": 1.0,
+      "maxAngleDegrees": 6,
+      "maxEccentricityPx": 5,
+      "frequencyHz": 0.55
+    },
+    "spinUp": {
+      "durationMs": 2600,
+      "easing": "easeOutCubic",
+      "arcStaggerMs": 180,
+      "countUp": true
+    }
+  },
+
+  "storage": {
+    "endpoint": "https://gdsdtawkigzpyseavkqp.supabase.co/rest/v1/capacity_responses",
+    "apiKey": "sb_publishable_9xYl5CzjcQ6cBCEmCfPs5Q_NwI7z_JQ",
+    "localStorageKey": "capacity-score-responses"
+  }
+}
