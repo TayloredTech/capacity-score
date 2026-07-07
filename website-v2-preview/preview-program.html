@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Private Advisory | Taylored Health</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600;700&family=Josefin+Sans:wght@300;400;600&display=swap');
+/* Taylored Health v2 — one brand, every page.
+   System derived from the ExecOS/manifesto pages Luke picked as the reference:
+   deep navy, gold, Spectral serif display, Josefin labels, big real B&W photography. */
+:root{
+  --bg0:#0b1a2c; --bg1:#10243a; --bg2:#143049; --band:#0e2136;
+  --gold:#b38e5d; --gold-soft:#cda978; --gold-bright:#d9bd92; --gold-deep:#96754a;
+  --line:rgba(217,189,146,.16); --line-soft:rgba(217,189,146,.28);
+  --hd:#f3f1ea; --tx:#c3ced6; --tx-dim:#9fb1bc; --tx-faint:#7c8f9b;
+  --paper:#f0ede4; --paper-line:#d9d3c4; --ink:#16222e; --ink-soft:#41505c; --ink-faint:#75838d;
+  --serif:'Spectral',Georgia,serif; --sans:'Manrope',system-ui,sans-serif; --label:'Josefin Sans',Verdana,sans-serif;
+  --measure:36rem; --pad:clamp(1.25rem,5vw,4.5rem); --navh:4.6rem;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:var(--sans);background:var(--bg1);color:var(--tx);
+  font-size:clamp(1rem,.96rem + .2vw,1.075rem);line-height:1.74;font-weight:400;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg{max-width:100%;height:auto;display:block}
+a{color:inherit}
+h1,h2,h3,.serif{font-family:var(--serif);font-weight:500;line-height:1.12;color:var(--hd);margin:0 0 1.15rem;letter-spacing:-.008em}
+h1{font-size:clamp(2.35rem,1.55rem + 4vw,4.5rem)}
+h2{font-size:clamp(1.75rem,1.3rem + 2.3vw,2.8rem)}
+h3{font-size:clamp(1.18rem,1.05rem + .7vw,1.5rem)}
+h1 em,h2 em{font-style:italic;font-weight:400;color:var(--gold-bright)}
+p{margin:0 0 1.15rem;max-width:var(--measure)}
+.center{text-align:center}.center p{margin-left:auto;margin-right:auto}
+.wrap{max-width:71rem;margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
+section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5.6rem)}
+.bg0{background:var(--bg0)}.bg2{background:var(--bg2)}.bandbg{background:var(--band)}
+.eyebrow{font-family:var(--label);font-weight:400;font-size:.74rem;
+  letter-spacing:.26em!important;text-transform:uppercase!important;color:var(--gold-soft);
+  margin:0 0 1.9rem;display:inline-flex;align-items:center;gap:.9em}
+.eyebrow::before{content:"";width:2.2rem;height:1px;background:var(--gold);opacity:.75;flex:none}
+.deck{font-size:clamp(1.13rem,1.02rem + .6vw,1.4rem);line-height:1.58;color:var(--tx);font-weight:300}
+.rule{width:2.6rem;height:1px;background:var(--gold);opacity:.75;margin:2.2rem 0}
+.center .rule{margin-left:auto;margin-right:auto}
+
+/* paper: the one light moment per page, used for document artifacts */
+.paper{background:var(--paper);color:var(--ink-soft)}
+.paper h1,.paper h2,.paper h3{color:var(--ink)}
+.paper p{color:var(--ink-soft)}
+.paper .deck{color:var(--ink-soft)}
+.paper .eyebrow{color:var(--gold-deep)}
+.paper .eyebrow::before{background:var(--gold-deep)}
+
+/* buttons */
+.btn,.btn-o{display:inline-block;font-family:var(--label);font-size:.78rem;font-weight:600;
+  letter-spacing:.18em!important;text-transform:uppercase!important;text-decoration:none;
+  padding:1.06rem 1.95rem .92rem;border-radius:2px;transition:background .25s,color .25s,border-color .25s;text-align:center}
+.btn{background:var(--gold);color:#0b1420;border:1px solid var(--gold)}
+.btn:hover{background:var(--gold-soft);border-color:var(--gold-soft)}
+.btn-o{background:transparent;color:var(--hd);border:1px solid rgba(217,189,146,.5)}
+.btn-o:hover{border-color:var(--gold-bright);color:var(--gold-bright)}
+.paper .btn-o{color:var(--ink)}
+.cta-row{display:flex;gap:.95rem;flex-wrap:wrap;align-items:center}
+.cta-note{font-size:.87rem;color:var(--tx-faint);margin-top:1rem}
+.cta-note a{color:var(--gold-soft)}
+.tlink{font-family:var(--label);font-size:.76rem;font-weight:600;letter-spacing:.17em!important;text-transform:uppercase!important;
+  text-decoration:none;color:var(--gold-soft);border-bottom:1px solid var(--line-soft);padding-bottom:.3em}
+.tlink:hover{border-color:var(--gold-bright);color:var(--gold-bright)}
+.arr{font-family:Georgia,serif}
+.goldlink{color:var(--gold-soft)}
+.paper .goldlink{color:var(--gold-deep)}
+
+/* proofline: quiet caps strip under hero CTAs (ref2) */
+.proofline{font-family:var(--label);font-size:.7rem;font-weight:400;letter-spacing:.2em!important;
+  text-transform:uppercase!important;color:var(--tx-dim);margin-top:2.6rem;line-height:2}
+.proofline b{font-weight:600;color:var(--hd);white-space:nowrap}
+.proofline .sep{color:var(--gold);padding:0 .55em}
+
+/* ===== nav: fixed, real logo, CSS-only dropdown + mobile sheet ===== */
+.nav{position:fixed;top:0;left:0;right:0;z-index:60;height:var(--navh);
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:0 clamp(1.1rem,3.5vw,2.6rem);
+  background:rgba(11,26,44,.9);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;text-decoration:none;flex:none}
+.brand img{height:clamp(2.1rem,1.7rem + 1vw,2.6rem);width:auto}
+.nav .links{display:flex;align-items:center;gap:clamp(.85rem,1.8vw,1.6rem)}
+.nlink{font-family:var(--label);font-size:.72rem;font-weight:400;letter-spacing:.19em!important;text-transform:uppercase!important;
+  color:#d5dde2;text-decoration:none;padding:.5em 0 .35em;border-bottom:1px solid transparent;white-space:nowrap}
+.nlink:hover{color:var(--gold-bright)}
+.pill{font-family:var(--label);font-size:.7rem;font-weight:600;letter-spacing:.16em!important;text-transform:uppercase!important;
+  color:#0b1420;background:var(--gold);text-decoration:none;padding:.8em 1.45em .66em;border-radius:2px;white-space:nowrap}
+.pill:hover{background:var(--gold-soft)}
+/* dropdown (About) */
+.drop{position:relative}
+.drop>.nlink::after{content:"\2304";display:inline-block;margin-left:.45em;color:var(--gold);transform:translateY(-.18em)}
+.dmenu{position:absolute;top:100%;right:-1rem;min-width:15.5rem;padding:.7rem 0;margin-top:.4rem;
+  background:rgba(11,26,44,.97);border:1px solid var(--line);border-top:2px solid var(--gold);
+  opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .22s,transform .22s,visibility .22s}
+.drop:hover .dmenu,.drop:focus-within .dmenu{opacity:1;visibility:visible;transform:none}
+.dmenu a{display:block;font-family:var(--label);font-size:.72rem;letter-spacing:.16em!important;text-transform:uppercase!important;
+  color:#d5dde2;text-decoration:none;padding:.78em 1.4em .6em}
+.dmenu a:hover{color:var(--gold-bright);background:rgba(217,189,146,.06)}
+.navtog{position:absolute;opacity:0;pointer-events:none}
+.navbtn{display:none;width:2.3rem;height:2.3rem;cursor:pointer;position:relative;z-index:62;flex:none}
+.navbtn span{position:absolute;left:.35rem;right:.35rem;height:2px;background:var(--hd);transition:transform .3s,opacity .3s}
+.navbtn span:nth-child(1){top:.82rem}.navbtn span:nth-child(2){top:1.4rem}
+@media (max-width:1080px){
+  .navbtn{display:block}
+  .nav .links{position:fixed;inset:0;top:0;padding-top:calc(var(--navh) + 1.2rem);
+    flex-direction:column;justify-content:flex-start;gap:0;background:rgba(9,20,34,.985);
+    opacity:0;pointer-events:none;transition:opacity .3s;overflow-y:auto}
+  .nlink{font-size:.95rem;padding:.95rem 0 .8rem;width:min(21rem,80vw);text-align:center;
+    border-bottom:1px solid rgba(217,189,146,.13)}
+  .drop{width:min(21rem,80vw);display:flex;flex-direction:column;align-items:center}
+  .drop>.nlink{width:100%}
+  .drop>.nlink::after{content:""}
+  .dmenu{position:static;opacity:1;visibility:visible;transform:none;border:0;background:transparent;
+    min-width:0;width:100%;padding:0;margin:0}
+  .dmenu a{font-size:.83rem;color:var(--tx-dim);padding:.85em 0 .7em;text-align:center;border-bottom:1px solid rgba(217,189,146,.08)}
+  .pill{margin:1.7rem 0 2.5rem;font-size:.82rem;padding:1em 2.1em .85em}
+  .navtog:checked ~ .links{opacity:1;pointer-events:auto}
+  .navtog:checked ~ .navbtn span:nth-child(1){transform:translateY(.29rem) rotate(45deg)}
+  .navtog:checked ~ .navbtn span:nth-child(2){transform:translateY(-.29rem) rotate(-45deg)}
+}
+
+/* ===== split hero: big B&W photography balanced against text (ref2) ===== */
+.hero{position:relative;background:var(--bg0);overflow:hidden}
+.hsplit{display:grid;grid-template-columns:minmax(0,10fr) minmax(0,12fr);align-items:center;min-height:min(92vh,58rem)}
+.hero-sm .hsplit{min-height:min(66vh,42rem)}
+.hero-sm h1{font-size:clamp(2.1rem,1.45rem + 2.9vw,3.5rem)}
+.hero-sm .hcopy{padding-top:calc(var(--navh) + clamp(2.4rem,6vh,4rem));padding-bottom:clamp(2.6rem,6vh,4rem)}
+.hmedia{position:relative;height:100%;min-height:100%}
+.hmedia img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--focus,center 22%);
+  filter:grayscale(1) contrast(1.04) brightness(.86)}
+.hmedia::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(11,26,44,.24),rgba(11,26,44,0) 34%,rgba(11,26,44,.5) 78%,var(--bg0) 100%),
+             linear-gradient(0deg,rgba(11,26,44,.55),rgba(11,26,44,0) 34%),
+             rgba(14,33,54,.24)}
+.hcopy{padding:calc(var(--navh) + clamp(3.4rem,8vh,6.5rem)) var(--pad) clamp(3.6rem,8vh,6rem) clamp(1.5rem,4vw,4rem)}
+.hcopy h1{max-width:15ch}
+.hcopy .lead{font-size:clamp(1.08rem,1rem + .5vw,1.34rem);line-height:1.62;color:var(--tx);font-weight:300;max-width:33rem}
+.hcopy .cta-row{margin-top:2.5rem}
+.hero-glow{position:absolute;pointer-events:none;inset:auto -20% -50% -20%;height:75%;
+  background:radial-gradient(ellipse at 50% 100%,rgba(179,142,93,.13),transparent 62%)}
+@media (prefers-reduced-motion:no-preference){
+  .hcopy .eyebrow,.hcopy h1,.hcopy .lead,.hcopy .cta-row,.hcopy .cta-note,.hcopy .proofline,.hcopy .factline{animation:herofade 1s cubic-bezier(.2,.7,.2,1) both}
+  .hcopy h1{animation-delay:.08s}.hcopy .lead{animation-delay:.16s}.hcopy .cta-row{animation-delay:.24s}
+  .hcopy .cta-note{animation-delay:.28s}.hcopy .proofline{animation-delay:.32s}.hcopy .factline{animation-delay:.32s}
+}
+@keyframes herofade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (max-width:900px){
+  .hsplit{grid-template-columns:minmax(0,1fr);min-height:0}
+  .hcopy{min-width:0;max-width:100%}
+  .eyebrow{letter-spacing:.2em!important;font-size:.68rem}
+  .proofline{font-size:.64rem;letter-spacing:.16em!important}
+  .hmedia{order:-1;height:48vh;min-height:20rem}
+  .hero-sm .hmedia{height:38vh;min-height:16rem}
+  .hmedia img{position:absolute}
+  .hmedia::after{background:linear-gradient(0deg,var(--bg0) 2%,rgba(11,26,44,.25) 30%,rgba(11,26,44,.12)),rgba(14,33,54,.24)}
+  .hcopy{padding-top:1.2rem}
+}
+
+/* fact line (price/duration chips under hero CTAs) */
+.factline{display:flex;gap:clamp(1.5rem,4vw,3rem);flex-wrap:wrap;margin-top:2.7rem;
+  border-top:1px solid var(--line);padding-top:1.7rem}
+.fact b{font-family:var(--serif);font-size:clamp(1.4rem,1.15rem + 1.2vw,2rem);font-weight:500;color:var(--hd);display:block;line-height:1.2}
+.fact span{font-family:var(--label);font-size:.66rem;font-weight:400;letter-spacing:.2em!important;text-transform:uppercase!important;color:var(--gold-soft)}
+
+/* cards */
+.cardgrid{display:grid;gap:1.15rem}
+.card{background:rgba(255,255,255,.028);border:1px solid var(--line);border-top:2px solid rgba(217,189,146,.5);
+  padding:clamp(1.5rem,3vw,2.3rem);position:relative}
+.card h3{margin-bottom:.65rem}
+.card p{font-size:.97rem;line-height:1.68;color:var(--tx-dim)}
+.kv{font-family:var(--label);font-size:.68rem;font-weight:400;letter-spacing:.2em!important;text-transform:uppercase!important;color:var(--gold-soft);margin-bottom:1rem;display:block}
+
+/* two-col editorial */
+.grid2{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(2rem,5vw,4.5rem);align-items:start}
+@media (max-width:840px){.grid2{grid-template-columns:1fr}}
+
+/* balanced image + text band */
+.imgtext{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);gap:clamp(2rem,5vw,4.5rem);align-items:center}
+.imgtext.rev>figure{order:2}
+.imgtext figure{margin:0;position:relative}
+.imgtext img{width:100%;filter:grayscale(1) contrast(1.03) brightness(.9);border:1px solid var(--line)}
+.imgtext figcaption{font-family:var(--label);font-size:.66rem;letter-spacing:.2em!important;text-transform:uppercase!important;color:var(--tx-faint);margin-top:.9rem}
+@media (max-width:840px){.imgtext,.imgtext.rev{grid-template-columns:1fr}.imgtext.rev>figure{order:0}}
+
+/* quote */
+.quote{border-left:2px solid var(--gold);padding:.2rem 0 .2rem 1.7rem;margin-top:2.4rem;max-width:36rem}
+.quote p{font-family:var(--serif);font-size:clamp(1.1rem,1rem + .7vw,1.42rem);font-style:italic;line-height:1.52;color:var(--hd);margin-bottom:.9rem}
+.quote cite{font-style:normal;font-family:var(--label);font-size:.7rem;font-weight:400;letter-spacing:.2em!important;
+  text-transform:uppercase!important;color:var(--gold-soft)}
+
+/* footer */
+.foot{background:var(--bg0);color:var(--tx-dim);padding:clamp(3.2rem,6vh,4.8rem) var(--pad) 2.4rem;
+  border-top:1px solid var(--line)}
+.foot-inner{max-width:71rem;margin:0 auto}
+.foot .brand img{height:2.2rem}
+.foot-pos{max-width:26rem;font-size:.93rem;line-height:1.7;margin:1.4rem 0 2.4rem;color:var(--tx-dim)}
+.foot-cols{display:flex;gap:clamp(2rem,6vw,5rem);flex-wrap:wrap;margin-bottom:2.6rem}
+.foot-col{min-width:11rem}
+.foot-h{font-family:var(--label);font-size:.68rem;font-weight:600;letter-spacing:.22em!important;text-transform:uppercase!important;color:var(--gold-soft);margin-bottom:1rem}
+.foot-col a{display:block;font-size:.91rem;color:var(--tx-dim);text-decoration:none;padding:.33em 0}
+.foot-col a:hover{color:var(--hd)}
+.foot-base{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+  border-top:1px solid var(--line);padding-top:1.6rem;font-size:.8rem;color:var(--tx-faint)}
+.foot-base a{color:var(--tx-faint);text-decoration:none}
+.foot-base a:hover{color:var(--gold-soft)}
+@media (max-width:560px){.cta-row .btn,.cta-row .btn-o{width:100%}}
+
+.moved{min-height:min(72vh,44rem);display:flex;align-items:center;text-align:center}
+.moved .wrap{padding-top:var(--navh)}
+.moved h1{margin-left:auto;margin-right:auto}
+.moved p{margin-left:auto;margin-right:auto}
+.moved .cta-row{justify-content:center;margin-top:2.4rem}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="brand" href="https://taylored.health/" aria-label="Taylored Health home">
+    <img src="https://taylored.health/wp-content/uploads/2024/02/TAYLORED-HEALTH-AND-TECH.png" alt="Taylored. Health &amp; Performance Technologies" width="1757" height="544">
+  </a>
+  <input type="checkbox" id="navtog" class="navtog" aria-hidden="true">
+  <label for="navtog" class="navbtn" aria-label="Menu"><span></span><span></span></label>
+  <div class="links">
+    <a class="nlink" href="https://taylored.health/executive-audit/">The Audit</a>
+    <a class="nlink" href="https://taylored.health/private-advisory/">Advisory</a>
+    <a class="nlink" href="https://taylored.health/executive-os/">ExecOS</a>
+    <a class="nlink" href="https://taylored.health/experiences/">Events</a>
+    <a class="nlink" href="https://taylored.health/the-biology-of-leadership/">Beacon</a>
+    <div class="drop">
+      <a class="nlink" href="https://taylored.health/about/">About</a>
+      <div class="dmenu">
+        <a href="https://taylored.health/about/">The two of us</a>
+        <a href="https://taylored.health/results/">Results</a>
+        <a href="https://taylored.health/executive-brief/">The Executive Brief</a>
+        <a href="https://taylored.health/apply/">Apply</a>
+        <a href="https://taylored.health/the-leadership-capacity-project/">The Capacity Project</a>
+      </div>
+    </div>
+    <a class="pill" href="https://calendar.app.google/37cKK6baU2fLqhrYA">Book a conversation</a>
+  </div>
+</nav>
+
+
+<header class="hero moved">
+  <div class="hero-glow"></div>
+  <div class="wrap">
+    <p class="eyebrow" style="display:inline-flex">This page has moved</p>
+    <h1>The Program is now the <em>Private Advisory.</em></h1>
+    <p class="lead" style="max-width:32rem">Same engagement, sharper name. Twelve months, five seats, both founders.</p>
+    <div class="cta-row">
+      <a class="btn" href="https://taylored.health/private-advisory/">Go to the Private Advisory</a>
+      <a class="btn-o" href="https://taylored.health/">Taylored Health home</a>
+    </div>
+  </div>
+</header>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <a class="brand" href="https://taylored.health/" aria-label="Taylored Health home">
+      <img src="https://taylored.health/wp-content/uploads/2024/02/TAYLORED-HEALTH-AND-TECH.png" alt="Taylored. Health &amp; Performance Technologies" width="1757" height="544" loading="lazy">
+    </a>
+    <p class="foot-pos">Executive capacity advisory, New Zealand. We measure what the role takes out of you, then build the capacity to carry it.</p>
+    <div class="foot-cols">
+      <div class="foot-col">
+        <div class="foot-h">Work with us</div>
+        <a href="https://taylored.health/executive-audit/">The Executive Audit</a>
+        <a href="https://taylored.health/private-advisory/">The Private Advisory</a>
+        <a href="https://taylored.health/executive-os/">ExecOS</a>
+        <a href="https://taylored.health/experiences/">Event consultancy</a>
+        <a href="https://taylored.health/apply/">Apply</a>
+      </div>
+      <div class="foot-col">
+        <div class="foot-h">The thinking</div>
+        <a href="https://taylored.health/the-biology-of-leadership/">Beacon, the book</a>
+        <a href="https://taylored.health/results/">Results</a>
+        <a href="https://taylored.health/about/">The two of us</a>
+        <a href="https://taylored.health/executive-brief/">The Executive Brief</a>
+        <a href="https://taylored.health/the-leadership-capacity-project/">The Capacity Project</a>
+      </div>
+      <div class="foot-col">
+        <div class="foot-h">Contact</div>
+        <a href="mailto:hello@taylored.health">hello@taylored.health</a>
+        <a href="https://calendar.app.google/37cKK6baU2fLqhrYA">Book a conversation</a>
+        <a href="https://www.instagram.com/tayloredhealthhq/">Instagram</a>
+        <a href="https://www.youtube.com/@tayloredhealth">YouTube</a>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>&copy; Taylored Health 2026</span>
+      <span><a href="https://taylored.health/privacy-policy-2/">Privacy</a> &nbsp;&middot;&nbsp; <a href="https://taylored.health/terms-of-service/">Terms</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
