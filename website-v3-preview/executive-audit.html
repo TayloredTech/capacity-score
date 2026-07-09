@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Executive Audit | Taylored Health</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600;700&family=Josefin+Sans:wght@300;400;600&display=swap');
+/* Taylored Health v2 — one brand, every page.
+   System derived from the ExecOS/manifesto pages Luke picked as the reference:
+   deep navy, gold, Spectral serif display, Josefin labels, big real B&W photography. */
+:root{
+  --bg0:#0b1a2c; --bg1:#10243a; --bg2:#143049; --band:#0e2136;
+  --gold:#b38e5d; --gold-soft:#cda978; --gold-bright:#d9bd92; --gold-deep:#96754a;
+  --line:rgba(217,189,146,.16); --line-soft:rgba(217,189,146,.28);
+  --hd:#f3f1ea; --tx:#c3ced6; --tx-dim:#9fb1bc; --tx-faint:#7c8f9b;
+  --paper:#f0ede4; --paper-line:#d9d3c4; --ink:#16222e; --ink-soft:#41505c; --ink-faint:#75838d;
+  --serif:'Spectral',Georgia,serif; --sans:'Manrope',system-ui,sans-serif; --label:'Josefin Sans',Verdana,sans-serif;
+  --measure:36rem; --pad:clamp(1.25rem,5vw,4.5rem); --navh:4.6rem;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:var(--sans);background:var(--bg1);color:var(--tx);
+  font-size:clamp(1rem,.96rem + .2vw,1.075rem);line-height:1.74;font-weight:400;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg{max-width:100%;height:auto;display:block}
+a{color:inherit}
+h1,h2,h3,.serif{font-family:var(--serif);font-weight:500;line-height:1.12;color:var(--hd);margin:0 0 1.15rem;letter-spacing:-.008em}
+h1{font-size:clamp(2.35rem,1.55rem + 4vw,4.5rem)}
+h2{font-size:clamp(1.75rem,1.3rem + 2.3vw,2.8rem)}
+h3{font-size:clamp(1.18rem,1.05rem + .7vw,1.5rem)}
+h1 em,h2 em{font-style:italic;font-weight:400;color:var(--gold-bright)}
+p{margin:0 0 1.15rem;max-width:var(--measure)}
+.center{text-align:center}.center p{margin-left:auto;margin-right:auto}
+.wrap{max-width:71rem;margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
+section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5.6rem)}
+.bg0{background:var(--bg0)}.bg2{background:var(--bg2)}.bandbg{background:var(--band)}
+.eyebrow{font-family:var(--label);font-weight:400;font-size:clamp(1.02rem,.92rem + .5vw,1.4rem);
+  letter-spacing:.24em!important;text-transform:uppercase!important;color:var(--gold-soft);
+  margin:0 0 1.6rem;display:inline-flex;align-items:center;gap:.85em;line-height:1.25}
+.eyebrow::before{content:"";width:2.4rem;height:1px;background:var(--gold);opacity:.75;flex:none}
+.deck{font-size:clamp(1.13rem,1.02rem + .6vw,1.4rem);line-height:1.58;color:var(--tx);font-weight:300}
+.rule{width:2.6rem;height:1px;background:var(--gold);opacity:.75;margin:2.2rem 0}
+.center .rule{margin-left:auto;margin-right:auto}
+
+/* paper: the one light moment per page, used for document artifacts */
+.paper{background:var(--paper);color:var(--ink-soft)}
+.paper h1,.paper h2,.paper h3{color:var(--ink)}
+.paper p{color:var(--ink-soft)}
+.paper .deck{color:var(--ink-soft)}
+.paper .eyebrow{color:var(--gold-deep)}
+.paper .eyebrow::before{background:var(--gold-deep)}
+
+/* buttons */
+.btn,.btn-o{display:inline-block;font-family:var(--label);font-size:.78rem;font-weight:600;
+  letter-spacing:.18em!important;text-transform:uppercase!important;text-decoration:none;
+  padding:1.06rem 1.95rem .92rem;border-radius:2px;transition:background .25s,color .25s,border-color .25s;text-align:center}
+.btn{background:var(--gold);color:#0b1420;border:1px solid var(--gold)}
+.btn:hover{background:var(--gold-soft);border-color:var(--gold-soft)}
+.btn-o{background:transparent;color:var(--hd);border:1px solid rgba(217,189,146,.5)}
+.btn-o:hover{border-color:var(--gold-bright);color:var(--gold-bright)}
+.paper .btn-o{color:var(--ink)}
+.cta-row{display:flex;gap:.95rem;flex-wrap:wrap;align-items:center}
+.cta-note{font-size:.87rem;color:var(--tx-faint);margin-top:1rem}
+.cta-note a{color:var(--gold-soft)}
+.tlink{font-family:var(--label);font-size:.76rem;font-weight:600;letter-spacing:.17em!important;text-transform:uppercase!important;
+  text-decoration:none;color:var(--gold-soft);border-bottom:1px solid var(--line-soft);padding-bottom:.3em}
+.tlink:hover{border-color:var(--gold-bright);color:var(--gold-bright)}
+.arr{font-family:Georgia,serif}
+.goldlink{color:var(--gold-soft)}
+.paper .goldlink{color:var(--gold-deep)}
+
+/* proofline: quiet caps strip under hero CTAs (ref2) */
+.proofline{font-family:var(--label);font-size:.7rem;font-weight:400;letter-spacing:.2em!important;
+  text-transform:uppercase!important;color:var(--tx-dim);margin-top:2.6rem;line-height:2}
+.proofline b{font-weight:600;color:var(--hd);white-space:nowrap}
+.proofline .sep{color:var(--gold);padding:0 .55em}
+
+/* ===== nav: fixed, real logo, CSS-only dropdown + mobile sheet ===== */
+.nav{position:fixed;top:0;left:0;right:0;z-index:60;height:var(--navh);
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:0 clamp(1.1rem,3.5vw,2.6rem);
+  background:rgba(11,26,44,.9);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;text-decoration:none;flex:none}
+.brand img{height:clamp(2.1rem,1.7rem + 1vw,2.6rem);width:auto}
+.nav .links{display:flex;align-items:center;gap:clamp(.85rem,1.8vw,1.6rem)}
+.nlink{font-family:var(--label);font-size:.72rem;font-weight:400;letter-spacing:.19em!important;text-transform:uppercase!important;
+  color:#d5dde2;text-decoration:none;padding:.5em 0 .35em;border-bottom:1px solid transparent;white-space:nowrap}
+.nlink:hover{color:var(--gold-bright)}
+.pill{font-family:var(--label);font-size:.7rem;font-weight:600;letter-spacing:.16em!important;text-transform:uppercase!important;
+  color:#0b1420;background:var(--gold);text-decoration:none;padding:.8em 1.45em .66em;border-radius:2px;white-space:nowrap}
+.pill:hover{background:var(--gold-soft)}
+/* dropdown (About) */
+.drop{position:relative;display:flex;align-items:center}
+.drop>.nlink::after{content:"";display:inline-block;width:.42em;height:.42em;
+  border-right:1px solid var(--gold);border-bottom:1px solid var(--gold);
+  transform:rotate(45deg);margin-left:.55em;vertical-align:.14em}
+.dmenu{position:absolute;top:100%;right:-1rem;min-width:15.5rem;padding:.7rem 0;margin-top:.4rem;
+  background:rgba(11,26,44,.97);border:1px solid var(--line);border-top:2px solid var(--gold);
+  opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .22s,transform .22s,visibility .22s}
+.drop:hover .dmenu,.drop:focus-within .dmenu{opacity:1;visibility:visible;transform:none}
+.dmenu a{display:block;font-family:var(--label);font-size:.72rem;letter-spacing:.16em!important;text-transform:uppercase!important;
+  color:#d5dde2;text-decoration:none;padding:.78em 1.4em .6em}
+.dmenu a:hover{color:var(--gold-bright);background:rgba(217,189,146,.06)}
+.navtog{position:absolute;opacity:0;pointer-events:none}
+.navbtn{display:none;width:2.3rem;height:2.3rem;cursor:pointer;position:relative;z-index:62;flex:none}
+.navbtn span{position:absolute;left:.35rem;right:.35rem;height:2px;background:var(--hd);transition:transform .3s,opacity .3s}
+.navbtn span:nth-child(1){top:.82rem}.navbtn span:nth-child(2){top:1.4rem}
+@media (max-width:1080px){
+  .navbtn{display:block}
+  .nav .links{position:fixed;inset:0;top:0;padding-top:calc(var(--navh) + 1.2rem);
+    flex-direction:column;justify-content:flex-start;gap:0;background:rgba(9,20,34,.985);
+    opacity:0;pointer-events:none;transition:opacity .3s;overflow-y:auto}
+  .nlink{font-size:.95rem;padding:.95rem 0 .8rem;width:min(21rem,80vw);text-align:center;
+    border-bottom:1px solid rgba(217,189,146,.13)}
+  .drop{width:min(21rem,80vw);display:flex;flex-direction:column;align-items:center}
+  .drop>.nlink{width:100%}
+  .drop>.nlink::after{content:""}
+  .dmenu{position:static;opacity:1;visibility:visible;transform:none;border:0;background:transparent;
+    min-width:0;width:100%;padding:0;margin:0}
+  .dmenu a{font-size:.83rem;color:var(--tx-dim);padding:.85em 0 .7em;text-align:center;border-bottom:1px solid rgba(217,189,146,.08)}
+  .pill{margin:1.7rem 0 2.5rem;font-size:.82rem;padding:1em 2.1em .85em}
+  .navtog:checked ~ .links{opacity:1;pointer-events:auto}
+  .navtog:checked ~ .navbtn span:nth-child(1){transform:translateY(.29rem) rotate(45deg)}
+  .navtog:checked ~ .navbtn span:nth-child(2){transform:translateY(-.29rem) rotate(-45deg)}
+}
+
+/* ===== split hero: big B&W photography balanced against text (ref2) ===== */
+.hero{position:relative;background:var(--bg0);overflow:hidden}
+.hsplit{display:grid;grid-template-columns:minmax(0,10fr) minmax(0,12fr);align-items:center;min-height:min(92vh,58rem)}
+.hero-sm .hsplit{min-height:min(66vh,42rem)}
+.hero-sm h1{font-size:clamp(2.1rem,1.45rem + 2.9vw,3.5rem)}
+.hero-sm .hcopy{padding-top:calc(var(--navh) + clamp(2.4rem,6vh,4rem));padding-bottom:clamp(2.6rem,6vh,4rem)}
+.hmedia{position:relative;height:100%;min-height:100%}
+.hmedia img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--focus,center 22%);
+  filter:grayscale(1) contrast(1.04) brightness(.86)}
+.hmedia::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(11,26,44,.24),rgba(11,26,44,0) 34%,rgba(11,26,44,.5) 78%,var(--bg0) 100%),
+             linear-gradient(0deg,rgba(11,26,44,.55),rgba(11,26,44,0) 34%),
+             rgba(14,33,54,.24)}
+.hcopy{padding:calc(var(--navh) + clamp(3.4rem,8vh,6.5rem)) var(--pad) clamp(3.6rem,8vh,6rem) clamp(1.5rem,4vw,4rem)}
+.hcopy h1{max-width:15ch}
+.hcopy .lead{font-size:clamp(1.08rem,1rem + .5vw,1.34rem);line-height:1.62;color:var(--tx);font-weight:300;max-width:33rem}
+.hcopy .cta-row{margin-top:2.5rem}
+.hero-glow{position:absolute;pointer-events:none;inset:auto -20% -50% -20%;height:75%;
+  background:radial-gradient(ellipse at 50% 100%,rgba(179,142,93,.13),transparent 62%)}
+@media (prefers-reduced-motion:no-preference){
+  .hcopy .eyebrow,.hcopy h1,.hcopy .lead,.hcopy .cta-row,.hcopy .cta-note,.hcopy .proofline,.hcopy .factline{animation:herofade 1s cubic-bezier(.2,.7,.2,1) both}
+  .hcopy h1{animation-delay:.08s}.hcopy .lead{animation-delay:.16s}.hcopy .cta-row{animation-delay:.24s}
+  .hcopy .cta-note{animation-delay:.28s}.hcopy .proofline{animation-delay:.32s}.hcopy .factline{animation-delay:.32s}
+}
+@keyframes herofade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (max-width:900px){
+  .hsplit{grid-template-columns:minmax(0,1fr);min-height:0}
+  .hcopy{min-width:0;max-width:100%}
+  .eyebrow{letter-spacing:.2em!important;font-size:.68rem}
+  .proofline{font-size:.64rem;letter-spacing:.16em!important}
+  .hmedia{order:-1;height:48vh;min-height:20rem}
+  .hero-sm .hmedia{height:38vh;min-height:16rem}
+  .hmedia img{position:absolute}
+  .hmedia::after{background:linear-gradient(0deg,var(--bg0) 2%,rgba(11,26,44,.25) 30%,rgba(11,26,44,.12)),rgba(14,33,54,.24)}
+  .hcopy{padding-top:1.2rem}
+}
+
+/* fact line (price/duration chips under hero CTAs) */
+.factline{display:flex;gap:clamp(1.5rem,4vw,3rem);flex-wrap:wrap;margin-top:2.7rem;
+  border-top:1px solid var(--line);padding-top:1.7rem}
+.fact b{font-family:var(--serif);font-size:clamp(1.4rem,1.15rem + 1.2vw,2rem);font-weight:500;color:var(--hd);display:block;line-height:1.2}
+.fact span{font-family:var(--label);font-size:.66rem;font-weight:400;letter-spacing:.2em!important;text-transform:uppercase!important;color:var(--gold-soft)}
+
+/* cards */
+.cardgrid{display:grid;gap:1.15rem}
+.card{background:rgba(255,255,255,.028);border:1px solid var(--line);border-top:2px solid rgba(217,189,146,.5);
+  padding:clamp(1.5rem,3vw,2.3rem);position:relative}
+.card h3{margin-bottom:.65rem}
+.card p{font-size:.97rem;line-height:1.68;color:var(--tx-dim)}
+.kv{font-family:var(--label);font-size:.68rem;font-weight:400;letter-spacing:.2em!important;text-transform:uppercase!important;color:var(--gold-soft);margin-bottom:1rem;display:block}
+
+/* two-col editorial */
+.grid2{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(2rem,5vw,4.5rem);align-items:start}
+@media (max-width:840px){.grid2{grid-template-columns:1fr}}
+
+/* balanced image + text band */
+.imgtext{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);gap:clamp(2rem,5vw,4.5rem);align-items:center}
+.imgtext.rev>figure{order:2}
+.imgtext figure{margin:0;position:relative}
+.imgtext img{width:100%;aspect-ratio:4/3.1;object-fit:cover;object-position:var(--focus,center);
+  filter:grayscale(1) contrast(1.03) brightness(.9);border:1px solid var(--line)}
+.imgtext figcaption{font-family:var(--label);font-size:.66rem;letter-spacing:.2em!important;text-transform:uppercase!important;color:var(--tx-faint);margin-top:.9rem}
+@media (max-width:840px){.imgtext,.imgtext.rev{grid-template-columns:1fr}.imgtext.rev>figure{order:0}}
+
+/* quote */
+.quote{border-left:2px solid var(--gold);padding:.2rem 0 .2rem 1.7rem;margin-top:2.4rem;max-width:36rem}
+.quote p{font-family:var(--serif);font-size:clamp(1.1rem,1rem + .7vw,1.42rem);font-style:italic;line-height:1.52;color:var(--hd);margin-bottom:.9rem}
+.quote cite{font-style:normal;font-family:var(--label);font-size:.7rem;font-weight:400;letter-spacing:.2em!important;
+  text-transform:uppercase!important;color:var(--gold-soft)}
+
+/* ===== animated capacity wheel (shared: home, execos, brochure) ===== */
+.wheelanim{--wa-ink:#0e2032;--wa-hub:#f4eee2;max-width:44rem;margin:0 auto}
+.ondark .wheelanim,.wheelanim.ondark{--wa-ink:#f3f1ea;--wa-hub:#10243a}
+.wheelanim .wa-lab{fill:var(--wa-ink)}
+.wheelanim .wa-hubbg{fill:var(--wa-hub)}
+.wheelanim .wa-hubsub{fill:var(--wa-ink)}
+.wheelanim .wa-spin{animation:wa-breathe 28s linear infinite}
+@keyframes wa-breathe{0%,24%{opacity:1}26%,49%{opacity:.85}51%,74%{opacity:.62}76%,99%{opacity:.45}100%{opacity:1}}
+.wa-states{position:relative;height:7.2rem;margin-top:1.6rem;text-align:center}
+.wa-state{position:absolute;inset:0;opacity:0;animation:wa-state 28s linear infinite}
+.wa-s1{animation-delay:0s}.wa-s2{animation-delay:7s}.wa-s3{animation-delay:14s}.wa-s4{animation-delay:21s}
+@keyframes wa-state{0%{opacity:0;transform:translateY(8px)}2.5%,21%{opacity:1;transform:none}25%,100%{opacity:0}}
+.wa-word{font-family:var(--label);font-weight:600;font-size:clamp(1.15rem,1.05rem + .6vw,1.55rem);
+  letter-spacing:.3em!important;text-transform:uppercase!important;color:var(--gold-deep);display:inline-flex;align-items:center;gap:.6em}
+.wa-word::before{content:"";width:.5em;height:.5em;border-radius:50%;background:var(--gold);flex:none}
+.ondark .wa-word,.wheelanim.ondark .wa-word{color:var(--gold-bright)}
+.wa-state p{font-size:.97rem;line-height:1.6;max-width:30rem;margin:.7rem auto 0;color:inherit}
+@media (prefers-reduced-motion:reduce){
+  .wheelanim .wa-spin{animation:none}
+  .wa-state{animation:none}
+  .wa-s2{opacity:1}
+}
+
+/* footer */
+.foot{background:var(--bg0);color:var(--tx-dim);padding:clamp(3.2rem,6vh,4.8rem) var(--pad) 2.4rem;
+  border-top:1px solid var(--line)}
+.foot-inner{max-width:71rem;margin:0 auto}
+.foot .brand img{height:2.2rem}
+.foot-pos{max-width:26rem;font-size:.93rem;line-height:1.7;margin:1.4rem 0 2.4rem;color:var(--tx-dim)}
+.foot-cols{display:flex;gap:clamp(2rem,6vw,5rem);flex-wrap:wrap;margin-bottom:2.6rem}
+.foot-col{min-width:11rem}
+.foot-h{font-family:var(--label);font-size:.68rem;font-weight:600;letter-spacing:.22em!important;text-transform:uppercase!important;color:var(--gold-soft);margin-bottom:1rem}
+.foot-col a{display:block;font-size:.91rem;color:var(--tx-dim);text-decoration:none;padding:.33em 0}
+.foot-col a:hover{color:var(--hd)}
+.foot-base{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+  border-top:1px solid var(--line);padding-top:1.6rem;font-size:.8rem;color:var(--tx-faint)}
+.foot-base a{color:var(--tx-faint);text-decoration:none}
+.foot-base a:hover{color:var(--gold-soft)}
+@media (max-width:560px){.cta-row .btn,.cta-row .btn-o{width:100%}}
+
+/* ---- audit-specific ---- */
+.spine{border-top:1px solid var(--line)}
+.spine-row{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:clamp(1rem,3vw,2.6rem);
+  padding:1.5rem 0;border-bottom:1px solid var(--line);align-items:baseline}
+.spine-row h3{font-size:clamp(1.08rem,1rem + .5vw,1.3rem);margin:0}
+.spine-row p{font-size:.96rem;color:var(--tx-dim);margin:0;max-width:none}
+@media (max-width:640px){.spine-row{grid-template-columns:1fr;gap:.3rem}}
+.weeks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.1rem;margin-top:2.6rem}
+.week{border-top:2px solid var(--line-soft);padding-top:1.2rem}
+.week .kv{margin-bottom:.6rem}
+.week h3{font-size:1.08rem;margin-bottom:.5rem}
+.week p{font-size:.92rem;line-height:1.62;color:var(--tx-dim);margin:0}
+@media (max-width:880px){.weeks{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.weeks{grid-template-columns:1fr}}
+.bp{background:#fff;border:1px solid var(--paper-line);border-top:2px solid var(--gold);padding:clamp(1.8rem,4vw,3rem)}
+.bp ul{margin:1.2rem 0 0;padding:0;list-style:none;max-width:38rem}
+.bp li{padding:.85rem 0 .85rem 1.9rem;border-bottom:1px solid var(--paper-line);position:relative;font-size:.98rem;color:var(--ink-soft);line-height:1.6}
+.bp li:last-child{border-bottom:0}
+.bp li::before{content:"";position:absolute;left:.2rem;top:1.42rem;width:.75rem;height:1px;background:var(--gold-deep)}
+.close-cta{text-align:center}
+.close-cta h2,.close-cta p{margin-left:auto;margin-right:auto}
+.close-cta .cta-row{justify-content:center;margin-top:2.2rem}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="brand" href="https://taylored.health/" aria-label="Taylored Health home">
+    <img src="https://taylored.health/wp-content/uploads/2024/02/TAYLORED-HEALTH-AND-TECH.png" alt="Taylored. Health &amp; Performance Technologies" width="1757" height="544">
+  </a>
+  <input type="checkbox" id="navtog" class="navtog" aria-hidden="true">
+  <label for="navtog" class="navbtn" aria-label="Menu"><span></span><span></span></label>
+  <div class="links">
+    <a class="nlink" href="https://taylored.health/executive-audit/">The Audit</a>
+    <a class="nlink" href="https://taylored.health/private-advisory/">Advisory</a>
+    <a class="nlink" href="https://taylored.health/experiences/">Events</a>
+    <a class="nlink" href="https://taylored.health/the-biology-of-leadership/">Beacon</a>
+    <a class="nlink" href="https://taylored.health/executive-os/">ExecOS</a>
+    <div class="drop">
+      <a class="nlink" href="https://taylored.health/about/">About</a>
+      <div class="dmenu">
+        <a href="https://taylored.health/about/">The two of us</a>
+        <a href="https://taylored.health/results/">Results</a>
+        <a href="https://taylored.health/executive-brief/">The Executive Brief</a>
+        <a href="https://taylored.health/apply/">Apply</a>
+        <a href="https://taylored.health/the-leadership-capacity-project/">The Capacity Project</a>
+      </div>
+    </div>
+    <a class="pill" href="https://calendar.app.google/37cKK6baU2fLqhrYA">Book a conversation</a>
+  </div>
+</nav>
+
+
+<header class="hero hero-sm">
+  <div class="hero-glow"></div>
+  <div class="hsplit">
+    <div class="hmedia" style="--focus:center 30%">
+      <img src="https://taylored.health/wp-content/uploads/2025/10/Taylored-Executive.jpg" alt="An executive pausing between meetings" fetchpriority="high">
+    </div>
+    <div class="hcopy">
+      <p class="eyebrow">The Executive Audit</p>
+      <h1>Find out what the role is <em>actually costing you.</em></h1>
+      <p class="lead">Ten weeks of measurement across your genetics, blood chemistry, glucose and recovery, read personally by both founders. One question answered: can your physiology sustain the role you&rsquo;re carrying, and where are the three quickest wins.</p>
+      <div class="cta-row">
+        <a class="btn" href="https://calendar.app.google/37cKK6baU2fLqhrYA">Book a conversation</a>
+      </div>
+      <p class="cta-note">Thirty minutes, no preparation. We&rsquo;ll tell you plainly if the audit isn&rsquo;t the right starting point.</p>
+      <div class="factline">
+        <div class="fact"><b>$12,000</b><span>Fixed fee</span></div>
+        <div class="fact"><b>10 weeks</b><span>Start to readout</span></div>
+        <div class="fact"><b>Two founders</b><span>No handoffs</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Why an audit</p>
+    <div class="grid2">
+      <h2>You can&rsquo;t manage what you&rsquo;ve stopped noticing.</h2>
+      <div>
+        <p class="deck">Low energy stops feeling low once you&rsquo;ve lived in it long enough. Most leaders don&rsquo;t realise how far their baseline has drifted until they see it measured.</p>
+        <p>You&rsquo;ve probably got fragments already. A wearable score here, an annual blood panel there, maybe an AI summary of both. What&rsquo;s missing is the connected picture: what your biology is predisposed to, what it&rsquo;s doing right now under real load, and what to change first. That&rsquo;s what the audit builds.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg2">
+  <div class="wrap">
+    <p class="eyebrow">What we measure</p>
+    <h2>Five instruments. One connected picture.</h2>
+    <p class="deck" style="margin-bottom:2.6rem">Deliberately lean. Each instrument earns its place by answering part of the sustain-the-role question.</p>
+    <div class="spine">
+      <div class="spine-row"><h3>DNA panel</h3><p>Your fixed predispositions. How you metabolise, recover and respond to stress at the genetic level, so everything else is read against your baseline, not a population average.</p></div>
+      <div class="spine-row"><h3>Biological age</h3><p>The headline number. How fast your body is actually aging against your calendar age, and the single most honest measure of accumulated load.</p></div>
+      <div class="spine-row"><h3>Nutrient status bloods</h3><p>Iron, B12, vitamin D, magnesium and the other levers behind energy and focus. This is usually where the quickest wins hide.</p></div>
+      <div class="spine-row"><h3>Wearable baseline</h3><p>An Oura ring or Whoop band, yours to keep. Live sleep, recovery and strain data from week one, while the lab work processes.</p></div>
+      <div class="spine-row"><h3>14-day glucose</h3><p>A continuous glucose monitor over two working weeks. It shows exactly when and why your afternoons fall over, meeting by meeting, meal by meal.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">The shape of it</p>
+    <h2>Ten weeks, most of them yours.</h2>
+    <p style="max-width:36rem">The audit is designed around a full calendar. Your hands-on time is a kickoff, two working weeks of wearing a sensor, and one readout.</p>
+    <div class="weeks">
+      <div class="week"><span class="kv">Weeks 0&ndash;1</span><h3>Kickoff</h3><p>One conversation, then kits ship. Wearable fitted, glucose monitor on, bloods and DNA drawn. Live data starts immediately.</p></div>
+      <div class="week"><span class="kv">Weeks 1&ndash;8</span><h3>The data comes in</h3><p>Labs process while your wearable and glucose monitor stream real life. You work. We watch.</p></div>
+      <div class="week"><span class="kv">Weeks 6&ndash;9</span><h3>We write your blueprint</h3><p>Rachel and Luke synthesise everything into a written picture of your current state and what to change first.</p></div>
+      <div class="week"><span class="kv">Weeks 9&ndash;10</span><h3>The readout</h3><p>A private session with both founders. You leave knowing your three quickest wins and precisely why they&rsquo;re yours.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="paper">
+  <div class="wrap">
+    <p class="eyebrow">What you keep</p>
+    <div class="grid2">
+      <h2>The Executive Biological Blueprint.</h2>
+      <div class="bp">
+        <p style="max-width:none">A written document, built by both founders from your data alone. Current-state architecture, in plain language, with a short list you can act on the same week:</p>
+        <ul>
+          <li>Your three quickest wins, ranked by effect against effort</li>
+          <li>The lowest-barrier changes for the load you actually carry</li>
+          <li>The one area with the biggest payoff, if you only fix one thing</li>
+          <li>Your wearable and glucose baselines, so future change is measurable</li>
+          <li>ExecOS access, so the plan turns into a daily directive rather than a PDF in a drawer</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg2">
+  <div class="wrap">
+    <p class="eyebrow">Where it leads</p>
+    <div class="grid2">
+      <h2>The audit finds the leaks. The advisory fixes them.</h2>
+      <div>
+        <p class="deck">For most clients the audit is the whole engagement. Clear picture, three wins, a system to run them in.</p>
+        <p>Some readouts surface things worth going deeper on: cortisol rhythm, gut health, cognitive load, the full diagnostic battery. That work lives in the <a class="goldlink" href="https://taylored.health/private-advisory/">Private Advisory</a>, a twelve-month engagement limited to five seats a year. Audit clients see the invitation at the readout. There&rsquo;s no obligation either way, and we only raise it when the data says there&rsquo;s something worth pursuing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg0 close-cta">
+  <div class="wrap">
+    <p class="eyebrow" style="display:inline-flex">Next step</p>
+    <h2>Ten weeks from now, you&rsquo;ll know.</h2>
+    <p class="deck">Intakes are limited by founder time. A conversation is the only way in, and it costs you thirty minutes.</p>
+    <div class="cta-row">
+      <a class="btn" href="https://calendar.app.google/37cKK6baU2fLqhrYA">Book a conversation</a>
+      <a class="btn-o" href="mailto:hello@taylored.health">Write to us instead</a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <a class="brand" href="https://taylored.health/" aria-label="Taylored Health home">
+      <img src="https://taylored.health/wp-content/uploads/2024/02/TAYLORED-HEALTH-AND-TECH.png" alt="Taylored. Health &amp; Performance Technologies" width="1757" height="544" loading="lazy">
+    </a>
+    <p class="foot-pos">Executive capacity advisory, New Zealand. We measure what the role takes out of you, then build the capacity to carry it.</p>
+    <div class="foot-cols">
+      <div class="foot-col">
+        <div class="foot-h">Work with us</div>
+        <a href="https://taylored.health/executive-audit/">The Executive Audit</a>
+        <a href="https://taylored.health/private-advisory/">The Private Advisory</a>
+        <a href="https://taylored.health/executive-os/">ExecOS</a>
+        <a href="https://taylored.health/experiences/">Event consultancy</a>
+        <a href="https://taylored.health/apply/">Apply</a>
+      </div>
+      <div class="foot-col">
+        <div class="foot-h">The thinking</div>
+        <a href="https://taylored.health/the-biology-of-leadership/">Beacon, the book</a>
+        <a href="https://taylored.health/results/">Results</a>
+        <a href="https://taylored.health/about/">The two of us</a>
+        <a href="https://taylored.health/executive-brief/">The Executive Brief</a>
+        <a href="https://taylored.health/the-leadership-capacity-project/">The Capacity Project</a>
+      </div>
+      <div class="foot-col">
+        <div class="foot-h">Contact</div>
+        <a href="mailto:hello@taylored.health">hello@taylored.health</a>
+        <a href="https://calendar.app.google/37cKK6baU2fLqhrYA">Book a conversation</a>
+        <a href="https://www.instagram.com/tayloredhealthhq/">Instagram</a>
+        <a href="https://www.youtube.com/@tayloredhealth">YouTube</a>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>&copy; Taylored Health 2026</span>
+      <span><a href="https://taylored.health/privacy-policy-2/">Privacy</a> &nbsp;&middot;&nbsp; <a href="https://taylored.health/terms-of-service/">Terms</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
