@@ -88,6 +88,32 @@ h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-heigh
 .ctabtn{display:inline-block;margin-top:1.3rem;font-weight:700;text-decoration:none;color:var(--navy-deep);background:var(--gold);border-radius:3px;padding:.9rem 1.9rem;transition:background .2s}
 .ctabtn:hover{background:var(--gold-deep);color:var(--cream)}
 .footnote{font-size:.78rem;color:var(--ink-faint);text-align:center;margin-top:2.5rem}
+/* result, desktop only: wheel left, key read right; score, band read and biggest drag sit beside the wheel, longer cards flow below. Mobile keeps the stacked layout above. */
+@media (min-width:900px){
+  #result .wrap{
+    max-width:66rem;
+    display:grid;
+    grid-template-columns:minmax(0,27rem) minmax(0,1fr);
+    grid-template-areas:
+      "wheel head"
+      "wheel read"
+      "wheel leak"
+      "wheel points"
+      "lever lever"
+      "bridge bridge"
+      "foot foot";
+    column-gap:clamp(2.5rem,5vw,4.5rem);
+    align-content:start;
+  }
+  #result .headrow{grid-area:head;text-align:left}
+  #result .wheelbox{grid-area:wheel;align-self:center;margin:0;width:100%;max-width:27rem}
+  #result .bandread{grid-area:read;margin:1.2rem 0 0;max-width:none;text-align:left}
+  #result .leak{grid-area:leak;margin:.9rem 0 0;max-width:none;text-align:left}
+  #result .points{grid-area:points;margin:1.8rem 0 0;max-width:none}
+  #result .lever{grid-area:lever}
+  #result .bridge{grid-area:bridge}
+  #result .footnote{grid-area:foot}
+}
 @media (max-width:480px){
   .opts{grid-template-columns:repeat(2,1fr)}
   .pointrow .nm{width:6rem}
@@ -148,12 +174,12 @@ h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-heigh
     <p class="bandread" id="r-read"></p>
     <p class="leak" id="r-leak"></p>
 
-    <div class="resultcard">
+    <div class="resultcard points">
       <h3 id="r-pointsHeading"></h3>
       <div id="pointRows"></div>
     </div>
 
-    <div class="resultcard">
+    <div class="resultcard lever">
       <h3 id="r-leverHeading"></h3>
       <p id="r-leverIntro"></p>
       <p id="r-leverBody" style="color:var(--cream);font-weight:600"></p>
