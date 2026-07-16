@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Which Way Is Your Wheel Turning? | Taylored</title>
+<meta name="description" content="Four minutes. Sixteen sliders. One honest look at what is driving you right now and what is dragging on you.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='12' fill='none' stroke='%23b38e5d' stroke-width='4'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1e3644; --navy-deep:#16242e; --paper:#f6f4ef; --paper-deep:#efe9dd;
+  --cream:#f3efe7; --ink:#22343d; --ink-soft:#475d68; --ink-faint:#8a9aa1;
+  --gold:#b38e5d; --gold-deep:#9a784b; --sage:#7fa07a;
+  --drag:#64798a; --drag-deep:#52667a;
+  --rule-d:#dcd5c7; --rule-l:rgba(243,239,231,.16);
+  --track-l:#eae4d6;
+  --measure:36rem;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Manrope,system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-height:1.15;color:var(--navy)}
+.screen{display:none;min-height:100svh}
+.screen.active{display:block}
+.wrap{max-width:var(--measure);margin:0 auto;padding:clamp(1.5rem,6vw,4rem) clamp(1.25rem,5vw,2rem)}
+.kicker{font-size:.72rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-deep)}
+.btn{display:inline-block;font:inherit;font-weight:700;font-size:1rem;color:var(--cream);background:var(--navy);border:0;border-radius:3px;padding:.95rem 2.1rem;cursor:pointer;letter-spacing:.02em;transition:background .2s}
+.btn:hover{background:var(--navy-deep)}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+/* intro */
+#intro .wrap{padding-top:clamp(3rem,10vh,6rem)}
+#intro h1{font-size:clamp(2.1rem,7vw,3.3rem);margin:.9rem 0 1.4rem}
+#intro .lede{font-size:1.08rem;color:var(--ink-soft);max-width:32rem}
+#intro .how{margin:1.6rem 0 2.2rem;padding:1.2rem 0;border-top:1px solid var(--rule-d);border-bottom:1px solid var(--rule-d);font-size:.95rem;color:var(--ink-soft)}
+.brandline{margin-top:3.5rem;font-size:.8rem;color:var(--ink-faint)}
+/* diagnostic */
+.progress{height:3px;background:var(--rule-d)}
+.progress i{display:block;height:100%;background:var(--gold);transform-origin:left;transition:transform .35s ease}
+.partmeta{font-size:.72rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:.7rem}
+.part h2{font-size:clamp(1.6rem,5vw,2.2rem)}
+.part .lead{color:var(--ink-soft);margin:.7rem 0 .4rem}
+.timeframe{font-size:.8rem;font-style:italic;color:var(--ink-faint);margin-bottom:1.6rem}
+.stmt{padding:1.35rem 0 1.2rem;border-top:1px solid var(--rule-d)}
+.stmt>p{font-weight:600;margin-bottom:.9rem}
+/* bipolar slider */
+.biplabels{display:flex;justify-content:space-between;align-items:baseline;font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.4rem}
+.biplabels .l{color:var(--drag-deep)}
+.biplabels .r{color:var(--gold-deep)}
+.bipwrap{position:relative;padding:7px 0}
+.bipmid{position:absolute;left:50%;top:-3px;bottom:-3px;width:0;border-left:2px dotted rgba(30,54,68,.4);transform:translateX(-1px);pointer-events:none}
+input[type=range].bip{-webkit-appearance:none;appearance:none;display:block;width:100%;height:10px;border-radius:999px;background:var(--track-l);cursor:pointer;outline:none}
+input[type=range].bip:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+input[type=range].bip::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:24px;height:24px;margin-top:-7px;border-radius:50%;background:#fff;border:2.5px solid var(--ink-faint);box-shadow:0 1px 3px rgba(14,17,20,.18);transition:border-color .15s}
+input[type=range].bip::-moz-range-thumb{width:19px;height:19px;border-radius:50%;background:#fff;border:2.5px solid var(--ink-faint);box-shadow:0 1px 3px rgba(14,17,20,.18);transition:border-color .15s}
+.stmt.answered input[type=range].bip::-webkit-slider-thumb{border-color:var(--navy)}
+.stmt.answered input[type=range].bip::-moz-range-thumb{border-color:var(--navy)}
+.bipread{font-size:.82rem;color:var(--ink-faint);margin-top:.55rem;min-height:1.3em;font-style:italic}
+.stmt.answered .bipread{color:var(--ink-soft);font-weight:600;font-style:normal}
+.partnav{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--rule-d)}
+.hint{font-size:.82rem;color:var(--gold-deep);opacity:0;transition:opacity .25s}
+.hint.show{opacity:1}
+/* email */
+#email .wrap{padding-top:clamp(3rem,12vh,7rem);max-width:26rem}
+#email h2{font-size:clamp(1.7rem,5vw,2.3rem);margin-bottom:.8rem}
+#email p{color:var(--ink-soft)}
+#email label{display:block;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin:1.3rem 0 .3rem}
+#email input{width:100%;font:inherit;font-size:1rem;padding:.75rem .9rem;border:1.5px solid var(--rule-d);border-radius:3px;background:#fff;color:var(--ink)}
+#email input:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:var(--gold)}
+#email .btn{margin-top:1.6rem;width:100%}
+.privacy{font-size:.76rem;color:var(--ink-faint);margin-top:.9rem}
+/* result */
+#result{background:var(--navy-deep);color:var(--cream)}
+#result h2,#result h3{color:var(--cream)}
+#result .wrap{max-width:42rem}
+.bandchip{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--navy-deep);background:var(--gold);border-radius:2px;padding:.3rem .7rem;margin:.8rem 0 0}
+#result .headrow{text-align:center}
+#result .headrow h2{font-size:clamp(1.8rem,5vw,2.4rem)}
+.resultcard{max-width:34rem;margin:2.2rem auto 0;padding:1.6rem 1.5rem;background:rgba(243,239,231,.05);border:1px solid var(--rule-l);border-radius:4px}
+.resultcard h3{font-size:1.3rem;margin-bottom:.7rem}
+.resultcard p{color:#cdd8db;font-size:.95rem}
+.resultcard p+p{margin-top:.7rem}
+/* bullet card */
+.bulletlede{font-size:.88rem !important;margin-bottom:.4rem}
+.blegend{display:flex;align-items:center;justify-content:center;gap:12px;font-size:.66rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin:1rem 0 .2rem}
+.blegend .ld{color:#8fa7b8}
+.blegend .lp{color:var(--gold)}
+.blegend .lz{width:0;height:14px;border-left:2px dotted rgba(243,239,231,.5)}
+.brow{padding:1.1rem 0 1rem}
+.brow+.brow{border-top:1px solid var(--rule-l)}
+.brow-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:.65rem}
+.brow-head .dim{font-family:"Playfair Display",Georgia,serif;font-weight:500;font-size:1.2rem;color:var(--cream)}
+.brow-head .state{font-size:.66rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap}
+.state.push{color:var(--gold)}
+.state.drag{color:#8fa7b8}
+.state.even{color:rgba(243,239,231,.5)}
+.btrack{position:relative;height:12px;border-radius:999px;background:rgba(243,239,231,.12)}
+.bfill{position:absolute;top:0;bottom:0;width:calc(var(--w) * 1%);animation:bgrow .9s cubic-bezier(.22,.8,.3,1) both;animation-delay:var(--d,.1s)}
+.bfill.push{left:50%;border-radius:0 999px 999px 0;background:linear-gradient(90deg,var(--gold-deep),var(--gold))}
+.bfill.drag{right:50%;border-radius:999px 0 0 999px;background:linear-gradient(270deg,var(--drag-deep),var(--drag))}
+.bmid{position:absolute;top:-7px;bottom:-7px;left:50%;width:0;border-left:2px dotted rgba(243,239,231,.5);transform:translateX(-1px)}
+.bnet{position:absolute;top:50%;transform:translateY(-50%);font-size:.8rem;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;animation:bappear .5s ease both;animation-delay:calc(var(--d,.1s) + .55s)}
+.bnet.push{left:calc(50% + var(--w) * 1% + 10px);color:var(--gold)}
+.bnet.drag{right:calc(50% + var(--w) * 1% + 10px);color:#8fa7b8}
+.bnet.even{left:calc(50% + 10px);color:rgba(243,239,231,.6)}
+/* long fills: the net sits inside the bar at its tip, so it never spills past the track */
+.bnet.push.in{left:auto;right:calc(50% - var(--w) * 1% + 8px);color:var(--navy-deep)}
+.bnet.drag.in{right:auto;left:calc(50% - var(--w) * 1% + 8px);color:#f0f3f5}
+.bgross{margin-top:.6rem;font-size:.74rem;font-weight:500;font-variant-numeric:tabular-nums;color:rgba(243,239,231,.55);letter-spacing:.02em}
+.bgross b{font-weight:700;color:#cdd8db}
+@keyframes bgrow{from{width:0}}
+@keyframes bappear{from{opacity:0}to{opacity:1}}
+.bandread{max-width:34rem;margin:1.6rem auto 0;text-align:center;color:#cdd8db;font-size:1.02rem}
+.leak{max-width:34rem;margin:.9rem auto 0;text-align:center;font-size:.85rem;color:var(--gold);letter-spacing:.04em}
+/* wheel */
+.wheelbox{position:relative;max-width:430px;margin:2.4rem auto .4rem}
+.wheelbox svg{display:block;width:100%;height:auto}
+.bridge{border-color:rgba(179,142,93,.45)}
+.tagline{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:1.15rem;color:var(--gold);margin-top:1rem}
+.ctabtn{display:inline-block;margin-top:1.3rem;font-weight:700;text-decoration:none;color:var(--navy-deep);background:var(--gold);border-radius:3px;padding:.9rem 1.9rem;transition:background .2s}
+.ctabtn:hover{background:var(--gold-deep);color:var(--cream)}
+.footnote{font-size:.78rem;color:var(--ink-faint);text-align:center;margin-top:2.5rem}
+@media (max-width:480px){
+  .brow-head .dim{font-size:1.05rem}
+  .bnet{font-size:.72rem}
+}
+@media (prefers-reduced-motion:reduce){
+  .bfill,.bnet{animation:none}
+}
+</style>
+</head>
+<body>
+
+<section id="intro" class="screen active">
+  <div class="wrap">
+    <p class="kicker" id="i-kicker"></p>
+    <h1 id="i-title"></h1>
+    <p class="lede" id="i-intro"></p>
+    <div class="how" id="i-how"></div>
+    <button class="btn" id="startBtn"></button>
+    <p class="brandline">From Taylored. The biology of leadership, made practical.</p>
+  </div>
+</section>
+
+<section id="diagnostic" class="screen">
+  <div class="progress"><i id="progbar" style="transform:scaleX(0)"></i></div>
+  <div class="wrap">
+    <div id="partHost"></div>
+    <div class="partnav">
+      <span class="hint" id="answerHint"></span>
+      <button class="btn" id="nextBtn"></button>
+    </div>
+  </div>
+</section>
+
+<section id="email" class="screen">
+  <div class="wrap">
+    <p class="kicker">Almost there</p>
+    <h2 id="e-heading"></h2>
+    <p id="e-body"></p>
+    <form id="emailForm" novalidate>
+      <label for="fname" id="e-namelabel"></label>
+      <input id="fname" name="fname" type="text" autocomplete="given-name">
+      <label for="femail" id="e-emaillabel"></label>
+      <input id="femail" name="femail" type="email" autocomplete="email" inputmode="email">
+      <button class="btn" type="submit" id="e-btn"></button>
+      <p class="privacy" id="e-privacy"></p>
+    </form>
+  </div>
+</section>
+
+<section id="result" class="screen">
+  <div class="wrap">
+    <div class="headrow">
+      <p class="kicker" id="r-kicker"></p>
+      <h2 id="r-heading"></h2>
+      <span class="bandchip" id="r-band"></span>
+    </div>
+
+    <div class="resultcard bulletcard">
+      <h3 id="r-bulletHeading"></h3>
+      <p class="bulletlede" id="r-bulletLede"></p>
+      <div class="blegend" aria-hidden="true">
+        <span class="ld" id="r-legendDrag"></span>
+        <span class="lz"></span>
+        <span class="lp" id="r-legendPush"></span>
+      </div>
+      <div id="bulletRows"></div>
+    </div>
+
+    <p class="bandread" id="r-read"></p>
+    <p class="leak" id="r-leak"></p>
+
+    <div class="wheelbox"><svg id="wheel" viewBox="0 0 440 440" role="img" aria-label=""></svg></div>
+
+    <div class="resultcard">
+      <h3 id="r-leverHeading"></h3>
+      <p id="r-leverIntro"></p>
+      <p id="r-leverBody" style="color:var(--cream);font-weight:600"></p>
+    </div>
+
+    <div class="resultcard bridge">
+      <h3 id="r-bridgeHeading"></h3>
+      <p id="r-bridgeBody"></p>
+      <p class="tagline" id="r-tagline"></p>
+      <a class="ctabtn" id="r-cta" href="#"></a>
+    </div>
+    <p class="footnote" id="r-footnote"></p>
+  </div>
+</section>
+
+<script type="module">
+import { computePushDrag } from "./capacity.js";
+const config = await (await fetch("./capacity-config.json?v=" + Date.now())).json();
+const C = config.copy, I = config.instrument, W = config.wheel;
+const $ = (id) => document.getElementById(id);
+const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- populate chrome from config ---------- */
+$("i-kicker").textContent = I.kicker;
+$("i-title").textContent = I.title;
+$("i-intro").textContent = I.intro;
+$("i-how").textContent = I.howItWorks;
+$("startBtn").textContent = C.startButton;
+$("answerHint").textContent = C.answerHint;
+$("e-heading").textContent = C.emailCapture.heading;
+$("e-body").textContent = C.emailCapture.body;
+$("e-namelabel").textContent = C.emailCapture.nameLabel;
+$("e-emaillabel").textContent = C.emailCapture.emailLabel + (C.emailCapture.emailRequired ? "" : " (optional)");
+$("e-btn").textContent = C.emailCapture.button;
+$("e-privacy").textContent = C.emailCapture.privacyNote;
+document.title = I.title + " | Taylored";
+
+/* ---------- bipolar slider helpers ---------- */
+const SL = I.slider;
+function readoutFor(v) {
+  // readouts: [{min,label}] sorted ascending — the highest min that v reaches wins
+  return SL.readouts.reduce((hit, r) => (v >= r.min ? r : hit), SL.readouts[0]).label;
+}
+function paintSlider(inp) {
+  const v = +inp.value;
+  const p = 50 + v / 2; // -100..100 -> 0..100% along the track
+  const lo = Math.min(50, p), hi = Math.max(50, p);
+  const c1 = v >= 0 ? "var(--gold-deep)" : "var(--drag)";
+  const c2 = v >= 0 ? "var(--gold)" : "var(--drag-deep)";
+  inp.style.background = `linear-gradient(to right, var(--track-l) 0%, var(--track-l) ${lo}%, ${c1} ${lo}%, ${c2} ${hi}%, var(--track-l) ${hi}%, var(--track-l) 100%)`;
+}
+
+/* ---------- flow ---------- */
+const answers = {}; // factor -> signed number[-100..100][], NaN until the person sets it
+I.parts.forEach((p) => (answers[p.factor] = new Array(p.statements.length).fill(NaN)));
+let partIdx = 0;
+const show = (id) => { document.querySelectorAll(".screen").forEach((s) => s.classList.remove("active")); $(id).classList.add("active"); scrollTo(0, 0); };
+
+$("startBtn").onclick = () => { renderPart(); show("diagnostic"); };
+
+function renderPart() {
+  const p = I.parts[partIdx];
+  $("progbar").style.transform = `scaleX(${partIdx / I.parts.length})`;
+  $("nextBtn").textContent = partIdx === I.parts.length - 1 ? C.seeResultButton : C.nextButton;
+  $("answerHint").classList.remove("show");
+  $("partHost").innerHTML = `
+    <div class="part">
+      <p class="partmeta">Part ${partIdx + 1} of ${I.parts.length} · ${p.title}</p>
+      <h2>${p.title}</h2>
+      <p class="lead">${p.lead}</p>
+      <p class="timeframe">${I.timeframeLabel}</p>
+      ${p.statements.map((s, si) => {
+        const saved = answers[p.factor][si];
+        const has = Number.isFinite(saved);
+        return `
+        <div class="stmt${has ? " answered" : ""}" data-si="${si}">
+          <p>${s}</p>
+          <div class="biplabels" aria-hidden="true"><span class="l">${SL.leftLabel}</span><span class="r">${SL.rightLabel}</span></div>
+          <div class="bipwrap">
+            <input type="range" class="bip" min="-100" max="100" step="5" value="${has ? saved : 0}"
+              aria-label="${s.replace(/"/g, "&quot;")}. Minus one hundred means ${SL.leftLabel.toLowerCase()}, plus one hundred means ${SL.rightLabel.toLowerCase()}, zero means neutral.">
+            <span class="bipmid"></span>
+          </div>
+          <p class="bipread">${has ? readoutFor(saved) : SL.untouched}</p>
+        </div>`;
+      }).join("")}
+    </div>`;
+  $("partHost").querySelectorAll("input.bip").forEach((inp) => {
+    const stmt = inp.closest(".stmt");
+    const si = +stmt.dataset.si;
+    const read = stmt.querySelector(".bipread");
+    paintSlider(inp);
+    const mark = () => {
+      answers[p.factor][si] = +inp.value;
+      stmt.classList.add("answered");
+      read.textContent = readoutFor(+inp.value);
+      paintSlider(inp);
+      $("answerHint").classList.remove("show");
+    };
+    inp.addEventListener("input", mark);      // drag, click on track, arrow keys
+    inp.addEventListener("pointerup", mark);  // a deliberate tap on the centre counts too
+  });
+}
+
+$("nextBtn").onclick = () => {
+  const p = I.parts[partIdx];
+  if (answers[p.factor].some((v) => !Number.isFinite(v))) { $("answerHint").classList.add("show"); return; }
+  if (partIdx < I.parts.length - 1) { partIdx++; renderPart(); scrollTo(0, 0); }
+  else { $("progbar").style.transform = "scaleX(1)"; show("email"); $("fname").focus(); }
+};
+
+let result = null;
+$("emailForm").onsubmit = (ev) => {
+  ev.preventDefault();
+  const email = $("femail").value.trim();
+  if (C.emailCapture.emailRequired && !/.+@.+\..+/.test(email)) { $("femail").focus(); $("femail").style.borderColor = "var(--gold-deep)"; return; }
+  result = computePushDrag(answers, "assessment", config);
+  storeResponse(email, $("fname").value.trim(), result);
+  renderResult(result);
+  show("result");
+};
+
+/* ---------- storage: Supabase insert + local backup, never blocks the result ----------
+   Same columns as v1; the jsonb payloads carry the richer push/drag shape and
+   config_version v2.0 marks the semantics change. capacity_score and subscores
+   stay 0-100 via the legacy (net+100)/2 mapping, so trends remain comparable. */
+function storeResponse(email, firstName, r) {
+  const partTotals = {};
+  for (const f of W.factorOrder) partTotals[f] = { push: r.push[f], drag: r.drag[f], net: r.net[f] };
+  const row = {
+    email: email || null, first_name: firstName || null,
+    answers, part_totals: partTotals, total_drag: r.overallDrag,
+    capacity_score: r.capacityScore, subscores: r.subscores,
+    coherence: +r.coherence.toFixed(4), band: r.band, push_lever: r.pushLever,
+    config_version: config.version, user_agent: navigator.userAgent.slice(0, 300),
+  };
+  try {
+    const key = config.storage.localStorageKey;
+    const prev = JSON.parse(localStorage.getItem(key) || "[]");
+    prev.push({ ...row, at: new Date().toISOString() });
+    localStorage.setItem(key, JSON.stringify(prev));
+  } catch {}
+  if (config.storage.endpoint) {
+    fetch(config.storage.endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", apikey: config.storage.apiKey, Authorization: "Bearer " + config.storage.apiKey, Prefer: "return=minimal" },
+      body: JSON.stringify(row),
+    }).catch(() => {});
+  }
+}
+
+/* ---------- the bullet rows: push right of the line, drag left, net at the tip ---------- */
+function stateFor(net) {
+  const S = C.bullet.states;
+  if (net >= 25) return { cls: "push", label: S.strongPush };
+  if (net >= 8) return { cls: "push", label: S.push };
+  if (net > -8) return { cls: "even", label: S.even };
+  if (net > -25) return { cls: "drag", label: S.drag };
+  return { cls: "drag", label: S.heavyDrag };
+}
+function renderBullets(r) {
+  $("r-bulletHeading").textContent = C.bullet.heading;
+  $("r-bulletLede").textContent = C.bullet.lede;
+  $("r-legendDrag").innerHTML = C.bullet.legendDrag + " &larr;";
+  $("r-legendPush").innerHTML = "&rarr; " + C.bullet.legendPush;
+  const half = W.bulletHalfScale; // net points that fill half the track
+  $("bulletRows").innerHTML = W.factorOrder.map((f, i) => {
+    const net = r.net[f], push = r.push[f], drag = r.drag[f];
+    const st = stateFor(net);
+    const w = Math.min(Math.abs(net), half) / half * 50; // % of full track
+    const side = net > 0 ? "push" : net < 0 ? "drag" : "even";
+    const inside = w > 36 ? " in" : ""; // long fill: net label moves inside the bar
+    const netTxt = net > 0 ? "+" + net : net < 0 ? "−" + Math.abs(net) : "0";
+    const aria = `${W.factorLabels[f]}: net ${net >= 0 ? "push " + net : "drag " + Math.abs(net)}. Push ${push}, drag ${drag}.`;
+    return `
+    <div class="brow" style="--w:${w.toFixed(1)};--d:${(0.1 + i * 0.1).toFixed(1)}s">
+      <div class="brow-head">
+        <span class="dim">${W.factorLabels[f]}</span>
+        <span class="state ${st.cls}">${st.label}</span>
+      </div>
+      <div class="btrack" role="img" aria-label="${aria}">
+        ${side !== "even" ? `<div class="bfill ${side}"></div>` : ""}
+        <div class="bmid"></div>
+        <span class="bnet ${side}${inside}">${netTxt}</span>
+      </div>
+      <p class="bgross">${C.bullet.legendPush} <b>${push}</b> &middot; ${C.bullet.legendDrag} <b>${drag}</b></p>
+    </div>`;
+  }).join("");
+}
+
+/* ---------- the wheel ---------- */
+const CX = 220, CY = 220;
+const polar = (r, deg) => { const a = (deg * Math.PI) / 180; return [CX + r * Math.sin(a), CY - r * Math.cos(a)]; };
+function arcPath(r, a1, a2) {
+  const [x1, y1] = polar(r, a1), [x2, y2] = polar(r, a2);
+  return `M ${x1.toFixed(2)} ${y1.toFixed(2)} A ${r} ${r} 0 ${a2 - a1 > 180 ? 1 : 0} 1 ${x2.toFixed(2)} ${y2.toFixed(2)}`;
+}
+const lerp = (a, b, t) => a + (b - a) * t;
+function speedFor(score) {
+  const m = W.spinSpeedMap;
+  if (score <= m[0].score) return m[0].dps;
+  for (let i = 1; i < m.length; i++) if (score <= m[i].score) return lerp(m[i - 1].dps, m[i].dps, (score - m[i - 1].score) / (m[i].score - m[i - 1].score));
+  return m[m.length - 1].dps;
+}
+const easings = { easeOutCubic: (t) => 1 - (1 - t) ** 3, linear: (t) => t };
+
+function renderResult(r) {
+  $("r-kicker").textContent = C.scoreCaption;
+  $("r-heading").textContent = C.resultHeading;
+  $("r-band").textContent = r.band;
+  renderBullets(r);
+  $("r-read").textContent = C.bandReads[r.band];
+  const worst = W.factorOrder.reduce((hit, f) => (r.drag[f] > r.drag[hit] ? f : hit), W.factorOrder[0]);
+  $("r-leak").textContent = r.drag[worst] >= config.scoring.leakThreshold ? C.leakLine + " " + W.factorLabels[worst] : "";
+  const lever = C.leverPrompts[r.pushLever];
+  $("r-leverHeading").textContent = lever.heading;
+  $("r-leverIntro").textContent = C.leverIntro;
+  $("r-leverBody").textContent = lever.body;
+  $("r-bridgeHeading").textContent = C.bridge.heading;
+  $("r-bridgeBody").textContent = C.bridge.body;
+  $("r-tagline").textContent = C.bridge.tagline;
+  $("r-cta").textContent = C.bridge.ctaLabel;
+  $("r-cta").href = C.bridge.ctaUrl;
+  $("r-footnote").textContent = C.bridge.footnote;
+  buildWheel(r);
+}
+
+function buildWheel(r) {
+  const svg = $("wheel");
+  svg.setAttribute("aria-label", `Capacity wheel. Score ${r.capacityScore} out of 100, band ${r.band}.`);
+  const half = W.sectorSpanDegrees / 2, R = W.arcRadius;
+  const spokes = W.factorOrder.map((f) => {
+    const a = W.factorAngles[f];
+    const [x2, y2] = polar(104, a);
+    return `<line x1="${CX}" y1="${CY}" x2="${x2}" y2="${y2}" stroke="${W.spokeColor}" stroke-width="2"/>
+            <circle cx="${x2}" cy="${y2}" r="5" fill="${W.factorColors[f]}"/>`;
+  }).join("");
+  const ticks = Array.from({ length: 24 }, (_, i) => {
+    const [x1, y1] = polar(88, i * 15), [x2, y2] = polar(96, i * 15);
+    return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${W.spokeColor}" stroke-width="1.4"/>`;
+  }).join("");
+  const tracks = W.factorOrder.map((f) => {
+    const a = W.factorAngles[f];
+    return `<path d="${arcPath(R, a - half, a + half)}" fill="none" stroke="${W.trackColor}" stroke-width="${W.arcWidth}" stroke-linecap="round"/>
+            <path id="fill-${f}" d="" fill="none" stroke="${W.factorColors[f]}" stroke-width="${W.arcWidth}" stroke-linecap="round"/>`;
+  }).join("");
+  const labels = W.factorOrder.map((f) => {
+    const a = ((W.factorAngles[f] % 360) + 360) % 360;
+    const flip = a > 90 && a < 270; // bottom-half labels run anticlockwise so they read upright
+    const rl = R + (flip ? 34 : 24);
+    const d = flip
+      ? `M ${polar(rl, a + 60).map((v) => v.toFixed(2)).join(" ")} A ${rl} ${rl} 0 0 0 ${polar(rl, a - 60).map((v) => v.toFixed(2)).join(" ")}`
+      : `M ${polar(rl, a - 60).map((v) => v.toFixed(2)).join(" ")} A ${rl} ${rl} 0 0 1 ${polar(rl, a + 60).map((v) => v.toFixed(2)).join(" ")}`;
+    return `<path id="lp-${f}" d="${d}" fill="none"/>
+            <text font-family="Manrope,sans-serif" font-size="13" font-weight="700" letter-spacing="2.5" fill="${W.factorColors[f]}"><textPath href="#lp-${f}" startOffset="50%" text-anchor="middle">${W.factorLabels[f].toUpperCase()}</textPath></text>`;
+  }).join("");
+  const axis = `
+    <text x="${CX}" y="${CY - 122}" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="3" fill="rgba(243,239,231,.4)">${W.axisLabels.outcomes}</text>
+    <text x="${CX}" y="${CY + 130}" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="3" fill="rgba(243,239,231,.4)">${W.axisLabels.levers}</text>`;
+  svg.innerHTML = `
+    <g id="wobbleRoot">
+      <g id="spinner">
+        <circle cx="${CX}" cy="${CY}" r="100" fill="none" stroke="${W.spokeColor}" stroke-width="1.6"/>
+        ${ticks}${spokes}
+        <circle cx="${CX}" cy="${CY - 100}" r="3" fill="${W.hubColor}"/>
+      </g>
+      <circle cx="${CX}" cy="${CY}" r="52" fill="${W.hubColor}" opacity="0.06"/>
+      <circle cx="${CX}" cy="${CY}" r="52" fill="none" stroke="${W.spokeColor}" stroke-width="1"/>
+      <text id="scoreNum" x="${CX}" y="${CY + 12}" text-anchor="middle" font-family="'Playfair Display',Georgia,serif" font-size="46" font-weight="600" fill="${W.hubColor}">0</text>
+      <text x="${CX}" y="${CY + 32}" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="2" fill="rgba(243,239,231,.55)">${C.scoreCaption.toUpperCase()}</text>
+      ${tracks}
+    </g>
+    ${labels}${axis}`;
+  animateWheel(r);
+}
+
+function animateWheel(r) {
+  const spinner = $("spinner"), root = $("wobbleRoot"), num = $("scoreNum");
+  const half = W.sectorSpanDegrees / 2, R = W.arcRadius;
+  const targetV = speedFor(r.capacityScore);
+  const imbalance = (1 - r.coherence) * W.wobble.sensitivity;
+  const ease = easings[W.spinUp.easing] || easings.easeOutCubic;
+  const setArcs = (t) => W.factorOrder.forEach((f, i) => {
+    const local = reducedMotion ? 1 : Math.min(1, Math.max(0, (t * W.spinUp.durationMs - i * W.spinUp.arcStaggerMs) / (W.spinUp.durationMs - W.spinUp.arcStaggerMs * (W.factorOrder.length - 1))));
+    const sweep = W.sectorSpanDegrees * (r.subscores[f] / 100) * ease(local);
+    const a = W.factorAngles[f];
+    $("fill-" + f).setAttribute("d", sweep < 0.5 ? "" : arcPath(R, a - half, a - half + sweep));
+  });
+
+  if (reducedMotion) { setArcs(1); num.textContent = r.capacityScore; return; }
+
+  let angle = 0, last = performance.now(), start = last;
+  function frame(now) {
+    const dt = (now - last) / 1000; last = now;
+    const elapsed = now - start;
+    const p = Math.min(1, elapsed / W.spinUp.durationMs);
+    const ramp = ease(p);
+    angle += targetV * ramp * dt;
+    const t = elapsed / 1000;
+    const wob = W.wobble.maxAngleDegrees * imbalance * Math.sin(2 * Math.PI * W.wobble.frequencyHz * t) * ramp;
+    const ecc = W.wobble.maxEccentricityPx * imbalance * ramp;
+    const arad = (angle * Math.PI) / 180;
+    root.setAttribute("transform", `translate(${(ecc * Math.sin(arad)).toFixed(2)} ${(-ecc * Math.cos(arad)).toFixed(2)})`);
+    spinner.setAttribute("transform", `rotate(${(angle + wob).toFixed(2)} ${CX} ${CY})`);
+    setArcs(p);
+    if (W.spinUp.countUp) num.textContent = Math.round(r.capacityScore * ease(Math.min(1, p * 1.15)));
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
+/* dev shortcuts:
+   ?start=1 jumps straight to the first slider screen
+   ?demo=peak|steady|conserve|restore fills signed answers and jumps straight to the result (nothing is stored) */
+const params = new URLSearchParams(location.search);
+if (params.get("start") !== null) { renderPart(); show("diagnostic"); }
+const demo = params.get("demo");
+if (demo !== null) {
+  const presets = {
+    peak:     { biology: [95, 85, 70, 90], behaviour: [70, 90, 55, 80], environment: [60, 75, -20, 85], leadership: [80, 75, 60, 85] },
+    steady:   { biology: [70, 50, -20, 60], behaviour: [80, 40, 60, -30], environment: [50, 70, 20, 60], leadership: [55, 65, 30, -10] },
+    conserve: { biology: [40, -30, -60, 20], behaviour: [-50, -40, 20, -10], environment: [-70, -40, -20, 30], leadership: [30, 20, -20, 0] },
+    restore:  { biology: [-80, -60, -90, -40], behaviour: [-90, -75, -55, -30], environment: [-70, -85, -40, 10], leadership: [-50, -70, 20, -60] },
+  };
+  const pick = presets[demo] || presets.conserve;
+  I.parts.forEach((p) => (answers[p.factor] = pick[p.factor].slice()));
+  result = computePushDrag(answers, "assessment", config);
+  renderResult(result);
+  show("result");
+}
+</script>
+</body>
+</html>

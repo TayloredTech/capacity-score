@@ -1,0 +1,199 @@
+{
+  "version": "v2.0",
+
+  "instrument": {
+    "draft": false,
+    "title": "Which Way Is Your Wheel Turning?",
+    "kicker": "A mirror, not a test",
+    "intro": "Four minutes. Sixteen sliders. One honest look at what is driving you right now and what is dragging on you. Answer for the month you are actually having, not the one you meant to have. Nobody sees this but you.",
+    "howItWorks": "Sixteen things that shape your capacity, in four short parts. For each one, slide the marker. Left if it is dragging on you right now. Right if it is driving you. Leave it on the middle line if it is not pulling either way. Go with your gut. The first answer is usually the true one.",
+    "timeframeLabel": "Think about the last month or so",
+    "slider": {
+      "leftLabel": "Dragging me",
+      "rightLabel": "Driving me",
+      "untouched": "Slide it either way, or tap the line",
+      "readouts": [
+        { "min": -100, "label": "Dragging hard" },
+        { "min": -66,  "label": "Dragging me" },
+        { "min": -33,  "label": "A slight drag" },
+        { "min": -9,   "label": "Not pulling either way" },
+        { "min": 10,   "label": "A slight push" },
+        { "min": 34,   "label": "Driving me" },
+        { "min": 67,   "label": "Driving hard" }
+      ]
+    },
+    "parts": [
+      {
+        "factor": "biology",
+        "title": "Your body",
+        "lead": "The energy you actually run on. You cannot order it around. It follows what you do and what is around you.",
+        "kind": "outcome",
+        "statements": [
+          "My energy through the afternoon",
+          "How easily I switch off at night",
+          "How rested I feel when I wake up",
+          "The lift I get when something I worked hard for lands"
+        ]
+      },
+      {
+        "factor": "behaviour",
+        "title": "What you do",
+        "lead": "Your daily habits. One of the two things you can actually change.",
+        "kind": "lever",
+        "statements": [
+          "The basics that keep me steady: sleep, movement, time outside",
+          "What I do with the small gaps in my day",
+          "The breathers I build into my working day",
+          "How I get through the heavy stretches"
+        ]
+      },
+      {
+        "factor": "environment",
+        "title": "What's around you",
+        "lead": "Your spaces, your noise, your people. The other thing you can actually change.",
+        "kind": "lever",
+        "statements": [
+          "The quiet time I get that is just mine",
+          "How reachable I am: the pings, calls and messages",
+          "The pace and noise of the world around me",
+          "How much of the load I share with the people close to me"
+        ]
+      },
+      {
+        "factor": "leadership",
+        "title": "How you lead",
+        "lead": "How you show up for the people around you. Like your energy, it follows the rest of the wheel.",
+        "kind": "outcome",
+        "statements": [
+          "How much I hand over when the pressure climbs",
+          "How fast decisions move through me",
+          "How I show up with my team on the hard days",
+          "How I treat myself when things go wrong"
+        ]
+      }
+    ]
+  },
+
+  "scoring": {
+    "coherenceDivisor": 50,
+    "bands": [
+      { "name": "Restore", "min": 0 },
+      { "name": "Conserve", "min": 34 },
+      { "name": "Steady", "min": 69 },
+      { "name": "Peak", "min": 85 }
+    ],
+    "pushLever": {
+      "compare": ["behaviour", "environment"],
+      "tieBreak": "behaviour"
+    },
+    "leakThreshold": 15
+  },
+
+  "copy": {
+    "bandReads": {
+      "Peak": "The wheel is working for you. Far more is pushing you forward than pulling you back. The job now is to protect the few things doing the pushing, because they are the first to slip when the load spikes.",
+      "Steady": "More is driving you than dragging on you. That is a good place to be. Protect the things doing the driving, because they slip quietly, and usually right when the load goes up.",
+      "Conserve": "Your wheel is close to a stall. The drag and the drive are about even, or the drag is starting to win. This is a good time to catch it, because you can still feel it without being under it. One real change now beats ten later.",
+      "Restore": "Right now more is pulling you back than pushing you forward, and the harder you drive, the faster it pulls. That is not a discipline problem. It is a design problem. Design can be fixed."
+    },
+    "bullet": {
+      "heading": "Where the push and the drag are coming from",
+      "lede": "Right of the line, it is driving you. Left of the line, it is dragging on you. The bar shows what is left after the two cancel out.",
+      "legendDrag": "drag",
+      "legendPush": "push",
+      "states": {
+        "strongPush": "Strong push",
+        "push": "Gentle push",
+        "even": "About even",
+        "drag": "Net drag",
+        "heavyDrag": "Heavy drag"
+      }
+    },
+    "leakLine": "Dragging hardest right now:",
+    "leverIntro": "You cannot turn this wheel from the top. You cannot order your energy up, or lead well from an empty tank. But two of the four are always in your hands, and your answers show which one to start with.",
+    "leverPrompts": {
+      "behaviour": {
+        "heading": "Start with what you do",
+        "body": "Bring one steadying habit back, at the same time every day, protected like a meeting you cannot move. The walk. The sleep window. The movement. Not all of them. One, this week."
+      },
+      "environment": {
+        "heading": "Start with what's around you",
+        "body": "Build one protected pocket of quiet and guard it. The early hour. The commute. The closed door, phone off. Made on purpose, not hoped for at the end of the day."
+      }
+    },
+    "bridge": {
+      "heading": "What this can't tell you",
+      "body": "You can now see which way your wheel is turning. What it cannot tell you is why. How fast you run down. How slowly you recharge. Why the same pressure hits you harder some weeks than others. That sits deeper than willpower, which is why willpower never fixes it. That is the next layer down, and it is where we work.",
+      "tagline": "Not more disciplined. Better designed.",
+      "ctaLabel": "Talk to us about the Capacity Audit",
+      "ctaUrl": "https://taylored.health",
+      "footnote": "This is a mirror to think with, not a diagnosis."
+    },
+    "emailCapture": {
+      "heading": "Your wheel is ready",
+      "body": "Tell us where to send it. You will see it on screen right away, and we will email you a copy to keep.",
+      "emailLabel": "Email",
+      "nameLabel": "First name",
+      "button": "Show me my wheel",
+      "privacyNote": "We will send your result and the odd note from Taylored. No spam. Leave any time.",
+      "emailRequired": true
+    },
+    "resultHeading": "Your wheel",
+    "scoreCaption": "Capacity score",
+    "startButton": "Start the read",
+    "nextButton": "Next",
+    "seeResultButton": "See your wheel",
+    "answerHint": "Set every slider before you carry on, even if it lands on the middle line"
+  },
+
+  "wheel": {
+    "factorOrder": ["biology", "leadership", "behaviour", "environment"],
+    "factorAngles": { "biology": 0, "leadership": 90, "behaviour": 180, "environment": 270 },
+    "factorLabels": {
+      "biology": "Biology",
+      "leadership": "Leadership",
+      "behaviour": "Behaviour",
+      "environment": "Environment"
+    },
+    "factorColors": {
+      "biology": "#7fa07a",
+      "leadership": "#b38e5d",
+      "behaviour": "#d9c9a8",
+      "environment": "#8fb3c0"
+    },
+    "axisLabels": { "outcomes": "BEING", "levers": "DOING" },
+    "trackColor": "rgba(243,239,231,0.14)",
+    "hubColor": "#f3efe7",
+    "spokeColor": "rgba(243,239,231,0.55)",
+    "sectorSpanDegrees": 76,
+    "arcRadius": 158,
+    "arcWidth": 13,
+    "bulletHalfScale": 60,
+    "spinSpeedMap": [
+      { "score": 0, "dps": -14 },
+      { "score": 33, "dps": -4 },
+      { "score": 45, "dps": 3 },
+      { "score": 68, "dps": 12 },
+      { "score": 85, "dps": 22 },
+      { "score": 100, "dps": 34 }
+    ],
+    "wobble": {
+      "sensitivity": 1.0,
+      "maxAngleDegrees": 6,
+      "maxEccentricityPx": 5,
+      "frequencyHz": 0.55
+    },
+    "spinUp": {
+      "durationMs": 2600,
+      "easing": "easeOutCubic",
+      "arcStaggerMs": 180,
+      "countUp": true
+    }
+  },
+
+  "storage": {
+    "endpoint": "https://gdsdtawkigzpyseavkqp.supabase.co/rest/v1/capacity_responses",
+    "apiKey": "sb_publishable_9xYl5CzjcQ6cBCEmCfPs5Q_NwI7z_JQ",
+    "localStorageKey": "capacity-score-responses"
+  }
+}
