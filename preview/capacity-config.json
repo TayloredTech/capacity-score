@@ -38,7 +38,7 @@
       {
         "factor": "behaviour",
         "title": "What you do",
-        "lead": "Your daily habits. One of the two things you can actually change.",
+        "lead": "Your daily habits. The part of your capacity most in your hands.",
         "kind": "lever",
         "statements": [
           "The basics that keep me steady: sleep, movement, time outside",
@@ -50,7 +50,7 @@
       {
         "factor": "environment",
         "title": "What's around you",
-        "lead": "Your spaces, your noise, your people. The other thing you can actually change.",
+        "lead": "Your spaces, your noise, your people. More in your hands than it feels.",
         "kind": "lever",
         "statements": [
           "The quiet time I get that is just mine",
