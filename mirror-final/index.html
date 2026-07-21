@@ -663,9 +663,20 @@ function animateWheel(r){
 /* dev shortcut: ?demo=peak|steady|conserve|restore — jumps straight to the dark reveal */
 const demo = new URLSearchParams(location.search).get("demo");
 if (demo !== null){
-  const presets = { peak:[1,1,1,1], steady:[1,2,2,2], conserve:[2,3,2,3], restore:[4,3,4,4] };
+  // per-factor drag inputs (1..4, higher = more drag) chosen so each state maps to
+  // clearly VARIED, off-centre subscores — some axes lifting right, some dragging left
+  const presets = {
+    // mostly lifting, all four filled toward lift (score ~85, Peak)
+    peak:     { biology:[1,1,2,1], leadership:[1,1,1,2], behaviour:[2,1,2,1], environment:[2,2,1,2] },
+    // mostly lifting with one mild drag (score ~71, Steady)
+    steady:   { biology:[1,1,2,1], leadership:[2,1,2,1], behaviour:[2,2,2,2], environment:[3,3,3,2] },
+    // one clear lift, one mild lift, two clearly dragging (score ~48, Conserve)
+    conserve: { biology:[3,2,2,2], leadership:[2,2,2,1], behaviour:[4,3,3,3], environment:[3,3,3,3] },
+    // mostly dragging, all four filled toward drag (score ~21, Restore)
+    restore:  { biology:[4,4,3,3], leadership:[4,3,3,3], behaviour:[4,4,4,3], environment:[3,3,3,3] },
+  };
   const pick = presets[demo] || presets.conserve;
-  I.parts.forEach((p,pi)=>(answers[p.factor]=p.statements.map((_,si)=>pick[(pi+si)%4])));
+  I.parts.forEach((p)=>(answers[p.factor] = (pick[p.factor] || [2,2,2,2]).slice()));
   result = computeCapacity(answers, "assessment", config);
   renderResult(result);
   show("result");
