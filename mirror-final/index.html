@@ -365,10 +365,6 @@ const config = {
     factorAngles: { biology:0, leadership:90, behaviour:180, environment:270 },
     factorLabels: { biology:"Biology", leadership:"Leadership", behaviour:"Behaviour", environment:"Environment" },
     factorColors: { biology:"#7fa07a", leadership:"#b38e5d", behaviour:"#d9c9a8", environment:"#8fb3c0" },
-    // per-axis rotational sense of the LIFT (positive) side, so each arc's +/- matches
-    // the point-by-point bars regardless of where the axis sits on the circle.
-    // +1 => lift fills clockwise from the tick; -1 => lift fills counter-clockwise.
-    liftDir: { biology:1, leadership:1, behaviour:-1, environment:-1 },
     axisLabels: { outcomes:"BEING", levers:"DOING" },
     trackColor: "rgba(243,239,231,0.14)", hubColor: "#f3efe7", spokeColor: "rgba(243,239,231,0.55)",
     sectorSpanDegrees: 76, arcRadius: 158, arcWidth: 13,
@@ -602,8 +598,8 @@ function buildWheel(r){
   const tracks = W.factorOrder.map((f)=>{ const a=W.factorAngles[f];
     const [cx1,cy1]=polar(R-W.arcWidth/2-5,a), [cx2,cy2]=polar(R+W.arcWidth/2+5,a);
     return `<path d="${arcPath(R,a-half,a+half)}" fill="none" stroke="${W.trackColor}" stroke-width="${W.arcWidth}" stroke-linecap="round"/>`
-      + `<path id="fill-${f}" d="" fill="none" stroke="${W.factorColors[f]}" stroke-width="${W.arcWidth}" stroke-linecap="butt"/>`
-      + `<circle id="cap-${f}" r="0" fill="${W.factorColors[f]}"/>`
+      + `<path id="shaft-${f}" d="" fill="none" stroke="${W.factorColors[f]}" stroke-width="7" stroke-linecap="round"/>`
+      + `<path id="head-${f}" d="" fill="${W.factorColors[f]}"/>`
       + `<line x1="${cx1.toFixed(2)}" y1="${cy1.toFixed(2)}" x2="${cx2.toFixed(2)}" y2="${cy2.toFixed(2)}" stroke="${W.hubColor}" stroke-width="2" opacity="0.85"/>`; }).join("");
   const labels = W.factorOrder.map((f)=>{ const a=((W.factorAngles[f]%360)+360)%360; const flip=a>90&&a<270; const rl=R+(flip?34:24);
     const d = flip ? `M ${polar(rl,a+60).map(v=>v.toFixed(2)).join(" ")} A ${rl} ${rl} 0 0 0 ${polar(rl,a-60).map(v=>v.toFixed(2)).join(" ")}`
@@ -635,21 +631,27 @@ function animateWheel(r){
   const targetV=speedFor(r.capacityScore);
   const imbalance=(1-r.coherence)*W.wobble.sensitivity;
   const ease=easings[W.spinUp.easing]||easings.easeOutCubic;
-  // fill grows from the centre tick: clockwise = lifting, counter-clockwise = dragging
+  // each axis is a curved FORCE ARROW from its centre tick:
+  //   clockwise arrowhead = building/lift (above 50), counter-clockwise = depleting/drag (below 50)
+  //   length encodes magnitude from (subscore-50)/50; near 50 = short/minimal arrow
+  const HEAD_DEG=7, MAX_DEG=34, HEAD_HALF=7;
   const setArcs=(t)=>W.factorOrder.forEach((f,i)=>{
     const local=reducedMotion?1:Math.min(1,Math.max(0,(t*W.spinUp.durationMs - i*W.spinUp.arcStaggerMs)/(W.spinUp.durationMs - W.spinUp.arcStaggerMs*(W.factorOrder.length-1))));
-    const signed=(r.subscores[f]-50)/50;           // -1 full drag .. +1 full lift
-    const m=half*Math.abs(signed)*ease(local);      // sweep magnitude from the centre tick
+    const signed=(r.subscores[f]-50)/50;            // + builds/lift, - depletes/drag
+    const mag=Math.abs(signed);
     const a=W.factorAngles[f];
-    // each axis fills toward its OWN lift side when above 50, its own drag side when below
-    const dir=(signed>=0?1:-1)*(W.liftDir[f]||1);   // +1 clockwise from tick, -1 counter-clockwise
-    const oa=a+dir*m;                                // outer/measurement angle
-    const d = m<0.5 ? "" : (dir>0 ? arcPath(R,a,oa) : arcPath(R,oa,a));
-    $("fill-"+f).setAttribute("d", d);
-    // rounded cap on the outer/measurement end only (centre end stays flat/butt)
-    const cap=$("cap-"+f);
-    if(m<0.5){ cap.setAttribute("r","0"); }
-    else{ const [px,py]=polar(R,oa); cap.setAttribute("cx",px.toFixed(2)); cap.setAttribute("cy",py.toFixed(2)); cap.setAttribute("r",(W.arcWidth/2).toFixed(2)); }
+    const shaft=$("shaft-"+f), head=$("head-"+f);
+    if(mag<0.06){ shaft.setAttribute("d",""); head.setAttribute("d",""); return; } // ~neutral: no net force
+    const dir=signed>=0?1:-1;                        // +1 clockwise (build), -1 counter-clockwise (deplete)
+    const L=(HEAD_DEG+(MAX_DEG-HEAD_DEG)*mag)*ease(local); // total arrow length in degrees, animated
+    const end=a+dir*L;                               // arrowhead tip angle
+    const neck=a+dir*Math.max(0,L-HEAD_DEG);         // where the head meets the shaft
+    // shaft: curved along the arc from the centre tick to the neck
+    shaft.setAttribute("d", Math.abs(neck-a)<0.4 ? "" : (dir>0 ? arcPath(R,a,neck) : arcPath(R,neck,a)));
+    // arrowhead: tangent triangle, tip leading in the force direction
+    const [tx,ty]=polar(R,end);
+    const [ox,oy]=polar(R+HEAD_HALF,neck), [ix,iy]=polar(R-HEAD_HALF,neck);
+    head.setAttribute("d", `M ${tx.toFixed(2)} ${ty.toFixed(2)} L ${ox.toFixed(2)} ${oy.toFixed(2)} L ${ix.toFixed(2)} ${iy.toFixed(2)} Z`);
   });
   if(reducedMotion){ setArcs(1); num.textContent=r.capacityScore; return; }
   let angle=0,last=performance.now(),start=last;
