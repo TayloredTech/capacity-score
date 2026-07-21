@@ -111,7 +111,8 @@ h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-heigh
 .tagline{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:1.15rem;color:var(--gold);margin-top:1rem}
 .ctabtn{display:inline-block;margin-top:1.3rem;font-weight:700;text-decoration:none;text-align:center;color:var(--navy-deep);background:var(--gold);border-radius:3px;padding:.9rem 1.9rem;transition:background .2s}
 .ctabtn:hover{background:var(--gold-deep);color:var(--cream)}
-.footnote{font-size:.78rem;color:var(--cream-faint);text-align:center;margin-top:2.5rem}
+.draftnote{max-width:34rem;margin:2.6rem auto 0;text-align:center;font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:1rem;color:var(--cream-soft);line-height:1.6}
+.footnote{font-size:.78rem;color:var(--cream-faint);text-align:center;margin-top:1.1rem}
 @media (min-width:900px){
   #result .wrap{
     max-width:66rem;
@@ -123,10 +124,12 @@ h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-heigh
       "wheel  leak"
       "points lever"
       "points bridge"
+      "note   note"
       "foot   foot";
     column-gap:clamp(2.5rem,5vw,4.5rem);
     align-content:start;
   }
+  #result .draftnote{grid-area:note}
   #result .headrow{grid-area:head;text-align:left}
   #result .wheelbox{grid-area:wheel;align-self:center;margin:0;width:100%;max-width:27rem}
   #result .bandread{grid-area:read;margin:1.2rem 0 0;max-width:none;text-align:left}
@@ -222,6 +225,7 @@ h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-heigh
       <p class="tagline" id="r-tagline"></p>
       <a class="ctabtn" id="r-cta" href="#"></a>
     </div>
+    <p class="draftnote" id="r-draftnote"></p>
     <p class="footnote" id="r-footnote"></p>
   </div>
 </section>
@@ -348,6 +352,7 @@ const config = {
       tagline: "Not more disciplined. Better designed.",
       ctaLabel: "Talk to us about the Capacity Audit",
       ctaUrl: "mailto:hello@taylored.health",
+      draftNote: "This is an early draft of an idea I'm still shaping in the book. If it lands for you, or if it doesn't, I'd genuinely love to hear.",
       footnote: "This is a mirror to think with, not a diagnosis."
     },
     emailCapture: {
@@ -583,6 +588,7 @@ function renderResult(r){
   $("r-tagline").textContent = C.bridge.tagline;
   $("r-cta").textContent = C.bridge.ctaLabel;
   $("r-cta").href = C.bridge.ctaUrl;
+  $("r-draftnote").textContent = C.bridge.draftNote;
   $("r-footnote").textContent = C.bridge.footnote;
   buildWheel(r);
 }
@@ -595,12 +601,19 @@ function buildWheel(r){
     return `<line x1="${CX}" y1="${CY}" x2="${x2}" y2="${y2}" stroke="${W.spokeColor}" stroke-width="2"/><circle cx="${x2}" cy="${y2}" r="5" fill="${W.factorColors[f]}"/>`; }).join("");
   const ticks = Array.from({length:24},(_,i)=>{ const [x1,y1]=polar(88,i*15),[x2,y2]=polar(96,i*15);
     return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${W.spokeColor}" stroke-width="1.4"/>`; }).join("");
-  const tracks = W.factorOrder.map((f)=>{ const a=W.factorAngles[f];
-    const [cx1,cy1]=polar(R-W.arcWidth/2-5,a), [cx2,cy2]=polar(R+W.arcWidth/2+5,a);
-    return `<path d="${arcPath(R,a-half,a+half)}" fill="none" stroke="${W.trackColor}" stroke-width="${W.arcWidth}" stroke-linecap="round"/>`
-      + `<path id="shaft-${f}" d="" fill="none" stroke="${W.factorColors[f]}" stroke-width="7" stroke-linecap="round"/>`
-      + `<path id="head-${f}" d="" fill="${W.factorColors[f]}"/>`
-      + `<line x1="${cx1.toFixed(2)}" y1="${cy1.toFixed(2)}" x2="${cx2.toFixed(2)}" y2="${cy2.toFixed(2)}" stroke="${W.hubColor}" stroke-width="2" opacity="0.85"/>`; }).join("");
+  // ONE bold spin arrow: which way the WHOLE wheel is turning.
+  // clockwise = building (score at/above midpoint), counter-clockwise = depleting (below).
+  const spin = r.capacityScore >= 50 ? 1 : -1;
+  const gap=38, headDeg=13, hw=15, sw=11, gold="#b8924a";
+  const lead = spin>0 ? 360-gap : gap;                 // arrowhead angle
+  const [ba0,ba1] = spin>0 ? [gap, lead-headDeg] : [lead+headDeg, 360-gap]; // shaft body span
+  const [tx,ty]=polar(R, lead);
+  const baseA = spin>0 ? lead-headDeg : lead+headDeg;
+  const [ox,oy]=polar(R+hw, baseA), [ix,iy]=polar(R-hw, baseA);
+  const spinArrow = `<g class="spinarrow">`
+    + `<path d="${arcPath(R,ba0,ba1)}" fill="none" stroke="${gold}" stroke-width="${sw}" stroke-linecap="round"/>`
+    + `<path d="M ${tx.toFixed(2)} ${ty.toFixed(2)} L ${ox.toFixed(2)} ${oy.toFixed(2)} L ${ix.toFixed(2)} ${iy.toFixed(2)} Z" fill="${gold}"/>`
+    + `</g>`;
   const labels = W.factorOrder.map((f)=>{ const a=((W.factorAngles[f]%360)+360)%360; const flip=a>90&&a<270; const rl=R+(flip?34:24);
     const d = flip ? `M ${polar(rl,a+60).map(v=>v.toFixed(2)).join(" ")} A ${rl} ${rl} 0 0 0 ${polar(rl,a-60).map(v=>v.toFixed(2)).join(" ")}`
                    : `M ${polar(rl,a-60).map(v=>v.toFixed(2)).join(" ")} A ${rl} ${rl} 0 0 1 ${polar(rl,a+60).map(v=>v.toFixed(2)).join(" ")}`;
@@ -619,9 +632,8 @@ function buildWheel(r){
       <circle cx="${CX}" cy="${CY}" r="52" fill="none" stroke="${W.spokeColor}" stroke-width="1"/>
       <text id="scoreNum" x="${CX}" y="${CY+12}" text-anchor="middle" font-family="'Playfair Display',Georgia,serif" font-size="46" font-weight="600" fill="${W.hubColor}">0</text>
       <text x="${CX}" y="${CY+32}" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="2" fill="rgba(243,239,231,.55)">${C.scoreCaption.toUpperCase()}</text>
-      ${tracks}
     </g>
-    ${labels}${axis}`;
+    ${spinArrow}${labels}${axis}`;
   animateWheel(r);
 }
 
@@ -631,29 +643,9 @@ function animateWheel(r){
   const targetV=speedFor(r.capacityScore);
   const imbalance=(1-r.coherence)*W.wobble.sensitivity;
   const ease=easings[W.spinUp.easing]||easings.easeOutCubic;
-  // each axis is a curved FORCE ARROW from its centre tick:
-  //   clockwise arrowhead = building/lift (above 50), counter-clockwise = depleting/drag (below 50)
-  //   length encodes magnitude from (subscore-50)/50; near 50 = short/minimal arrow
-  const HEAD_DEG=7, MAX_DEG=34, HEAD_HALF=7;
-  const setArcs=(t)=>W.factorOrder.forEach((f,i)=>{
-    const local=reducedMotion?1:Math.min(1,Math.max(0,(t*W.spinUp.durationMs - i*W.spinUp.arcStaggerMs)/(W.spinUp.durationMs - W.spinUp.arcStaggerMs*(W.factorOrder.length-1))));
-    const signed=(r.subscores[f]-50)/50;            // + builds/lift, - depletes/drag
-    const mag=Math.abs(signed);
-    const a=W.factorAngles[f];
-    const shaft=$("shaft-"+f), head=$("head-"+f);
-    if(mag<0.06){ shaft.setAttribute("d",""); head.setAttribute("d",""); return; } // ~neutral: no net force
-    const dir=signed>=0?1:-1;                        // +1 clockwise (build), -1 counter-clockwise (deplete)
-    const L=(HEAD_DEG+(MAX_DEG-HEAD_DEG)*mag)*ease(local); // total arrow length in degrees, animated
-    const end=a+dir*L;                               // arrowhead tip angle
-    const neck=a+dir*Math.max(0,L-HEAD_DEG);         // where the head meets the shaft
-    // shaft: curved along the arc from the centre tick to the neck
-    shaft.setAttribute("d", Math.abs(neck-a)<0.4 ? "" : (dir>0 ? arcPath(R,a,neck) : arcPath(R,neck,a)));
-    // arrowhead: tangent triangle, tip leading in the force direction
-    const [tx,ty]=polar(R,end);
-    const [ox,oy]=polar(R+HEAD_HALF,neck), [ix,iy]=polar(R-HEAD_HALF,neck);
-    head.setAttribute("d", `M ${tx.toFixed(2)} ${ty.toFixed(2)} L ${ox.toFixed(2)} ${oy.toFixed(2)} L ${ix.toFixed(2)} ${iy.toFixed(2)} Z`);
-  });
-  if(reducedMotion){ setArcs(1); num.textContent=r.capacityScore; return; }
+  // the inner wheel (ticks/spokes) spins the same way the spin arrow points:
+  // clockwise when building, counter-clockwise when depleting; count-up on the score.
+  if(reducedMotion){ num.textContent=r.capacityScore; return; }
   let angle=0,last=performance.now(),start=last;
   function frame(now){
     const dt=(now-last)/1000; last=now;
@@ -667,7 +659,6 @@ function animateWheel(r){
     const arad=(angle*Math.PI)/180;
     root.setAttribute("transform",`translate(${(ecc*Math.sin(arad)).toFixed(2)} ${(-ecc*Math.cos(arad)).toFixed(2)})`);
     spinner.setAttribute("transform",`rotate(${(angle+wob).toFixed(2)} ${CX} ${CY})`);
-    setArcs(p);
     if(W.spinUp.countUp) num.textContent=Math.round(r.capacityScore*ease(Math.min(1,p*1.15)));
     requestAnimationFrame(frame);
   }
