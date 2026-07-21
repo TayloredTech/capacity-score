@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Which Way Is Your Wheel Turning? | Taylored</title>
+<meta name="description" content="A four minute self read for senior leaders. Sixteen statements, one honest mirror: which way is your capacity wheel turning?">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='12' fill='none' stroke='%23b8924a' stroke-width='4'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1e3644; --navy-deep:#12202b; --navy-mid:#16242e;
+  --field:#1b2c37;
+  --cream:#f3efe7; --cream-soft:#cdd8db; --cream-faint:#8a9aa1;
+  --gold:#b8924a; --gold-deep:#9a784b; --sage:#7fa07a;
+  --drag-l:#9fb0ba;
+  --rule-l:rgba(243,239,231,.16);
+  --measure:38rem;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Manrope,system-ui,sans-serif;background:var(--navy-deep);color:var(--cream);line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-height:1.15;color:var(--cream)}
+.screen{display:none;min-height:100svh}
+.screen.active{display:block}
+.wrap{max-width:var(--measure);margin:0 auto;padding:clamp(1.5rem,6vw,4rem) clamp(1.25rem,5vw,2rem)}
+.kicker{font-size:.72rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.btn{display:inline-block;font:inherit;font-weight:700;font-size:1rem;color:var(--navy-deep);background:var(--gold);border:0;border-radius:3px;padding:.95rem 2.1rem;cursor:pointer;letter-spacing:.02em;transition:background .2s,opacity .2s}
+.btn:hover{background:var(--gold-deep);color:var(--cream)}
+.btn:disabled{opacity:.3;cursor:not-allowed}
+.btn:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+/* intro */
+#intro .wrap{padding-top:clamp(3rem,10vh,6rem)}
+#intro h1{font-size:clamp(2.1rem,7vw,3.3rem);margin:.9rem 0 1.4rem}
+#intro .lede{font-size:1.08rem;color:var(--cream-soft);max-width:33rem}
+#intro .how{margin:1.6rem 0 2.2rem;padding:1.2rem 0;border-top:1px solid var(--rule-l);border-bottom:1px solid var(--rule-l);font-size:.95rem;color:var(--cream-soft)}
+.brandline{margin-top:3.5rem;font-size:.8rem;color:var(--cream-faint)}
+/* diagnostic */
+.progress{height:3px;background:var(--rule-l)}
+.progress i{display:block;height:100%;background:var(--gold);transform-origin:left;transition:transform .35s ease}
+.partmeta{font-size:.72rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--cream-faint);margin-bottom:.7rem}
+.part h2{font-size:clamp(1.6rem,5vw,2.2rem)}
+.part .lead{color:var(--cream-soft);margin:.7rem 0 .4rem;max-width:34rem}
+.timeframe{font-size:.8rem;font-style:italic;color:var(--cream-faint);margin-bottom:.4rem}
+/* slider statement */
+.sl{padding:1.5rem 0 1.1rem;border-top:1px solid var(--rule-l)}
+.sl-poles{display:flex;justify-content:space-between;gap:1.2rem;margin-bottom:.9rem}
+.pole{flex:1;font-family:'Poppins',Manrope,sans-serif;font-size:.96rem;line-height:1.5;color:var(--cream);opacity:.92;transition:opacity .2s,color .2s}
+.pole.left{text-align:left}
+.pole.right{text-align:right}
+.pole small{display:block;font-family:'Poppins',sans-serif;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-bottom:.55rem;opacity:.9}
+.pole.left small{color:var(--drag-l)}
+.pole.right small{color:var(--gold)}
+.pole.dim{opacity:.4}
+.track{position:relative;height:36px;cursor:grab;touch-action:none;outline:none}
+.track:active{cursor:grabbing}
+.rail{position:absolute;top:50%;left:5px;right:5px;height:4px;transform:translateY(-50%);background:var(--rule-l);border-radius:3px}
+.fill{position:absolute;top:50%;height:4px;transform:translateY(-50%);border-radius:3px;background:var(--drag-l)}
+.center{position:absolute;top:50%;left:50%;width:1px;height:16px;transform:translate(-50%,-50%);background:rgba(243,239,231,.4)}
+.knob{position:absolute;top:50%;left:50%;width:28px;height:28px;border-radius:50%;transform:translate(-50%,-50%);background:var(--navy);border:2px solid var(--drag-l);display:grid;place-items:center;transition:border-color .18s,background .18s;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+.knob::after{content:'';width:6px;height:6px;border-radius:50%;background:var(--drag-l);transition:background .18s}
+.knob.lift{border-color:var(--gold);background:var(--gold)}
+.knob.lift::after{background:var(--navy-deep)}
+.track:focus-visible .knob{box-shadow:0 0 0 3px rgba(184,146,74,.5)}
+.scale{display:flex;justify-content:space-between;font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;color:var(--cream-faint);margin-top:.55rem}
+.scale span:nth-child(2){opacity:.7}
+.partnav{display:flex;justify-content:space-between;align-items:center;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--rule-l);gap:1rem}
+.hint{font-size:.82rem;color:var(--gold);opacity:0;transition:opacity .25s}
+.hint.show{opacity:1}
+.navbtns{display:flex;gap:.6rem;align-items:center}
+.backbtn{font:inherit;font-weight:600;font-size:.9rem;color:var(--cream-soft);background:none;border:1px solid var(--rule-l);border-radius:3px;padding:.9rem 1.3rem;cursor:pointer;transition:border-color .2s,color .2s}
+.backbtn:hover{border-color:var(--cream-faint);color:var(--cream)}
+.backbtn:disabled{opacity:.25;cursor:not-allowed}
+/* email */
+#email .wrap{padding-top:clamp(3rem,12vh,7rem);max-width:27rem}
+#email h2{font-size:clamp(1.7rem,5vw,2.3rem);margin-bottom:.8rem}
+#email p{color:var(--cream-soft)}
+#email label{display:block;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--cream-soft);margin:1.3rem 0 .3rem}
+#email input{width:100%;font:inherit;font-size:1rem;padding:.8rem .95rem;border:1.5px solid var(--rule-l);border-radius:3px;background:var(--field);color:var(--cream)}
+#email input::placeholder{color:var(--cream-faint)}
+#email input:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:var(--gold)}
+#email .btn{margin-top:1.6rem;width:100%}
+.privacy{font-size:.76rem;color:var(--cream-faint);margin-top:.9rem}
+/* result (dark reveal — kept as-is) */
+#result{background:var(--navy-mid);color:var(--cream)}
+#result h2,#result h3{color:var(--cream)}
+#result .wrap{max-width:42rem}
+.bandchip{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--navy-deep);background:var(--gold);border-radius:2px;padding:.3rem .7rem;margin:.8rem 0 0}
+#result .headrow{text-align:center}
+#result .headrow h2{font-size:clamp(1.8rem,5vw,2.4rem)}
+.wheelbox{position:relative;max-width:430px;margin:1.2rem auto .4rem}
+.wheelbox svg{display:block;width:100%;height:auto}
+.bandread{max-width:34rem;margin:0 auto;text-align:center;color:var(--cream-soft);font-size:1.02rem}
+.leak{max-width:34rem;margin:.9rem auto 0;text-align:center;font-size:.85rem;color:var(--gold);letter-spacing:.04em}
+.resultcard{max-width:34rem;margin:2.6rem auto 0;padding:1.6rem 1.5rem;background:rgba(243,239,231,.05);border:1px solid var(--rule-l);border-radius:4px}
+.resultcard h3{font-size:1.3rem;margin-bottom:.7rem}
+.resultcard p{color:var(--cream-soft);font-size:.95rem}
+.resultcard p+p{margin-top:.7rem}
+.pointlegend{display:flex;justify-content:space-between;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cream-faint);margin:.2rem 0 1rem;padding-left:8.3rem}
+.pointrow{display:flex;align-items:center;gap:.8rem;padding:.55rem 0}
+.pointrow .dot{width:10px;height:10px;border-radius:50%;flex:none}
+.pointrow .nm{width:7.5rem;font-size:.86rem;font-weight:600}
+.pointrow .bibar{flex:1;position:relative;height:8px;background:var(--rule-l);border-radius:4px}
+.pointrow .bibar .mid{position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:rgba(243,239,231,.45)}
+.pointrow .bibar i{position:absolute;top:0;bottom:0;border-radius:4px;transform:scaleX(0);transition:transform 1.1s cubic-bezier(.22,.9,.35,1)}
+.pointrow .val{width:2.4rem;text-align:right;font-size:.86rem;font-weight:700;color:var(--cream)}
+.bridge{border-color:rgba(184,146,74,.45)}
+.tagline{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:1.15rem;color:var(--gold);margin-top:1rem}
+.ctabtn{display:inline-block;margin-top:1.3rem;font-weight:700;text-decoration:none;color:var(--navy-deep);background:var(--gold);border-radius:3px;padding:.9rem 1.9rem;transition:background .2s}
+.ctabtn:hover{background:var(--gold-deep);color:var(--cream)}
+.footnote{font-size:.78rem;color:var(--cream-faint);text-align:center;margin-top:2.5rem}
+@media (min-width:900px){
+  #result .wrap{
+    max-width:66rem;
+    display:grid;
+    grid-template-columns:minmax(0,26rem) minmax(0,1fr);
+    grid-template-areas:
+      "wheel  head"
+      "wheel  read"
+      "wheel  leak"
+      "points lever"
+      "points bridge"
+      "foot   foot";
+    column-gap:clamp(2.5rem,5vw,4.5rem);
+    align-content:start;
+  }
+  #result .headrow{grid-area:head;text-align:left}
+  #result .wheelbox{grid-area:wheel;align-self:center;margin:0;width:100%;max-width:27rem}
+  #result .bandread{grid-area:read;margin:1.2rem 0 0;max-width:none;text-align:left}
+  #result .leak{grid-area:leak;margin:.9rem 0 0;max-width:none;text-align:left}
+  #result .points{grid-area:points;margin:1.8rem 0 0;max-width:none;align-self:start}
+  #result .lever{grid-area:lever}
+  #result .bridge{grid-area:bridge}
+  #result .footnote{grid-area:foot}
+}
+@media (max-width:480px){
+  .pole{font-size:.9rem}
+  .pointrow .nm{width:6rem}
+  .pointlegend{padding-left:6.8rem}
+}
+@media (prefers-reduced-motion:reduce){
+  .pointrow .bibar i{transition:none}
+}
+</style>
+</head>
+<body>
+
+<section id="intro" class="screen active">
+  <div class="wrap">
+    <p class="kicker" id="i-kicker"></p>
+    <h1 id="i-title"></h1>
+    <p class="lede" id="i-intro"></p>
+    <div class="how" id="i-how"></div>
+    <button class="btn" id="startBtn"></button>
+    <p class="brandline">From Taylored. The biology of leadership, made practical.</p>
+  </div>
+</section>
+
+<section id="diagnostic" class="screen">
+  <div class="progress"><i id="progbar" style="transform:scaleX(0)"></i></div>
+  <div class="wrap">
+    <div id="partHost"></div>
+    <div class="partnav">
+      <span class="hint" id="answerHint">Set every marker to carry on</span>
+      <div class="navbtns">
+        <button class="backbtn" id="backBtn" type="button">Back</button>
+        <button class="btn" id="nextBtn"></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="email" class="screen">
+  <div class="wrap">
+    <p class="kicker">Almost there</p>
+    <h2 id="e-heading"></h2>
+    <p id="e-body"></p>
+    <form id="emailForm" novalidate>
+      <label for="fname" id="e-namelabel"></label>
+      <input id="fname" name="fname" type="text" autocomplete="given-name">
+      <label for="femail" id="e-emaillabel"></label>
+      <input id="femail" name="femail" type="email" autocomplete="email" inputmode="email">
+      <button class="btn" type="submit" id="e-btn"></button>
+      <p class="privacy" id="e-privacy"></p>
+    </form>
+  </div>
+</section>
+
+<section id="result" class="screen">
+  <div class="wrap">
+    <div class="headrow">
+      <p class="kicker" id="r-kicker"></p>
+      <h2 id="r-heading"></h2>
+      <span class="bandchip" id="r-band"></span>
+    </div>
+    <div class="wheelbox"><svg id="wheel" viewBox="0 0 440 440" role="img" aria-label=""></svg></div>
+    <p class="bandread" id="r-read"></p>
+    <p class="leak" id="r-leak"></p>
+
+    <div class="resultcard points">
+      <h3 id="r-pointsHeading"></h3>
+      <div class="pointlegend"><span>&#9664; Dragging</span><span>Lifting &#9654;</span></div>
+      <div id="pointRows"></div>
+    </div>
+
+    <div class="resultcard lever">
+      <h3 id="r-leverHeading"></h3>
+      <p id="r-leverIntro"></p>
+      <p id="r-leverBody" style="color:var(--cream);font-weight:600"></p>
+    </div>
+
+    <div class="resultcard bridge">
+      <h3 id="r-bridgeHeading"></h3>
+      <p id="r-bridgeBody"></p>
+      <p class="tagline" id="r-tagline"></p>
+      <a class="ctabtn" id="r-cta" href="#"></a>
+    </div>
+    <p class="footnote" id="r-footnote"></p>
+  </div>
+</section>
+
+<script>
+/* ============================================================
+   Self-contained build. Config + scoring inlined so this file
+   works standalone in /mirror-final/ with no sibling assets.
+   ============================================================ */
+
+/* ---------- scoring (from capacity.js, unchanged logic) ---------- */
+const FACTORS = ["biology", "behaviour", "environment", "leadership"];
+const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+const sum = (a) => a.reduce((t, v) => t + v, 0);
+function stdev(values){ const mean = sum(values)/values.length; return Math.sqrt(sum(values.map(v=>(v-mean)**2))/values.length); }
+function bandFor(score, bands){ return bands.reduce((hit,b)=>(score>=b.min?b:hit), bands[0]).name; }
+function computeCapacity(inputs, source, config){
+  const s = config.scoring, scale = config.instrument.scale;
+  const perFactor = config.instrument.parts.find(p=>p.factor==="biology").statements.length;
+  const partDrag={}, subscores={}; let complete=true;
+  for(const f of FACTORS){
+    const answers=(inputs[f]||[]).filter(v=>Number.isFinite(v));
+    if(answers.length<perFactor) complete=false;
+    const drag=sum(answers); partDrag[f]=drag;
+    const floor=perFactor*scale.min;
+    subscores[f]=clamp(Math.round((100*(floor+s.factorDivisor-drag))/s.factorDivisor),0,100);
+  }
+  const totalDrag=sum(FACTORS.map(f=>partDrag[f]));
+  const dragFloor=FACTORS.length*perFactor*scale.min;
+  let capacityScore=clamp(Math.round((100*(dragFloor+s.capacityDivisor-totalDrag))/s.capacityDivisor),0,100);
+  const coherence=clamp(1-stdev(FACTORS.map(f=>subscores[f]))/s.coherenceDivisor,0,1);
+  if(s.coherenceAffectsScore) capacityScore=clamp(Math.round(capacityScore*(s.coherenceBase+s.coherenceCoefficient*coherence)),0,100);
+  const [a,b]=s.pushLever.compare;
+  const pushLever=partDrag[a]===partDrag[b]?s.pushLever.tieBreak:(partDrag[a]>partDrag[b]?a:b);
+  const confidence=!complete?"low":(source==="assessment"?"medium":"high");
+  return { capacityScore, subscores, coherence, band:bandFor(capacityScore,s.bands), confidence,
+    version:config.version, totalDrag, partDrag, dragBand:bandFor(totalDrag,s.dragBands), pushLever, complete };
+}
+
+/* ---------- config (inlined). Statements are the depleted pole;
+   `lifts` is the parallel lifted pole for the drag-slider. ---------- */
+const config = {
+  version: "v2.0-mirror",
+  instrument: {
+    title: "Which Way Is Your Wheel Turning?",
+    kicker: "The wheel, made personal",
+    intro: "A four minute self read for senior leaders. Not a quiz, a mirror. Answer for the month you are actually in, not the one you intend to have. Nobody is marking this but you.",
+    howItWorks: "Sixteen statements, in four parts, one for each point of the wheel. Each runs between two honest ends: one where it drags on you, one where it lifts you. Pull the marker toward whichever is truer right now.",
+    timeframeLabel: "In a typical month",
+    scale: { min: 1, max: 4, labels: ["Rarely","Sometimes","Often","Almost always"] },
+    parts: [
+      { factor:"biology", title:"Your state", kind:"outcome",
+        lead:"The body you actually lead from. You cannot push this point directly. It is what the others produce.",
+        statements:[
+          "By mid-afternoon the tank is empty, even on a day I did everything right.",
+          "I wake and don't feel restored, whatever the hours say.",
+          "At night my mind won't switch off. Wired and tired at once.",
+          "I land the thing I drove for, feel almost nothing, and reach for the next."],
+        lifts:[
+          "My energy holds through the day, and I finish with something in reserve.",
+          "I wake genuinely restored, ready before my head is.",
+          "When the day's done I can drop out of gear and settle.",
+          "When something good happens, my body lets me feel it."] },
+      { factor:"behaviour", title:"What you do", kind:"lever",
+        lead:"Your behaviour. One of the two points you can actually reach.",
+        statements:[
+          "When the load climbs, the first things I drop are the ones that keep me steady.",
+          "Recovery is something I hope for at day's end, not something I've built in.",
+          "I reach for the phone in the exact moment I could have recovered.",
+          "I push through on caffeine or willpower rather than changing anything."],
+        lifts:[
+          "The harder it gets, the tighter I hold the basics.",
+          "Recovery is built into my day on purpose.",
+          "In the gaps, I do the thing that refills me.",
+          "I run on things that restore me, not just stimulants and grit."] },
+      { factor:"environment", title:"The conditions around you", kind:"lever",
+        lead:"Your environment. The other point you can actually reach.",
+        statements:[
+          "I have no protected pocket of solitude that's mine and defended.",
+          "I'm reachable to almost everyone, almost all of the time.",
+          "The pace and noise around me set my state, rather than me setting theirs.",
+          "I carry more than I share; the people who could steady me don't know the half of it."],
+        lifts:[
+          "I have space that's genuinely mine, and I defend it.",
+          "I decide when I'm reachable, not everyone else.",
+          "I set the tone of the rooms I'm in more than they set mine.",
+          "I let the people who can steady me actually in."] },
+      { factor:"leadership", title:"The calls you make", kind:"outcome",
+        lead:"Your leadership. Like your state, an outcome of the wheel, not a lever you force.",
+        statements:[
+          "The harder the pressure, the tighter I grip and the less I let go.",
+          "I become the bottleneck the moment the team needs me freed up.",
+          "Under load I get reactive, short, or withdrawn with the people I lead.",
+          "I'm hardest on the one person I never extend any grace to. Myself."],
+        lifts:[
+          "Under pressure I can loosen my grip and trust the room.",
+          "When it matters most, I'm freed up for the calls only I can make.",
+          "Under load I stay someone steady for the people I lead.",
+          "I extend myself the same grace I'd give anyone I lead."] }
+    ]
+  },
+  scoring: {
+    capacityDivisor: 48, factorDivisor: 12, coherenceDivisor: 50,
+    coherenceAffectsScore: false, coherenceBase: 0.85, coherenceCoefficient: 0.15,
+    bands: [ {name:"Restore",min:0}, {name:"Conserve",min:34}, {name:"Steady",min:69}, {name:"Peak",min:85} ],
+    dragBands: [ {name:"Turning with you",min:16}, {name:"Starting to slip",min:32}, {name:"Turning against you",min:48} ],
+    pushLever: { compare:["behaviour","environment"], tieBreak:"behaviour" }
+  },
+  copy: {
+    bandReads: {
+      Peak: "The wheel is carrying you, and carrying you well. Hold it. The work now is to protect the few things that are keeping it spinning the right way, because the wrong direction arrives quietly and by default, usually right when the load spikes.",
+      Steady: "The wheel is carrying you more than it is costing you. Hold it. The work now is to protect the few things that are keeping it spinning the right way, because the wrong direction arrives quietly and by default, usually right when the load spikes.",
+      Conserve: "The wheel is stalling and beginning to turn back on you. This is the most useful place to be reading this, because it is early. You can feel the drag but you are not yet underneath it. One deliberate change now is worth ten later.",
+      Restore: "The wheel is spinning the wrong way and your own drive is feeding it, because the most driven people spin it fastest. This is not a discipline problem and it will not yield to gripping harder. It is a design problem, and that is good news, because design is fixable."
+    },
+    leverIntro: "You cannot turn this wheel from the top. You cannot order your state to improve or force good leadership out of an empty tank. But two points are always within reach, and your scores show you which one is dragging hardest.",
+    leverPrompts: {
+      behaviour: { heading:"Push behaviour first", body:"Put one keystone back, at the same time every day, defended like a meeting you cannot move. The walk, the sleep window, the movement. Not all of them. One, this week." },
+      environment: { heading:"Push environment first", body:"Engineer one protected pocket and guard it. The early hour, the commute, the door closed, the notifications off. Built on purpose, not hoped for at the end of the day." }
+    },
+    bridge: {
+      heading: "What this cannot tell you",
+      body: "You can now feel which way your wheel is turning. What this cannot tell you is why. How fast you deplete, how slowly you recover, how hard the same pressure lands on you compared to the person beside you. That runs below the level of willpower, which is exactly why willpower never reaches it. That is the next layer down, and it is the one that turns a felt direction into a designed one.",
+      tagline: "Not more disciplined. Better designed.",
+      ctaLabel: "Talk to us about the Capacity Audit",
+      ctaUrl: "mailto:hello@taylored.health",
+      footnote: "This is a mirror to think with, not a diagnosis."
+    },
+    emailCapture: {
+      heading: "Your read is ready",
+      body: "Tell us where to send it and we'll keep a copy for you. You'll see it on screen right away.",
+      emailLabel: "Email", nameLabel: "First name", button: "Show me my wheel",
+      privacyNote: "We'll use this to send your result and occasional notes from Taylored. No spam, unsubscribe any time.",
+      emailRequired: true
+    },
+    resultHeading: "Your wheel", scoreCaption: "Capacity score", partBreakdownHeading: "Point by point",
+    startButton: "Start the read", nextButton: "Next", seeResultButton: "See your wheel"
+  },
+  wheel: {
+    factorOrder: ["biology","leadership","behaviour","environment"],
+    factorAngles: { biology:0, leadership:90, behaviour:180, environment:270 },
+    factorLabels: { biology:"Biology", leadership:"Leadership", behaviour:"Behaviour", environment:"Environment" },
+    factorColors: { biology:"#7fa07a", leadership:"#b38e5d", behaviour:"#d9c9a8", environment:"#8fb3c0" },
+    axisLabels: { outcomes:"BEING", levers:"DOING" },
+    trackColor: "rgba(243,239,231,0.14)", hubColor: "#f3efe7", spokeColor: "rgba(243,239,231,0.55)",
+    sectorSpanDegrees: 76, arcRadius: 158, arcWidth: 13,
+    spinSpeedMap: [ {score:0,dps:-14},{score:33,dps:-4},{score:45,dps:3},{score:68,dps:12},{score:85,dps:22},{score:100,dps:34} ],
+    wobble: { sensitivity:1.0, maxAngleDegrees:6, maxEccentricityPx:5, frequencyHz:0.55 },
+    spinUp: { durationMs:2600, easing:"easeOutCubic", arcStaggerMs:180, countUp:true }
+  },
+  storage: {
+    endpoint: "https://gdsdtawkigzpyseavkqp.supabase.co/rest/v1/capacity_responses",
+    apiKey: "sb_publishable_9xYl5CzjcQ6cBCEmCfPs5Q_NwI7z_JQ",
+    localStorageKey: "capacity-score-responses"
+  }
+};
+
+const C = config.copy, I = config.instrument, W = config.wheel;
+const $ = (id) => document.getElementById(id);
+const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- populate chrome ---------- */
+$("i-kicker").textContent = I.kicker;
+$("i-title").textContent = I.title;
+$("i-intro").textContent = I.intro;
+$("i-how").textContent = I.howItWorks;
+$("startBtn").textContent = C.startButton;
+$("e-heading").textContent = C.emailCapture.heading;
+$("e-body").textContent = C.emailCapture.body;
+$("e-namelabel").textContent = C.emailCapture.nameLabel;
+$("e-emaillabel").textContent = C.emailCapture.emailLabel + (C.emailCapture.emailRequired ? "" : " (optional)");
+$("e-btn").textContent = C.emailCapture.button;
+$("e-privacy").textContent = C.emailCapture.privacyNote;
+document.title = I.title + " | Taylored";
+
+/* ---------- flow state ---------- */
+const answers = {};        // factor -> drag number[4] (1..4), NaN until set
+const rawV = {};           // factor -> slider value[-2..2], null until touched
+I.parts.forEach((p) => { answers[p.factor] = new Array(p.statements.length).fill(NaN); rawV[p.factor] = new Array(p.statements.length).fill(null); });
+let partIdx = 0;
+const show = (id) => { document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active")); $(id).classList.add("active"); scrollTo(0,0); };
+
+/* slider value -> drag score: +2 lifts (min drag 1), -2 drags (max drag 4), 0 neutral (2.5) */
+const dragFromV = (v) => 2.5 - 0.75 * v;
+
+$("startBtn").onclick = () => { renderPart(); show("diagnostic"); };
+
+function renderPart(){
+  const p = I.parts[partIdx];
+  $("progbar").style.transform = `scaleX(${partIdx / I.parts.length})`;
+  $("nextBtn").textContent = partIdx === I.parts.length - 1 ? C.seeResultButton : C.nextButton;
+  $("backBtn").disabled = partIdx === 0;
+  $("answerHint").classList.remove("show");
+  $("partHost").innerHTML = `
+    <div class="part">
+      <p class="partmeta">Part ${partIdx+1} of ${I.parts.length} &middot; ${p.title}</p>
+      <h2>${p.title}</h2>
+      <p class="lead">${p.lead}</p>
+      <p class="timeframe">${I.timeframeLabel}</p>
+      <div class="sliders">
+        ${p.statements.map((s, si)=>`
+          <div class="sl" data-si="${si}">
+            <div class="sl-poles">
+              <div class="pole left"><small>Drags me</small><span>${s}</span></div>
+              <div class="pole right"><small>Lifts me</small><span>${p.lifts[si]}</span></div>
+            </div>
+            <div class="track" tabindex="0" role="slider" aria-valuemin="-2" aria-valuemax="2" aria-valuenow="0"
+                 aria-label="${(s + ' versus ' + p.lifts[si]).replace(/"/g,'&quot;')}">
+              <div class="rail"></div>
+              <div class="fill"></div>
+              <div class="center"></div>
+              <div class="knob"></div>
+            </div>
+            <div class="scale"><span>Fully drags</span><span>Neutral</span><span>Fully lifts</span></div>
+          </div>`).join("")}
+      </div>
+    </div>`;
+  $("partHost").querySelectorAll(".sl").forEach((el)=>wireSlider(el, p.factor, +el.dataset.si));
+}
+
+function wireSlider(el, factor, si){
+  const track = el.querySelector(".track");
+  const fill = el.querySelector(".fill");
+  const knob = el.querySelector(".knob");
+  const poleL = el.querySelector(".pole.left");
+  const poleR = el.querySelector(".pole.right");
+
+  function paint(v){
+    v = Math.max(-2, Math.min(2, v));
+    const pct = v * 25; // -50..50
+    knob.style.left = (50 + pct) + "%";
+    if (pct >= 0){ fill.style.left = "50%"; fill.style.right = "auto"; fill.style.width = pct + "%"; fill.style.background = "var(--gold)"; }
+    else { fill.style.right = "50%"; fill.style.left = "auto"; fill.style.width = (-pct) + "%"; fill.style.background = "var(--drag-l)"; }
+    const lift = v > 0.15, drag = v < -0.15;
+    knob.classList.toggle("lift", lift);
+    poleR.classList.toggle("dim", drag);
+    poleL.classList.toggle("dim", lift);
+    track.setAttribute("aria-valuenow", v.toFixed(1));
+  }
+  function commit(v){
+    v = Math.max(-2, Math.min(2, Math.round(v*10)/10));
+    rawV[factor][si] = v;
+    answers[factor][si] = dragFromV(v);
+    paint(v);
+    $("answerHint").classList.remove("show");
+  }
+  function fromEvent(e){
+    const r = track.getBoundingClientRect();
+    const rel = (e.clientX - r.left) / r.width; // 0..1
+    commit((rel - 0.5) * 4);
+  }
+  let dragging = false;
+  track.addEventListener("pointerdown", (e)=>{ dragging=true; track.setPointerCapture(e.pointerId); fromEvent(e); });
+  track.addEventListener("pointermove", (e)=>{ if(dragging) fromEvent(e); });
+  track.addEventListener("pointerup", ()=>{ dragging=false; });
+  track.addEventListener("keydown", (e)=>{
+    const cur = rawV[factor][si] == null ? 0 : rawV[factor][si];
+    if(e.key==="ArrowRight"||e.key==="ArrowUp"){ commit(cur+0.2); e.preventDefault(); }
+    else if(e.key==="ArrowLeft"||e.key==="ArrowDown"){ commit(cur-0.2); e.preventDefault(); }
+    else if(e.key==="Home"){ commit(-2); e.preventDefault(); }
+    else if(e.key==="End"){ commit(2); e.preventDefault(); }
+  });
+
+  // restore prior position (going back) or show neutral untouched
+  if (rawV[factor][si] != null) paint(rawV[factor][si]);
+  else paint(0);
+}
+
+$("backBtn").onclick = () => { if(partIdx>0){ partIdx--; renderPart(); scrollTo(0,0); } };
+
+$("nextBtn").onclick = () => {
+  const p = I.parts[partIdx];
+  if (answers[p.factor].some((v)=>!Number.isFinite(v))) { $("answerHint").classList.add("show"); return; }
+  if (partIdx < I.parts.length - 1) { partIdx++; renderPart(); scrollTo(0,0); }
+  else { $("progbar").style.transform = "scaleX(1)"; show("email"); $("fname").focus(); }
+};
+
+let result = null;
+$("emailForm").onsubmit = (ev) => {
+  ev.preventDefault();
+  const email = $("femail").value.trim();
+  if (C.emailCapture.emailRequired && !/.+@.+\..+/.test(email)) { $("femail").focus(); $("femail").style.borderColor = "var(--gold)"; return; }
+  result = computeCapacity(answers, "assessment", config);
+  storeResponse(email, $("fname").value.trim(), result);
+  renderResult(result);
+  show("result");
+};
+
+/* ---------- storage: Supabase insert + local backup ---------- */
+function storeResponse(email, firstName, r){
+  const row = {
+    email: email || null, first_name: firstName || null,
+    answers, part_totals: r.partDrag, total_drag: r.totalDrag,
+    capacity_score: r.capacityScore, subscores: r.subscores,
+    coherence: +r.coherence.toFixed(4), band: r.band, push_lever: r.pushLever,
+    config_version: config.version, user_agent: navigator.userAgent.slice(0,300),
+  };
+  try {
+    const key = config.storage.localStorageKey;
+    const prev = JSON.parse(localStorage.getItem(key) || "[]");
+    prev.push({ ...row, at: new Date().toISOString() });
+    localStorage.setItem(key, JSON.stringify(prev));
+  } catch {}
+  if (config.storage.endpoint) {
+    fetch(config.storage.endpoint, {
+      method: "POST",
+      headers: { "Content-Type":"application/json", apikey: config.storage.apiKey, Authorization: "Bearer "+config.storage.apiKey, Prefer:"return=minimal" },
+      body: JSON.stringify(row),
+    }).catch(()=>{});
+  }
+}
+
+/* ---------- the wheel (unchanged dark reveal) ---------- */
+const CX = 220, CY = 220;
+const polar = (r, deg) => { const a=(deg*Math.PI)/180; return [CX + r*Math.sin(a), CY - r*Math.cos(a)]; };
+function arcPath(r, a1, a2){ const [x1,y1]=polar(r,a1),[x2,y2]=polar(r,a2); return `M ${x1.toFixed(2)} ${y1.toFixed(2)} A ${r} ${r} 0 ${a2-a1>180?1:0} 1 ${x2.toFixed(2)} ${y2.toFixed(2)}`; }
+const lerp = (a,b,t)=>a+(b-a)*t;
+function speedFor(score){ const m=W.spinSpeedMap; if(score<=m[0].score) return m[0].dps; for(let i=1;i<m.length;i++) if(score<=m[i].score) return lerp(m[i-1].dps,m[i].dps,(score-m[i-1].score)/(m[i].score-m[i-1].score)); return m[m.length-1].dps; }
+const easings = { easeOutCubic:(t)=>1-(1-t)**3, linear:(t)=>t };
+
+function renderResult(r){
+  $("r-kicker").textContent = C.scoreCaption;
+  $("r-heading").textContent = C.resultHeading;
+  $("r-band").textContent = r.band;
+  $("r-read").textContent = C.bandReads[r.band];
+  const sorted = Object.entries(r.subscores).sort((a,b)=>a[1]-b[1]);
+  $("r-leak").textContent = sorted[0][1] < sorted[3][1] ? "Dragging hardest right now: " + W.factorLabels[sorted[0][0]] : "";
+  $("r-pointsHeading").textContent = C.partBreakdownHeading;
+  // bidirectional point-by-point: centre line, fill left (drag) or right (lift), factor colour kept
+  $("pointRows").innerHTML = W.factorOrder.map((f)=>{
+    const sub = r.subscores[f];
+    const signed = (sub - 50) / 50;         // -1 full drag .. +1 full lift
+    const lift = signed >= 0;
+    const w = Math.min(50, Math.abs(signed) * 50).toFixed(1);
+    // fixed target width; animate scaleX from the centre outward (origin at the centre line)
+    const side = lift ? `left:50%;transform-origin:left;` : `right:50%;left:auto;transform-origin:right;`;
+    return `<div class="pointrow">
+      <span class="dot" style="background:${W.factorColors[f]}"></span>
+      <span class="nm">${W.factorLabels[f]}</span>
+      <span class="bibar"><span class="mid"></span><i style="${side}width:${w}%;background:${W.factorColors[f]}"></i></span>
+      <span class="val">${sub}</span>
+    </div>`;
+  }).join("");
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    document.querySelectorAll(".pointrow .bibar i").forEach((el)=>{ el.style.transform = "scaleX(1)"; });
+  }));
+  const lever = C.leverPrompts[r.pushLever];
+  $("r-leverHeading").textContent = lever.heading;
+  $("r-leverIntro").textContent = C.leverIntro;
+  $("r-leverBody").textContent = lever.body;
+  $("r-bridgeHeading").textContent = C.bridge.heading;
+  $("r-bridgeBody").textContent = C.bridge.body;
+  $("r-tagline").textContent = C.bridge.tagline;
+  $("r-cta").textContent = C.bridge.ctaLabel;
+  $("r-cta").href = C.bridge.ctaUrl;
+  $("r-footnote").textContent = C.bridge.footnote;
+  buildWheel(r);
+}
+
+function buildWheel(r){
+  const svg = $("wheel");
+  svg.setAttribute("aria-label", `Capacity wheel. Score ${r.capacityScore} out of 100, band ${r.band}.`);
+  const half = W.sectorSpanDegrees/2, R = W.arcRadius;
+  const spokes = W.factorOrder.map((f)=>{ const a=W.factorAngles[f]; const [x2,y2]=polar(104,a);
+    return `<line x1="${CX}" y1="${CY}" x2="${x2}" y2="${y2}" stroke="${W.spokeColor}" stroke-width="2"/><circle cx="${x2}" cy="${y2}" r="5" fill="${W.factorColors[f]}"/>`; }).join("");
+  const ticks = Array.from({length:24},(_,i)=>{ const [x1,y1]=polar(88,i*15),[x2,y2]=polar(96,i*15);
+    return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${W.spokeColor}" stroke-width="1.4"/>`; }).join("");
+  const tracks = W.factorOrder.map((f)=>{ const a=W.factorAngles[f];
+    return `<path d="${arcPath(R,a-half,a+half)}" fill="none" stroke="${W.trackColor}" stroke-width="${W.arcWidth}" stroke-linecap="round"/><path id="fill-${f}" d="" fill="none" stroke="${W.factorColors[f]}" stroke-width="${W.arcWidth}" stroke-linecap="round"/>`; }).join("");
+  const labels = W.factorOrder.map((f)=>{ const a=((W.factorAngles[f]%360)+360)%360; const flip=a>90&&a<270; const rl=R+(flip?34:24);
+    const d = flip ? `M ${polar(rl,a+60).map(v=>v.toFixed(2)).join(" ")} A ${rl} ${rl} 0 0 0 ${polar(rl,a-60).map(v=>v.toFixed(2)).join(" ")}`
+                   : `M ${polar(rl,a-60).map(v=>v.toFixed(2)).join(" ")} A ${rl} ${rl} 0 0 1 ${polar(rl,a+60).map(v=>v.toFixed(2)).join(" ")}`;
+    return `<path id="lp-${f}" d="${d}" fill="none"/><text font-family="Manrope,sans-serif" font-size="13" font-weight="700" letter-spacing="2.5" fill="${W.factorColors[f]}"><textPath href="#lp-${f}" startOffset="50%" text-anchor="middle">${W.factorLabels[f].toUpperCase()}</textPath></text>`; }).join("");
+  const axis = `
+    <text x="${CX}" y="${CY-122}" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="3" fill="rgba(243,239,231,.4)">${W.axisLabels.outcomes}</text>
+    <text x="${CX}" y="${CY+130}" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="3" fill="rgba(243,239,231,.4)">${W.axisLabels.levers}</text>`;
+  svg.innerHTML = `
+    <g id="wobbleRoot">
+      <g id="spinner">
+        <circle cx="${CX}" cy="${CY}" r="100" fill="none" stroke="${W.spokeColor}" stroke-width="1.6"/>
+        ${ticks}${spokes}
+        <circle cx="${CX}" cy="${CY-100}" r="3" fill="${W.hubColor}"/>
+      </g>
+      <circle cx="${CX}" cy="${CY}" r="52" fill="${W.hubColor}" opacity="0.06"/>
+      <circle cx="${CX}" cy="${CY}" r="52" fill="none" stroke="${W.spokeColor}" stroke-width="1"/>
+      <text id="scoreNum" x="${CX}" y="${CY+12}" text-anchor="middle" font-family="'Playfair Display',Georgia,serif" font-size="46" font-weight="600" fill="${W.hubColor}">0</text>
+      <text x="${CX}" y="${CY+32}" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="2" fill="rgba(243,239,231,.55)">${C.scoreCaption.toUpperCase()}</text>
+      ${tracks}
+    </g>
+    ${labels}${axis}`;
+  animateWheel(r);
+}
+
+function animateWheel(r){
+  const spinner=$("spinner"), root=$("wobbleRoot"), num=$("scoreNum");
+  const half=W.sectorSpanDegrees/2, R=W.arcRadius;
+  const targetV=speedFor(r.capacityScore);
+  const imbalance=(1-r.coherence)*W.wobble.sensitivity;
+  const ease=easings[W.spinUp.easing]||easings.easeOutCubic;
+  const setArcs=(t)=>W.factorOrder.forEach((f,i)=>{
+    const local=reducedMotion?1:Math.min(1,Math.max(0,(t*W.spinUp.durationMs - i*W.spinUp.arcStaggerMs)/(W.spinUp.durationMs - W.spinUp.arcStaggerMs*(W.factorOrder.length-1))));
+    const sweep=W.sectorSpanDegrees*(r.subscores[f]/100)*ease(local);
+    const a=W.factorAngles[f];
+    $("fill-"+f).setAttribute("d", sweep<0.5 ? "" : arcPath(R,a-half,a-half+sweep));
+  });
+  if(reducedMotion){ setArcs(1); num.textContent=r.capacityScore; return; }
+  let angle=0,last=performance.now(),start=last;
+  function frame(now){
+    const dt=(now-last)/1000; last=now;
+    const elapsed=now-start;
+    const p=Math.min(1,elapsed/W.spinUp.durationMs);
+    const ramp=ease(p);
+    angle+=targetV*ramp*dt;
+    const t=elapsed/1000;
+    const wob=W.wobble.maxAngleDegrees*imbalance*Math.sin(2*Math.PI*W.wobble.frequencyHz*t)*ramp;
+    const ecc=W.wobble.maxEccentricityPx*imbalance*ramp;
+    const arad=(angle*Math.PI)/180;
+    root.setAttribute("transform",`translate(${(ecc*Math.sin(arad)).toFixed(2)} ${(-ecc*Math.cos(arad)).toFixed(2)})`);
+    spinner.setAttribute("transform",`rotate(${(angle+wob).toFixed(2)} ${CX} ${CY})`);
+    setArcs(p);
+    if(W.spinUp.countUp) num.textContent=Math.round(r.capacityScore*ease(Math.min(1,p*1.15)));
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
+/* dev shortcut: ?demo=peak|steady|conserve|restore — jumps straight to the dark reveal */
+const demo = new URLSearchParams(location.search).get("demo");
+if (demo !== null){
+  const presets = { peak:[1,1,1,1], steady:[1,2,2,2], conserve:[2,3,2,3], restore:[4,3,4,4] };
+  const pick = presets[demo] || presets.conserve;
+  I.parts.forEach((p,pi)=>(answers[p.factor]=p.statements.map((_,si)=>pick[(pi+si)%4])));
+  result = computeCapacity(answers, "assessment", config);
+  renderResult(result);
+  show("result");
+}
+</script>
+</body>
+</html>
