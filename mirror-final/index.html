@@ -381,7 +381,8 @@ const config = {
     endpoint: "https://gdsdtawkigzpyseavkqp.supabase.co/rest/v1/capacity_responses",
     apiKey: "sb_publishable_9xYl5CzjcQ6cBCEmCfPs5Q_NwI7z_JQ",
     localStorageKey: "capacity-score-responses"
-  }
+  },
+  kit: { formId: "9688949" }
 };
 
 const C = config.copy, I = config.instrument, W = config.wheel;
@@ -511,9 +512,26 @@ $("emailForm").onsubmit = (ev) => {
   if (C.emailCapture.emailRequired && !/.+@.+\..+/.test(email)) { $("femail").focus(); $("femail").style.borderColor = "var(--gold)"; return; }
   result = computeCapacity(answers, "assessment", config);
   storeResponse(email, $("fname").value.trim(), result);
+  subscribeToKit(email, $("fname").value.trim(), result);
   renderResult(result);
   show("result");
 };
+
+/* ---------- Kit (ConvertKit) subscribe: email + capacity state + heaviest point ---------- */
+function subscribeToKit(email, firstName, r){
+  if (!email || !config.kit || !config.kit.formId) return;
+  const point = r.pushLever ? r.pushLever.charAt(0).toUpperCase() + r.pushLever.slice(1) : "";
+  const body = new URLSearchParams();
+  body.set("email_address", email);
+  if (firstName) body.set("fields[first_name]", firstName);
+  body.set("fields[capacity_state]", r.band || "");
+  body.set("fields[heaviest_point]", point);
+  fetch(`https://app.kit.com/forms/${config.kit.formId}/subscriptions`, {
+    method: "POST", mode: "no-cors",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: body.toString(),
+  }).catch(()=>{});
+}
 
 /* ---------- storage: Supabase insert + local backup ---------- */
 function storeResponse(email, firstName, r){
