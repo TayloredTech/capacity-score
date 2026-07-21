@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capacity Mirror — the full workflow</title>
+<meta name="description" content="Every page, link, trigger and email in the Capacity Mirror launch funnel.">
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>document.addEventListener('DOMContentLoaded',function(){mermaid.initialize({startOnLoad:true,securityLevel:'loose'});});</script>
+</head>
+<body>
+<style>
+  :root{
+    --ground:#EFEDE7; --panel:#FFFFFF; --ink:#22303a; --muted:#6a7680; --line:#e2ddd0;
+    --navy:#1E3644; --gold:#b8924a; --gold-d:#9a784b;
+    --live:#4f7a4d; --live-bg:#eef3ec; --pending:#b07d2e; --pending-bg:#f7efe1;
+    --diagram-bg:#faf8f2; --diagram-line:#d9d2c2;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --ground:#14191d; --panel:#1b2228; --ink:#e7e3d9; --muted:#93a0a8; --line:#2c353d;
+      --navy:#cddae2; --gold:#cfa668; --gold-d:#b8924a;
+      --live:#7fae7b; --live-bg:#1c2620; --pending:#d3a24e; --pending-bg:#2a2418;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#14191d; --panel:#1b2228; --ink:#e7e3d9; --muted:#93a0a8; --line:#2c353d;
+    --navy:#cddae2; --gold:#cfa668; --gold-d:#b8924a;
+    --live:#7fae7b; --live-bg:#1c2620; --pending:#d3a24e; --pending-bg:#2a2418;
+  }
+  :root[data-theme="light"]{
+    --ground:#EFEDE7; --panel:#FFFFFF; --ink:#22303a; --muted:#6a7680; --line:#e2ddd0;
+    --navy:#1E3644; --gold:#b8924a; --gold-d:#9a784b;
+    --live:#4f7a4d; --live-bg:#eef3ec; --pending:#b07d2e; --pending-bg:#f7efe1;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--ground);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;margin:0}
+  .wrap{max-width:900px;margin:0 auto;padding:44px 26px 80px}
+  .kick{font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold-d);font-weight:700;margin-bottom:12px}
+  h1{font-family:Georgia,"Times New Roman",serif;font-weight:600;font-size:34px;line-height:1.15;margin:0 0 10px;color:var(--ink);text-wrap:balance}
+  .lede{color:var(--muted);font-size:16px;max-width:62ch;margin:0 0 8px}
+  h2{font-family:Georgia,serif;font-weight:600;font-size:22px;margin:46px 0 4px;color:var(--ink)}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 18px}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 0}
+  .tag{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:999px;border:1px solid var(--line)}
+  .tag::before{content:"";width:9px;height:9px;border-radius:50%}
+  .tag.live{color:var(--live);background:var(--live-bg)}.tag.live::before{background:var(--live)}
+  .tag.pend{color:var(--pending);background:var(--pending-bg)}.tag.pend::before{background:var(--pending)}
+  .diagram{background:var(--diagram-bg,#faf8f2);border:1px solid var(--diagram-line,#d9d2c2);border-radius:10px;padding:20px 14px;margin-top:14px;overflow-x:auto}
+  .diagram .mermaid{min-width:560px}
+  table{width:100%;border-collapse:collapse;margin-top:6px;font-size:14.5px}
+  th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:11.5px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:700}
+  td code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.8px;background:var(--live-bg);color:var(--gold-d);padding:1px 6px;border-radius:4px;background:color-mix(in srgb,var(--gold) 12%,transparent)}
+  .st{font-weight:700;font-size:12px;white-space:nowrap}
+  .st.live{color:var(--live)}.st.pend{color:var(--pending)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px 18px;margin-top:12px}
+  .card h3{margin:0 0 6px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;color:var(--gold-d);font-weight:700}
+  .card p{margin:0;color:var(--muted);font-size:14px}
+  ol.todo{list-style:none;counter-reset:t;padding:0;margin:14px 0 0}
+  ol.todo li{counter-increment:t;position:relative;padding:14px 16px 14px 52px;background:var(--pending-bg);border:1px solid var(--line);border-radius:8px;margin-bottom:10px;font-size:14.5px}
+  ol.todo li::before{content:counter(t);position:absolute;left:14px;top:13px;width:24px;height:24px;border-radius:50%;background:var(--pending);color:#fff;font-weight:700;font-size:13px;display:grid;place-items:center}
+  ol.todo b{color:var(--ink)}
+  .foot{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+  a{color:var(--gold-d);text-decoration:underline;text-underline-offset:2px}
+</style>
+
+<div class="wrap">
+  <div class="kick">The Biology of Leadership · Launch</div>
+  <h1>Capacity Mirror — the full workflow</h1>
+  <p class="lede">Every page, link, trigger and email in the launch funnel, and exactly what is live versus what still needs one setup step. Green is working now. Amber needs a hand.</p>
+  <div class="legend">
+    <span class="tag live">Live &amp; tested</span>
+    <span class="tag pend">Needs one setup step</span>
+  </div>
+
+  <h2>The flow at a glance</h2>
+  <p class="sub">Follow an arrow to see what happens next. Amber boxes are the three things left to switch on.</p>
+  <div class="diagram">
+    <pre class="mermaid">
+%%{init: {'theme':'base','themeVariables':{'fontFamily':'ui-sans-serif,system-ui,sans-serif','fontSize':'13px','primaryColor':'#ffffff','primaryTextColor':'#22303a','primaryBorderColor':'#b8924a','lineColor':'#9a784b','clusterBkg':'#f2ede1','clusterBorder':'#d9d2c2'}}}%%
+flowchart TD
+  INV["Interviewee invites<br/>(sent by Rachel)"]:::live
+  BEACON["Website page<br/>taylored.health/beacon"]:::live
+  WFORM["Kit form 9688949<br/>DOUBLE opt-in"]:::live
+  LIST[("Newsletter<br/>subscriber list")]:::live
+  NL["Newsletter Issue 01<br/>manual send by Rachel"]:::pend
+
+  INV --> BEACON
+  BEACON --> WFORM
+  WFORM -->|confirm-email click| LIST
+  NL --> LIST
+  NL -->|CTA button| MIR
+
+  MIR["Capacity Mirror<br/>capacity-score root"]:::live
+  MIR --> SUPA[("Supabase<br/>capacity_responses")]:::live
+  MIR --> MFORM["Kit Mirror form<br/>SINGLE opt-in"]:::pend
+  MIR --> REV["On-screen reveal<br/>state · spin · lever"]:::live
+  REV --> FG["Field guide<br/>page"]:::live
+  REV --> AUD["Email us:<br/>Capacity Audit"]:::live
+  FG --> AUD
+  MFORM --> AUTO{{"Kit automation<br/>form join → send"}}:::pend
+  AUTO --> RES["Results email"]:::pend
+  RES --> FG
+  RES --> AUD
+  MFORM -.adds to.-> LIST
+
+  classDef live fill:#eef3ec,stroke:#4f7a4d,stroke-width:1.5px,color:#22303a;
+  classDef pend fill:#f7efe1,stroke:#b07d2e,stroke-width:1.5px,stroke-dasharray:5 3,color:#22303a;
+    </pre>
+  </div>
+
+  <h2>Every email</h2>
+  <table>
+    <thead><tr><th>Email</th><th>Who gets it</th><th>Trigger</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td><b>Interviewee invites</b></td><td>Your 28 book interviewees</td><td>You send each one by hand</td><td class="st live">Sending</td></tr>
+      <tr><td><b>Confirm your subscription</b></td><td>Anyone who signs up on the website</td><td>Auto, on website form submit (double opt-in)</td><td class="st live">Live</td></tr>
+      <tr><td><b>Newsletter Issue 01</b><br/><span style="color:var(--muted);font-size:13px">"You are the weather your team works in"</span></td><td>Your whole active list</td><td>You hit send in Kit</td><td class="st pend">Draft — not scheduled</td></tr>
+      <tr><td><b>Your Capacity wheel</b><br/><span style="color:var(--muted);font-size:13px">the results email</span></td><td>Anyone who finishes the Mirror</td><td>Kit automation: joins the Mirror form → sends</td><td class="st pend">Copy ready · automation not built</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Every page &amp; where its links go</h2>
+  <table>
+    <thead><tr><th>Page</th><th>Links out to</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td><b>Website</b> <code>/beacon</code></td><td>Newsletter signup (Kit form 9688949)</td><td class="st live">Live</td></tr>
+      <tr><td><b>Newsletter Issue 01</b></td><td>CTA button → the Capacity Mirror</td><td class="st live">Link correct</td></tr>
+      <tr><td><b>Capacity Mirror</b><br/><span style="color:var(--muted);font-size:13px">capacity-score root</span></td><td>On finish → Supabase + Kit (state &amp; heaviest point) → on-screen reveal. Reveal links to the <b>field guide</b> + <b>Capacity Audit</b> email.</td><td class="st live">Live &amp; wired</td></tr>
+      <tr><td><b>Field guide</b></td><td>Capacity Audit email</td><td class="st live">Live · linked from reveal &amp; results email</td></tr>
+      <tr><td><b>Results email</b></td><td>Field guide + Capacity Audit email</td><td class="st pend">Ready to drop into the automation</td></tr>
+    </tbody>
+  </table>
+
+  <h2>To switch it fully on — 3 steps</h2>
+  <ol class="todo">
+    <li><b>Make a "Capacity Mirror" form in Kit set to single opt-in.</b> This keeps your website signups on double opt-in (unchanged) while Mirror finishers come straight in with no confirm step. Send me the form ID and I point the wheel at it. <span class="mono">~1 min in Kit</span></li>
+    <li><b>Build the results-email automation in Kit:</b> trigger "subscribes to the Capacity Mirror form" → action "send the Your Capacity wheel email". The email copy is written and ready to paste. I'll walk you or Luke through it. <span class="mono">~10 min in Kit</span></li>
+    <li><b>Send Newsletter Issue 01.</b> It's loaded and ready in Kit as a draft — you hit send when your review's done. <span class="mono">your call on timing</span></li>
+  </ol>
+
+  <div class="card">
+    <h3>What each Mirror finisher hands you</h3>
+    <p>Their email + first name, their capacity <b>state</b> (Peak / Steady / Conserve / Restore) and their <b>heaviest point</b> (Behaviour or Environment), saved as Kit fields so the results email can speak to exactly where they are. Kit dedupes on email, so a repeat visitor updates rather than duplicates.</p>
+  </div>
+
+  <div class="foot">Prepared for the Beacon launch · statuses reflect the live pages as built. The three amber steps are the only things between here and fully hands-off.</div>
+</div>
+</body>
+</html>
