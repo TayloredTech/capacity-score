@@ -80,30 +80,30 @@
     <pre class="mermaid">
 %%{init: {'theme':'base','themeVariables':{'fontFamily':'ui-sans-serif,system-ui,sans-serif','fontSize':'13px','primaryColor':'#ffffff','primaryTextColor':'#22303a','primaryBorderColor':'#b8924a','lineColor':'#9a784b','clusterBkg':'#f2ede1','clusterBorder':'#d9d2c2'}}}%%
 flowchart TD
-  INV["Interviewee invites<br/>(sent by Rachel)"]:::live
-  BEACON["Website page<br/>taylored.health/beacon"]:::live
-  WFORM["Kit form 9688949<br/>DOUBLE opt-in"]:::live
-  LIST[("Newsletter<br/>subscriber list")]:::live
-  NL["Newsletter Issue 01<br/>manual send by Rachel"]:::pend
+  INV["Interviewee invites"]:::live
+  BEACON["Website /beacon"]:::live
+  WFORM["Kit form 9688949 &mdash; double opt-in"]:::live
+  LIST[("Subscriber list")]:::live
+  NL["Newsletter Issue 01 &mdash; you send"]:::pend
 
   INV --> BEACON
   BEACON --> WFORM
-  WFORM -->|confirm-email click| LIST
+  WFORM -->|confirm click| LIST
   NL --> LIST
-  NL -->|CTA button| MIR
+  NL -->|CTA| MIR
 
-  MIR["Capacity Mirror<br/>capacity-score root"]:::live
-  MIR --> SUPA[("Supabase<br/>capacity_responses")]:::live
-  MIR --> MFORM["Kit Mirror form<br/>SINGLE opt-in"]:::pend
-  MIR --> REV["On-screen reveal<br/>state · spin · lever"]:::live
-  REV --> FG["Field guide<br/>page"]:::live
-  REV --> AUD["Email us:<br/>Capacity Audit"]:::live
+  MIR["Capacity Mirror &mdash; the page"]:::live
+  MIR --> SUPA[("Supabase")]:::live
+  MIR --> MFORM["Mirror form &mdash; single opt-in"]:::pend
+  MIR --> REV["On-screen reveal"]:::live
+  REV --> FG["Field guide"]:::live
+  REV --> AUD["Email: Capacity Audit"]:::live
   FG --> AUD
-  MFORM --> AUTO{{"Kit automation<br/>form join → send"}}:::pend
+  MFORM --> AUTO{{"Kit automation"}}:::pend
   AUTO --> RES["Results email"]:::pend
   RES --> FG
   RES --> AUD
-  MFORM -.adds to.-> LIST
+  MFORM -.-> LIST
 
   classDef live fill:#eef3ec,stroke:#4f7a4d,stroke-width:1.5px,color:#22303a;
   classDef pend fill:#f7efe1,stroke:#b07d2e,stroke-width:1.5px,stroke-dasharray:5 3,color:#22303a;
