@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Capacity Mirror — the full workflow</title>
-<meta name="description" content="Every page, link, trigger and email in the Capacity Mirror launch funnel.">
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <script>document.addEventListener('DOMContentLoaded',function(){mermaid.initialize({startOnLoad:true,securityLevel:'loose'});});</script>
 </head>
@@ -78,7 +77,7 @@
   <p class="sub">Follow an arrow to see what happens next. Amber boxes are the three things left to switch on.</p>
   <div class="diagram">
     <pre class="mermaid">
-%%{init: {'theme':'base','themeVariables':{'fontFamily':'ui-sans-serif,system-ui,sans-serif','fontSize':'13px','primaryColor':'#ffffff','primaryTextColor':'#22303a','primaryBorderColor':'#b8924a','lineColor':'#9a784b','clusterBkg':'#f2ede1','clusterBorder':'#d9d2c2'}}}%%
+%%{init: {'theme':'base','flowchart':{'htmlLabels':true,'padding':10,'nodeSpacing':42,'rankSpacing':48,'useMaxWidth':true},'themeVariables':{'fontFamily':'Arial, Helvetica, sans-serif','fontSize':'13px','primaryColor':'#ffffff','primaryTextColor':'#22303a','primaryBorderColor':'#b8924a','lineColor':'#9a784b'}}}%%
 flowchart TD
   INV["Interviewee invites"]:::live
   BEACON["Website /beacon"]:::live
@@ -147,5 +146,6 @@ flowchart TD
 
   <div class="foot">Prepared for the Beacon launch · statuses reflect the live pages as built. The three amber steps are the only things between here and fully hands-off.</div>
 </div>
+
 </body>
 </html>
