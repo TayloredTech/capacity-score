@@ -552,7 +552,12 @@ function renderResult(r){
   $("r-band").textContent = r.band;
   $("r-read").textContent = C.bandReads[r.band];
   const sorted = Object.entries(r.subscores).sort((a,b)=>a[1]-b[1]);
-  $("r-leak").textContent = sorted[0][1] < sorted[3][1] ? "Dragging hardest right now: " + W.factorLabels[sorted[0][0]] : "";
+  const lowest = sorted[0], highest = sorted[sorted.length-1];
+  // only claim a drag when the weakest axis is genuinely below the midline;
+  // otherwise name the strongest lift so the line stays honest for Peak/Steady
+  $("r-leak").textContent = lowest[1] < 50
+    ? "Dragging hardest right now: " + W.factorLabels[lowest[0]]
+    : "Lifting most right now: " + W.factorLabels[highest[0]];
   $("r-pointsHeading").textContent = C.partBreakdownHeading;
   // bidirectional point-by-point: centre line, fill left (drag) or right (lift), factor colour kept
   $("pointRows").innerHTML = W.factorOrder.map((f)=>{
