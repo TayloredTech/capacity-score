@@ -557,7 +557,8 @@ function renderResult(r){
     const lift = signed >= 0;
     const w = Math.min(50, Math.abs(signed) * 50).toFixed(1);
     // fixed target width; animate scaleX from the centre outward (origin at the centre line)
-    const side = lift ? `left:50%;transform-origin:left;` : `right:50%;left:auto;transform-origin:right;`;
+    // round only the outer/measurement end; keep the centre-line end square
+    const side = lift ? `left:50%;transform-origin:left;border-radius:0 4px 4px 0;` : `right:50%;left:auto;transform-origin:right;border-radius:4px 0 0 4px;`;
     return `<div class="pointrow">
       <span class="dot" style="background:${W.factorColors[f]}"></span>
       <span class="nm">${W.factorLabels[f]}</span>
@@ -593,6 +594,7 @@ function buildWheel(r){
     const [cx1,cy1]=polar(R-W.arcWidth/2-5,a), [cx2,cy2]=polar(R+W.arcWidth/2+5,a);
     return `<path d="${arcPath(R,a-half,a+half)}" fill="none" stroke="${W.trackColor}" stroke-width="${W.arcWidth}" stroke-linecap="round"/>`
       + `<path id="fill-${f}" d="" fill="none" stroke="${W.factorColors[f]}" stroke-width="${W.arcWidth}" stroke-linecap="butt"/>`
+      + `<circle id="cap-${f}" r="0" fill="${W.factorColors[f]}"/>`
       + `<line x1="${cx1.toFixed(2)}" y1="${cy1.toFixed(2)}" x2="${cx2.toFixed(2)}" y2="${cy2.toFixed(2)}" stroke="${W.hubColor}" stroke-width="2" opacity="0.85"/>`; }).join("");
   const labels = W.factorOrder.map((f)=>{ const a=((W.factorAngles[f]%360)+360)%360; const flip=a>90&&a<270; const rl=R+(flip?34:24);
     const d = flip ? `M ${polar(rl,a+60).map(v=>v.toFixed(2)).join(" ")} A ${rl} ${rl} 0 0 0 ${polar(rl,a-60).map(v=>v.toFixed(2)).join(" ")}`
@@ -632,6 +634,10 @@ function animateWheel(r){
     const a=W.factorAngles[f];
     const d = m<0.5 ? "" : (signed>=0 ? arcPath(R,a,a+m) : arcPath(R,a-m,a));
     $("fill-"+f).setAttribute("d", d);
+    // rounded cap on the outer/measurement end only (centre end stays flat/butt)
+    const cap=$("cap-"+f);
+    if(m<0.5){ cap.setAttribute("r","0"); }
+    else{ const [px,py]=polar(R, signed>=0 ? a+m : a-m); cap.setAttribute("cx",px.toFixed(2)); cap.setAttribute("cy",py.toFixed(2)); cap.setAttribute("r",(W.arcWidth/2).toFixed(2)); }
   });
   if(reducedMotion){ setArcs(1); num.textContent=r.capacityScore; return; }
   let angle=0,last=performance.now(),start=last;
