@@ -526,12 +526,19 @@ $("emailForm").onsubmit = (ev) => {
 /* ---------- Kit (ConvertKit) subscribe: email + capacity state + heaviest point ---------- */
 function subscribeToKit(email, firstName, r){
   if (!email || !config.kit || !config.kit.formId) return;
-  const point = r.pushLever ? r.pushLever.charAt(0).toUpperCase() + r.pushLever.slice(1) : "";
+  const cap = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : "";
+  const lever = cap(r.pushLever);
+  // heaviest_point = the factor dragging hardest across all four (matches the reveal's
+  // "Dragging hardest" line; can be Leadership/Biology). push_lever = the pushable lever
+  // (behaviour/environment). The email names BOTH: name the drag, push the lever.
+  const dragged = Object.entries(r.subscores || {}).sort((a, b) => a[1] - b[1])[0];
+  const heaviest = dragged ? cap(dragged[0]) : lever;
   const body = new URLSearchParams();
   body.set("email_address", email);
   if (firstName) body.set("fields[first_name]", firstName);
   body.set("fields[capacity_state]", r.band || "");
-  body.set("fields[heaviest_point]", point);
+  body.set("fields[heaviest_point]", heaviest);
+  body.set("fields[push_lever]", lever);
   fetch(`https://app.kit.com/forms/${config.kit.formId}/subscriptions`, {
     method: "POST", mode: "no-cors",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
