@@ -539,6 +539,10 @@ function subscribeToKit(email, firstName, r){
   body.set("fields[capacity_state]", r.band || "");
   body.set("fields[heaviest_point]", heaviest);
   body.set("fields[push_lever]", lever);
+  body.set("fields[capacity_score]", String(r.capacityScore ?? ""));
+  // full per-factor answer set (raw slider values), so the results portal has every answer, not just the outcome
+  const detail = FACTORS.map(f => cap(f) + ": " + ((answers[f] || []).map(v => Number.isFinite(v) ? v : "-").join("/"))).join("  |  ");
+  body.set("fields[answers_detail]", detail);
   fetch(`https://app.kit.com/forms/${config.kit.formId}/subscriptions`, {
     method: "POST", mode: "no-cors",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
