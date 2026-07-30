@@ -238,13 +238,39 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 @media (max-width:560px){.cta-row .btn,.cta-row .btn-o{width:100%}}
 
 /* ---- advisory-specific ---- */
-.year{border-left:1px solid var(--line-soft);margin-left:.4rem}
-.stage{position:relative;padding:0 0 2.4rem 2.2rem}
-.stage::before{content:"";position:absolute;left:-4px;top:.55rem;width:7px;height:7px;border-radius:50%;background:var(--gold)}
-.stage:last-child{padding-bottom:.2rem}
-.stage .kv{margin-bottom:.35rem}
-.stage h3{margin-bottom:.5rem}
-.stage p{font-size:.97rem;color:var(--tx-dim);margin:0;max-width:36rem}
+/* "What a year looks like" — quarterly rhythm (Option B, wired to shared tokens) */
+.yr-quarters{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem}
+.yr-q{background:linear-gradient(180deg,var(--bg1),var(--band));border:1px solid var(--line);
+  border-top:2px solid var(--gold);border-radius:3px;padding:1.5rem 1.35rem 1.7rem}
+.yr-q .yr-qk{font-family:var(--label);letter-spacing:.16em;text-transform:uppercase;font-size:.66rem;color:var(--gold-soft)}
+.yr-q .yr-qm{font-family:var(--label);letter-spacing:.1em;text-transform:uppercase;font-size:.6rem;color:var(--tx-faint);margin-left:.55rem}
+.yr-q h3{font-family:var(--serif);color:var(--hd);font-size:1.16rem;font-weight:500;margin:.7rem 0 .5rem;line-height:1.25}
+.yr-q p{font-size:.85rem;color:var(--tx-dim);line-height:1.55;margin:0;max-width:none}
+.yr-cadence{margin-top:1.1rem;border:1px solid var(--line);border-radius:3px;overflow:hidden;background:rgba(14,33,54,.5)}
+.yr-row{display:grid;grid-template-columns:210px 1fr;align-items:center;border-top:1px solid var(--line);min-height:62px}
+.yr-row:first-child{border-top:0}
+.yr-lbl{padding:0 1.4rem;border-right:1px solid var(--line)}
+.yr-lbl .f{font-family:var(--label);letter-spacing:.14em;text-transform:uppercase;font-size:.62rem;color:var(--gold-soft)}
+.yr-lbl .t{color:var(--hd);font-size:.94rem;margin-top:.15rem;font-family:var(--serif)}
+.yr-track{position:relative;height:100%;padding:0 26px;display:flex;align-items:center;min-width:0}
+.yr-track.t-daily .bar{height:8px;width:100%;border-radius:6px;
+  background:linear-gradient(90deg,var(--gold-deep),var(--gold-bright),var(--gold-deep));
+  box-shadow:0 0 16px rgba(217,189,146,.35)}
+.yr-track.t-week .ticks{width:100%;display:flex;justify-content:space-between}
+.yr-track.t-week .ticks i{width:1px;height:13px;background:rgba(217,189,146,.5)}
+.yr-track.t-month .dots{width:100%;display:flex;justify-content:space-between}
+.yr-track.t-month .dots i{width:9px;height:9px;border-radius:50%;background:var(--gold-soft);box-shadow:0 0 8px rgba(205,169,120,.5)}
+.yr-track.t-quarter .nodes{width:100%;display:grid;grid-template-columns:repeat(4,1fr)}
+.yr-track.t-quarter .nodes i{justify-self:center;width:15px;height:15px;border-radius:50%;background:var(--gold-bright);
+  box-shadow:0 0 0 5px rgba(179,142,93,.16),0 0 16px rgba(217,189,146,.6)}
+.yr-track.t-always .band{width:100%;height:0;border-top:1.5px dashed rgba(217,189,146,.4)}
+.yr-foot{text-align:center;color:var(--tx-faint);font-size:.84rem;margin-top:2.2rem;font-family:var(--label);letter-spacing:.04em}
+@media (max-width:820px){
+  .yr-quarters{grid-template-columns:1fr;gap:.9rem}
+  .yr-row{grid-template-columns:1fr;align-items:stretch;min-height:0}
+  .yr-lbl{padding:1rem 1.2rem .35rem;border-right:0}
+  .yr-track{padding:.55rem 1.2rem 1.25rem;height:auto}
+}
 .levers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.1rem;margin-top:2.6rem;text-align:center}
 .levers .card p{margin-left:auto;margin-right:auto}
 .levers .kv{margin-bottom:.85rem}
@@ -335,17 +361,45 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 <section class="bg2">
   <div class="wrap">
     <p class="eyebrow">The year</p>
-    <h2>What twelve months actually looks like.</h2>
-    <p class="deck" style="margin-bottom:3rem">By month three you&rsquo;ll see measurable change. By month six you&rsquo;ll feel it. By month twelve you&rsquo;ll own it.</p>
-    <div class="year">
-      <div class="stage"><span class="kv">Weeks 1&ndash;2</span><h3>Onboarding</h3><p>Intake, history and a working session on your actual calendar. Your wearable and glucose monitor are set up, kits are shipped, and ExecOS goes live on your phone.</p></div>
-      <div class="stage"><span class="kv">Months 1&ndash;2</span><h3>The full picture</h3><p>The complete diagnostic battery, all eight layers of it, from genetics and hormones through to cognitive function and biological age.</p></div>
-      <div class="stage"><span class="kv">Month 2</span><h3>Your blueprint</h3><p>We write your Personal Performance Blueprint. Not a routine, a strategy: fuelling, sleep architecture, recovery, movement and cognitive load, designed around your data and your calendar.</p></div>
-      <div class="stage"><span class="kv">Months 3&ndash;11</span><h3>Recalibration</h3><p>A steady cadence of strategy sessions, in person or virtual, with fortnightly digital check-ins and micro-corrections between them. Your wearable and glucose data keep the plan honest against your real trajectory, not a snapshot.</p></div>
-      <div class="stage"><span class="kv">Month 6</span><h3>Mid-year retest</h3><p>Key markers are re-measured, so progress is verified rather than assumed, and the second half of the year is built on where you actually are.</p></div>
-      <div class="stage"><span class="kv">Month 12</span><h3>Wrap-up testing, verified results</h3><p>The full battery runs a final time and is read against your baselines from month one. A closing session turns it into your next-year operating plan. You leave with proof, not impressions.</p></div>
+    <h2>What a year <em>looks like.</em></h2>
+    <p class="deck" style="margin-bottom:3rem">Not a countdown to a finish, but a rhythm you run all year. By month three you&rsquo;ll see measurable change. By month six you&rsquo;ll feel it. By month twelve you&rsquo;ll own it.</p>
+
+    <div class="yr-quarters">
+      <div class="yr-q"><span class="yr-qk">Quarter 1</span><span class="yr-qm">Months 1&ndash;3</span><h3>Kickoff &amp; baseline</h3><p>In person, both founders. The full battery and your complete starting picture.</p></div>
+      <div class="yr-q"><span class="yr-qk">Quarter 2</span><span class="yr-qm">Months 4&ndash;6</span><h3>Re-test &amp; recalibrate</h3><p>The battery repeated. You see direction, not a single snapshot.</p></div>
+      <div class="yr-q"><span class="yr-qk">Quarter 3</span><span class="yr-qm">Months 7&ndash;9</span><h3>Mid-year deep review</h3><p>In person again. The year&rsquo;s data walked through and the plan reset around it.</p></div>
+      <div class="yr-q"><span class="yr-qk">Quarter 4</span><span class="yr-qm">Months 10&ndash;12</span><h3>Re-test &amp; forward plan</h3><p>A final re-test, the year in review, and the plan for what comes next.</p></div>
     </div>
+
+    <div class="yr-cadence">
+      <div class="yr-row">
+        <div class="yr-lbl"><div class="f">Every day</div><div class="t">The daily directive</div></div>
+        <div class="yr-track t-daily"><div class="bar"></div></div>
+      </div>
+      <div class="yr-row">
+        <div class="yr-lbl"><div class="f">Every week</div><div class="t">Touchpoint</div></div>
+        <div class="yr-track t-week"><div class="ticks" id="yr-wk"></div></div>
+      </div>
+      <div class="yr-row">
+        <div class="yr-lbl"><div class="f">Every month</div><div class="t">Founder session</div></div>
+        <div class="yr-track t-month"><div class="dots" id="yr-mo"></div></div>
+      </div>
+      <div class="yr-row">
+        <div class="yr-lbl"><div class="f">Every quarter</div><div class="t">Full diagnostic re-test</div></div>
+        <div class="yr-track t-quarter"><div class="nodes"><i></i><i></i><i></i><i></i></div></div>
+      </div>
+      <div class="yr-row">
+        <div class="yr-lbl"><div class="f">Always on</div><div class="t">Oura + CGM</div></div>
+        <div class="yr-track t-always"><div class="band"></div></div>
+      </div>
+    </div>
+
+    <p class="yr-foot">One loop, run every day &middot; deepened every quarter &middot; founder-led all year</p>
     <a class="tlink" href="https://taylored.health/private-advisory-brochure/" style="margin-top:2.6rem;display:inline-block">The precise detail, stage by stage: read the advisory brochure <span class="arr">&rarr;</span></a>
+    <script>
+    (function(){var w=document.getElementById('yr-wk');if(w){for(var i=0;i<52;i++)w.appendChild(document.createElement('i'));}
+    var m=document.getElementById('yr-mo');if(m){for(var j=0;j<12;j++)m.appendChild(document.createElement('i'));}})();
+    </script>
   </div>
 </section>
 
