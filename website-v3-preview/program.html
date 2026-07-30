@@ -78,7 +78,9 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 .nav{position:fixed;top:0;left:0;right:0;z-index:60;height:var(--navh);
   display:flex;align-items:center;justify-content:space-between;gap:1rem;
   padding:0 clamp(1.1rem,3.5vw,2.6rem);
-  background:rgba(11,26,44,.9);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  background:transparent;border-bottom:1px solid transparent;
+  transition:background .3s ease,backdrop-filter .3s ease,border-color .3s ease}
+.nav.scrolled{background:rgba(11,26,44,.9);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
   border-bottom:1px solid var(--line)}
 .brand{display:flex;align-items:center;text-decoration:none;flex:none}
 .brand img{height:clamp(2.1rem,1.7rem + 1vw,2.6rem);width:auto}
@@ -268,6 +270,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
     <a class="pill" href="https://calendar.app.google/37cKK6baU2fLqhrYA">Book a conversation</a>
   </div>
 </nav>
+<script>(function(){var n=document.querySelector('.nav');if(!n)return;var f=function(){n.classList.toggle('scrolled',(window.scrollY||document.documentElement.scrollTop)>40);};f();window.addEventListener('scroll',f,{passive:true});})();</script>
 
 
 <header class="hero moved">
