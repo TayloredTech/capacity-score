@@ -38,7 +38,6 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 .eyebrow{font-family:var(--label);font-weight:400;font-size:clamp(1.02rem,.92rem + .5vw,1.4rem);
   letter-spacing:.24em!important;text-transform:uppercase!important;color:var(--gold-soft);
   margin:0 0 1.6rem;display:inline-flex;align-items:center;gap:.85em;line-height:1.25}
-.eyebrow::before{content:"";width:.42rem;height:.42rem;border-radius:50%;background:var(--gold);opacity:.85;flex:none}
 .deck{font-size:clamp(1.13rem,1.02rem + .6vw,1.4rem);line-height:1.58;color:var(--tx);font-weight:300}
 .rule{width:2.6rem;height:1px;background:var(--gold);opacity:.75;margin:2.2rem 0}
 .center .rule{margin-left:auto;margin-right:auto}
@@ -49,7 +48,6 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 .paper p{color:var(--ink-soft)}
 .paper .deck{color:var(--ink-soft)}
 .paper .eyebrow{color:var(--gold-deep)}
-.paper .eyebrow::before{background:var(--gold-deep)}
 
 /* buttons */
 .btn,.btn-o{display:inline-block;font-family:var(--label);font-size:.78rem;font-weight:600;
@@ -270,6 +268,8 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 .close-cta .cta-row{justify-content:center;margin-top:2.2rem}
 /* clickable wheel front door */
 .wheellink{display:block;text-decoration:none}
+/* home front door: show the wheel + CTA only, not the cycling state captions */
+.wheelsec .wa-states{display:none}
 .wheelcta{display:inline-block;margin-top:1.6rem;font-family:var(--label);font-size:.8rem;font-weight:600;
   letter-spacing:.14em!important;text-transform:uppercase!important;color:var(--gold-bright);text-decoration:none;
   border-bottom:1px solid rgba(217,189,146,.4);padding-bottom:.35em;transition:color .25s,border-color .25s}
@@ -320,11 +320,11 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 <header class="hero">
   <div class="hero-glow"></div>
   <div class="hsplit">
-    <div class="hmedia" style="--focus:center 26%">
+    <div class="hmedia" style="--focus:center top">
       <img src="https://taylored.health/wp-content/uploads/2026/06/rachel-luke-biology-leadership.jpg" alt="Rachel Taylor and Luke Taylor, co-founders of Taylored Health" fetchpriority="high">
     </div>
     <div class="hcopy">
-      <p class="eyebrow">Executive capacity advisory<span style="white-space:nowrap">&nbsp;&middot;&nbsp;New Zealand</span></p>
+      <p class="eyebrow">Executive capacity advisory</p>
       <h1>Capacity is the <em>real constraint.</em></h1>
       <p class="lead">Senior roles rarely break on strategy. They break on the capacity to carry them. We measure what your role takes out of you, then build what needs to sit underneath it.</p>
       <div class="cta-row">
@@ -426,7 +426,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
         <span class="rgo">&rarr;</span>
       </a>
     </div>
-    <p class="ladder-also">Running under every engagement: <a class="goldlink" href="https://taylored.health/executive-os/">ExecOS</a>, the software that turns your plan into one clear directive each morning. We also run <a class="goldlink" href="https://taylored.health/experiences/">event consultancy</a> for offsites and board days, and Rachel is writing <a class="goldlink" href="https://taylored.health/the-biology-of-leadership/">Beacon</a>, the thinking behind all of it.</p>
+    <p class="ladder-also"><a class="goldlink" href="https://taylored.health/executive-os/">ExecOS</a> runs across the paid engagements, from the Metabolic Audit up through the Executive Capacity Audit, with its most powerful, locked-down options reserved for Private Advisory. It uses the Capacity Wheel to drive the four factors of decision-making, Biology, Leadership, Behaviour and Environment, into one clear directive each morning. We also run <a class="goldlink" href="https://taylored.health/experiences/">event consultancy</a> for offsites and board days, and Rachel is writing <a class="goldlink" href="https://taylored.health/the-biology-of-leadership/">Beacon</a>, the thinking behind all of it.</p>
   </div>
 </section>
 
@@ -446,7 +446,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
     <div class="grid2">
       <h2>We don&rsquo;t guess. We <em>measure.</em></h2>
       <div>
-        <p>Every engagement starts with data. Genetics, blood chemistry, glucose dynamics, sleep and recovery from your own wearable. Rachel reads the science. Luke turns it into a plan you can actually run inside a heavy role.</p>
+        <p>Every engagement starts with data. Genetics, blood chemistry, glucose dynamics, sleep and recovery from your own wearable. Rachel reads it through biology, Luke through performance, and together they turn it into a plan you can actually run inside a heavy role.</p>
         <p>Nothing is templated and nothing is delegated. Five advisory seats a year means both of us are across every data point, every readout and every recalibration. That access is the point.</p>
         <blockquote class="quote">
           <p>Luke and Rachel bring science and structure to performance. They are the catalyst for change most leaders don&rsquo;t know they&rsquo;ve been looking for.</p>
@@ -462,21 +462,21 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
   <div class="wrap">
     <p class="eyebrow">The two of us</p>
     <div class="grid2" style="align-items:end">
-      <h2 style="margin-bottom:0">A scientist and an operator.</h2>
-      <p style="margin-bottom:.2rem">Every programme is built by both: Rachel reads the science, Luke makes it run inside a real calendar. No team around them, no handoffs.</p>
+      <h2 style="margin-bottom:0">Two scientists, two lenses.</h2>
+      <p style="margin-bottom:.2rem">Every programme is built by both. Two scientists on the same problem, Rachel through biology, Luke through performance. No team around them, no handoffs.</p>
     </div>
     <div class="duo2">
       <div class="fcard">
         <img src="https://taylored.health/wp-content/uploads/2026/06/rachel-portrait-biology-leadership.jpg" alt="Rachel Taylor, scientific director and co-founder" loading="lazy">
         <h3>Rachel Taylor</h3>
-        <span class="frole">Scientific director &middot; Co-founder</span>
-        <p>Geneticist and biochemist, with a career in multinational C-suite governance and a past life as a New Zealand representative gymnast. Rachel builds the scientific architecture behind every programme, and is writing <em>Beacon</em>, a book about what actually decides whether leaders last.</p>
+        <span class="frole">CEO &middot; Co-founder</span>
+        <p>Geneticist and biochemist, with a career in multinational C-suite governance and a past life as a national-level gymnast. Rachel builds the scientific architecture behind every programme, and is writing <em>Beacon</em>, a book about what actually decides whether leaders last.</p>
       </div>
       <div class="fcard">
         <img src="https://taylored.health/wp-content/uploads/2025/10/Luke-Taylor-Taylored-Health.jpg" alt="Luke Taylor, executive performance specialist and co-founder" loading="lazy">
         <h3>Luke Taylor</h3>
-        <span class="frole">Executive performance &middot; Co-founder</span>
-        <p>Fifteen years inside the performance biology of founders and executives. Luke built a specialist performance clinic of fifteen practitioners, scaled it and exited. A former New Zealand triathlete, he runs the diagnostics and builds the programmes.</p>
+        <span class="frole">Chief Performance Officer &middot; Co-founder</span>
+        <p>Fifteen years inside the performance biology of founders and executives. Luke built a specialist performance clinic of fifteen practitioners, scaled it and exited. A former national-level triathlete, he runs the diagnostics and builds the programmes.</p>
       </div>
     </div>
     <a class="tlink" href="https://taylored.health/about/" style="margin-top:2.4rem;display:inline-block">More about us <span class="arr">&rarr;</span></a>
@@ -500,7 +500,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
     <a class="brand" href="https://taylored.health/" aria-label="Taylored Health home">
       <img src="https://taylored.health/wp-content/uploads/2024/02/TAYLORED-HEALTH-AND-TECH.png" alt="Taylored. Health &amp; Performance Technologies" width="1757" height="544" loading="lazy">
     </a>
-    <p class="foot-pos">Executive capacity advisory, New Zealand. We measure what the role takes out of you, then build the capacity to carry it.</p>
+    <p class="foot-pos">Executive capacity advisory. We measure what the role takes out of you, then build the capacity to carry it.</p>
     <div class="foot-cols">
       <div class="foot-col">
         <div class="foot-h">Work with us</div>

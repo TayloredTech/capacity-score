@@ -38,7 +38,6 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 .eyebrow{font-family:var(--label);font-weight:400;font-size:clamp(1.02rem,.92rem + .5vw,1.4rem);
   letter-spacing:.24em!important;text-transform:uppercase!important;color:var(--gold-soft);
   margin:0 0 1.6rem;display:inline-flex;align-items:center;gap:.85em;line-height:1.25}
-.eyebrow::before{content:"";width:.42rem;height:.42rem;border-radius:50%;background:var(--gold);opacity:.85;flex:none}
 .deck{font-size:clamp(1.13rem,1.02rem + .6vw,1.4rem);line-height:1.58;color:var(--tx);font-weight:300}
 .rule{width:2.6rem;height:1px;background:var(--gold);opacity:.75;margin:2.2rem 0}
 .center .rule{margin-left:auto;margin-right:auto}
@@ -49,7 +48,6 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 .paper p{color:var(--ink-soft)}
 .paper .deck{color:var(--ink-soft)}
 .paper .eyebrow{color:var(--gold-deep)}
-.paper .eyebrow::before{background:var(--gold-deep)}
 
 /* buttons */
 .btn,.btn-o{display:inline-block;font-family:var(--label);font-size:.78rem;font-weight:600;
@@ -245,6 +243,10 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 .bio figure{margin:0}
 .bio img{width:100%;aspect-ratio:4/4.8;object-fit:cover;object-position:center 15%;
   filter:grayscale(1) contrast(1.04) brightness(.92);border:1px solid var(--line)}
+/* STOPGAP: Rachel's current portrait is a tighter crop than Luke's, so scale it down
+   to match his head size. Remove this + the .rzoom class when her new luxe photo is swapped in. */
+.bio figure{overflow:hidden;background:#0e1319}
+.bio img.rzoom{transform:scale(.84);transform-origin:center 22%}
 .bio h2{margin-bottom:.3rem}
 .bio .frole{font-family:var(--label);font-size:.68rem;letter-spacing:.22em!important;text-transform:uppercase!important;color:var(--gold-soft);display:block;margin-bottom:1.6rem}
 @media (max-width:840px){.bio,.bio.rev{grid-template-columns:1fr}.bio.rev>figure{order:0}.bio img{aspect-ratio:4/4}}
@@ -291,8 +293,8 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
     </div>
     <div class="hcopy">
       <p class="eyebrow">About us</p>
-      <h1>Two advisors. <em>No handoffs.</em></h1>
-      <p class="lead">Everything Taylored Health does is built and delivered by the two people on this page. A geneticist who reads the science, and a performance specialist who makes it run inside a real calendar.</p>
+      <h1>Two scientists. <em>No handoffs.</em></h1>
+      <p class="lead">Everything Taylored Health does is built and delivered by the two people on this page. Two scientists looking at the same question through complementary lenses: one reads the biology, the other reads the performance.</p>
       <div class="cta-row">
         <a class="btn" href="https://calendar.app.google/37cKK6baU2fLqhrYA">Book a conversation</a>
       </div>
@@ -305,12 +307,12 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
   <div class="wrap">
     <p class="eyebrow">Rachel Taylor</p>
     <div class="bio">
-      <figure><img src="https://taylored.health/wp-content/uploads/2026/06/rachel-portrait-biology-leadership.jpg" alt="Rachel Taylor" loading="lazy"></figure>
+      <figure><img class="rzoom" src="https://taylored.health/wp-content/uploads/2026/06/rachel-portrait-biology-leadership.jpg" alt="Rachel Taylor" loading="lazy"></figure>
       <div>
-        <h2>Geneticist. Biochemist. Author.</h2>
-        <span class="frole">Scientific director &middot; Co-founder</span>
+        <h2>Scientist. Strategist. CEO.</h2>
+        <span class="frole">CEO &middot; Co-founder</span>
         <p class="deck">Rachel builds the scientific architecture behind every programme, translating genetic, hormonal and metabolic data into strategies specific to each client&rsquo;s biology.</p>
-        <p>A former New Zealand representative gymnast with a background in multinational C-suite governance and strategic leadership, she leads the operations and strategic delivery of Taylored Health. She&rsquo;s writing <a class="goldlink" href="https://taylored.health/the-biology-of-leadership/"><em>Beacon</em></a>, investigating how high-performing leaders create and protect the energy they need across work, relationships and life.</p>
+        <p>A former New Zealand representative gymnast with a background in multinational C-suite governance and strategic leadership, she leads Taylored Health as its CEO. She&rsquo;s writing <a class="goldlink" href="https://taylored.health/the-biology-of-leadership/"><em>Beacon</em></a>, investigating how high-performing leaders create and protect the energy they need across work, relationships and life.</p>
       </div>
     </div>
   </div>
@@ -322,8 +324,8 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
     <div class="bio rev">
       <figure><img src="https://taylored.health/wp-content/uploads/2025/10/Luke-Taylor-Taylored-Health.jpg" alt="Luke Taylor" loading="lazy"></figure>
       <div>
-        <h2>Fifteen years in executive biology.</h2>
-        <span class="frole">Executive performance specialist &middot; Co-founder</span>
+        <h2>Scientist. Practitioner. CPO.</h2>
+        <span class="frole">Chief Performance Officer &middot; Co-founder</span>
         <p class="deck">Luke runs the diagnostics, interprets the data and builds the programmes that separate a leader who manages their energy from one who controls it.</p>
         <p>He built a specialist performance clinic of fifteen practitioners, scaled it and exited. The methodology behind this advisory was developed and proven there. A former New Zealand triathlete, he understands from the inside what sustained high performance actually demands. His clients come to him not because something is wrong, but because the next decade requires the same rigour they apply to their business, applied to their biology.</p>
       </div>
@@ -381,7 +383,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
     <a class="brand" href="https://taylored.health/" aria-label="Taylored Health home">
       <img src="https://taylored.health/wp-content/uploads/2024/02/TAYLORED-HEALTH-AND-TECH.png" alt="Taylored. Health &amp; Performance Technologies" width="1757" height="544" loading="lazy">
     </a>
-    <p class="foot-pos">Executive capacity advisory, New Zealand. We measure what the role takes out of you, then build the capacity to carry it.</p>
+    <p class="foot-pos">Executive capacity advisory. We measure what the role takes out of you, then build the capacity to carry it.</p>
     <div class="foot-cols">
       <div class="foot-col">
         <div class="foot-h">Work with us</div>
