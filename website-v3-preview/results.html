@@ -136,9 +136,8 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 .hmedia img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--focus,center 22%);
   filter:grayscale(1) contrast(1.04) brightness(.86)}
 .hmedia::after{content:"";position:absolute;inset:0;
-  background:linear-gradient(90deg,rgba(11,26,44,.24),rgba(11,26,44,0) 34%,rgba(11,26,44,.5) 78%,var(--bg0) 100%),
-             linear-gradient(0deg,rgba(11,26,44,.55),rgba(11,26,44,0) 34%),
-             rgba(14,33,54,.24)}
+  background:linear-gradient(90deg,rgba(11,26,44,0),rgba(11,26,44,0) 56%,rgba(11,26,44,.30) 84%,var(--bg0) 100%),
+             linear-gradient(0deg,rgba(11,26,44,.32),rgba(11,26,44,0) 44%)}
 .hcopy{padding:calc(var(--navh) + clamp(3.4rem,8vh,6.5rem)) var(--pad) clamp(3.6rem,8vh,6rem) clamp(1.5rem,4vw,4rem)}
 .hcopy h1{max-width:15ch}
 .hcopy .lead{font-size:clamp(1.08rem,1rem + .5vw,1.34rem);line-height:1.62;color:var(--tx);font-weight:300;max-width:33rem}
@@ -159,7 +158,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
   .hmedia{order:-1;height:48vh;min-height:20rem}
   .hero-sm .hmedia{height:38vh;min-height:16rem}
   .hmedia img{position:absolute}
-  .hmedia::after{background:linear-gradient(0deg,var(--bg0) 2%,rgba(11,26,44,.25) 30%,rgba(11,26,44,.12)),rgba(14,33,54,.24)}
+  .hmedia::after{background:linear-gradient(0deg,var(--bg0) 2%,rgba(11,26,44,.22) 26%,rgba(11,26,44,0) 55%)}
   .hcopy{padding-top:1.2rem}
 }
 
@@ -294,7 +293,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 <header class="hero hero-sm">
   <div class="hero-glow"></div>
   <div class="hsplit">
-    <div class="hmedia" style="--focus:center 45%">
+    <div class="hmedia" style="--focus:center top">
       <img src="https://taylored.health/wp-content/uploads/2025/10/The-signals-Taylored-Health.jpg" alt="A leader at the head of the boardroom table" fetchpriority="high">
     </div>
     <div class="hcopy">
