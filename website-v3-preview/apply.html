@@ -38,7 +38,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 .eyebrow{font-family:var(--label);font-weight:400;font-size:clamp(1.02rem,.92rem + .5vw,1.4rem);
   letter-spacing:.24em!important;text-transform:uppercase!important;color:var(--gold-soft);
   margin:0 0 1.6rem;display:inline-flex;align-items:center;gap:.85em;line-height:1.25}
-.eyebrow::before{content:"";width:2.4rem;height:1px;background:var(--gold);opacity:.75;flex:none}
+.eyebrow::before{content:"";width:.42rem;height:.42rem;border-radius:50%;background:var(--gold);opacity:.85;flex:none}
 .deck{font-size:clamp(1.13rem,1.02rem + .6vw,1.4rem);line-height:1.58;color:var(--tx);font-weight:300}
 .rule{width:2.6rem;height:1px;background:var(--gold);opacity:.75;margin:2.2rem 0}
 .center .rule{margin-left:auto;margin-right:auto}
@@ -91,6 +91,8 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 .pill{font-family:var(--label);font-size:.7rem;font-weight:600;letter-spacing:.16em!important;text-transform:uppercase!important;
   color:#0b1420;background:var(--gold);text-decoration:none;padding:.8em 1.45em .66em;border-radius:2px;white-space:nowrap}
 .pill:hover{background:var(--gold-soft)}
+.pill-ghost{background:transparent;color:var(--gold-bright);border:1px solid rgba(217,189,146,.5)}
+.pill-ghost:hover{background:rgba(217,189,146,.08);border-color:var(--gold-bright);color:var(--gold-bright)}
 /* dropdown (About) */
 .drop{position:relative;display:flex;align-items:center}
 .drop>.nlink::after{content:"";display:inline-block;width:.42em;height:.42em;
@@ -240,7 +242,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 .ready{margin:2.2rem 0 0;padding:0;list-style:none;max-width:36rem}
 .ready li{padding:1rem 0 1rem 2.1rem;border-bottom:1px solid var(--line);position:relative;font-size:1rem;color:var(--tx);line-height:1.6}
 .ready li:last-child{border-bottom:0}
-.ready li::before{content:"";position:absolute;left:.2rem;top:1.58rem;width:.85rem;height:1px;background:var(--gold)}
+.ready li::before{content:"";position:absolute;left:.2rem;top:1.34rem;width:.42rem;height:.42rem;border-radius:50%;background:var(--gold)}
 .paths{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-top:2.6rem}
 @media (max-width:760px){.paths{grid-template-columns:1fr}}
 .path{background:rgba(255,255,255,.028);border:1px solid var(--line);border-top:2px solid var(--gold);padding:clamp(1.8rem,3.5vw,2.6rem)}
@@ -269,11 +271,11 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
       <div class="dmenu">
         <a href="https://taylored.health/about/">The two of us</a>
         <a href="https://taylored.health/results/">Results</a>
-        <a href="https://taylored.health/executive-brief/">The Executive Brief</a>
         <a href="https://taylored.health/apply/">Apply</a>
         <a href="https://taylored.health/the-leadership-capacity-project/">The Capacity Project</a>
       </div>
     </div>
+    <a class="pill pill-ghost" href="https://wheel.taylored.health">The Capacity Wheel &rarr;</a>
     <a class="pill" href="https://calendar.app.google/37cKK6baU2fLqhrYA">Book a conversation</a>
   </div>
 </nav>
@@ -329,9 +331,9 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
       </div>
       <div class="path">
         <span class="kv">The considered route</span>
-        <h3>Get the Executive Brief.</h3>
-        <p>The programme on one confidential page: structure, method, proof and investment range. Read it, then book when you&rsquo;re ready.</p>
-        <a class="btn-o" href="https://taylored.health/executive-brief/">Download the brief</a>
+        <h3>Start with the Capacity Wheel.</h3>
+        <p>Not ready to talk yet? Take the free Capacity Wheel first. Two minutes, and you&rsquo;ll see which of the four factors is driving your spin right now. Then book when you&rsquo;re ready.</p>
+        <a class="btn-o" href="https://wheel.taylored.health">Take the free Capacity Wheel &rarr;</a>
       </div>
     </div>
   </div>
@@ -341,7 +343,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
   <div class="wrap">
     <p class="eyebrow" style="display:inline-flex">While you wait</p>
     <h2>See what the work delivers.</h2>
-    <p class="deck">Verified outcomes and client accounts are on the <a class="goldlink" href="https://taylored.health/results/">results page</a>. The measured way in is the <a class="goldlink" href="https://taylored.health/executive-audit/">Executive Audit</a>.</p>
+    <p class="deck">Verified outcomes and client accounts are on the <a class="goldlink" href="https://taylored.health/results/">results page</a>. The measured way in is the <a class="goldlink" href="https://taylored.health/executive-audit/">Executive Capacity Audit</a>.</p>
   </div>
 </section>
 
@@ -354,7 +356,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
     <div class="foot-cols">
       <div class="foot-col">
         <div class="foot-h">Work with us</div>
-        <a href="https://taylored.health/executive-audit/">The Executive Audit</a>
+        <a href="https://taylored.health/executive-audit/">Executive Capacity Audit</a>
         <a href="https://taylored.health/private-advisory/">The Private Advisory</a>
         <a href="https://taylored.health/executive-os/">ExecOS</a>
         <a href="https://taylored.health/experiences/">Event consultancy</a>
@@ -365,7 +367,6 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
         <a href="https://taylored.health/the-biology-of-leadership/">Beacon, the book</a>
         <a href="https://taylored.health/results/">Results</a>
         <a href="https://taylored.health/about/">The two of us</a>
-        <a href="https://taylored.health/executive-brief/">The Executive Brief</a>
         <a href="https://taylored.health/the-leadership-capacity-project/">The Capacity Project</a>
       </div>
       <div class="foot-col">

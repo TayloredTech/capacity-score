@@ -38,7 +38,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 .eyebrow{font-family:var(--label);font-weight:400;font-size:clamp(1.02rem,.92rem + .5vw,1.4rem);
   letter-spacing:.24em!important;text-transform:uppercase!important;color:var(--gold-soft);
   margin:0 0 1.6rem;display:inline-flex;align-items:center;gap:.85em;line-height:1.25}
-.eyebrow::before{content:"";width:2.4rem;height:1px;background:var(--gold);opacity:.75;flex:none}
+.eyebrow::before{content:"";width:.42rem;height:.42rem;border-radius:50%;background:var(--gold);opacity:.85;flex:none}
 .deck{font-size:clamp(1.13rem,1.02rem + .6vw,1.4rem);line-height:1.58;color:var(--tx);font-weight:300}
 .rule{width:2.6rem;height:1px;background:var(--gold);opacity:.75;margin:2.2rem 0}
 .center .rule{margin-left:auto;margin-right:auto}
@@ -91,6 +91,8 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 .pill{font-family:var(--label);font-size:.7rem;font-weight:600;letter-spacing:.16em!important;text-transform:uppercase!important;
   color:#0b1420;background:var(--gold);text-decoration:none;padding:.8em 1.45em .66em;border-radius:2px;white-space:nowrap}
 .pill:hover{background:var(--gold-soft)}
+.pill-ghost{background:transparent;color:var(--gold-bright);border:1px solid rgba(217,189,146,.5)}
+.pill-ghost:hover{background:rgba(217,189,146,.08);border-color:var(--gold-bright);color:var(--gold-bright)}
 /* dropdown (About) */
 .drop{position:relative;display:flex;align-items:center}
 .drop>.nlink::after{content:"";display:inline-block;width:.42em;height:.42em;
@@ -252,6 +254,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 .tq{background:rgba(255,255,255,.028);border:1px solid var(--line);border-top:2px solid rgba(217,189,146,.5);
   padding:clamp(1.5rem,3vw,2.1rem);display:flex;flex-direction:column}
 .tq h3{font-size:1.06rem;margin-bottom:.8rem;color:var(--gold-soft);font-style:italic;font-weight:500}
+.tq .stars{color:var(--gold-bright);letter-spacing:.22em;font-size:.85rem;margin-bottom:1rem}
 .tq p{font-size:.94rem;line-height:1.68;color:var(--tx-dim);margin-bottom:1.2rem;max-width:none;flex:1}
 .tq cite{font-style:normal;font-family:var(--label);font-size:.66rem;letter-spacing:.18em!important;text-transform:uppercase!important;color:var(--gold-soft)}
 .notefrom{max-width:44rem;margin:0 auto;text-align:center}
@@ -280,11 +283,11 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
       <div class="dmenu">
         <a href="https://taylored.health/about/">The two of us</a>
         <a href="https://taylored.health/results/">Results</a>
-        <a href="https://taylored.health/executive-brief/">The Executive Brief</a>
         <a href="https://taylored.health/apply/">Apply</a>
         <a href="https://taylored.health/the-leadership-capacity-project/">The Capacity Project</a>
       </div>
     </div>
+    <a class="pill pill-ghost" href="https://wheel.taylored.health">The Capacity Wheel &rarr;</a>
     <a class="pill" href="https://calendar.app.google/37cKK6baU2fLqhrYA">Book a conversation</a>
   </div>
 </nav>
@@ -346,34 +349,29 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
     <h2>Leaders who stopped guessing.</h2>
     <div class="twall">
       <div class="tq">
-        <h3>The catalyst you didn&rsquo;t know you needed.</h3>
-        <p>&ldquo;Luke brings a no-nonsense, science-based approach to health and performance. He&rsquo;s knowledgeable, professional, well-organised. And to be honest, the catalyst to change most people don&rsquo;t know they&rsquo;ve been looking for.&rdquo;</p>
-        <cite>Logan Wedgwood &middot; Managing Director</cite>
+        <div class="stars" aria-label="Five out of five">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+        <p>&ldquo;I wish this was available years ago. I could have avoided many of the issues I&rsquo;ve dealt with in the past. Being armed with the knowledge of my unique needs means my health is no longer a guessing game. The team are incredibly knowledgeable and were there at every step.&rdquo;</p>
+        <cite>Jo &middot; Executive Capacity Audit client</cite>
       </div>
       <div class="tq">
-        <h3>No more guessing.</h3>
-        <p>&ldquo;I wish this was available years ago. Armed with the knowledge of my unique needs, my health is no longer a guessing game. The team were incredibly knowledgeable and there at every step.&rdquo;</p>
-        <cite>Jo Jensen &middot; Managing Director</cite>
+        <div class="stars" aria-label="Five out of five">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+        <p>&ldquo;Insightful, energising and a must-do for anyone investing in their long-term health.&rdquo;</p>
+        <cite>Nic &middot; Executive Capacity Audit client</cite>
       </div>
       <div class="tq">
-        <h3>What shifts when you understand your biology.</h3>
-        <p>&ldquo;This experience truly changed my life. The testing, the data, and the precision of the recommendations created a personalised instruction manual for my biology. Every senior leader should experience this.&rdquo;</p>
-        <cite>R. Lamb &middot; Executive Leader &amp; Founder</cite>
+        <div class="stars" aria-label="Five out of five">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+        <p>&ldquo;An incredible experience. A once-in-a-lifetime opportunity to understand your inner workings. You&rsquo;ll receive the information, but it&rsquo;s up to you to put in the effort and create meaningful, lasting change.&rdquo;</p>
+        <cite>Angela &middot; Executive Capacity Audit client</cite>
       </div>
       <div class="tq">
-        <h3>A fundamental difference to my leadership.</h3>
-        <p>&ldquo;The awareness and knowledge I gained made a fundamental difference to my life, my leadership, and my parenting. I finally understand what my body&rsquo;s been trying to tell me for years.&rdquo;</p>
-        <cite>V. Crone &middot; Board Director</cite>
+        <div class="stars" aria-label="Five out of five">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+        <p>&ldquo;The taonga I was gifted, in awareness and knowledge, I can see making a fundamental difference to my life, my leadership and my parenting. I finally understand what my body&rsquo;s been trying to tell me for years.&rdquo;</p>
+        <cite>Victoria &middot; Executive Capacity Audit client</cite>
       </div>
       <div class="tq">
-        <h3>The data connects the dots.</h3>
-        <p>&ldquo;A once-in-a-lifetime opportunity to understand your inner workings. You&rsquo;ll receive the information, but it&rsquo;s up to you to put in the effort and create meaningful, lasting change. The data gives you clarity. It connects the dots.&rdquo;</p>
-        <cite>A. Whitham &middot; Senior Leader</cite>
-      </div>
-      <div class="tq">
-        <h3>Insightful, energising, essential.</h3>
-        <p>&ldquo;It&rsquo;s built for who I am. I found that if I look after myself better as an executive, I am a better performing executive. A must-do for anyone investing in their long-term health.&rdquo;</p>
-        <cite>N. Richardson &middot; Chief People Officer</cite>
+        <div class="stars" aria-label="Five out of five">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+        <p>&ldquo;An extensive series of assessments, DNA, comprehensive bloods, glucose monitoring, turned into a personalised instruction manual for my body. My DNA work flagged the Alzheimer&rsquo;s gene, which became powerful motivation. A 3-2-1 wind-down improved my sleeping heart-rate health by 66% on my Oura ring. Every senior leader should do this.&rdquo;</p>
+        <cite>Rustica &middot; Executive Capacity Audit client</cite>
       </div>
     </div>
   </div>
@@ -391,11 +389,12 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
   <div class="wrap">
     <p class="eyebrow" style="display:inline-flex">Next step</p>
     <h2>Ready to measure what matters?</h2>
-    <p class="deck">You&rsquo;ve read the proof. The <a class="goldlink" href="https://taylored.health/executive-audit/">Executive Audit</a> is where your own data starts.</p>
+    <p class="deck">You&rsquo;ve read the proof. The <a class="goldlink" href="https://taylored.health/executive-audit/">Executive Capacity Audit</a> is where your own data starts.</p>
     <div class="cta-row">
       <a class="btn" href="https://calendar.app.google/37cKK6baU2fLqhrYA">Book a conversation</a>
       <a class="btn-o" href="https://taylored.health/executive-audit/">See the audit</a>
     </div>
+    <p class="cta-note" style="margin-top:1.8rem">Not ready? <a class="goldlink" href="https://wheel.taylored.health">Start with the Capacity Wheel &rarr;</a></p>
   </div>
 </section>
 
@@ -408,7 +407,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
     <div class="foot-cols">
       <div class="foot-col">
         <div class="foot-h">Work with us</div>
-        <a href="https://taylored.health/executive-audit/">The Executive Audit</a>
+        <a href="https://taylored.health/executive-audit/">Executive Capacity Audit</a>
         <a href="https://taylored.health/private-advisory/">The Private Advisory</a>
         <a href="https://taylored.health/executive-os/">ExecOS</a>
         <a href="https://taylored.health/experiences/">Event consultancy</a>
@@ -419,7 +418,6 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
         <a href="https://taylored.health/the-biology-of-leadership/">Beacon, the book</a>
         <a href="https://taylored.health/results/">Results</a>
         <a href="https://taylored.health/about/">The two of us</a>
-        <a href="https://taylored.health/executive-brief/">The Executive Brief</a>
         <a href="https://taylored.health/the-leadership-capacity-project/">The Capacity Project</a>
       </div>
       <div class="foot-col">

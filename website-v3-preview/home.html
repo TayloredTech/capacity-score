@@ -38,7 +38,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 .eyebrow{font-family:var(--label);font-weight:400;font-size:clamp(1.02rem,.92rem + .5vw,1.4rem);
   letter-spacing:.24em!important;text-transform:uppercase!important;color:var(--gold-soft);
   margin:0 0 1.6rem;display:inline-flex;align-items:center;gap:.85em;line-height:1.25}
-.eyebrow::before{content:"";width:2.4rem;height:1px;background:var(--gold);opacity:.75;flex:none}
+.eyebrow::before{content:"";width:.42rem;height:.42rem;border-radius:50%;background:var(--gold);opacity:.85;flex:none}
 .deck{font-size:clamp(1.13rem,1.02rem + .6vw,1.4rem);line-height:1.58;color:var(--tx);font-weight:300}
 .rule{width:2.6rem;height:1px;background:var(--gold);opacity:.75;margin:2.2rem 0}
 .center .rule{margin-left:auto;margin-right:auto}
@@ -91,6 +91,8 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 .pill{font-family:var(--label);font-size:.7rem;font-weight:600;letter-spacing:.16em!important;text-transform:uppercase!important;
   color:#0b1420;background:var(--gold);text-decoration:none;padding:.8em 1.45em .66em;border-radius:2px;white-space:nowrap}
 .pill:hover{background:var(--gold-soft)}
+.pill-ghost{background:transparent;color:var(--gold-bright);border:1px solid rgba(217,189,146,.5)}
+.pill-ghost:hover{background:rgba(217,189,146,.08);border-color:var(--gold-bright);color:var(--gold-bright)}
 /* dropdown (About) */
 .drop{position:relative;display:flex;align-items:center}
 .drop>.nlink::after{content:"";display:inline-block;width:.42em;height:.42em;
@@ -266,6 +268,25 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 .close-cta h2{max-width:20ch;margin-left:auto;margin-right:auto}
 .close-cta p{margin-left:auto;margin-right:auto}
 .close-cta .cta-row{justify-content:center;margin-top:2.2rem}
+/* clickable wheel front door */
+.wheellink{display:block;text-decoration:none}
+.wheelcta{display:inline-block;margin-top:1.6rem;font-family:var(--label);font-size:.8rem;font-weight:600;
+  letter-spacing:.14em!important;text-transform:uppercase!important;color:var(--gold-bright);text-decoration:none;
+  border-bottom:1px solid rgba(217,189,146,.4);padding-bottom:.35em;transition:color .25s,border-color .25s}
+.wheelcta:hover{color:var(--gold-bright);border-color:var(--gold-bright)}
+/* preferred rung */
+.rung-feature{background:rgba(217,189,146,.05);box-shadow:inset 3px 0 0 var(--gold);
+  padding-left:clamp(1rem,3vw,1.6rem);padding-right:clamp(1rem,3vw,1.6rem)}
+.rung-feature .rtitle{color:var(--gold-bright)}
+.rung-feature .rtag{color:var(--gold-bright)}
+.ladder-also{margin-top:1.9rem;font-size:.92rem;line-height:1.7;color:var(--tx-dim);max-width:40rem}
+/* approved pull-quote */
+.pullq{max-width:44rem;margin:0 auto;text-align:center}
+.pullq .stars{color:var(--gold-bright);letter-spacing:.25em;font-size:1rem;margin-bottom:1.2rem}
+.pullq blockquote{margin:0;font-family:var(--serif);font-style:italic;font-size:clamp(1.25rem,1.1rem + 1vw,1.7rem);
+  line-height:1.5;color:var(--hd)}
+.pullq figcaption{margin-top:1.4rem;font-family:var(--label);font-size:.7rem;letter-spacing:.2em!important;
+  text-transform:uppercase!important;color:var(--gold-soft)}
 </style>
 </head>
 <body>
@@ -286,11 +307,11 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
       <div class="dmenu">
         <a href="https://taylored.health/about/">The two of us</a>
         <a href="https://taylored.health/results/">Results</a>
-        <a href="https://taylored.health/executive-brief/">The Executive Brief</a>
         <a href="https://taylored.health/apply/">Apply</a>
         <a href="https://taylored.health/the-leadership-capacity-project/">The Capacity Project</a>
       </div>
     </div>
+    <a class="pill pill-ghost" href="https://wheel.taylored.health">The Capacity Wheel &rarr;</a>
     <a class="pill" href="https://calendar.app.google/37cKK6baU2fLqhrYA">Book a conversation</a>
   </div>
 </nav>
@@ -299,11 +320,11 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 <header class="hero">
   <div class="hero-glow"></div>
   <div class="hsplit">
-    <div class="hmedia" style="--focus:center 8%">
-      <img src="https://taylored.health/wp-content/uploads/2026/06/rachel-luke-biology-leadership.jpg" alt="Rachel Kelly and Luke Taylor, co-founders of Taylored Health" fetchpriority="high">
+    <div class="hmedia" style="--focus:center 26%">
+      <img src="https://taylored.health/wp-content/uploads/2026/06/rachel-luke-biology-leadership.jpg" alt="Rachel Taylor and Luke Taylor, co-founders of Taylored Health" fetchpriority="high">
     </div>
     <div class="hcopy">
-      <p class="eyebrow">Executive capacity advisory &middot; New Zealand</p>
+      <p class="eyebrow">Executive capacity advisory<span style="white-space:nowrap">&nbsp;&middot;&nbsp;New Zealand</span></p>
       <h1>Capacity is the <em>real constraint.</em></h1>
       <p class="lead">Senior roles rarely break on strategy. They break on the capacity to carry them. We measure what your role takes out of you, then build what needs to sit underneath it.</p>
       <div class="cta-row">
@@ -322,7 +343,8 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
     <h2 style="max-width:24ch;margin-left:auto;margin-right:auto">Capacity isn&rsquo;t a trait. It&rsquo;s a wheel, and the spin is the thing.</h2>
     <p class="premise">Your biology shapes your leadership. Your leadership drives your behaviour. Your behaviour builds your environment, and your environment feeds straight back into your biology. Turned one way the wheel builds you. Turned the other, it empties you, faster the harder you push.</p>
     <figure class="wheelfig">
-      <div class="wheelanim">
+      <a class="wheellink" href="https://wheel.taylored.health" aria-label="Take the free Capacity Wheel">
+        <div class="wheelanim">
 <svg viewBox="-90 0 1300 1080" role="img" aria-label="The capacity wheel: Biology, Leadership, Behaviour and Environment turning as a continuous loop around a central hub marked Capacity. The wheel cycles through its four states: Peak, Steady, Conserve and Restore, spinning fastest at Peak and slowest at Restore." font-family="Georgia, 'Times New Roman', serif">
 <defs><marker id="waarrow" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 Z" fill="#B8924A"/></marker></defs>
 <line x1="835" y1="265" x2="365" y2="735" stroke="#B8924A" stroke-width="1" stroke-dasharray="2 9" opacity="0.4"/>
@@ -354,6 +376,8 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 </div>
 </div>
 
+      </a>
+      <a class="wheelcta" href="https://wheel.taylored.health">Take the free Capacity Wheel &rarr;</a>
       <figcaption>The Leadership Capacity Wheel, live in <a class="goldlink" href="https://taylored.health/executive-os/">ExecOS</a>: four factors, one spin, and the state it puts you in each morning. The model behind everything we do, and the subject of Rachel&rsquo;s book, <a class="goldlink" href="https://taylored.health/the-biology-of-leadership/">Beacon</a>.</figcaption>
     </figure>
   </div>
@@ -362,55 +386,57 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 <section id="start">
   <div class="wrap">
     <p class="eyebrow">Where to start</p>
-    <h2>One method. Five ways in.</h2>
-    <p class="deck" style="margin-bottom:3rem">Everything we do measures and builds the same thing. Start where the stakes are for you.</p>
+    <h2>One method. One path, cheapest to deepest.</h2>
+    <p class="deck" style="margin-bottom:3rem">Everything we do measures and builds the same thing. Most people start with the Executive Capacity Audit. Here&rsquo;s the full path, from a free two-minute read to a full year together.</p>
     <div class="ladder">
-      <a class="rung" href="https://taylored.health/executive-audit/">
+      <a class="rung" href="https://wheel.taylored.health">
+        <span class="rnum">00</span>
+        <span>
+          <h3 class="rtitle">The Capacity Wheel</h3>
+          <p class="rbody">A two-minute read on which of the four factors is driving your spin right now. The free front door to everything below.</p>
+          <span class="rtag">Free &middot; Two minutes</span>
+        </span>
+        <span class="rgo">&rarr;</span>
+      </a>
+      <a class="rung" href="https://calendar.app.google/37cKK6baU2fLqhrYA">
         <span class="rnum">01</span>
         <span>
-          <h3 class="rtitle">The Executive Audit</h3>
-          <p class="rbody">Ten weeks. Genetics, bloods, glucose and your own wearable, read personally by both founders and written up as a blueprint of your three quickest wins. The measured way in.</p>
-          <span class="rtag">$12,000 &middot; Ten weeks</span>
+          <h3 class="rtitle">Metabolic Audit</h3>
+          <p class="rbody">A continuous glucose monitor, your own wearable and a focused questionnaire, read by a practitioner. The measured first step, without the full diagnostic commitment.</p>
+          <span class="rtag">~$2,000 AUD</span>
+        </span>
+        <span class="rgo">&rarr;</span>
+      </a>
+      <a class="rung rung-feature" href="https://taylored.health/executive-audit/">
+        <span class="rnum">02</span>
+        <span>
+          <h3 class="rtitle">Executive Capacity Audit</h3>
+          <p class="rbody">Ten weeks. Genetics, bloods, glucose and your own wearable, read personally by both founders and written up as a blueprint of your three quickest wins. Where most people start.</p>
+          <span class="rtag">Most start here &middot; $12,000 &middot; Ten weeks</span>
         </span>
         <span class="rgo">&rarr;</span>
       </a>
       <a class="rung" href="https://taylored.health/private-advisory/">
-        <span class="rnum">02</span>
+        <span class="rnum">03</span>
         <span>
           <h3 class="rtitle">The Private Advisory</h3>
           <p class="rbody">The flagship. Twelve months with both of us, built from your full diagnostic picture and recalibrated as your year unfolds. Five seats, once a year.</p>
-          <span class="rtag">By application &middot; Five seats a year</span>
-        </span>
-        <span class="rgo">&rarr;</span>
-      </a>
-      <a class="rung" href="https://taylored.health/executive-os/">
-        <span class="rnum">03</span>
-        <span>
-          <h3 class="rtitle">ExecOS</h3>
-          <p class="rbody">The software underneath all of it. Your data, your protocols and one clear directive every morning, in a system you run all year.</p>
-          <span class="rtag">Runs under every engagement</span>
-        </span>
-        <span class="rgo">&rarr;</span>
-      </a>
-      <a class="rung" href="https://taylored.health/experiences/">
-        <span class="rnum">04</span>
-        <span>
-          <h3 class="rtitle">Event consultancy</h3>
-          <p class="rbody">We design the biology of the room. Offsites, summits and board days where energy and attention hold from the first session to the last.</p>
-          <span class="rtag">By engagement</span>
-        </span>
-        <span class="rgo">&rarr;</span>
-      </a>
-      <a class="rung" href="https://taylored.health/the-biology-of-leadership/">
-        <span class="rnum">05</span>
-        <span>
-          <h3 class="rtitle">Beacon, the book</h3>
-          <p class="rbody">Rachel is writing the thinking in the open: why capacity, not willpower, decides which leaders last. Start here if you want the ideas before any commitment.</p>
-          <span class="rtag">Free to follow &middot; Publishing 2026</span>
+          <span class="rtag">By application &middot; ~$95,000 AUD</span>
         </span>
         <span class="rgo">&rarr;</span>
       </a>
     </div>
+    <p class="ladder-also">Running under every engagement: <a class="goldlink" href="https://taylored.health/executive-os/">ExecOS</a>, the software that turns your plan into one clear directive each morning. We also run <a class="goldlink" href="https://taylored.health/experiences/">event consultancy</a> for offsites and board days, and Rachel is writing <a class="goldlink" href="https://taylored.health/the-biology-of-leadership/">Beacon</a>, the thinking behind all of it.</p>
+  </div>
+</section>
+
+<section class="bandbg">
+  <div class="wrap">
+    <figure class="pullq">
+      <div class="stars" aria-label="Five out of five">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+      <blockquote>&ldquo;Insightful, energising and a must-do for anyone investing in their long-term health.&rdquo;</blockquote>
+      <figcaption>Nic &middot; Executive Capacity Audit client</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -441,8 +467,8 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
     </div>
     <div class="duo2">
       <div class="fcard">
-        <img src="https://taylored.health/wp-content/uploads/2026/06/rachel-portrait-biology-leadership.jpg" alt="Rachel Kelly, scientific director and co-founder" loading="lazy">
-        <h3>Rachel Kelly</h3>
+        <img src="https://taylored.health/wp-content/uploads/2026/06/rachel-portrait-biology-leadership.jpg" alt="Rachel Taylor, scientific director and co-founder" loading="lazy">
+        <h3>Rachel Taylor</h3>
         <span class="frole">Scientific director &middot; Co-founder</span>
         <p>Geneticist and biochemist, with a career in multinational C-suite governance and a past life as a New Zealand representative gymnast. Rachel builds the scientific architecture behind every programme, and is writing <em>Beacon</em>, a book about what actually decides whether leaders last.</p>
       </div>
@@ -478,7 +504,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
     <div class="foot-cols">
       <div class="foot-col">
         <div class="foot-h">Work with us</div>
-        <a href="https://taylored.health/executive-audit/">The Executive Audit</a>
+        <a href="https://taylored.health/executive-audit/">Executive Capacity Audit</a>
         <a href="https://taylored.health/private-advisory/">The Private Advisory</a>
         <a href="https://taylored.health/executive-os/">ExecOS</a>
         <a href="https://taylored.health/experiences/">Event consultancy</a>
@@ -489,7 +515,6 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
         <a href="https://taylored.health/the-biology-of-leadership/">Beacon, the book</a>
         <a href="https://taylored.health/results/">Results</a>
         <a href="https://taylored.health/about/">The two of us</a>
-        <a href="https://taylored.health/executive-brief/">The Executive Brief</a>
         <a href="https://taylored.health/the-leadership-capacity-project/">The Capacity Project</a>
       </div>
       <div class="foot-col">

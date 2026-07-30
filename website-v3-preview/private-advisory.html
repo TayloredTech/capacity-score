@@ -38,7 +38,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 .eyebrow{font-family:var(--label);font-weight:400;font-size:clamp(1.02rem,.92rem + .5vw,1.4rem);
   letter-spacing:.24em!important;text-transform:uppercase!important;color:var(--gold-soft);
   margin:0 0 1.6rem;display:inline-flex;align-items:center;gap:.85em;line-height:1.25}
-.eyebrow::before{content:"";width:2.4rem;height:1px;background:var(--gold);opacity:.75;flex:none}
+.eyebrow::before{content:"";width:.42rem;height:.42rem;border-radius:50%;background:var(--gold);opacity:.85;flex:none}
 .deck{font-size:clamp(1.13rem,1.02rem + .6vw,1.4rem);line-height:1.58;color:var(--tx);font-weight:300}
 .rule{width:2.6rem;height:1px;background:var(--gold);opacity:.75;margin:2.2rem 0}
 .center .rule{margin-left:auto;margin-right:auto}
@@ -91,6 +91,8 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 .pill{font-family:var(--label);font-size:.7rem;font-weight:600;letter-spacing:.16em!important;text-transform:uppercase!important;
   color:#0b1420;background:var(--gold);text-decoration:none;padding:.8em 1.45em .66em;border-radius:2px;white-space:nowrap}
 .pill:hover{background:var(--gold-soft)}
+.pill-ghost{background:transparent;color:var(--gold-bright);border:1px solid rgba(217,189,146,.5)}
+.pill-ghost:hover{background:rgba(217,189,146,.08);border-color:var(--gold-bright);color:var(--gold-bright)}
 /* dropdown (About) */
 .drop{position:relative;display:flex;align-items:center}
 .drop>.nlink::after{content:"";display:inline-block;width:.42em;height:.42em;
@@ -258,7 +260,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 @media (max-width:520px){.tests{grid-template-columns:1fr}}
 .inc{columns:2;column-gap:3rem;margin:1.6rem 0 0;padding:0;list-style:none;max-width:none}
 .inc li{break-inside:avoid;padding:.8rem 0 .8rem 1.9rem;border-bottom:1px solid var(--paper-line);position:relative;font-size:.97rem;color:var(--ink-soft);line-height:1.6}
-.inc li::before{content:"";position:absolute;left:.2rem;top:1.38rem;width:.75rem;height:1px;background:var(--gold-deep)}
+.inc li::before{content:"";position:absolute;left:.2rem;top:1.16rem;width:.42rem;height:.42rem;border-radius:50%;background:var(--gold-deep)}
 @media (max-width:700px){.inc{columns:1}}
 .close-cta{text-align:center}
 .close-cta h2,.close-cta p{margin-left:auto;margin-right:auto}
@@ -283,11 +285,11 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
       <div class="dmenu">
         <a href="https://taylored.health/about/">The two of us</a>
         <a href="https://taylored.health/results/">Results</a>
-        <a href="https://taylored.health/executive-brief/">The Executive Brief</a>
         <a href="https://taylored.health/apply/">Apply</a>
         <a href="https://taylored.health/the-leadership-capacity-project/">The Capacity Project</a>
       </div>
     </div>
+    <a class="pill pill-ghost" href="https://wheel.taylored.health">The Capacity Wheel &rarr;</a>
     <a class="pill" href="https://calendar.app.google/37cKK6baU2fLqhrYA">Book a conversation</a>
   </div>
 </nav>
@@ -307,7 +309,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
         <a class="btn" href="https://calendar.app.google/37cKK6baU2fLqhrYA">Book a conversation</a>
         <a class="btn-o" href="https://taylored.health/apply/">Apply for a seat</a>
       </div>
-      <p class="cta-note">Every advisory starts with a conversation, and most start with the <a href="https://taylored.health/executive-audit/">Executive Audit</a>.</p>
+      <p class="cta-note">Every advisory starts with a conversation, and most start with the <a href="https://taylored.health/executive-audit/">Executive Capacity Audit</a>.</p>
       <div class="factline">
         <div class="fact"><b>Five seats</b><span>Per year, total</span></div>
         <div class="fact"><b>12 months</b><span>Full engagement</span></div>
@@ -321,7 +323,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
   <div class="wrap">
     <p class="eyebrow">Who this is for</p>
     <div class="grid2">
-      <h2>You&rsquo;re not broken. You&rsquo;re carrying <em>more than most.</em></h2>
+      <h2>You&rsquo;re carrying <em>more than most.</em></h2>
       <div>
         <p class="deck">Our clients already perform at a level most people can&rsquo;t touch. The question is how long they can hold it, and at what cost.</p>
         <p>Five seats a year is not a marketing device. It&rsquo;s the number of people two founders can personally measure, interpret and recalibrate without delegating any of it. Every data point is reviewed by us. Every readout happens with us. If you want a programme run by a care team, this isn&rsquo;t it.</p>
@@ -403,7 +405,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
     <div class="grid2">
       <h2>Most seats begin with the audit.</h2>
       <div>
-        <p class="deck">The <a class="goldlink" href="https://taylored.health/executive-audit/">Executive Audit</a> is ten weeks and a fraction of the commitment. It gives you the measured picture, and it gives both of us the evidence to decide whether a year together is worth it.</p>
+        <p class="deck">The <a class="goldlink" href="https://taylored.health/executive-audit/">Executive Capacity Audit</a> is ten weeks and a fraction of the commitment. It gives you the measured picture, and it gives both of us the evidence to decide whether a year together is worth it.</p>
         <p>The deeper battery, from hormones to biological age, is everything the audit deliberately leaves on the shelf. The advisory starts by running all of it.</p>
         <p>Some clients join the advisory directly, usually on referral. Either way it starts with the same thirty-minute conversation, or a short <a class="goldlink" href="https://taylored.health/apply/">application</a> if you already know.</p>
       </div>
@@ -432,7 +434,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
     <div class="foot-cols">
       <div class="foot-col">
         <div class="foot-h">Work with us</div>
-        <a href="https://taylored.health/executive-audit/">The Executive Audit</a>
+        <a href="https://taylored.health/executive-audit/">Executive Capacity Audit</a>
         <a href="https://taylored.health/private-advisory/">The Private Advisory</a>
         <a href="https://taylored.health/executive-os/">ExecOS</a>
         <a href="https://taylored.health/experiences/">Event consultancy</a>
@@ -443,7 +445,6 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
         <a href="https://taylored.health/the-biology-of-leadership/">Beacon, the book</a>
         <a href="https://taylored.health/results/">Results</a>
         <a href="https://taylored.health/about/">The two of us</a>
-        <a href="https://taylored.health/executive-brief/">The Executive Brief</a>
         <a href="https://taylored.health/the-leadership-capacity-project/">The Capacity Project</a>
       </div>
       <div class="foot-col">
