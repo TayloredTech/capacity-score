@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ExecOS | The executive operating system</title>
+<title>Leadership Capacity | Taylored Health</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600;700&family=Josefin+Sans:wght@300;400;600&display=swap');
 /* Taylored Health v2 — one brand, every page.
@@ -237,56 +237,41 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 .foot-base a:hover{color:var(--gold-soft)}
 @media (max-width:560px){.cta-row .btn,.cta-row .btn-o{width:100%}}
 
-/* ---- execos-specific ---- */
-.oshero{background:var(--bg0);position:relative;overflow:hidden}
-.oshero .inner{max-width:71rem;margin:0 auto;display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);gap:clamp(2rem,4vw,4rem);align-items:center;
-  padding:calc(var(--navh) + clamp(3rem,7vh,5.5rem)) var(--pad) clamp(3.4rem,7vh,5.5rem)}
-@media (max-width:900px){.oshero .inner{grid-template-columns:1fr}}
-.shot{border:1px solid var(--line);background:var(--band);box-shadow:0 30px 80px rgba(0,0,0,.45)}
-.shot .bar{display:flex;align-items:center;gap:.45rem;padding:.7rem 1rem;border-bottom:1px solid var(--line)}
-.shot .bar i{width:.55rem;height:.55rem;border-radius:50%;background:rgba(217,189,146,.35);display:block}
-.shot .bar span{font-family:var(--label);font-size:.6rem;letter-spacing:.24em!important;text-transform:uppercase!important;color:var(--tx-faint);margin-left:.6rem}
-.shot img{width:100%;display:block}
-.shot figcaption{font-family:var(--label);font-size:.66rem;letter-spacing:.2em!important;text-transform:uppercase!important;color:var(--tx-faint);padding:.9rem 1rem;text-align:center}
-/* states */
-.states{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.1rem;margin-top:2.6rem;text-align:center}
-@media (max-width:880px){.states{grid-template-columns:1fr 1fr}}
-@media (max-width:520px){.states{grid-template-columns:1fr}}
-.state-card{background:rgba(255,255,255,.028);border:1px solid var(--line);border-top:2px solid var(--gold);padding:clamp(1.5rem,3vw,2.1rem)}
-.state-card .sw{font-family:var(--label);font-weight:600;font-size:1rem;letter-spacing:.3em!important;text-transform:uppercase!important;color:var(--gold-bright);display:inline-flex;align-items:center;gap:.55em;margin-bottom:.9rem}
-.state-card .sw::before{content:"";width:.5em;height:.5em;border-radius:50%;background:var(--gold);flex:none}
-.state-card p{font-size:.94rem;line-height:1.65;color:var(--tx-dim);margin:0 auto;max-width:26ch}
-.state-card:nth-child(2) .sw{opacity:.92}.state-card:nth-child(3) .sw{opacity:.8}.state-card:nth-child(4) .sw{opacity:.68}
-/* wheel on paper */
-.wheelsec .premise{font-size:clamp(1.05rem,1rem + .4vw,1.24rem);line-height:1.7;max-width:40rem;margin:0 auto 2.4rem}
-.wheelfig{margin:0 auto;max-width:44rem}
-.wheelfig figcaption{font-size:.85rem;color:var(--ink-faint);text-align:center;margin-top:1.4rem;line-height:1.6}
-/* ways in */
-.ways{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-top:2.6rem}
-@media (max-width:760px){.ways{grid-template-columns:1fr}}
-.way{background:rgba(255,255,255,.028);border:1px solid var(--line);border-top:2px solid var(--gold);padding:clamp(1.8rem,3.5vw,2.6rem)}
-.way h3{margin-bottom:.7rem}
-.way p{font-size:.96rem;color:var(--tx-dim)}
-.way .tlink{margin-top:1.2rem;display:inline-block}
-.close-cta{text-align:center}
-.close-cta h2,.close-cta p{margin-left:auto;margin-right:auto}
-.close-cta .cta-row{justify-content:center;margin-top:2.2rem}
-/* Real Impact: Rachel's real ExecOS screenshots (iPad + iPhone) */
-.ri-stage{position:relative;max-width:58rem;margin:3.2rem auto 0;padding-bottom:2.4rem}
-.ri-ipad{position:relative;width:80%;margin:0 auto;border-radius:16px;overflow:hidden;
-  border:1px solid var(--line-soft);box-shadow:0 42px 90px rgba(0,0,0,.5)}
-.ri-ipad img{width:100%;display:block}
-.ri-iphone{position:absolute;right:1%;bottom:0;width:23%;min-width:132px;
-  border-radius:24px;overflow:hidden;border:3px solid #0b1420;
-  box-shadow:0 30px 62px rgba(0,0,0,.6);background:var(--bg0);z-index:2}
-.ri-iphone img{width:100%;display:block}
-.ri-cap{font-family:var(--label);font-size:.66rem;letter-spacing:.2em!important;text-transform:uppercase!important;
-  color:var(--tx-faint);margin-top:2rem}
-@media (max-width:680px){
-  .ri-stage{display:flex;flex-direction:column;align-items:center;gap:1.6rem;padding-bottom:0}
-  .ri-ipad{width:100%}
-  .ri-iphone{position:static;width:60%;right:auto;bottom:auto}
-}
+/* ---- leadership-capacity specific ---- */
+/* wheel (static four-factor, on paper) */
+.premise{max-width:34rem;margin:1.6rem auto 0;font-size:1.02rem;line-height:1.66}
+.premise strong{color:var(--ink);font-weight:600}
+.wheelwrap{margin:clamp(2.4rem,6vh,3.6rem) auto 0;max-width:40rem}
+.wheelwrap svg{width:100%;height:auto;display:block}
+.wheelcap{margin:clamp(1.8rem,4vh,2.6rem) auto 0;max-width:30rem;color:var(--ink-soft);
+  font-size:1.02rem;line-height:1.6;text-align:center}
+.wheelcap b{color:var(--ink);font-weight:600}
+/* full-bleed editorial photo bands */
+.band{margin:0}
+.band img{display:block;width:100%;height:clamp(19rem,50vh,34rem);object-fit:cover;object-position:center;
+  filter:grayscale(1) contrast(1.03) brightness(.88)}
+/* the themes list (no numbers, per house style) */
+.themes{margin:2rem 0 0;padding:0;list-style:none;max-width:40rem}
+.themes li{position:relative;padding:1.15rem 0 1.15rem 1.9rem;border-bottom:1px solid var(--line);
+  font-family:var(--serif);font-size:clamp(1.08rem,1rem + .55vw,1.34rem);line-height:1.34;color:var(--hd)}
+.themes li:first-child{border-top:1px solid var(--line)}
+.themes li::before{content:"";position:absolute;left:.2rem;top:1.68rem;width:.44rem;height:.44rem;border-radius:50%;background:var(--gold)}
+.pull{font-family:var(--serif);font-style:italic;color:var(--gold-bright);
+  font-size:clamp(1.2rem,1.05rem + .8vw,1.6rem);line-height:1.4;margin:2.6rem 0 0;max-width:30rem}
+/* the note from Rachel band */
+.note{background:linear-gradient(rgba(11,26,44,.86),rgba(11,26,44,.9)),
+  url('https://taylored.health/wp-content/uploads/2026/06/rachel-note-bg.jpg');
+  background-size:cover;background-position:right 28%}
+.note .wrap{max-width:44rem}
+.note .statement{font-family:var(--serif);font-style:italic;color:var(--hd);
+  font-size:clamp(1.5rem,1.1rem + 2vw,2.4rem);line-height:1.24;margin:0 0 1.6rem;max-width:24ch}
+.note .sig{font-family:var(--label);margin-top:2rem}
+.note .sig .name{font-size:.95rem;font-weight:600;letter-spacing:.02em;color:var(--hd)}
+.note .sig .role{font-family:var(--label);font-size:.68rem;font-weight:400;letter-spacing:.2em!important;
+  text-transform:uppercase!important;color:var(--gold-soft);margin-top:.5rem}
+/* the closing signature */
+.closing-sig{margin-top:2.8rem;font-size:.92rem;line-height:1.8;color:var(--tx-dim)}
+.closing-sig .who{color:var(--hd);font-weight:600}
 </style>
 </head>
 <body>
@@ -318,133 +303,68 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 <script>(function(){var n=document.querySelector('.nav');if(!n)return;var f=function(){n.classList.toggle('scrolled',(window.scrollY||document.documentElement.scrollTop)>40);};f();window.addEventListener('scroll',f,{passive:true});})();</script>
 
 
-<header class="oshero">
+<header class="hero hero-sm">
   <div class="hero-glow"></div>
-  <div class="inner">
-    <div class="hcopy" style="padding:0">
-      <p class="eyebrow">ExecOS &middot; The delivery layer</p>
-      <h1>Your biology, on <em>one screen.</em></h1>
-      <p class="lead">ExecOS is how everything we measure reaches your actual day. Genetics, bloods, glucose, sleep and load converge into one state and one directive every morning, on whatever screen you&rsquo;re holding.</p>
-      <div class="cta-row">
-        <a class="btn" href="https://calendar.app.google/hbAqQpcCyCGTv6BA7">Book a demo</a>
-      </div>
-      <p class="proofline"><b>Comes with every engagement</b> <span class="sep">&middot;</span> <b>One directive a day</b> <span class="sep">&middot;</span> <b>Phone, tablet, desktop</b></p>
+  <div class="hsplit">
+    <div class="hmedia" style="--focus:center 28%">
+      <img src="https://taylored.health/wp-content/uploads/2025/10/Taylored-Health-Hero-Elite-Performance-for-Executives.jpg" alt="A leader, in a quiet moment of thought" fetchpriority="high">
     </div>
-    <figure class="shot" style="margin:0">
-      <div class="bar"><i></i><i></i><i></i><span>ExecOS &middot; Today</span></div>
-      <img src="https://taylored.health/wp-content/uploads/2026/07/execos-embed-04.png" alt="ExecOS Today: the morning state and directive, with recovery and physical scores beneath" fetchpriority="high">
-    </figure>
+    <div class="hcopy">
+      <p class="eyebrow">The Leadership Capacity Project</p>
+      <h1>A research-led look at how good leaders <em>sustain themselves</em> over time.</h1>
+      <p class="lead">And an invitation to add your voice. If a nomination brought you here, someone sees the way you lead and wants it counted.</p>
+      <div class="cta-row">
+        <a class="btn" href="https://calendar.app.google/rbkUhUneDWnEKRQv9">Find a time to talk</a>
+      </div>
+      <p class="proofline"><b>45 to 60 minutes</b> <span class="sep">&middot;</span> <b>No preparation</b> <span class="sep">&middot;</span> <b>By nomination</b></p>
+    </div>
   </div>
 </header>
 
-<section class="paper wheelsec">
-  <div class="wrap center">
-    <p class="eyebrow">The model inside</p>
-    <h2 style="max-width:24ch;margin-left:auto;margin-right:auto">ExecOS runs the capacity wheel, live.</h2>
-    <p class="premise">Your biology shapes your leadership, your leadership drives your behaviour, your behaviour builds your environment, and your environment feeds straight back into your biology. ExecOS measures all four factors continuously and reads the spin, because capacity isn&rsquo;t a trait, it&rsquo;s a state that changes overnight.</p>
-    <figure class="wheelfig">
-      <div class="wheelanim">
-<svg viewBox="-90 0 1300 1080" role="img" aria-label="The capacity wheel: Biology, Leadership, Behaviour and Environment turning as a continuous loop around a central hub marked Capacity. The wheel cycles through its four states: Peak, Steady, Conserve and Restore, spinning fastest at Peak and slowest at Restore." font-family="Georgia, 'Times New Roman', serif">
-<defs><marker id="waarrow" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 Z" fill="#B8924A"/></marker></defs>
-<line x1="835" y1="265" x2="365" y2="735" stroke="#B8924A" stroke-width="1" stroke-dasharray="2 9" opacity="0.4"/>
-<text x="262" y="214" text-anchor="middle" font-size="19" letter-spacing="8" font-weight="bold" fill="#B8924A" opacity="0.85">BEING</text>
-<text x="938" y="796" text-anchor="middle" font-size="19" letter-spacing="8" font-weight="bold" fill="#B8924A" opacity="0.85">DOING</text>
-<circle cx="600" cy="500" r="345" fill="none" stroke="#B8924A" stroke-width="0.8" opacity="0.4"/>
-<circle cx="600" cy="500" r="332" fill="none" stroke="#B8924A" stroke-width="3.4"/>
-<circle cx="600" cy="500" r="200" fill="none" stroke="#B8924A" stroke-width="0.7" opacity="0.3"/>
-<g class="wa-spin">
-<g fill="none" stroke="#B8924A" stroke-linecap="round"><path d="M 806,217 A 352,352 0 0 1 874,272" stroke-width="2.6" opacity="0.42"/><path d="M 828,178 A 384,384 0 0 1 882,222" stroke-width="1.8" opacity="0.24"/><path d="M 884,706 A 352,352 0 0 1 821,774" stroke-width="2.6" opacity="0.42"/><path d="M 921,724 A 384,384 0 0 1 858,800" stroke-width="1.8" opacity="0.24"/><path d="M 394,783 A 352,352 0 0 1 326,728" stroke-width="2.6" opacity="0.42"/><path d="M 372,822 A 384,384 0 0 1 318,778" stroke-width="1.8" opacity="0.24"/><path d="M 316,294 A 352,352 0 0 1 379,226" stroke-width="2.6" opacity="0.42"/><path d="M 279,276 A 384,384 0 0 1 342,200" stroke-width="1.8" opacity="0.24"/></g>
-<g fill="none" stroke="#B8924A" stroke-width="3" opacity="0.9"><path d="M 678,210 A 300,300 0 0 1 890,422" marker-end="url(#waarrow)"/><path d="M 890,578 A 300,300 0 0 1 678,790" marker-end="url(#waarrow)"/><path d="M 522,790 A 300,300 0 0 1 310,578" marker-end="url(#waarrow)"/><path d="M 310,422 A 300,300 0 0 1 522,210" marker-end="url(#waarrow)"/></g>
-<animateTransform attributeName="transform" type="rotate" values="0 600 500; 540 600 500; 810 600 500; 990 600 500; 1080 600 500" keyTimes="0;0.25;0.5;0.75;1" dur="28s" repeatCount="indefinite"/>
-</g>
-<g stroke="#B8924A" stroke-width="2" opacity="0.85"><line x1="600" y1="426" x2="600" y2="168"/><line x1="600" y1="574" x2="600" y2="832"/><line x1="526" y1="500" x2="268" y2="500"/><line x1="674" y1="500" x2="932" y2="500"/></g>
-<circle cx="600" cy="168" r="7" fill="#B8924A"/><circle cx="932" cy="500" r="7" fill="#B8924A"/><circle cx="600" cy="832" r="7" fill="#B8924A"/><circle cx="268" cy="500" r="7" fill="#B8924A"/>
-<text class="wa-lab" x="600" y="76" text-anchor="middle" font-size="44" letter-spacing="1.5">Biology</text>
-<text class="wa-lab" x="978" y="512" text-anchor="start" font-size="44" letter-spacing="1.5">Leadership</text>
-<text class="wa-lab" x="600" y="952" text-anchor="middle" font-size="44" letter-spacing="1.5">Behaviour</text>
-<text class="wa-lab" x="222" y="512" text-anchor="end" font-size="44" letter-spacing="1.5">Environment</text>
-<circle class="wa-hubbg" cx="600" cy="500" r="78" stroke="#B8924A" stroke-width="3.4"/>
-<text x="600" y="494" text-anchor="middle" font-size="22" letter-spacing="3" fill="#B8924A">CAPACITY</text>
-<text class="wa-hubsub" x="600" y="522" text-anchor="middle" font-size="12" letter-spacing="3" opacity="0.6">THE SPIN</text>
-</svg>
-<div class="wa-states" aria-hidden="true">
-<div class="wa-state wa-s1"><span class="wa-word">Peak</span><p>Every factor is feeding the spin. Spend today on the work that moves the company.</p></div>
-<div class="wa-state wa-s2"><span class="wa-word">Steady</span><p>The wheel is turning clean. Hold the cadence and bank the gains.</p></div>
-<div class="wa-state wa-s3"><span class="wa-word">Conserve</span><p>Load is outrunning recovery. Protect the mornings and cut the edges.</p></div>
-<div class="wa-state wa-s4"><span class="wa-word">Restore</span><p>The wheel needs slack to rebuild. Recovery is the work today.</p></div>
-</div>
-</div>
+<section>
+  <div class="wrap">
+    <p class="eyebrow">The shift</p>
+    <div class="grid2">
+      <h2>The leaders who thrive today aren&rsquo;t the ones pushing harder. They&rsquo;re the ones who <em>protect their capacity.</em></h2>
+      <div>
+        <p class="deck">Our work with founders, executives and high-performing teams keeps surfacing patterns worth understanding properly.</p>
+        <p>So we&rsquo;ve begun a research-led project into the real operating systems behind sustainable leadership, told through the experiences of leaders who live it. You&rsquo;ve been nominated for your impact, your presence, and the way you lead with intention and care. We&rsquo;d be grateful to include you.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-      <figcaption>The Leadership Capacity Wheel, the model behind every engagement, running as software. Each morning the wheel&rsquo;s spin becomes your state and your directive.</figcaption>
+<section class="paper center">
+  <div class="wrap">
+    <p class="eyebrow" style="display:inline-flex">The model behind it</p>
+    <h2 style="max-width:15em;margin-left:auto;margin-right:auto">Capacity isn&rsquo;t a trait. It&rsquo;s a wheel, and the <em>spin</em> is the thing.</h2>
+    <p class="premise">Four factors decide whether you lead from a full tank or an empty one. Your biology shapes your leadership, which drives your behaviour, which builds your environment, which feeds back to your biology. <strong>Being</strong> is biology and environment. <strong>Doing</strong> is leadership and behaviour. Turned one way the wheel builds you. Turned the other it empties you, faster the harder you push.</p>
+    <figure class="wheelwrap">
+      <svg viewBox="-90 0 1300 1000" role="img" aria-label="The capacity wheel: Biology at the top, Leadership to the right, Behaviour at the bottom, Environment to the left, turning clockwise as a continuous loop around a central hub marked Capacity. Biology and Environment form Being; Leadership and Behaviour form Doing." font-family="Georgia, 'Times New Roman', serif"><defs><marker id="wheelarrow" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 Z" fill="#B8924A"/></marker></defs><line x1="835" y1="265" x2="365" y2="735" stroke="#B8924A" stroke-width="1" stroke-dasharray="2 9" opacity="0.4"/><text x="262" y="214" text-anchor="middle" font-size="19" letter-spacing="8" font-weight="bold" fill="#B8924A" opacity="0.85">BEING</text><text x="938" y="796" text-anchor="middle" font-size="19" letter-spacing="8" font-weight="bold" fill="#B8924A" opacity="0.85">DOING</text><circle cx="600" cy="500" r="345" fill="none" stroke="#B8924A" stroke-width="0.8" opacity="0.4"/><circle cx="600" cy="500" r="332" fill="none" stroke="#B8924A" stroke-width="3.4"/><circle cx="600" cy="500" r="200" fill="none" stroke="#B8924A" stroke-width="0.7" opacity="0.3"/><g fill="none" stroke="#B8924A" stroke-linecap="round"><path d="M 806,217 A 352,352 0 0 1 874,272" stroke-width="2.6" opacity="0.42"/><path d="M 828,178 A 384,384 0 0 1 882,222" stroke-width="1.8" opacity="0.24"/><path d="M 884,706 A 352,352 0 0 1 821,774" stroke-width="2.6" opacity="0.42"/><path d="M 921,724 A 384,384 0 0 1 858,800" stroke-width="1.8" opacity="0.24"/><path d="M 394,783 A 352,352 0 0 1 326,728" stroke-width="2.6" opacity="0.42"/><path d="M 372,822 A 384,384 0 0 1 318,778" stroke-width="1.8" opacity="0.24"/><path d="M 316,294 A 352,352 0 0 1 379,226" stroke-width="2.6" opacity="0.42"/><path d="M 279,276 A 384,384 0 0 1 342,200" stroke-width="1.8" opacity="0.24"/></g><g stroke="#B8924A" stroke-width="2" opacity="0.85"><line x1="600" y1="426" x2="600" y2="168"/><line x1="600" y1="574" x2="600" y2="832"/><line x1="526" y1="500" x2="268" y2="500"/><line x1="674" y1="500" x2="932" y2="500"/></g><g fill="none" stroke="#B8924A" stroke-width="3" opacity="0.9"><path d="M 678,210 A 300,300 0 0 1 890,422" marker-end="url(#wheelarrow)"/><path d="M 890,578 A 300,300 0 0 1 678,790" marker-end="url(#wheelarrow)"/><path d="M 522,790 A 300,300 0 0 1 310,578" marker-end="url(#wheelarrow)"/><path d="M 310,422 A 300,300 0 0 1 522,210" marker-end="url(#wheelarrow)"/></g><circle cx="600" cy="168" r="7" fill="#B8924A"/><circle cx="932" cy="500" r="7" fill="#B8924A"/><circle cx="600" cy="832" r="7" fill="#B8924A"/><circle cx="268" cy="500" r="7" fill="#B8924A"/><text x="600" y="76" text-anchor="middle" font-size="40" letter-spacing="1.5" fill="#0E2032">Biology</text><text x="978" y="512" text-anchor="start" font-size="40" letter-spacing="1.5" fill="#0E2032">Leadership</text><text x="600" y="952" text-anchor="middle" font-size="40" letter-spacing="1.5" fill="#0E2032">Behaviour</text><text x="222" y="512" text-anchor="end" font-size="40" letter-spacing="1.5" fill="#0E2032">Environment</text><circle cx="600" cy="500" r="78" fill="#F4EEE2" stroke="#B8924A" stroke-width="3.4"/><text x="600" y="494" text-anchor="middle" font-size="22" letter-spacing="3" fill="#B8924A">CAPACITY</text><text x="600" y="522" text-anchor="middle" font-size="12" letter-spacing="3" fill="#0E2032" opacity="0.6">THE SPIN</text></svg>
+      <figcaption class="wheelcap"><b>You&rsquo;re one interconnected system,</b> the best leaders and teams just understand it better. This project is where we learn how they do it.</figcaption>
     </figure>
   </div>
 </section>
 
+<figure class="band">
+  <img src="https://taylored.health/wp-content/uploads/2026/06/lcp-leaders.jpg" alt="Two leaders, pensive" loading="lazy" decoding="async" style="object-position:top">
+</figure>
+
 <section class="bg2">
-  <div class="wrap center">
-    <p class="eyebrow">One read, every morning</p>
-    <h2 style="max-width:24ch;margin-left:auto;margin-right:auto">Four states. One directive.</h2>
-    <p style="max-width:38rem;margin-left:auto;margin-right:auto">No dashboards to interpret before coffee. ExecOS reads the wheel and hands you the day&rsquo;s state, what to spend, what to protect, in plain words.</p>
-    <div class="states">
-      <div class="state-card"><span class="sw">Peak</span><p>A strong day. Spend it on the work that moves the company.</p></div>
-      <div class="state-card"><span class="sw">Steady</span><p>The wheel is turning clean. Hold the cadence and bank the gains.</p></div>
-      <div class="state-card"><span class="sw">Conserve</span><p>Load is outrunning recovery. Protect the mornings, cut the edges.</p></div>
-      <div class="state-card"><span class="sw">Restore</span><p>The wheel needs slack to rebuild. Recovery is the work today.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="bandbg">
   <div class="wrap">
-    <p class="eyebrow">Underneath the directive</p>
-    <div class="imgtext rev">
-      <figure class="shot">
-        <div class="bar"><i></i><i></i><i></i><span>ExecOS &middot; Trends</span></div>
-        <img src="https://taylored.health/wp-content/uploads/2026/07/execos-embed-02.png" alt="ExecOS trends: HRV, resting heart rate and activity indexed to baseline across months" loading="lazy" style="filter:none;aspect-ratio:auto;border:0">
-      </figure>
+    <p class="eyebrow">What this project is</p>
+    <div class="grid2">
+      <h2>A collaborative exploration of how real leaders <em>carry the load.</em></h2>
       <div>
-        <h2>The trend underneath the day.</h2>
-        <p>A single morning read is only as honest as the data underneath it. ExecOS indexes your recovery, heart rate, sleep and activity against your own baseline and holds the trend all year, so a rough week reads as a rough week, not a new normal.</p>
-        <p>Between testing rounds, this is what keeps your plan honest: your advisors watch the same trends from their side, and micro-correct before drift becomes a quarter.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="bg0">
-  <div class="wrap center">
-    <p class="eyebrow">Real Impact</p>
-    <h2 style="max-width:24ch;margin-left:auto;margin-right:auto">Her actual ExecOS, <em>this morning.</em></h2>
-    <p style="max-width:40rem;margin-left:auto;margin-right:auto">Not a mockup. This is Rachel&rsquo;s own account, the same read she wakes to: one state, one directive, on the tablet and in her pocket.</p>
-    <div class="ri-stage">
-      <div class="ri-ipad">
-        <img src="assets/execos-ipad.jpg" alt="Rachel&rsquo;s ExecOS on iPad: Good afternoon, Rachel, with the Conserve state and the day&rsquo;s directive" loading="lazy">
-      </div>
-      <div class="ri-iphone">
-        <img src="assets/execos-iphone.jpg" alt="Rachel&rsquo;s ExecOS on iPhone: the Conserve directive in her pocket" loading="lazy">
-      </div>
-    </div>
-    <p class="ri-cap">Rachel Taylor&rsquo;s ExecOS &middot; Today &middot; iPad &amp; iPhone</p>
-  </div>
-</section>
-
-<section class="bg2" id="getit">
-  <div class="wrap">
-    <p class="eyebrow">How you get it</p>
-    <h2>ExecOS isn&rsquo;t sold. <em>It&rsquo;s included.</em></h2>
-    <p style="max-width:38rem">ExecOS is the delivery layer under everything we do, not a product on its own. It arrives loaded with your data, because without your diagnostics it would just be another dashboard.</p>
-    <div class="ways">
-      <div class="way">
-        <span class="kv">Ten weeks</span>
-        <h3>With the Executive Audit</h3>
-        <p>The measured way in. Your genetics, bloods, glucose and wearable land in ExecOS as they&rsquo;re read, and the daily directive runs from week one.</p>
-        <a class="tlink" href="https://taylored.health/executive-audit/">The Executive Audit <span class="arr">&rarr;</span></a>
-      </div>
-      <div class="way">
-        <span class="kv">Twelve months</span>
-        <h3>With the Private Advisory</h3>
-        <p>The flagship. ExecOS carries your Personal Performance Blueprint all year, and both founders watch the same picture from their side.</p>
-        <a class="tlink" href="https://taylored.health/private-advisory/">The Private Advisory <span class="arr">&rarr;</span></a>
+        <p class="deck">Not a hero narrative. A shared investigation of the patterns that matter, drawn from the leaders who live them.</p>
+        <ul class="themes">
+          <li>Build and protect energy</li>
+          <li>Navigate the internal cost of leadership</li>
+          <li>Sustain clarity under pressure</li>
+          <li>Recover, reset and stay grounded</li>
+          <li>Maintain purpose, humanity and effectiveness over time</li>
+          <li>Evolve their leadership without burning out</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -452,30 +372,77 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 
 <section>
   <div class="wrap">
-    <p class="eyebrow">The people behind it</p>
-    <div class="imgtext">
-      <figure>
-        <img src="https://taylored.health/wp-content/uploads/2026/07/execos-embed-05.jpg" alt="Rachel Taylor fitting monitoring equipment during a testing session with Luke Taylor" loading="lazy" style="--focus:center 30%">
-        <figcaption>Testing day. The data in ExecOS starts here.</figcaption>
-      </figure>
+    <p class="eyebrow">What to expect</p>
+    <div class="grid2">
+      <h2>A calm, reflective conversation. No preparation, and <em>no right answers.</em></h2>
       <div>
-        <h2>The software does the synthesis. The advisors make the call.</h2>
-        <p>ExecOS holds the model, runs the numbers and hands you the morning read. But no algorithm tells you to take on a merger or sit one out. Your data is watched by the two people who tested you, and the fortnightly check-in takes five minutes because the synthesis is already done.</p>
-        <a class="tlink" href="https://taylored.health/about/">The two of us <span class="arr">&rarr;</span></a>
+        <p>An honest conversation about the realities of leadership you rarely get asked about. It moves through a handful of themes: the demands of leadership, what it costs you, what restores you, the habits that keep you grounded, how you keep growing, and the honest truth of where it still challenges you.</p>
+        <a class="tlink" href="https://tayloredgroup.notion.site/Leadership-Capacity-Book-Project-Key-Questions-2f50c4b777ff805da4b6c6517a24bf8a" target="_blank" rel="noopener" style="margin-top:1.4rem;display:inline-block">See the full set of questions beforehand <span class="arr">&rarr;</span></a>
+      </div>
+    </div>
+    <div class="factline">
+      <div class="fact"><b>45 to 60 minutes</b><span>Length</span></div>
+      <div class="fact"><b>Zoom or phone</b><span>Format</span></div>
+      <div class="fact"><b>None required</b><span>Preparation</span></div>
+    </div>
+  </div>
+</section>
+
+<figure class="band">
+  <img src="https://taylored.health/wp-content/uploads/2026/06/lcp-podcast-studio.jpg" alt="An empty studio, ready for the next conversation" loading="lazy" decoding="async">
+</figure>
+
+<section class="bg2">
+  <div class="wrap">
+    <p class="eyebrow">Why your voice matters</p>
+    <div class="grid2">
+      <h2>The leaders most worth learning from are usually the ones <em>least likely to put their hand up.</em></h2>
+      <div>
+        <p>Your honest experience, the wins and the hard parts, becomes part of a body of work that helps other leaders carry the load without losing themselves.</p>
+        <p class="pull">It costs you an hour. It could change how a lot of people lead.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="bg0 close-cta">
+<section>
   <div class="wrap">
-    <p class="eyebrow" style="display:inline-flex">Next step</p>
-    <h2>See your own data in it.</h2>
-    <p class="deck">ExecOS starts with a conversation about which engagement fits, the ten-week audit or the twelve-month advisory.</p>
-    <div class="cta-row">
-      <a class="btn" href="https://calendar.app.google/hbAqQpcCyCGTv6BA7">Book a demo</a>
-      <a class="btn-o" href="https://taylored.health/executive-audit/">Start with the audit</a>
+    <p class="eyebrow">Your privacy</p>
+    <div class="grid2">
+      <h2>You choose how your insights are used. Attributed, anonymous, or kept <em>off the record.</em></h2>
+      <div>
+        <p class="deck">Nothing attributed to you will be published without your approval.</p>
+        <p>Your comfort and privacy come first, at every step.</p>
+      </div>
     </div>
+  </div>
+</section>
+
+<section class="note">
+  <div class="wrap">
+    <p class="eyebrow">A note from Rachel</p>
+    <p class="statement">My commitment to you: integrity in how your story is represented, care and confidentiality throughout, and honouring your boundaries.</p>
+    <p>Using your wisdom to support future leaders, with nothing shared beyond what you&rsquo;re comfortable with.</p>
+    <div class="sig">
+      <div class="name">Rachel Taylor</div>
+      <div class="role">Co-Founder &amp; Lead Researcher</div>
+    </div>
+  </div>
+</section>
+
+<section class="bg0 center">
+  <div class="wrap">
+    <p class="eyebrow" style="display:inline-flex">The invitation</p>
+    <h2 style="max-width:16em;margin-left:auto;margin-right:auto">If that&rsquo;s a conversation you&rsquo;d be open to, we&rsquo;d love to <em>have you in this.</em></h2>
+    <div class="cta-row" style="justify-content:center">
+      <a class="btn" href="https://calendar.app.google/rbkUhUneDWnEKRQv9">Find a time to talk</a>
+      <a class="btn-o" href="https://wheel.taylored.health">Or start with the free Capacity Wheel &rarr;</a>
+    </div>
+    <p class="closing-sig">
+      Warmly,<br>
+      <span class="who">Rachel Taylor &amp; Luke Taylor</span><br>
+      Co-Founders, Taylored Health
+    </p>
   </div>
 </section>
 
