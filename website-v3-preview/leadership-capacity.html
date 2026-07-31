@@ -266,12 +266,13 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 .band{margin:0}
 .band img{display:block;width:100%;height:clamp(19rem,50vh,34rem);object-fit:cover;object-position:center;
   filter:grayscale(1) contrast(1.03) brightness(.88)}
-/* the themes list (no numbers, per house style) */
+/* the themes list (sans, no dividers, matches the other pages) */
 .themes{margin:2rem 0 0;padding:0;list-style:none;max-width:40rem}
-.themes li{position:relative;padding:1.15rem 0 1.15rem 1.9rem;border-bottom:1px solid var(--line);
-  font-family:var(--serif);font-size:clamp(1.08rem,1rem + .55vw,1.34rem);line-height:1.34;color:var(--hd)}
-.themes li:first-child{border-top:1px solid var(--line)}
-.themes li::before{content:"";position:absolute;left:.2rem;top:1.68rem;width:.44rem;height:.44rem;border-radius:50%;background:var(--gold)}
+.themes li{position:relative;padding:.55rem 0 .55rem 1.9rem;
+  font-family:var(--sans);font-size:1.02rem;line-height:1.6;color:var(--tx)}
+.themes li::before{content:"";position:absolute;left:.2rem;top:1.15rem;width:.42rem;height:.42rem;border-radius:50%;background:var(--gold)}
+/* spinning wheel matches home: hide the cycling state captions, keep the spin */
+.wheelwrap .wa-states{display:none}
 .pull{font-family:var(--serif);font-style:italic;color:var(--gold-bright);
   font-size:clamp(1.2rem,1.05rem + .8vw,1.6rem);line-height:1.4;margin:2.6rem 0 0;max-width:30rem}
 /* the note from Rachel band */
@@ -322,8 +323,8 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 <header class="hero hero-sm">
   <div class="hero-glow"></div>
   <div class="hsplit">
-    <div class="hmedia" style="--focus:center 28%">
-      <img src="https://taylored.health/wp-content/uploads/2025/10/Taylored-Health-Hero-Elite-Performance-for-Executives.jpg" alt="A leader, in a quiet moment of thought" fetchpriority="high">
+    <div class="hmedia" style="--focus:72% 30%">
+      <img src="assets/lcp-hero-duo.jpg" alt="A man and a woman, both leaders, in a reflective moment" fetchpriority="high">
     </div>
     <div class="hcopy">
       <p class="eyebrow">The Leadership Capacity Project</p>
@@ -356,15 +357,42 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
     <h2 style="max-width:15em;margin-left:auto;margin-right:auto">Capacity isn&rsquo;t a trait. It&rsquo;s a wheel, and the <em>spin</em> is the thing.</h2>
     <p class="premise">Four factors decide whether you lead from a full tank or an empty one. Your biology shapes your leadership, which drives your behaviour, which builds your environment, which feeds back to your biology. <strong>Being</strong> is biology and environment. <strong>Doing</strong> is leadership and behaviour. Turned one way the wheel builds you. Turned the other it empties you, faster the harder you push.</p>
     <figure class="wheelwrap">
-      <svg viewBox="-90 0 1300 1000" role="img" aria-label="The capacity wheel: Biology at the top, Leadership to the right, Behaviour at the bottom, Environment to the left, turning clockwise as a continuous loop around a central hub marked Capacity. Biology and Environment form Being; Leadership and Behaviour form Doing." font-family="Georgia, 'Times New Roman', serif"><defs><marker id="wheelarrow" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 Z" fill="#B8924A"/></marker></defs><line x1="835" y1="265" x2="365" y2="735" stroke="#B8924A" stroke-width="1" stroke-dasharray="2 9" opacity="0.4"/><text x="262" y="214" text-anchor="middle" font-size="19" letter-spacing="8" font-weight="bold" fill="#B8924A" opacity="0.85">BEING</text><text x="938" y="796" text-anchor="middle" font-size="19" letter-spacing="8" font-weight="bold" fill="#B8924A" opacity="0.85">DOING</text><circle cx="600" cy="500" r="345" fill="none" stroke="#B8924A" stroke-width="0.8" opacity="0.4"/><circle cx="600" cy="500" r="332" fill="none" stroke="#B8924A" stroke-width="3.4"/><circle cx="600" cy="500" r="200" fill="none" stroke="#B8924A" stroke-width="0.7" opacity="0.3"/><g fill="none" stroke="#B8924A" stroke-linecap="round"><path d="M 806,217 A 352,352 0 0 1 874,272" stroke-width="2.6" opacity="0.42"/><path d="M 828,178 A 384,384 0 0 1 882,222" stroke-width="1.8" opacity="0.24"/><path d="M 884,706 A 352,352 0 0 1 821,774" stroke-width="2.6" opacity="0.42"/><path d="M 921,724 A 384,384 0 0 1 858,800" stroke-width="1.8" opacity="0.24"/><path d="M 394,783 A 352,352 0 0 1 326,728" stroke-width="2.6" opacity="0.42"/><path d="M 372,822 A 384,384 0 0 1 318,778" stroke-width="1.8" opacity="0.24"/><path d="M 316,294 A 352,352 0 0 1 379,226" stroke-width="2.6" opacity="0.42"/><path d="M 279,276 A 384,384 0 0 1 342,200" stroke-width="1.8" opacity="0.24"/></g><g stroke="#B8924A" stroke-width="2" opacity="0.85"><line x1="600" y1="426" x2="600" y2="168"/><line x1="600" y1="574" x2="600" y2="832"/><line x1="526" y1="500" x2="268" y2="500"/><line x1="674" y1="500" x2="932" y2="500"/></g><g fill="none" stroke="#B8924A" stroke-width="3" opacity="0.9"><path d="M 678,210 A 300,300 0 0 1 890,422" marker-end="url(#wheelarrow)"/><path d="M 890,578 A 300,300 0 0 1 678,790" marker-end="url(#wheelarrow)"/><path d="M 522,790 A 300,300 0 0 1 310,578" marker-end="url(#wheelarrow)"/><path d="M 310,422 A 300,300 0 0 1 522,210" marker-end="url(#wheelarrow)"/></g><circle cx="600" cy="168" r="7" fill="#B8924A"/><circle cx="932" cy="500" r="7" fill="#B8924A"/><circle cx="600" cy="832" r="7" fill="#B8924A"/><circle cx="268" cy="500" r="7" fill="#B8924A"/><text x="600" y="76" text-anchor="middle" font-size="40" letter-spacing="1.5" fill="#0E2032">Biology</text><text x="978" y="512" text-anchor="start" font-size="40" letter-spacing="1.5" fill="#0E2032">Leadership</text><text x="600" y="952" text-anchor="middle" font-size="40" letter-spacing="1.5" fill="#0E2032">Behaviour</text><text x="222" y="512" text-anchor="end" font-size="40" letter-spacing="1.5" fill="#0E2032">Environment</text><circle cx="600" cy="500" r="78" fill="#F4EEE2" stroke="#B8924A" stroke-width="3.4"/><text x="600" y="494" text-anchor="middle" font-size="22" letter-spacing="3" fill="#B8924A">CAPACITY</text><text x="600" y="522" text-anchor="middle" font-size="12" letter-spacing="3" fill="#0E2032" opacity="0.6">THE SPIN</text></svg>
+      <div class="wheelanim">
+<svg viewBox="-90 0 1300 1080" role="img" aria-label="The capacity wheel: Biology, Leadership, Behaviour and Environment turning as a continuous loop around a central hub marked Capacity. The wheel cycles through its four states: Peak, Steady, Conserve and Restore, spinning fastest at Peak and slowest at Restore." font-family="Georgia, 'Times New Roman', serif">
+<defs><marker id="waarrow" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 Z" fill="#B8924A"/></marker></defs>
+<line x1="835" y1="265" x2="365" y2="735" stroke="#B8924A" stroke-width="1" stroke-dasharray="2 9" opacity="0.4"/>
+<text x="262" y="214" text-anchor="middle" font-size="19" letter-spacing="8" font-weight="bold" fill="#B8924A" opacity="0.85">BEING</text>
+<text x="938" y="796" text-anchor="middle" font-size="19" letter-spacing="8" font-weight="bold" fill="#B8924A" opacity="0.85">DOING</text>
+<circle cx="600" cy="500" r="345" fill="none" stroke="#B8924A" stroke-width="0.8" opacity="0.4"/>
+<circle cx="600" cy="500" r="332" fill="none" stroke="#B8924A" stroke-width="3.4"/>
+<circle cx="600" cy="500" r="200" fill="none" stroke="#B8924A" stroke-width="0.7" opacity="0.3"/>
+<g class="wa-spin">
+<g fill="none" stroke="#B8924A" stroke-linecap="round"><path d="M 806,217 A 352,352 0 0 1 874,272" stroke-width="2.6" opacity="0.42"/><path d="M 828,178 A 384,384 0 0 1 882,222" stroke-width="1.8" opacity="0.24"/><path d="M 884,706 A 352,352 0 0 1 821,774" stroke-width="2.6" opacity="0.42"/><path d="M 921,724 A 384,384 0 0 1 858,800" stroke-width="1.8" opacity="0.24"/><path d="M 394,783 A 352,352 0 0 1 326,728" stroke-width="2.6" opacity="0.42"/><path d="M 372,822 A 384,384 0 0 1 318,778" stroke-width="1.8" opacity="0.24"/><path d="M 316,294 A 352,352 0 0 1 379,226" stroke-width="2.6" opacity="0.42"/><path d="M 279,276 A 384,384 0 0 1 342,200" stroke-width="1.8" opacity="0.24"/></g>
+<g fill="none" stroke="#B8924A" stroke-width="3" opacity="0.9"><path d="M 678,210 A 300,300 0 0 1 890,422" marker-end="url(#waarrow)"/><path d="M 890,578 A 300,300 0 0 1 678,790" marker-end="url(#waarrow)"/><path d="M 522,790 A 300,300 0 0 1 310,578" marker-end="url(#waarrow)"/><path d="M 310,422 A 300,300 0 0 1 522,210" marker-end="url(#waarrow)"/></g>
+<animateTransform attributeName="transform" type="rotate" values="0 600 500; 540 600 500; 810 600 500; 990 600 500; 1080 600 500" keyTimes="0;0.25;0.5;0.75;1" dur="28s" repeatCount="indefinite"/>
+</g>
+<g stroke="#B8924A" stroke-width="2" opacity="0.85"><line x1="600" y1="426" x2="600" y2="168"/><line x1="600" y1="574" x2="600" y2="832"/><line x1="526" y1="500" x2="268" y2="500"/><line x1="674" y1="500" x2="932" y2="500"/></g>
+<circle cx="600" cy="168" r="7" fill="#B8924A"/><circle cx="932" cy="500" r="7" fill="#B8924A"/><circle cx="600" cy="832" r="7" fill="#B8924A"/><circle cx="268" cy="500" r="7" fill="#B8924A"/>
+<text class="wa-lab" x="600" y="76" text-anchor="middle" font-size="44" letter-spacing="1.5">Biology</text>
+<text class="wa-lab" x="978" y="512" text-anchor="start" font-size="44" letter-spacing="1.5">Leadership</text>
+<text class="wa-lab" x="600" y="952" text-anchor="middle" font-size="44" letter-spacing="1.5">Behaviour</text>
+<text class="wa-lab" x="222" y="512" text-anchor="end" font-size="44" letter-spacing="1.5">Environment</text>
+<circle class="wa-hubbg" cx="600" cy="500" r="78" stroke="#B8924A" stroke-width="3.4"/>
+<text x="600" y="494" text-anchor="middle" font-size="22" letter-spacing="3" fill="#B8924A">CAPACITY</text>
+<text class="wa-hubsub" x="600" y="522" text-anchor="middle" font-size="12" letter-spacing="3" opacity="0.6">THE SPIN</text>
+</svg>
+<div class="wa-states" aria-hidden="true">
+<div class="wa-state wa-s1"><span class="wa-word">Peak</span><p>Every factor is feeding the spin. Spend today on the work that moves the company.</p></div>
+<div class="wa-state wa-s2"><span class="wa-word">Steady</span><p>The wheel is turning clean. Hold the cadence and bank the gains.</p></div>
+<div class="wa-state wa-s3"><span class="wa-word">Conserve</span><p>Load is outrunning recovery. Protect the mornings and cut the edges.</p></div>
+<div class="wa-state wa-s4"><span class="wa-word">Restore</span><p>The wheel needs slack to rebuild. Recovery is the work today.</p></div>
+</div>
+</div>
+
       <figcaption class="wheelcap"><b>You&rsquo;re one interconnected system,</b> the best leaders and teams just understand it better. This project is where we learn how they do it.</figcaption>
     </figure>
   </div>
 </section>
-
-<figure class="band">
-  <img src="https://taylored.health/wp-content/uploads/2026/06/lcp-leaders.jpg" alt="Two leaders, pensive" loading="lazy" decoding="async" style="object-position:top">
-</figure>
 
 <section class="bg2">
   <div class="wrap">
@@ -421,7 +449,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
   </div>
 </section>
 
-<section>
+<section class="paper">
   <div class="wrap">
     <p class="eyebrow">Your privacy</p>
     <div class="grid2">
@@ -454,11 +482,6 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
       <a class="btn" href="https://calendar.app.google/rbkUhUneDWnEKRQv9">Find a time to talk</a>
       <a class="btn-o" href="https://wheel.taylored.health">Or start with the free Capacity Wheel &rarr;</a>
     </div>
-    <p class="closing-sig">
-      Warmly,<br>
-      <span class="who">Rachel Taylor &amp; Luke Taylor</span><br>
-      Co-Founders, Taylored Health
-    </p>
   </div>
 </section>
 

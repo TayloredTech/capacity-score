@@ -264,6 +264,19 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 .shot .bar span{font-family:var(--label);font-size:.6rem;letter-spacing:.24em!important;text-transform:uppercase!important;color:var(--tx-faint);margin-left:.6rem}
 .shot img{width:100%;display:block}
 .shot figcaption{font-family:var(--label);font-size:.66rem;letter-spacing:.2em!important;text-transform:uppercase!important;color:var(--tx-faint);padding:.9rem 1rem;text-align:center}
+/* hero: the exec, with the morning read popped out */
+.os-herofig{position:relative;margin:0}
+.os-herofig>img{width:100%;display:block;border:1px solid var(--line);filter:grayscale(1) contrast(1.02) brightness(.94)}
+.os-reading{position:absolute;left:-1.1rem;bottom:-1.4rem;max-width:19rem;
+  background:var(--bg1);border:1px solid var(--line-soft);border-top:3px solid var(--gold);
+  box-shadow:0 34px 74px -22px rgba(0,0,0,.72);padding:1.25rem 1.5rem 1.35rem}
+.osr-kick{display:block;font-family:var(--label);font-size:.62rem;font-weight:600;letter-spacing:.24em!important;
+  text-transform:uppercase!important;color:var(--gold-soft)}
+.osr-state{display:block;font-family:var(--serif);font-size:2.1rem;line-height:1;color:var(--gold-bright);margin:.35rem 0 .55rem}
+.osr-line{margin:0;font-size:.9rem;line-height:1.5;color:var(--tx-dim)}
+@media (max-width:520px){
+  .os-reading{position:static;max-width:none;margin-top:-1px;box-shadow:none}
+}
 /* states */
 .states{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.1rem;margin-top:2.6rem;text-align:center}
 @media (max-width:880px){.states{grid-template-columns:1fr 1fr}}
@@ -346,10 +359,14 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
       </div>
       <p class="proofline"><b>Comes with every engagement</b> <span class="sep">&middot;</span> <b>One directive a day</b> <span class="sep">&middot;</span> <b>Phone, tablet, desktop</b></p>
     </div>
-    <figure class="shot" style="margin:0">
-      <div class="bar"><i></i><i></i><i></i><span>ExecOS &middot; Today</span></div>
-      <img src="https://taylored.health/wp-content/uploads/2026/07/execos-embed-04.png" alt="ExecOS Today: the morning state and directive, with recovery and physical scores beneath" fetchpriority="high">
-    </figure>
+    <div class="os-herofig">
+      <img src="assets/os-exec-hero.jpg" alt="An executive in a reflective moment, the morning read in hand" fetchpriority="high">
+      <div class="os-reading">
+        <span class="osr-kick">Today &middot; your directive</span>
+        <span class="osr-state">Steady</span>
+        <p class="osr-line">The wheel&rsquo;s turning clean. Hold the cadence, and bank the gains.</p>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -471,7 +488,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
     <p class="eyebrow">The people behind it</p>
     <div class="imgtext">
       <figure>
-        <img src="https://taylored.health/wp-content/uploads/2026/07/execos-embed-05.jpg" alt="Rachel Taylor fitting monitoring equipment during a testing session with Luke Taylor" loading="lazy" style="--focus:center 30%">
+        <img src="assets/execos-testing-day.jpg" alt="Luke fitting a continuous glucose sensor on Rachel during a testing session" loading="lazy" style="--focus:center 38%">
         <figcaption>Testing day. The data in ExecOS starts here.</figcaption>
       </figure>
       <div>
