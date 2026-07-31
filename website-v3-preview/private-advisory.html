@@ -276,6 +276,10 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 .levers .kv{margin-bottom:.85rem}
 @media (max-width:880px){.levers{grid-template-columns:1fr 1fr}}
 @media (max-width:520px){.levers{grid-template-columns:1fr}}
+/* four levers on cream (.paper) — cards + text read on light, mirrors the "What's included" paper section */
+.paper .levers .card{background:#fff;border:1px solid var(--paper-line);border-top:2px solid var(--gold-deep)}
+.paper .levers .card p{color:var(--ink-soft)}
+.paper .levers .kv{color:var(--gold-deep)}
 .tests{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:2.6rem}
 .test{background:var(--bg1);padding:clamp(1.2rem,2.4vw,1.8rem)}
 .test svg{width:2.1rem;height:2.1rem;margin-bottom:1rem;fill:none;stroke:var(--gold-soft);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:.9}
@@ -395,7 +399,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
     </div>
 
     <p class="yr-foot">One loop, run every day &middot; deepened every quarter &middot; founder-led all year</p>
-    <a class="tlink" href="https://taylored.health/private-advisory-brochure/" style="margin-top:2.6rem;display:inline-block">The precise detail, stage by stage: read the advisory brochure <span class="arr">&rarr;</span></a>
+    <a class="tlink" href="https://taylored.health/private-advisory-brochure/" style="margin-top:2.6rem;display:inline-block">The precise detail, stage by stage: read the advisory dossier <span class="arr">&rarr;</span></a>
     <script>
     (function(){var w=document.getElementById('yr-wk');if(w){for(var i=0;i<52;i++)w.appendChild(document.createElement('i'));}
     var m=document.getElementById('yr-mo');if(m){for(var j=0;j<12;j++)m.appendChild(document.createElement('i'));}})();
@@ -403,7 +407,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
   </div>
 </section>
 
-<section>
+<section class="paper">
   <div class="wrap center">
     <p class="eyebrow">The four levers</p>
     <h2 style="max-width:22ch;margin-left:auto;margin-right:auto">Your body is a system, not a mystery.</h2>
@@ -449,7 +453,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
       <li>ExecOS, carrying your plan as a daily directive all year</li>
       <li>Year-end verified results and your next-year operating plan</li>
     </ul>
-    <p class="cta-note" style="margin-top:2rem;color:var(--ink-faint)">The investment is AUD $95,000 for the twelve months, taken in full. We discuss it in the first conversation, and if the audit is the better fit we&rsquo;ll say so. The complete detail lives in the <a class="goldlink" href="https://taylored.health/private-advisory-brochure/">advisory brochure</a>.</p>
+    <p class="cta-note" style="margin-top:2rem;color:var(--ink-faint)">The investment is AUD $95,000 for the twelve months, taken in full. We discuss it in the first conversation, and if the audit is the better fit we&rsquo;ll say so. The complete detail lives in the <a class="goldlink" href="https://taylored.health/private-advisory-brochure/">advisory dossier</a>.</p>
   </div>
 </section>
 
