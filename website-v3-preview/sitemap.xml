@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://taylored.health/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://taylored.health/executive-audit/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://taylored.health/private-advisory/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://taylored.health/program/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taylored.health/execos/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://taylored.health/leadership-capacity/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://taylored.health/events/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://taylored.health/results/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taylored.health/about/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taylored.health/apply/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://taylored.health/beacon/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+</urlset>
