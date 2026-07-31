@@ -290,6 +290,23 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 .sform .msg.ok{color:var(--gold-bright)}
 .sform .msg.err{color:#e7b6a0}
 .sform .note{font-size:.82rem;color:var(--tx-faint);margin-top:1rem}
+/* Kit native embed themed to the dark brand */
+.kit-embed .formkit-form{margin:0!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;max-width:none!important}
+.kit-embed .formkit-form [data-style=minimal]{padding:0!important}
+.kit-embed .formkit-fields{display:flex!important;flex-wrap:wrap!important;gap:.7rem!important;margin:0!important}
+.kit-embed .formkit-field{flex:1 1 14rem!important;min-width:0!important;margin:0!important}
+.kit-embed .formkit-input{width:100%!important;font-family:var(--sans)!important;font-size:1rem!important;color:var(--hd)!important;
+  background:rgba(255,255,255,.06)!important;border:1px solid var(--line-soft)!important;border-radius:2px!important;padding:1.02em 1.3em!important;
+  transition:border-color .3s,background .3s!important}
+.kit-embed .formkit-input::placeholder{color:var(--tx-faint)!important}
+.kit-embed .formkit-input:focus{border-color:var(--gold)!important;background:rgba(255,255,255,.1)!important;outline:none!important}
+.kit-embed .formkit-submit{flex:0 0 auto!important;font-family:var(--label)!important;letter-spacing:.14em!important;text-transform:uppercase!important;
+  font-size:.78rem!important;font-weight:600!important;color:var(--ink)!important;background:var(--gold)!important;border:0!important;border-radius:2px!important;
+  padding:1.02em 1.7em!important;cursor:pointer!important;transition:background .3s!important}
+.kit-embed .formkit-submit:hover{background:var(--gold-bright)!important}
+.kit-embed .formkit-submit span{color:var(--ink)!important}
+.kit-embed .formkit-guarantee,.kit-embed .formkit-powered-by-convertkit-container,.kit-embed [data-element=powered-by]{display:none!important}
+.kit-embed .formkit-alert{font-family:var(--sans)!important;color:var(--gold-bright)!important;background:transparent!important;border:0!important;padding:.6rem 0 0!important}
 @media (max-width:840px){.signup figure{order:-1;max-width:30rem}}
 </style>
 </head>
@@ -437,14 +454,10 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
         <p class="launch"><b>2 March 2027</b> <span>Launch day</span></p>
         <h2>Know when there&rsquo;s <em>something worth reading.</em></h2>
         <p>I have been writing Beacon for the better part of a year, drawing on conversations with senior leaders across New Zealand and beyond. It lands on 2 March 2027. If you&rsquo;d like to know when there&rsquo;s something worth reading, an early chapter, a research finding, the launch itself, leave your email below. I won&rsquo;t fill your inbox. I&rsquo;ll only write when there&rsquo;s something real to say.</p>
-        <form class="sform" id="followForm" novalidate>
-          <div class="row">
-            <input type="email" id="email" name="email" placeholder="Email address" autocomplete="email" required aria-label="Email address">
-            <button class="btn" type="submit" id="submitBtn">Keep me posted</button>
-          </div>
-          <p class="msg" id="formMsg" role="status" aria-live="polite"></p>
+        <div class="sform kit-embed">
+          <script async data-uid="7fbf07d1fd" src="https://taylored-health.kit.com/7fbf07d1fd/index.js"></script>
           <p class="note">Early chapters and research notes, only when there&rsquo;s something real. No inbox filler.</p>
-        </form>
+        </div>
       </div>
       <figure>
         <img src="assets/beacon-book.jpg" alt="The Beacon hardcover on a desk" loading="lazy">
@@ -490,42 +503,5 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
   </div>
 </footer>
 
-<script>
-  (function(){
-    var form = document.getElementById('followForm');
-    var input = document.getElementById('email');
-    var btn = document.getElementById('submitBtn');
-    var msg = document.getElementById('formMsg');
-    if(!form) return;
-    function valid(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
-    function mailtoLink(email){
-      return 'mailto:rachel@taylored.health'
-        + '?subject=' + encodeURIComponent('Follow the writing')
-        + '&body=' + encodeURIComponent('Please add me to the list: ' + (email || ''));
-    }
-    function showThanks(){
-      var row = form.querySelector('.row');
-      if(row) row.style.display = 'none';
-      msg.textContent = "Thanks, I'll be in touch when there's something worth reading.";
-      msg.className = 'msg ok';
-    }
-    var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxihOM6DqI2R-Jlov-nmUea5uzmnibMn3Uzei4vOGkcVOOLSRCnPGkF3SZ-XAATiHageQ/exec';
-    form.addEventListener('submit', function(ev){
-      ev.preventDefault();
-      var email = (input.value || '').trim();
-      msg.className = 'msg';
-      if(!valid(email)){
-        msg.textContent = 'Please enter a valid email address.';
-        msg.className = 'msg err';
-        input.focus();
-        return;
-      }
-      if(btn) btn.disabled = true;
-      fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', body: new URLSearchParams({ email: email }) })
-        .then(function(){ showThanks(); })
-        .catch(function(){ window.location.href = mailtoLink(email); showThanks(); });
-    });
-  })();
-</script>
 </body>
 </html>
