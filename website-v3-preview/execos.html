@@ -265,8 +265,8 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 .shot img{width:100%;display:block}
 .shot figcaption{font-family:var(--label);font-size:.66rem;letter-spacing:.2em!important;text-transform:uppercase!important;color:var(--tx-faint);padding:.9rem 1rem;text-align:center}
 /* hero: the exec, with the morning read popped out */
-.os-herofig{position:relative;margin:0}
-.os-herofig>img{width:100%;display:block;border:1px solid var(--line);filter:grayscale(1) contrast(1.02) brightness(.94)}
+.os-herofig{position:relative;margin:0;align-self:stretch;display:flex;min-height:30rem}
+.os-herofig>img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;border:1px solid var(--line);filter:grayscale(1) contrast(1.02) brightness(.94)}
 .os-reading{position:absolute;left:-1.1rem;bottom:-1.4rem;max-width:19rem;
   background:var(--bg1);border:1px solid var(--line-soft);border-top:3px solid var(--gold);
   box-shadow:0 34px 74px -22px rgba(0,0,0,.72);padding:1.25rem 1.5rem 1.35rem}
@@ -285,7 +285,17 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 .state-card .sw{font-family:var(--label);font-weight:600;font-size:1rem;letter-spacing:.3em!important;text-transform:uppercase!important;color:var(--gold-bright);display:inline-flex;align-items:center;gap:.55em;margin-bottom:.9rem}
 .state-card .sw::before{content:"";width:.5em;height:.5em;border-radius:50%;background:var(--gold);flex:none}
 .state-card p{font-size:.94rem;line-height:1.65;color:var(--tx-dim);margin:0 auto;max-width:26ch}
-.state-card:nth-child(2) .sw{opacity:.92}.state-card:nth-child(3) .sw{opacity:.8}.state-card:nth-child(4) .sw{opacity:.68}
+/* each state in its own signature colour (Peak green, Steady blue, Conserve amber, Restore rose) */
+.state-card:nth-child(1){border-top-color:#62c79a}
+.state-card:nth-child(1) .sw{color:#7ad4ac}.state-card:nth-child(1) .sw::before{background:#62c79a}
+.state-card:nth-child(2){border-top-color:#6fb6dd}
+.state-card:nth-child(2) .sw{color:#8ac8e8}.state-card:nth-child(2) .sw::before{background:#6fb6dd}
+.state-card:nth-child(3){border-top-color:#d7a24f}
+.state-card:nth-child(3) .sw{color:#e6bd74}.state-card:nth-child(3) .sw::before{background:#d7a24f}
+.state-card:nth-child(4){border-top-color:#d1707f}
+.state-card:nth-child(4) .sw{color:#df8b98}.state-card:nth-child(4) .sw::before{background:#d1707f}
+/* the wheel here already cycles the states; hide its captions since the cards below repeat them */
+.wheelsec .wa-states{display:none}
 /* wheel on paper */
 .wheelsec .premise{font-size:clamp(1.05rem,1rem + .4vw,1.24rem);line-height:1.7;max-width:40rem;margin:0 auto 2.4rem}
 .wheelfig{margin:0 auto;max-width:44rem}
@@ -539,7 +549,7 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
         <a href="mailto:hello@taylored.health">hello@taylored.health</a>
         <a href="https://calendar.app.google/rbkUhUneDWnEKRQv9">Book a conversation</a>
         <a href="https://www.instagram.com/tayloredhealthhq/">Instagram</a>
-        <a href="https://www.youtube.com/@tayloredhealth">YouTube</a>
+        <a href="https://www.youtube.com/@TayloredLifePodcast">YouTube</a>
       </div>
     </div>
     <div class="foot-base">
