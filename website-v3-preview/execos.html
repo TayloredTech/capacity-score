@@ -254,22 +254,18 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 @media (max-width:560px){.cta-row .btn,.cta-row .btn-o{width:100%}}
 
 /* ---- execos-specific ---- */
-.oshero{background:var(--bg0);position:relative;overflow:hidden}
-.oshero .inner{max-width:71rem;margin:0 auto;display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);gap:clamp(2rem,4vw,4rem);align-items:center;
-  padding:calc(var(--navh) + clamp(3rem,7vh,5.5rem)) var(--pad) clamp(3.4rem,7vh,5.5rem)}
-@media (max-width:900px){.oshero .inner{grid-template-columns:1fr}}
+.oshero{background:var(--bg0)}
 .shot{border:1px solid var(--line);background:var(--band);box-shadow:0 30px 80px rgba(0,0,0,.45)}
 .shot .bar{display:flex;align-items:center;gap:.45rem;padding:.7rem 1rem;border-bottom:1px solid var(--line)}
 .shot .bar i{width:.55rem;height:.55rem;border-radius:50%;background:rgba(217,189,146,.35);display:block}
 .shot .bar span{font-family:var(--label);font-size:.6rem;letter-spacing:.24em!important;text-transform:uppercase!important;color:var(--tx-faint);margin-left:.6rem}
 .shot img{width:100%;display:block}
 .shot figcaption{font-family:var(--label);font-size:.66rem;letter-spacing:.2em!important;text-transform:uppercase!important;color:var(--tx-faint);padding:.9rem 1rem;text-align:center}
-/* hero: the exec, with the morning read popped out */
-.os-herofig{position:relative;margin:0;align-self:stretch;display:flex;min-height:30rem}
-.os-herofig>img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;border:1px solid var(--line);filter:grayscale(1) contrast(1.02) brightness(.94)}
-.os-reading{position:absolute;left:-1.1rem;bottom:-1.4rem;max-width:19rem;
+/* hero: the exec image fills the column (standard .hmedia), the read popped on it */
+.os-hmedia{position:relative}
+.os-reading{position:absolute;right:1.2rem;bottom:1.4rem;max-width:min(19rem,72%);
   background:var(--bg1);border:1px solid var(--line-soft);border-top:3px solid var(--gold);
-  box-shadow:0 34px 74px -22px rgba(0,0,0,.72);padding:1.25rem 1.5rem 1.35rem}
+  box-shadow:0 34px 74px -22px rgba(0,0,0,.72);padding:1.2rem 1.4rem 1.3rem}
 .osr-kick{display:block;font-family:var(--label);font-size:.62rem;font-weight:600;letter-spacing:.24em!important;
   text-transform:uppercase!important;color:var(--gold-soft)}
 .osr-state{display:block;font-family:var(--serif);font-size:2.1rem;line-height:1;color:var(--gold-bright);margin:.35rem 0 .55rem}
@@ -357,10 +353,18 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
 <script>(function(){var n=document.querySelector('.nav');if(!n)return;var f=function(){n.classList.toggle('scrolled',(window.scrollY||document.documentElement.scrollTop)>40);};f();window.addEventListener('scroll',f,{passive:true});})();</script>
 
 
-<header class="oshero">
+<header class="hero hero-sm oshero">
   <div class="hero-glow"></div>
-  <div class="inner">
-    <div class="hcopy" style="padding:0">
+  <div class="hsplit">
+    <div class="hmedia os-hmedia" style="--focus:center 26%">
+      <img src="assets/os-exec-hero.jpg" alt="An executive in a reflective moment, the morning read in hand" fetchpriority="high">
+      <div class="os-reading">
+        <span class="osr-kick">Today &middot; your directive</span>
+        <span class="osr-state">Steady</span>
+        <p class="osr-line">The wheel&rsquo;s turning clean. Hold the cadence, and bank the gains.</p>
+      </div>
+    </div>
+    <div class="hcopy">
       <p class="eyebrow">ExecOS &middot; The delivery layer</p>
       <h1>Your biology, on <em>one screen.</em></h1>
       <p class="lead">ExecOS is how everything we measure reaches your actual day. Genetics, bloods, glucose, sleep and load converge into one state and one directive every morning, on whatever screen you&rsquo;re holding.</p>
@@ -368,14 +372,6 @@ section{padding-top:clamp(3.8rem,7vh,6.2rem);padding-bottom:clamp(3.5rem,6.5vh,5
         <a class="btn" href="https://calendar.app.google/hbAqQpcCyCGTv6BA7">Book a demo</a>
       </div>
       <p class="proofline"><b>Comes with every engagement</b> <span class="sep">&middot;</span> <b>One directive a day</b> <span class="sep">&middot;</span> <b>Phone, tablet, desktop</b></p>
-    </div>
-    <div class="os-herofig">
-      <img src="assets/os-exec-hero.jpg" alt="An executive in a reflective moment, the morning read in hand" fetchpriority="high">
-      <div class="os-reading">
-        <span class="osr-kick">Today &middot; your directive</span>
-        <span class="osr-state">Steady</span>
-        <p class="osr-line">The wheel&rsquo;s turning clean. Hold the cadence, and bank the gains.</p>
-      </div>
     </div>
   </div>
 </header>
