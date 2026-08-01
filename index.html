@@ -168,8 +168,19 @@ h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-heigh
   .pointrow .bibar i{transition:none}
 }
 </style>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TLRP9CF');</script>
+<!-- End Google Tag Manager -->
 </head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TLRP9CF"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 <section id="intro" class="screen active">
   <div class="wrap">
@@ -533,6 +544,17 @@ $("emailForm").onsubmit = (ev) => {
   result = computeCapacity(answers, "assessment", config);
   storeResponse(email, $("fname").value.trim(), result);
   subscribeToKit(email, $("fname").value.trim(), result);
+  // Real completions only. The demo preset path further down must never push this,
+  // or canned runs would land in reporting as real people.
+  try {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: "wheel_complete",
+      capacity_state: result.band || "",
+      push_lever: result.pushLever || "",
+      has_email: Boolean(email),
+    });
+  } catch (e) {}
   renderResult(result);
   show("result");
 };
