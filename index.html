@@ -297,7 +297,7 @@ function computeCapacity(inputs, source, config){
 /* ---------- config (inlined). Statements are the depleted pole;
    `lifts` is the parallel lifted pole for the drag-slider. ---------- */
 const config = {
-  version: "v2.7-wheel",
+  version: "v2.8-wheel",
   instrument: {
     title: "Which Way Is Your Wheel Turning?",
     kicker: "The Capacity Wheel, made personal",
@@ -610,9 +610,16 @@ function subscribeToKit(email, firstName, r){
   // result back to the same idea as the post: default is what runs when there is
   // no capacity to choose. capacityScore is 0-100 where HIGH = good, so a score
   // at or below the midpoint is being run by default rather than by design.
+  // Rachel, 7 Aug: "rotating to the left means it's eroding capacity, draining,
+  // depleting. Rotating to the right is helping to build capacity, to give
+  // energy. We just need to clarify that." So the field states the CONSEQUENCE,
+  // not just the direction. "By default" on its own does not tell anyone they
+  // are losing capacity.
   const byDesign = (r.capacityScore ?? 0) > 50;
-  body.set("fields[wheel_pull]", byDesign ? "to the right, by design"
-                                          : "to the left, by default");
+  body.set("fields[wheel_pull]", byDesign ? "to the right, building capacity"
+                                          : "to the left, draining capacity");
+  body.set("fields[wheel_direction]", byDesign ? "right" : "left");
+  body.set("fields[wheel_effect]", byDesign ? "building capacity" : "draining capacity");
   body.set("fields[wheel_pull_short]", byDesign ? "by design" : "by default");
   fetch(`https://app.kit.com/forms/${config.kit.formId}/subscriptions`, {
     method: "POST", mode: "no-cors",
