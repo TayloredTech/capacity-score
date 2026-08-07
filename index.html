@@ -297,7 +297,7 @@ function computeCapacity(inputs, source, config){
 /* ---------- config (inlined). Statements are the depleted pole;
    `lifts` is the parallel lifted pole for the drag-slider. ---------- */
 const config = {
-  version: "v2.1-wheel",
+  version: "v2.2-wheel",
   instrument: {
     title: "Which Way Is Your Wheel Turning?",
     kicker: "The Capacity Wheel, made personal",
@@ -307,52 +307,52 @@ const config = {
     scale: { min: 1, max: 4, labels: ["Rarely","Sometimes","Often","Almost always"] },
     parts: [
       { factor:"biology", title:"Your state", kind:"outcome",
-        lead:"The body you actually lead from. You cannot push this point directly. It is what the others produce.",
+        lead:"Your body's state. This is the result of your behaviour and your environment, which is why you cannot change it directly.",
         statements:[
-          "By mid-afternoon the tank is empty, even on a day I did everything right.",
-          "I wake and don't feel restored, whatever the hours say.",
-          "At night my mind won't switch off. Wired and tired at once.",
-          "I land the thing I drove for, feel almost nothing, and reach for the next."],
+          "By mid-afternoon I have nothing left, even on a day I did everything right.",
+          "I wake and don't feel restored, no matter how many hours I slept.",
+          "At night my mind won't switch off. Either I can't get to sleep, or I wake and can't get back to sleep.",
+          "I achieve something, feel almost nothing, and push straight on to the next thing."],
         lifts:[
-          "My energy holds through the day, and I finish with something in reserve.",
-          "I wake genuinely restored, ready before my head is.",
-          "When the day's done I can drop out of gear and settle.",
-          "When something good happens, my body lets me feel it."] },
+          "My energy holds through the day and I finish with something left.",
+          "I wake genuinely restored and ready for my day.",
+          "When the day is done, I can find rest and wind down easily.",
+          "When something good happens, I can enjoy it without chasing the next thing too quickly."] },
       { factor:"behaviour", title:"What you do", kind:"lever",
-        lead:"Your behaviour. One of the two points you can actually reach.",
+        lead:"Your behaviour. One of the two things you can directly influence.",
         statements:[
-          "When the load climbs, the first things I drop are the ones that keep me steady.",
-          "Recovery is something I hope for at day's end, not something I've built in.",
+          "When I am under pressure, the things I stop doing are the ones that normally help me manage it.",
+          "Recovery is something I hope for at the end of the day, not something I have built in.",
           "I reach for the phone in the exact moment I could have recovered.",
           "I push through on caffeine or willpower rather than changing anything."],
         lifts:[
-          "The harder it gets, the tighter I hold the basics.",
+          "The bigger the load, the tighter I hold on to the habits that keep me steady.",
           "Recovery is built into my day on purpose.",
-          "In the gaps, I do the thing that refills me.",
-          "I run on things that restore me, not just stimulants and grit."] },
+          "When I have a spare moment, I do the thing that recharges me.",
+          "I make sure I do things that restore me regularly, rather than relying on stimulants and grit."] },
       { factor:"environment", title:"The conditions around you", kind:"lever",
-        lead:"Your environment. The other point you can actually reach.",
+        lead:"Your environment. The situation and the people around you, and the other thing you can influence.",
         statements:[
           "I have no protected pocket of solitude that's mine and defended.",
           "I'm reachable to almost everyone, almost all of the time.",
-          "The pace and noise around me set my state, rather than me setting theirs.",
-          "I carry more than I share; the people who could steady me don't know the half of it."],
+          "The pace and noise around me heavily influence how I feel, rather than me deciding how I show up.",
+          "I carry more than I share with the people around me, including the ones who could help steady me."],
         lifts:[
           "I have space that's genuinely mine, and I defend it.",
           "I decide when I'm reachable, not everyone else.",
           "I set the tone of the rooms I'm in more than they set mine.",
-          "I let the people who can steady me actually in."] },
+          "I let the people who can help steady me know where I am at."] },
       { factor:"leadership", title:"The calls you make", kind:"outcome",
-        lead:"Your leadership. Like your state, an outcome of the wheel, not a lever you force.",
+        lead:"How you show up for your team. Like your biology, this is heavily influenced by your behaviour and your environment.",
         statements:[
           "The harder the pressure, the tighter I grip and the less I let go.",
           "I become the bottleneck the moment the team needs me freed up.",
-          "Under load I get reactive, short, or withdrawn with the people I lead.",
+          "Under load I get reactive, short or withdrawn with the people I lead, or at home.",
           "I'm hardest on the one person I never extend any grace to. Myself."],
         lifts:[
           "Under pressure I can loosen my grip and trust the room.",
-          "When it matters most, I'm freed up for the calls only I can make.",
-          "Under load I stay someone steady for the people I lead.",
+          "When it matters most, I make sure I am freed up for the calls only I can make.",
+          "Under load I stay steady for the people I lead, and at home.",
           "I extend myself the same grace I'd give anyone I lead."] }
     ]
   },
