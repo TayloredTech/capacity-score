@@ -297,7 +297,7 @@ function computeCapacity(inputs, source, config){
 /* ---------- config (inlined). Statements are the depleted pole;
    `lifts` is the parallel lifted pole for the drag-slider. ---------- */
 const config = {
-  version: "v2.8-wheel",
+  version: "v2.9-wheel",
   instrument: {
     title: "Which Way Is Your Wheel Turning?",
     kicker: "The Capacity Wheel, made personal",
@@ -575,7 +575,10 @@ function subscribeToKit(email, firstName, r){
   const heaviest = dragged ? cap(dragged[0]) : lever;
   const body = new URLSearchParams();
   body.set("email_address", email);
-  if (firstName) body.set("fields[first_name]", firstName);
+  // Always send something. The results email greets by name with a bare
+  // {{ subscriber.first_name }} tag (Liquid `default:` filters break when Kit
+  // escapes the quotes inside them), so an empty value would read "Hi ,".
+  body.set("fields[first_name]", firstName || "there");
   body.set("fields[capacity_state]", r.band || "");
   body.set("fields[heaviest_point]", heaviest);
   body.set("fields[push_lever]", lever);
