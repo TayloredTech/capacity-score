@@ -297,7 +297,7 @@ function computeCapacity(inputs, source, config){
 /* ---------- config (inlined). Statements are the depleted pole;
    `lifts` is the parallel lifted pole for the drag-slider. ---------- */
 const config = {
-  version: "v3.1-wheel",
+  version: "v3.2-wheel",
   instrument: {
     title: "Which Way Is Your Wheel Turning?",
     kicker: "The Capacity Wheel, made personal",
@@ -359,14 +359,20 @@ const config = {
   scoring: {
     capacityDivisor: 48, factorDivisor: 12, coherenceDivisor: 50,
     coherenceAffectsScore: false, coherenceBase: 0.85, coherenceCoefficient: 0.15,
-    bands: [ {name:"Restore",min:0}, {name:"Conserve",min:34}, {name:"Steady",min:69}, {name:"Peak",min:85} ],
+    // REBANDED 7 Aug 2026 (Rachel). The old cuts put a dead-centre answer on all
+    // sixteen sliders at 50, which fell in Conserve, so a completely neutral
+    // person was told their wheel was stalling and turning back on them.
+    // Conserve also spanned 34-68, over a third of the scale, which is why 13
+    // of the first 14 finishers all landed there. Now 50 is the FLOOR of Steady:
+    // neutral reads as neutral.
+    bands: [ {name:"Restore",min:0}, {name:"Conserve",min:30}, {name:"Steady",min:50}, {name:"Peak",min:75} ],
     dragBands: [ {name:"Turning with you",min:16}, {name:"Starting to slip",min:32}, {name:"Turning against you",min:48} ],
     pushLever: { compare:["behaviour","environment"], tieBreak:"behaviour" }
   },
   copy: {
     bandReads: {
       Peak: "The wheel is carrying you, and carrying you well. Hold it. The work now is to protect the few things that are keeping it spinning the right way, because the wrong direction arrives quietly and by default, usually right when the load spikes.",
-      Steady: "The wheel is carrying you more than it is costing you. Hold it. The work now is to protect the few things that are keeping it spinning the right way, because the wrong direction arrives quietly and by default, usually right when the load spikes.",
+      Steady: "The wheel is holding, but it is not really turning. You are not losing capacity and you are not building it either. That is a fine place to sit until something changes, and something usually does. A new challenge would need more than you currently have spare, so the work now is to build a little headroom before you need it rather than after.",
       Conserve: "The wheel is stalling and beginning to turn back on you. This is the most useful place to be reading this, because it is early. You can feel the drag but you are not yet underneath it. One deliberate change now is worth ten later.",
       Restore: "The wheel is spinning the wrong way and your own drive is feeding it, because the most driven people spin it fastest. This is not a discipline problem and it will not yield to gripping harder. It is a design problem, and that is good news, because design is fixable."
     },
@@ -625,12 +631,20 @@ function subscribeToKit(email, firstName, r){
   // said "turning to the left, draining your capacity". The same email
   // contradicting itself in two places. Tying both to the band makes that
   // impossible by construction.
-  const byDesign = (r.band === "Steady" || r.band === "Peak");
-  body.set("fields[wheel_pull]", byDesign ? "to the right, building capacity"
-                                          : "to the left, draining capacity");
-  body.set("fields[wheel_direction]", byDesign ? "right" : "left");
-  body.set("fields[wheel_effect]", byDesign ? "building capacity" : "draining capacity");
-  body.set("fields[wheel_pull_short]", byDesign ? "by design" : "by default");
+  // THREE directions, not two (Rachel, 7 Aug): "Perhaps the wheel is not
+  // spinning at all. They're not building but they're not losing." Steady is
+  // genuinely a third state, so it must not claim to be building.
+  var PULL = {
+    Restore:  ["to the left, draining capacity",   "left",  "draining capacity", "by default"],
+    Conserve: ["to the left, draining capacity",   "left",  "draining capacity", "by default"],
+    Steady:   ["steady, holding rather than building", "steady", "holding steady", "by habit"],
+    Peak:     ["to the right, building capacity",  "right", "building capacity", "by design"],
+  };
+  var pull = PULL[r.band] || PULL.Steady;
+  body.set("fields[wheel_pull]", pull[0]);
+  body.set("fields[wheel_direction]", pull[1]);
+  body.set("fields[wheel_effect]", pull[2]);
+  body.set("fields[wheel_pull_short]", pull[3]);
 
   // ── TAG BY STATE (7 Aug 2026) ─────────────────────────────────────────────
   // Kit sequences are drip campaigns: only the FIRST email can send
