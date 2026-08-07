@@ -297,7 +297,7 @@ function computeCapacity(inputs, source, config){
 /* ---------- config (inlined). Statements are the depleted pole;
    `lifts` is the parallel lifted pole for the drag-slider. ---------- */
 const config = {
-  version: "v2.5-wheel",
+  version: "v2.6-wheel",
   instrument: {
     title: "Which Way Is Your Wheel Turning?",
     kicker: "The Capacity Wheel, made personal",
@@ -496,10 +496,14 @@ function wireSlider(el, factor, si){
     knob.classList.toggle("lift", lift);
     poleR.classList.toggle("dim", drag);
     poleL.classList.toggle("dim", lift);
-    track.setAttribute("aria-valuenow", v.toFixed(1));
+    track.setAttribute("aria-valuenow", String(v));
   }
   function commit(v){
-    v = Math.max(-2, Math.min(2, Math.round(v*10)/10));
+    // FIVE POSITIONS, not a fluid slider (Rachel, 7 Aug: "I never needed a fully
+    // fluid slider. It's okay if it's more 5 points. One on each end, one in the
+    // middle and two on either side."). Snapping to -2..2 also removes the source
+    // of the decimals that silently broke the database write for three weeks.
+    v = Math.max(-2, Math.min(2, Math.round(v)));
     rawV[factor][si] = v;
     answers[factor][si] = dragFromV(v);
     paint(v);
