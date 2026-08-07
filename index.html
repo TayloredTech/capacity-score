@@ -297,7 +297,7 @@ function computeCapacity(inputs, source, config){
 /* ---------- config (inlined). Statements are the depleted pole;
    `lifts` is the parallel lifted pole for the drag-slider. ---------- */
 const config = {
-  version: "v2.6-wheel",
+  version: "v2.7-wheel",
   instrument: {
     title: "Which Way Is Your Wheel Turning?",
     kicker: "The Capacity Wheel, made personal",
@@ -583,6 +583,37 @@ function subscribeToKit(email, firstName, r){
   // full per-factor answer set (raw slider values), so the results portal has every answer, not just the outcome
   const detail = FACTORS.map(f => cap(f) + ": " + ((answers[f] || []).map(v => Number.isFinite(v) ? v : "-").join("/"))).join("  |  ");
   body.set("fields[answers_detail]", detail);
+
+  // ── THEIR PAIN, IN THEIR OWN WORDS (7 Aug 2026) ────────────────────────────
+  // Rachel: "we must be able to use their pain points for the sales process,
+  // otherwise our process limps along." answers_detail is raw digits, which is
+  // useless as email copy. These carry the actual statements they dragged
+  // hardest, so the results email and a sales conversation can quote the person
+  // back to themselves instead of naming a factor.
+  const pains = [];
+  (config.instrument.parts || []).forEach(part => {
+    (part.statements || []).forEach((text, i) => {
+      const v = (answers[part.factor] || [])[i];
+      if (Number.isFinite(v)) pains.push({ text, drag: v });
+    });
+  });
+  pains.sort((a, b) => b.drag - a.drag);          // highest drag first
+  const top = pains.filter(p => p.drag >= 3).slice(0, 3);   // only genuine drag
+  top.forEach((p, i) => body.set(`fields[top_pain_${i + 1}]`, p.text));
+  for (let i = top.length; i < 3; i++) body.set(`fields[top_pain_${i + 1}]`, "");
+  // One preformatted block so a single merge tag can drop the whole thing in.
+  body.set("fields[top_pains]", top.map(p => "• " + p.text).join("\n"));
+  body.set("fields[top_pain_count]", String(top.length));
+
+  // Which way the wheel is turning, in Rachel's framing (7 Aug): "right now your
+  // wheel is pulling to the left, by default, or right, by design." Ties the
+  // result back to the same idea as the post: default is what runs when there is
+  // no capacity to choose. capacityScore is 0-100 where HIGH = good, so a score
+  // at or below the midpoint is being run by default rather than by design.
+  const byDesign = (r.capacityScore ?? 0) > 50;
+  body.set("fields[wheel_pull]", byDesign ? "to the right, by design"
+                                          : "to the left, by default");
+  body.set("fields[wheel_pull_short]", byDesign ? "by design" : "by default");
   fetch(`https://app.kit.com/forms/${config.kit.formId}/subscriptions`, {
     method: "POST", mode: "no-cors",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
