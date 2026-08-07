@@ -297,7 +297,7 @@ function computeCapacity(inputs, source, config){
 /* ---------- config (inlined). Statements are the depleted pole;
    `lifts` is the parallel lifted pole for the drag-slider. ---------- */
 const config = {
-  version: "v2.9-wheel",
+  version: "v3.0-wheel",
   instrument: {
     title: "Which Way Is Your Wheel Turning?",
     kicker: "The Capacity Wheel, made personal",
@@ -624,6 +624,24 @@ function subscribeToKit(email, firstName, r){
   body.set("fields[wheel_direction]", byDesign ? "right" : "left");
   body.set("fields[wheel_effect]", byDesign ? "building capacity" : "draining capacity");
   body.set("fields[wheel_pull_short]", byDesign ? "by design" : "by default");
+
+  // ── TAG BY STATE (7 Aug 2026) ─────────────────────────────────────────────
+  // Kit sequences are drip campaigns: only the FIRST email can send
+  // "immediately", every later one waits hours or days behind it. So three
+  // emails in one sequence would make a Steady reader wait a day and a Peak
+  // reader two days for their own results. Unacceptable for a results email.
+  //
+  // Instead each state gets its own single-email sequence, triggered by a tag.
+  // Verified 7 Aug that the PUBLIC form endpoint accepts tags[] without an API
+  // key: a test submission carrying tag 22266620 came back tagged "Wheel: Peak".
+  var KIT_STATE_TAGS = {
+    Restore:  "22266617",
+    Conserve: "22266618",
+    Steady:   "22266619",
+    Peak:     "22266620",
+  };
+  var stateTag = KIT_STATE_TAGS[r.band];
+  if (stateTag) body.set("tags[]", stateTag);
   fetch(`https://app.kit.com/forms/${config.kit.formId}/subscriptions`, {
     method: "POST", mode: "no-cors",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
