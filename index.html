@@ -297,7 +297,7 @@ function computeCapacity(inputs, source, config){
 /* ---------- config (inlined). Statements are the depleted pole;
    `lifts` is the parallel lifted pole for the drag-slider. ---------- */
 const config = {
-  version: "v2.2-wheel",
+  version: "v2.4-wheel",
   instrument: {
     title: "Which Way Is Your Wheel Turning?",
     kicker: "The Capacity Wheel, made personal",
@@ -590,7 +590,11 @@ function subscribeToKit(email, firstName, r){
 function storeResponse(email, firstName, r){
   const row = {
     email: email || null, first_name: firstName || null,
-    answers, part_totals: r.partDrag, total_drag: r.totalDrag,
+    // total_drag is an INTEGER column. The slider went continuous on 21 Jul and
+    // started sending decimals, so every insert since has 400'd with
+    // 'invalid input syntax for type integer' and the .catch below ate it
+    // silently. Full precision is kept in answers/part_totals, which are jsonb.
+    answers, part_totals: r.partDrag, total_drag: Math.round(r.totalDrag),
     capacity_score: r.capacityScore, subscores: r.subscores,
     coherence: +r.coherence.toFixed(4), band: r.band, push_lever: r.pushLever,
     config_version: config.version, user_agent: navigator.userAgent.slice(0,300),
@@ -602,13 +606,58 @@ function storeResponse(email, firstName, r){
     localStorage.setItem(key, JSON.stringify(prev));
   } catch {}
   if (config.storage.endpoint) {
-    fetch(config.storage.endpoint, {
-      method: "POST",
-      headers: { "Content-Type":"application/json", apikey: config.storage.apiKey, Authorization: "Bearer "+config.storage.apiKey, Prefer:"return=minimal" },
-      body: JSON.stringify(row),
-    }).catch(()=>{});
+    // BULLETPROOFING (7 Aug 2026). A single fire-and-forget POST with a silent
+    // catch lost every response from 21 Jul to 7 Aug and nobody could tell,
+    // because the visitor's screen looks identical whether it saved or not.
+    // Now: retry twice with backoff, and if it still fails, park the row in
+    // localStorage under a pending queue that the next visit flushes. The
+    // visitor never sees any of this.
+    postWithRetry(row, 0);
   }
 }
+
+const PENDING_KEY = "capacity_pending_v1";
+
+function postWithRetry(row, attempt) {
+  fetch(config.storage.endpoint, {
+    method: "POST",
+    headers: { "Content-Type":"application/json", apikey: config.storage.apiKey, Authorization: "Bearer "+config.storage.apiKey, Prefer:"return=minimal" },
+    body: JSON.stringify(row),
+  }).then(res => {
+    if (res.ok) return;
+    return res.text().then(t => {
+      console.error("[capacity] store failed", res.status, t);
+      // A 4xx is our bug and will fail identically on retry, so park it at once.
+      if (res.status >= 400 && res.status < 500) return park(row);
+      if (attempt < 2) return setTimeout(() => postWithRetry(row, attempt + 1), 800 * (attempt + 1));
+      park(row);
+    });
+  }).catch(e => {
+    console.error("[capacity] store unreachable", e);
+    if (attempt < 2) setTimeout(() => postWithRetry(row, attempt + 1), 800 * (attempt + 1));
+    else park(row);
+  });
+}
+
+function park(row) {
+  try {
+    const q = JSON.parse(localStorage.getItem(PENDING_KEY) || "[]");
+    q.push({ ...row, parked_at: new Date().toISOString() });
+    localStorage.setItem(PENDING_KEY, JSON.stringify(q.slice(-20)));
+    console.warn("[capacity] response parked for later flush");
+  } catch {}
+}
+
+// Flush anything parked by an earlier visit. Runs once on load, best effort.
+function flushPending() {
+  let q;
+  try { q = JSON.parse(localStorage.getItem(PENDING_KEY) || "[]"); } catch { return; }
+  if (!q.length || !config.storage.endpoint) return;
+  localStorage.removeItem(PENDING_KEY);
+  q.forEach(r => { const { parked_at, ...row } = r; postWithRetry(row, 1); });
+}
+
+try { flushPending(); } catch {}
 
 /* ---------- the wheel (unchanged dark reveal) ---------- */
 const CX = 220, CY = 220;
