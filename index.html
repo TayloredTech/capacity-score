@@ -297,7 +297,7 @@ function computeCapacity(inputs, source, config){
 /* ---------- config (inlined). Statements are the depleted pole;
    `lifts` is the parallel lifted pole for the drag-slider. ---------- */
 const config = {
-  version: "v3.2-wheel",
+  version: "v3.3-wheel",
   instrument: {
     title: "Which Way Is Your Wheel Turning?",
     kicker: "The Capacity Wheel, made personal",
@@ -372,7 +372,7 @@ const config = {
   copy: {
     bandReads: {
       Peak: "The wheel is carrying you, and carrying you well. Hold it. The work now is to protect the few things that are keeping it spinning the right way, because the wrong direction arrives quietly and by default, usually right when the load spikes.",
-      Steady: "The wheel is holding, but it is not really turning. You are not losing capacity and you are not building it either. That is a fine place to sit until something changes, and something usually does. A new challenge would need more than you currently have spare, so the work now is to build a little headroom before you need it rather than after.",
+      Steady: "The wheel is barely turning, and that is not the neutral it looks like. Nothing is actively building your capacity right now, and without something driving it forward, default quietly takes over. So this is not holding, it is edging backwards slowly enough that you would not notice for a while. A new challenge would need more than you currently have spare. The work now is to put one thing back that actively builds, before the next thing arrives and decides for you.",
       Conserve: "The wheel is stalling and beginning to turn back on you. This is the most useful place to be reading this, because it is early. You can feel the drag but you are not yet underneath it. One deliberate change now is worth ten later.",
       Restore: "The wheel is spinning the wrong way and your own drive is feeding it, because the most driven people spin it fastest. This is not a discipline problem and it will not yield to gripping harder. It is a design problem, and that is good news, because design is fixable."
     },
@@ -637,7 +637,8 @@ function subscribeToKit(email, firstName, r){
   var PULL = {
     Restore:  ["to the left, draining capacity",   "left",  "draining capacity", "by default"],
     Conserve: ["to the left, draining capacity",   "left",  "draining capacity", "by default"],
-    Steady:   ["steady, holding rather than building", "steady", "holding steady", "by habit"],
+    Steady:   ["barely turning, and edging backwards without you noticing", "stalling",
+               "slowly losing ground", "by drift"],
     Peak:     ["to the right, building capacity",  "right", "building capacity", "by design"],
   };
   var pull = PULL[r.band] || PULL.Steady;
