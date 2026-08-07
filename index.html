@@ -297,7 +297,7 @@ function computeCapacity(inputs, source, config){
 /* ---------- config (inlined). Statements are the depleted pole;
    `lifts` is the parallel lifted pole for the drag-slider. ---------- */
 const config = {
-  version: "v3.0-wheel",
+  version: "v3.1-wheel",
   instrument: {
     title: "Which Way Is Your Wheel Turning?",
     kicker: "The Capacity Wheel, made personal",
@@ -618,7 +618,14 @@ function subscribeToKit(email, firstName, r){
   // energy. We just need to clarify that." So the field states the CONSEQUENCE,
   // not just the direction. "By default" on its own does not tell anyone they
   // are losing capacity.
-  const byDesign = (r.capacityScore ?? 0) > 50;
+  // ★ DERIVE THIS FROM THE BAND, NOT A SEPARATE THRESHOLD (7 Aug 2026).
+  // It used to be capacityScore > 50, which is a different cut to the band
+  // boundaries. Rachel scored 66: above 50, so the email masthead said "turning
+  // to the right, building capacity", while her band was Conserve so the body
+  // said "turning to the left, draining your capacity". The same email
+  // contradicting itself in two places. Tying both to the band makes that
+  // impossible by construction.
+  const byDesign = (r.band === "Steady" || r.band === "Peak");
   body.set("fields[wheel_pull]", byDesign ? "to the right, building capacity"
                                           : "to the left, draining capacity");
   body.set("fields[wheel_direction]", byDesign ? "right" : "left");
