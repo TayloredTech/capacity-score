@@ -48,6 +48,15 @@ h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-heigh
 #intro .wrap{padding-top:clamp(3rem,10vh,6rem)}
 #intro h1{font-size:clamp(2.1rem,7vw,3.3rem);margin:.9rem 0 1.4rem}
 #intro .lede{font-size:1.08rem;color:var(--cream-soft);max-width:33rem}
+.carry{margin:0 0 1.8rem}
+.carry p{font-size:.95rem;color:var(--cream-soft);margin:0 0 .7rem}
+.carry .opts{display:flex;flex-wrap:wrap;gap:.5rem}
+.carry button{font:inherit;font-size:.88rem;color:var(--cream-soft);background:transparent;
+  border:1px solid var(--rule-l);border-radius:2rem;padding:.45rem 1rem;cursor:pointer;
+  transition:border-color .15s,color .15s,background .15s}
+.carry button:hover{border-color:var(--cream-soft)}
+.carry button[aria-pressed="true"]{border-color:var(--gold,#b8924a);color:var(--cream,#f4efe6);
+  background:rgba(184,146,74,.12)}
 #intro .how{margin:1.6rem 0 2.2rem;padding:1.2rem 0;border-top:1px solid var(--rule-l);border-bottom:1px solid var(--rule-l);font-size:.95rem;color:var(--cream-soft)}
 .brandline{margin-top:3.5rem;font-size:.8rem;color:var(--cream-faint)}
 /* diagnostic */
@@ -189,6 +198,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <h1 id="i-title"></h1>
     <p class="lede" id="i-intro"></p>
     <div class="how" id="i-how"></div>
+    <div class="carry" id="carryHost"></div>
     <button class="btn" id="startBtn"></button>
     <p class="brandline">From Taylored. The biology of leadership, made practical.</p>
   </div>
@@ -297,7 +307,7 @@ function computeCapacity(inputs, source, config){
 /* ---------- config (inlined). Statements are the depleted pole;
    `lifts` is the parallel lifted pole for the drag-slider. ---------- */
 const config = {
-  version: "v3.3-wheel",
+  version: "v3.4-wheel",
   instrument: {
     title: "Which Way Is Your Wheel Turning?",
     kicker: "The Capacity Wheel, made personal",
@@ -346,7 +356,7 @@ const config = {
         lead:"How you show up for your team. Like your biology, this is heavily influenced by your behaviour and your environment.",
         statements:[
           "The harder the pressure, the tighter I grip and the less I let go.",
-          "I become the bottleneck the moment the team needs me freed up.",
+          "I become the bottleneck the moment {whoNeeds} me freed up.",
           "Under load I get reactive, short or withdrawn with the people I lead, or at home.",
           "I'm hardest on the one person I never extend any grace to. Myself."],
         lifts:[
@@ -414,6 +424,30 @@ const config = {
     wobble: { sensitivity:1.0, maxAngleDegrees:6, maxEccentricityPx:5, frequencyHz:0.55 },
     spinUp: { durationMs:2600, easing:"easeOutCubic", arcStaggerMs:180, countUp:true }
   },
+  // ── WHO ARE YOU CARRYING AT WORK? (Rachel, 8 Aug 2026) ────────────────────
+  // "there is a segment that is important... a founder in which they might just
+  // be a founding team, where they still have leadership requirements, but don't
+  // necessarily have direct reports... I don't lead a team anymore in this
+  // particular role, but I'm still completely depleted and I can't really answer
+  // the current questions."
+  //
+  // She is the reader, not an edge case, so this does NOT branch the instrument.
+  // The answer supplies a NOUN. One statement, one place to maintain it, and
+  // every reader sees their own world in it. Sixteen items either way, same four
+  // factors, same divisors, so a founder and a chief executive stay comparable.
+  //
+  // It is also the segmentation she has never had: the Audit pitch to a CEO with
+  // 300 staff is not the pitch to a two-person founding team, and until now the
+  // list could not tell them apart.
+  carry: {
+    label: "Before you start, who are you carrying at work right now?",
+    options: [
+      { key: "team",  label: "A team who report to me",                    whoNeeds: "my team needs" },
+      { key: "build", label: "People I build with, but nobody reports to me", whoNeeds: "the people I build with need" },
+      { key: "solo",  label: "Mostly just me",                             whoNeeds: "my clients need" },
+    ],
+    default: "team",
+  },
   storage: {
     endpoint: "https://gdsdtawkigzpyseavkqp.supabase.co/rest/v1/capacity_responses",
     apiKey: "sb_publishable_9xYl5CzjcQ6cBCEmCfPs5Q_NwI7z_JQ",
@@ -431,6 +465,33 @@ $("i-kicker").textContent = I.kicker;
 $("i-title").textContent = I.title;
 $("i-intro").textContent = I.intro;
 $("i-how").textContent = I.howItWorks;
+// Who are you carrying at work. Defaults to the commonest answer so it never
+// blocks the start — this funnel already leaks and a required field at the top
+// of it would cost more than the segmentation is worth. One tap to change.
+let carryKey = (config.carry && config.carry.default) || "team";
+function carryOption(){
+  return (config.carry.options || []).find(o => o.key === carryKey) || config.carry.options[0];
+}
+// Substitutes the carry noun into any statement carrying a token. Statements
+// without one are returned untouched, which is fifteen of the sixteen.
+function fillTokens(text){
+  return String(text).replace(/\{whoNeeds\}/g, carryOption().whoNeeds);
+}
+(function renderCarry(){
+  const host = $("carryHost");
+  if (!host || !config.carry) return;
+  host.innerHTML = `<p>${config.carry.label}</p><div class="opts">${
+    config.carry.options.map(o =>
+      `<button type="button" data-key="${o.key}" aria-pressed="${o.key === carryKey}">${o.label}</button>`
+    ).join("")}</div>`;
+  host.querySelectorAll("button").forEach(b => {
+    b.onclick = () => {
+      carryKey = b.dataset.key;
+      host.querySelectorAll("button").forEach(x =>
+        x.setAttribute("aria-pressed", String(x.dataset.key === carryKey)));
+    };
+  });
+})();
 $("startBtn").textContent = C.startButton;
 $("e-heading").textContent = C.emailCapture.heading;
 $("e-body").textContent = C.emailCapture.body;
@@ -468,11 +529,11 @@ function renderPart(){
         ${p.statements.map((s, si)=>`
           <div class="sl" data-si="${si}">
             <div class="sl-poles">
-              <div class="pole left"><small>Drags me</small><span>${s}</span></div>
-              <div class="pole right"><small>Lifts me</small><span>${p.lifts[si]}</span></div>
+              <div class="pole left"><small>Drags me</small><span>${fillTokens(s)}</span></div>
+              <div class="pole right"><small>Lifts me</small><span>${fillTokens(p.lifts[si])}</span></div>
             </div>
             <div class="track" tabindex="0" role="slider" aria-valuemin="-2" aria-valuemax="2" aria-valuenow="0"
-                 aria-label="${(s + ' versus ' + p.lifts[si]).replace(/"/g,'&quot;')}">
+                 aria-label="${(fillTokens(s) + ' versus ' + fillTokens(p.lifts[si])).replace(/"/g,'&quot;')}">
               <div class="rail"></div>
               <div class="fill"></div>
               <div class="center"></div>
@@ -603,7 +664,8 @@ function subscribeToKit(email, firstName, r){
   (config.instrument.parts || []).forEach(part => {
     (part.statements || []).forEach((text, i) => {
       const v = (answers[part.factor] || [])[i];
-      if (Number.isFinite(v)) pains.push({ text, drag: v });
+      // fillTokens, or the sales email quotes a sentence with a {whoNeeds} in it.
+      if (Number.isFinite(v)) pains.push({ text: fillTokens(text), drag: v });
     });
   });
   pains.sort((a, b) => b.drag - a.drag);          // highest drag first
@@ -662,6 +724,8 @@ function subscribeToKit(email, firstName, r){
     Steady:   "22266619",
     Peak:     "22266620",
   };
+  body.set("fields[carry]", carryKey);
+  body.set("fields[carry_label]", carryOption().label);
   var stateTag = KIT_STATE_TAGS[r.band];
   if (stateTag) body.set("tags[]", stateTag);
   fetch(`https://app.kit.com/forms/${config.kit.formId}/subscriptions`, {
@@ -682,6 +746,7 @@ function storeResponse(email, firstName, r){
     answers, part_totals: r.partDrag, total_drag: Math.round(r.totalDrag),
     capacity_score: r.capacityScore, subscores: r.subscores,
     coherence: +r.coherence.toFixed(4), band: r.band, push_lever: r.pushLever,
+    carry: carryKey,
     config_version: config.version, user_agent: navigator.userAgent.slice(0,300),
   };
   try {
