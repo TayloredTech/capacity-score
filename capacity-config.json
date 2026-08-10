@@ -1,6 +1,6 @@
 {
+  "_WARNING_DO_NOT_READ_THIS_FILE": "STOP. THIS FILE IS STALE AND NOT USED BY ANYTHING. It is v1.0; the LIVE Capacity Wheel is v3.4-wheel and its config is INLINED in projects/capacity-score/index.html (const config). The live page never fetches this file. Its instrument is WRONG here: the live Wheel pairs each statements[j] DRAG with a lifts[j] LIFT and the user drags a marker between the two ends. This file's 4-point frequency scale does not exist in production. Reading this file has produced false claims to Rachel (9 Aug) and to Luke (11 Aug). Read index.html, or curl https://wheel.taylored.health/.",
   "version": "v1.0",
-
   "instrument": {
     "draft": false,
     "title": "Which Way Is Your Wheel Turning?",
@@ -11,7 +11,12 @@
     "scale": {
       "min": 1,
       "max": 4,
-      "labels": ["Rarely", "Sometimes", "Often", "Almost always"]
+      "labels": [
+        "Rarely",
+        "Sometimes",
+        "Often",
+        "Almost always"
+      ]
     },
     "parts": [
       {
@@ -64,7 +69,6 @@
       }
     ]
   },
-
   "scoring": {
     "capacityDivisor": 48,
     "factorDivisor": 12,
@@ -73,22 +77,45 @@
     "coherenceBase": 0.85,
     "coherenceCoefficient": 0.15,
     "bands": [
-      { "name": "Restore", "min": 0 },
-      { "name": "Conserve", "min": 34 },
-      { "name": "Steady", "min": 69 },
-      { "name": "Peak", "min": 85 }
+      {
+        "name": "Restore",
+        "min": 0
+      },
+      {
+        "name": "Conserve",
+        "min": 34
+      },
+      {
+        "name": "Steady",
+        "min": 69
+      },
+      {
+        "name": "Peak",
+        "min": 85
+      }
     ],
     "dragBands": [
-      { "name": "Turning with you", "min": 16 },
-      { "name": "Starting to slip", "min": 32 },
-      { "name": "Turning against you", "min": 48 }
+      {
+        "name": "Turning with you",
+        "min": 16
+      },
+      {
+        "name": "Starting to slip",
+        "min": 32
+      },
+      {
+        "name": "Turning against you",
+        "min": 48
+      }
     ],
     "pushLever": {
-      "compare": ["behaviour", "environment"],
+      "compare": [
+        "behaviour",
+        "environment"
+      ],
       "tieBreak": "behaviour"
     }
   },
-
   "copy": {
     "bandReads": {
       "Peak": "The wheel is carrying you, and carrying you well. Hold it. The work now is to protect the few things that are keeping it spinning the right way, because the wrong direction arrives quietly and by default, usually right when the load spikes.",
@@ -131,10 +158,19 @@
     "nextButton": "Next",
     "seeResultButton": "See your wheel"
   },
-
   "wheel": {
-    "factorOrder": ["biology", "leadership", "behaviour", "environment"],
-    "factorAngles": { "biology": 0, "leadership": 90, "behaviour": 180, "environment": 270 },
+    "factorOrder": [
+      "biology",
+      "leadership",
+      "behaviour",
+      "environment"
+    ],
+    "factorAngles": {
+      "biology": 0,
+      "leadership": 90,
+      "behaviour": 180,
+      "environment": 270
+    },
     "factorLabels": {
       "biology": "Biology",
       "leadership": "Leadership",
@@ -147,7 +183,10 @@
       "behaviour": "#d9c9a8",
       "environment": "#8fb3c0"
     },
-    "axisLabels": { "outcomes": "BEING", "levers": "DOING" },
+    "axisLabels": {
+      "outcomes": "BEING",
+      "levers": "DOING"
+    },
     "trackColor": "rgba(243,239,231,0.14)",
     "hubColor": "#f3efe7",
     "spokeColor": "rgba(243,239,231,0.55)",
@@ -155,12 +194,30 @@
     "arcRadius": 158,
     "arcWidth": 13,
     "spinSpeedMap": [
-      { "score": 0, "dps": -14 },
-      { "score": 33, "dps": -4 },
-      { "score": 45, "dps": 3 },
-      { "score": 68, "dps": 12 },
-      { "score": 85, "dps": 22 },
-      { "score": 100, "dps": 34 }
+      {
+        "score": 0,
+        "dps": -14
+      },
+      {
+        "score": 33,
+        "dps": -4
+      },
+      {
+        "score": 45,
+        "dps": 3
+      },
+      {
+        "score": 68,
+        "dps": 12
+      },
+      {
+        "score": 85,
+        "dps": 22
+      },
+      {
+        "score": 100,
+        "dps": 34
+      }
     ],
     "wobble": {
       "sensitivity": 1.0,
@@ -175,7 +232,6 @@
       "countUp": true
     }
   },
-
   "storage": {
     "endpoint": "https://gdsdtawkigzpyseavkqp.supabase.co/rest/v1/capacity_responses",
     "apiKey": "sb_publishable_9xYl5CzjcQ6cBCEmCfPs5Q_NwI7z_JQ",
