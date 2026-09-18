@@ -82,4 +82,34 @@ const partial = computeCapacity({ biology: [2, 2], behaviour: [2, 2, 2, 2], envi
 assert.equal(partial.confidence, "low");
 assert.equal(partial.complete, false);
 
+// --- THE ARROW AND THE WORDS MUST AGREE --------------------------------------
+// ⛔ This exact bug shipped TWICE. 7 Aug: the masthead read `score > 50` while
+// the body read the band, so Rachel's email said "building" at the top and
+// "draining" underneath. 18 Sept: the wheel arrow read `score >= 50` while the
+// paragraph read the band, so a Steady result drew a clockwise sweep over the
+// words "it is edging backwards". Her verdict: "blatantly untrue".
+// Both times two rules described one thing. This pins them together in source.
+const page = readFileSync(new URL("./index.html", import.meta.url), "utf8");
+
+// the arrow spins forwards for exactly Peak and Steady, and reads the BAND
+assert.match(page, /const building = r\.band === "Peak" \|\| r\.band === "Steady";/,
+  "the wheel arrow must derive from the band, never from a bare score threshold");
+assert.match(page, /const marginal = r\.band === "Steady";/,
+  "Steady must draw the short arc (Rachel, 18 Sept: 'only marginal')");
+assert.doesNotMatch(page, /const spin = r\.capacityScore/,
+  "the score threshold arrow is the 18 Sept regression, do not reintroduce it");
+
+// and the email's direction word agrees with it, band for band
+const pullBlock = page.slice(page.indexOf("var PULL = {"), page.indexOf("var pull = PULL["));
+for (const [band, dir] of [["Restore","left"],["Conserve","left"],["Steady","right"],["Peak","right"]]) {
+  const row = pullBlock.match(new RegExp(`${band}:\\s*\\[([^\\]]*)\\]`, "s"));
+  assert.ok(row, `PULL is missing ${band}`);
+  assert.match(row[1], new RegExp(`"${dir}"`),
+    `the ${band} email says the wheel turns a different way to the ${band} arrow`);
+}
+
+// a subscore of exactly 50 still draws something (it read as a broken row)
+assert.match(page, /Math\.max\(1\.5, Math\.min\(50, Math\.abs\(signed\) \* 50\)\)/,
+  "level subscores need a visible floor, not a bare centre line");
+
 console.log("self-check green: all assertions passed (config " + config.version + ")");

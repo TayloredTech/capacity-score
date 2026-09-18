@@ -115,6 +115,7 @@ h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-heigh
 #result .headrow h2{font-size:clamp(1.8rem,5vw,2.4rem)}
 .wheelbox{position:relative;max-width:430px;margin:1.2rem auto .4rem}
 .wheelbox svg{display:block;width:100%;height:auto}
+.scoremeans{font-size:.82rem;line-height:1.5;color:var(--cream-faint);text-align:center;margin:.1rem 0 .9rem;}
 .bandread{max-width:34rem;margin:0 auto;text-align:center;color:var(--cream-soft);font-size:1.02rem}
 .leak{max-width:34rem;margin:.9rem auto 0;text-align:center;font-size:.85rem;color:var(--gold);letter-spacing:.04em}
 .resultcard{max-width:34rem;margin:2.6rem auto 0;padding:1.6rem 1.5rem;background:rgba(243,239,231,.05);border:1px solid var(--rule-l);border-radius:4px}
@@ -242,6 +243,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="bandchip" id="r-band"></span>
     </div>
     <div class="wheelbox"><svg id="wheel" viewBox="0 0 440 440" role="img" aria-label=""></svg></div>
+    <p class="scoremeans" id="r-scoreMeans"></p>
     <p class="bandread" id="r-read"></p>
     <p class="leak" id="r-leak"></p>
 
@@ -380,9 +382,14 @@ const config = {
     pushLever: { compare:["behaviour","environment"], tieBreak:"behaviour" }
   },
   copy: {
+    // ⛔ 18 Sept. The number sat in the hub of the wheel with no explanation at
+    // all. Rachel: "I don't know what the score 64 means at all." Unlabelled it
+    // reads as a mark out of 100 for you as a person, which is the opposite of
+    // a mirror. One plain line, directly under the wheel, before the band read.
+    scoreMeans: "{score} out of 100 is how much of your capacity is currently working for you rather than against you. It is a reading for this month, not a grade.",
     bandReads: {
       Peak: "The wheel is carrying you, and carrying you well. Hold it. The work now is to protect the few things that are keeping it spinning the right way, because the wrong direction arrives quietly and by default, usually right when the load spikes.",
-      Steady: "The wheel is barely turning, and that is not the neutral it looks like. Nothing is actively building your capacity right now, and without something driving it forward, default quietly takes over. So this is not holding, it is edging backwards slowly enough that you would not notice for a while. A new challenge would need more than you currently have spare. The work now is to put one thing back that actively builds, before the next thing arrives and decides for you.",
+      Steady: "You are at capacity. The wheel is turning the right way, but only just, and there is very little in it. That holds while nothing changes. A shift in your environment, or a step up in what your role asks of you, would be enough to cancel out the small gain and start it turning the other way. The work now is to put one thing back that actively builds, so there is something in reserve before the next thing arrives.",
       Conserve: "The wheel is stalling and beginning to turn back on you. This is the most useful place to be reading this, because it is early. You can feel the drag but you are not yet underneath it. One deliberate change now is worth ten later.",
       Restore: "The wheel is spinning the wrong way and your own drive is feeding it, because the most driven people spin it fastest. This is not a discipline problem and it will not yield to gripping harder. It is a design problem, and that is good news, because design is fixable."
     },
@@ -699,8 +706,14 @@ function subscribeToKit(email, firstName, r){
   var PULL = {
     Restore:  ["to the left, draining capacity",   "left",  "draining capacity", "by default"],
     Conserve: ["to the left, draining capacity",   "left",  "draining capacity", "by default"],
-    Steady:   ["barely turning, and edging backwards without you noticing", "stalling",
-               "slowly losing ground", "by drift"],
+    // ⛔ STEADY IS A MARGINAL GAIN, NOT A LOSS (Rachel, 18 Sept 2026). This used
+    // to say "edging backwards without you noticing", which flatly contradicted
+    // the wheel drawn beside it: the arc spins clockwise for Steady. Her ruling:
+    // "Steady should be a very fractionally clockwise spin. Only marginal.
+    // They're just at capacity now but any big changes in their environment or
+    // leadership requirements would offset the marginal gain to default
+    // backwards." So the email says right, and narrow, and conditional.
+    Steady:   ["to the right, but only just",      "right", "holding at capacity", "by a fine margin"],
     Peak:     ["to the right, building capacity",  "right", "building capacity", "by design"],
   };
   var pull = PULL[r.band] || PULL.Steady;
@@ -821,6 +834,7 @@ function renderResult(r){
   $("r-kicker").textContent = C.scoreCaption;
   $("r-heading").textContent = C.resultHeading;
   $("r-band").textContent = r.band;
+  $("r-scoreMeans").textContent = C.scoreMeans.replace("{score}", String(r.capacityScore));
   $("r-read").textContent = C.bandReads[r.band];
   const sorted = Object.entries(r.subscores).sort((a,b)=>a[1]-b[1]);
   const lowest = sorted[0], highest = sorted[sorted.length-1];
@@ -835,7 +849,12 @@ function renderResult(r){
     const sub = r.subscores[f];
     const signed = (sub - 50) / 50;         // -1 full drag .. +1 full lift
     const lift = signed >= 0;
-    const w = Math.min(50, Math.abs(signed) * 50).toFixed(1);
+    // ⛔ 18 Sept: a subscore of EXACTLY 50 computed a width of 0, so the row
+    // drew a bare centre line with no mark on it and read as a rendering
+    // fault rather than as "this one is level". Rachel's Biology was 50 and
+    // she flagged the alignment. A floor of 1.5% gives level its own visible
+    // nub, distinct from both a drag and a lift.
+    const w = Math.max(1.5, Math.min(50, Math.abs(signed) * 50)).toFixed(1);
     // fixed target width; animate scaleX from the centre outward (origin at the centre line)
     // round only the outer/measurement end; keep the centre-line end square
     const side = lift ? `left:50%;transform-origin:left;border-radius:0 4px 4px 0;` : `right:50%;left:auto;transform-origin:right;border-radius:4px 0 0 4px;`;
@@ -867,18 +886,52 @@ function renderResult(r){
 
 function buildWheel(r){
   const svg = $("wheel");
-  svg.setAttribute("aria-label", `Capacity wheel. Score ${r.capacityScore} out of 100, band ${r.band}.`);
+  // the arrow IS the meaning, so a screen reader has to get the direction too
+  const spinWord = r.band === "Peak" ? "turning forwards"
+    : r.band === "Steady" ? "turning forwards, only just"
+    : "turning backwards";
+  svg.setAttribute("aria-label", `Capacity wheel. Score ${r.capacityScore} out of 100, band ${r.band}, ${spinWord}.`);
   const half = W.sectorSpanDegrees/2, R = W.arcRadius;
   const spokes = W.factorOrder.map((f)=>{ const a=W.factorAngles[f]; const [x2,y2]=polar(104,a);
     return `<line x1="${CX}" y1="${CY}" x2="${x2}" y2="${y2}" stroke="${W.spokeColor}" stroke-width="2"/><circle cx="${x2}" cy="${y2}" r="5" fill="${W.factorColors[f]}"/>`; }).join("");
   const ticks = Array.from({length:24},(_,i)=>{ const [x1,y1]=polar(88,i*15),[x2,y2]=polar(96,i*15);
     return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${W.spokeColor}" stroke-width="1.4"/>`; }).join("");
   // ONE bold spin arrow: which way the WHOLE wheel is turning.
-  // clockwise = building (score at/above midpoint), counter-clockwise = depleting (below).
-  const spin = r.capacityScore >= 50 ? 1 : -1;
+  //
+  // ⛔ 18 Sept 2026. This used to read `capacityScore >= 50`, a SEPARATE rule
+  // from the one the copy uses. Steady starts at exactly 50, so every Steady
+  // result drew a confident clockwise "building" sweep while the paragraph
+  // underneath said "it is edging backwards". Rachel scored 64 with all four
+  // subscores at or above centre and the page told her she was going backwards.
+  // Her words: "blatantly untrue".
+  //
+  // The arrow now reads THE BAND, the same source the copy reads, so the two
+  // can never disagree again. Three directions, matching the three she set in
+  // August (left / stalling / right):
+  //
+  //   Peak              full clockwise      actively building
+  //   Steady            MARGINAL clockwise  at capacity, only just gaining
+  //   Conserve/Restore  anticlockwise       draining
+  //
+  // Her ruling on Steady, 18 Sept: "a very fractionally clockwise spin. Only
+  // marginal. They're just at capacity now but any big changes in their
+  // environment or leadership requirements would offset the marginal gain to
+  // default backwards." So Steady is a SHORT arc, not a long one: the direction
+  // is right but there is visibly almost nothing in it.
+  const building = r.band === "Peak" || r.band === "Steady";
+  const marginal = r.band === "Steady";
+  const spin = building ? 1 : -1;
   const gap=38, headDeg=13, hw=15, sw=11, gold="#b8924a";
   const lead = spin>0 ? 360-gap : gap;                 // arrowhead angle
-  const [ba0,ba1] = spin>0 ? [gap, lead-headDeg] : [lead+headDeg, 360-gap]; // shaft body span
+  // The ARROWHEAD stays where it always was, so every state is read the same
+  // way round; only the TAIL is shortened for Steady. Moving the head instead
+  // (the first attempt) slid the whole arc to the far side of the wheel and a
+  // marginal clockwise spin ended up pointing anticlockwise.
+  const fullSpan = 360 - 2*gap - headDeg;
+  const span = marginal ? 70 : fullSpan;               // 70deg reads as "only just"
+  const [ba0,ba1] = spin>0
+    ? [lead - headDeg - span, lead - headDeg]          // clockwise: head at the high end
+    : [lead + headDeg, lead + headDeg + span];         // anticlockwise: head at the low end
   const [tx,ty]=polar(R, lead);
   const baseA = spin>0 ? lead-headDeg : lead+headDeg;
   const [ox,oy]=polar(R+hw, baseA), [ix,iy]=polar(R-hw, baseA);
