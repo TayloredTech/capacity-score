@@ -37,7 +37,12 @@
   --line:rgba(217,189,146,.16); --line-soft:rgba(217,189,146,.28);
   --gold:#b8924a; --gold-soft:#cdaa6b; --gold-bright:#d9c08a; --gold-deep:#9a784b;
   --paper:#f0ede4; --paper-line:#d9d3c4;
-  --ink:#16222e; --ink-soft:#41505c; --ink-faint:#75838d;
+  --ink:#16222e; --ink-soft:#41505c;
+  /* ⚠ --ink-faint measures 3.33:1 on --paper, under the 4.5:1 text floor, and
+     it carries text here. NOT changed locally on purpose: this value comes
+     from taylored.health, so moving it here would re-create exactly the drift
+     this page was realigned to remove. It is a SITE-WIDE decision. */
+  --ink-faint:#75838d;
   --label:'Josefin Sans',Verdana,sans-serif;
   --navh:4.6rem; --pad:clamp(1.25rem,5vw,4.5rem);
 
@@ -46,7 +51,12 @@
   --field:var(--bg1);
   --cream:var(--hd); --cream-soft:var(--tx); --cream-faint:var(--tx-faint);
   --sage:#7fa07a;
-  --gold-ink:#8f6f45;  /* gold for small text on paper: 4.8:1 */
+  /* ⛔ THE COMMENT HERE WAS WRONG AND THE COLOUR FAILED. It claimed 4.8:1 and
+     #8f6f45 actually measures 3.96:1 on --paper, under the 4.5:1 floor for
+     normal text, and this token carries text in five places. Found 28 Sept
+     2026 by a contrast probe that measured rendered pixels instead of trusting
+     the comment. Measured, not asserted: #7d6039 is 4.98:1 on #f0ede4. */
+  --gold-ink:#7d6039;
   --drag-l:#9fb0ba;
   --rule-l:rgba(243,239,231,.16);
   --measure:38rem;
