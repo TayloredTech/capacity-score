@@ -430,11 +430,22 @@ const config = {
     },
     bridge: {
       heading: "This shows you where. It cannot tell you why.",
-      body: "The Capacity Wheel is based on what you can see and feel. It can show you where capacity appears to be getting lost, but it cannot tell you what is driving it underneath. Two people can carry the same workload and respond very differently. Sleep, recovery, glucose, stress physiology, blood chemistry and genetics can all change how that load lands. That is where we go next. Our work adds measurement to the picture so you can stop guessing about what is actually costing you capacity, and what is most worth changing first.",
-      tagline: "30 minutes. No preparation. We will help you work out whether there is anything worth measuring next, and where to start.",
-      ctaLabel: "Talk through my result",
-      ctaUrl: "https://taylored.health/executive-audit/",
-      fieldGuideLabel: "I am not ready to talk yet. Show me how Taylored measures this.",
+      body: "The Capacity Wheel is based on what you can see and feel. It can show you where capacity appears to be getting lost, but it cannot tell you what is driving it underneath. Two people can carry the same workload and respond very differently. Sleep, recovery, glucose, stress physiology, blood chemistry and genetics can all change how that load lands. That is where we go next. You do not need to know how deep to go. Start with the smallest layer that can answer the question in front of you. If it answers it, stop. If it raises a better question, go one layer deeper.",
+      tagline: "If you already wear an Oura or WHOOP, the next answer may be sitting in data you own. 30 days of it, personally reviewed, three changes to test.",
+      ctaLabel: "Review my sleep data",
+      // ⚠ PROVISIONAL DESTINATION, 27 Sept 2026. The label now promises a sleep
+      // review, so the link had to stop pointing at the executive audit page.
+      // Rachel's instruction is that the buy goes to
+      // osleeve.com/products/sleep-score-review, but that page is OSleeve-branded
+      // and currently prices the same review at $119 as an "OSleeve customer
+      // price" with 10 places, while her own field guide prices it at AUD$299.
+      // Sending someone straight from a Taylored result screen to a different
+      // brand at a different price is the kind of thing nobody notices until a
+      // customer does. So this points at the field guide, which explains the
+      // Sleep Score Review in her voice at her price and routes on from there.
+      // SWAP THIS the moment sleep.taylored.health exists.
+      ctaUrl: "https://wheel.taylored.health/field-guide/#sleep-score-review",
+      fieldGuideLabel: "Not ready yet? Read the field guide and see the whole path.",
       fieldGuideUrl: "https://wheel.taylored.health/field-guide/",
       draftNote: "This is an early draft of an idea I'm still shaping in the book. If it lands for you, or if it doesn't, I'd genuinely love to hear.",
       footnote: "A tool for reflection, not a diagnosis."
