@@ -233,14 +233,32 @@ h3{font-size:clamp(1.2rem,3.2vw,1.45rem);margin:0 0 .5rem}
 .chip--conserve{color:var(--clay)}
 .chip--restore{color:var(--drag-l)}
 
-/* contents disclosure */
+/* contents disclosure. every item is a link, so it has to read as tappable
+   before it is tapped: a full row, a hairline under it, a small gold chevron
+   and a 44px target. resting is a faint gold underline, hover goes gold. */
 .toc{margin-top:1.6rem}
 .toc ol{list-style:none;margin:.9rem 0 0;
   columns:2;column-gap:2rem;font-size:.92rem}
-.toc li{break-inside:avoid;margin:0 0 .45rem}
-.toc a{color:var(--cream-soft);text-decoration:none;text-underline-offset:4px;
-  text-decoration-color:var(--rule-l)}
-.toc a:hover{color:var(--gold);text-decoration:underline}
+.toc li{break-inside:avoid;margin:0;border-bottom:1px solid var(--rule-l)}
+.toc a{
+  display:flex;align-items:center;gap:.6rem;
+  min-height:44px;padding:.5rem 0;
+  color:var(--cream);text-decoration:underline;
+  text-decoration-thickness:1px;text-underline-offset:4px;
+  text-decoration-color:rgba(184,146,74,.62);
+  transition:color .18s,text-decoration-color .18s
+}
+.toc a::after{
+  content:"";flex:none;margin-left:auto;margin-right:3px;width:6px;height:6px;
+  border-right:1.6px solid var(--gold);border-top:1.6px solid var(--gold);
+  transform:rotate(45deg);transition:transform .18s
+}
+.toc a:hover,.toc a:focus-visible,.toc a:active{
+  color:var(--gold);text-decoration-color:var(--gold)
+}
+.toc a:hover::after,.toc a:focus-visible::after,.toc a:active::after{
+  transform:translateX(3px) rotate(45deg)
+}
 @media (max-width:560px){.toc ol{columns:1}}
 
 /* ============================================================
@@ -741,7 +759,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </nav>
 
   <details class="toc">
-    <summary>Everything in this guide<svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+    <summary>Quick navigation<svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><use href="#i-chev"/></svg></summary>
     <div class="dbody">
       <ol>
         <li><a href="#the-wheel">What do we mean by capacity?</a></li>
