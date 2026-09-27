@@ -173,6 +173,35 @@ a{color:inherit}
 /* ============================================================
    SECTIONS
    ============================================================ */
+/* on a phone the guide opens as a list of headings rather than one long
+   wall. the fold is built by script, so with no script every section is
+   simply open, which is the old behaviour. */
+.mfold{border:0;margin:0}
+.mfold > summary{
+  padding:.55rem 2rem .55rem 0;position:relative;
+  font-family:inherit;font-size:inherit;font-weight:inherit;color:inherit;
+  display:block;min-height:44px
+}
+.mfold > summary > h2{margin:0}
+.mfold > summary > .deck{margin:.3rem 0 0}
+.mfold > summary::after{
+  content:"";position:absolute;right:.35rem;top:50%;width:9px;height:9px;
+  border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);
+  transform:translateY(-70%) rotate(45deg);transition:transform .25s ease
+}
+.mfold[open] > summary::after{transform:translateY(-20%) rotate(225deg)}
+.mfold > summary:hover::after{border-color:var(--gold-bright)}
+.s--paper .mfold > summary::after,.s--cream .mfold > summary::after{border-color:var(--gold-ink)}
+.mfold-body{padding-top:.5rem}
+.folded > .wrap > .deck,.folded > .wrap--wide > .deck{margin-bottom:.4rem}
+@media (max-width:760px){
+  /* .s.folded, not .folded, so it outranks the .s padding further down */
+  .s.folded{padding-top:1.15rem;padding-bottom:1.15rem}
+  .s.folded[data-open="1"]{padding-bottom:clamp(2.2rem,6vw,3rem)}
+  .s.folded + .s.folded{border-top:1px solid var(--rule-d-soft)}
+  .s--navy.folded + .s.folded,.s--deep.folded + .s.folded{border-top-color:var(--rule-l)}
+  body{line-height:1.6}
+}
 .s{padding:clamp(3rem,8vw,5.5rem) clamp(1.25rem,5vw,2rem)}
 .s--paper{background:var(--paper)}
 .s--cream{background:var(--cream)}
@@ -192,7 +221,7 @@ a{color:inherit}
 
 h2{font-size:clamp(1.65rem,4.6vw,2.3rem);margin:0 0 .9rem}
 h3{font-size:clamp(1.2rem,3.2vw,1.45rem);margin:0 0 .5rem}
-.s p + p{margin-top:.9rem}
+.s p + p{margin-top:.62rem}
 .s h2 + p,.s h3 + p{margin-top:.6rem}
 .s p + h3{margin-top:2rem}
 .s p + h2,.s ul + h2,.s div + h2{margin-top:2.6rem}
@@ -994,8 +1023,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <h3>Peak</h3>
         </div>
         <p class="deck">You have something in reserve.</p>
-        <p>Your current way of operating is supporting the load you are carrying.</p>
-        <p>The temptation here is to assume you have solved it.</p>
+        <p>Your current way of operating is supporting the load you are carrying. The temptation here is to assume you have solved it.</p>
         <p>A better question is:</p>
         <p class="ask">What is working that you need to protect?</p>
         <p style="margin-top:.9rem">Because capacity tends to disappear when the load rises, not when life is easy.</p>
@@ -1007,10 +1035,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <h3>Steady</h3>
         </div>
         <p class="deck">You are holding, but there is not much to spare.</p>
-        <p>Things are mostly working.</p>
-        <p>The issue is margin.</p>
-        <p>A harder quarter, disrupted sleep, more travel, pressure at home or an unexpected problem can quickly consume what is left.</p>
-        <p>This is the time to build reserve before you need it.</p>
+        <p>Things are mostly working. The issue is margin.</p>
+        <p>A harder quarter, disrupted sleep, more travel, pressure at home or an unexpected problem can quickly consume what is left. This is the time to build reserve before you need it.</p>
       </article>
 
       <article class="band band--conserve" id="conserve">
@@ -1019,11 +1045,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <h3>Conserve</h3>
         </div>
         <p class="deck">You are spending capacity faster than you are rebuilding it.</p>
-        <p>You may still be performing well.</p>
-        <p>That is precisely why this state is easy to ignore.</p>
-        <p>The work still gets done. People still rely on you. You can still push when required.</p>
-        <p>But more of your own energy is being used to produce the same result.</p>
-        <p>Leave that equation unchanged for long enough and it becomes your new normal.</p>
+        <p>You may still be performing well. That is precisely why this state is easy to ignore.</p>
+        <p>The work still gets done. People still rely on you. You can still push when required. But more of your own energy is being used to produce the same result. Leave that equation unchanged for long enough and it becomes your new normal.</p>
       </article>
 
       <article class="band band--restore" id="restore">
@@ -1032,9 +1055,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <h3>Restore</h3>
         </div>
         <p class="deck">The current equation is asking for more than it gives back.</p>
-        <p>This is not a sign that you need more discipline.</p>
-        <p>If pushing harder were going to fix it, it probably would have by now.</p>
-        <p>The priority is to work out what is taking so much out of you, reduce the unnecessary load, and start rebuilding.</p>
+        <p>This is not a sign that you need more discipline. If pushing harder were going to fix it, it probably would have by now. The priority is to work out what is taking so much out of you, reduce the unnecessary load, and start rebuilding.</p>
       </article>
 
     </div>
@@ -1175,9 +1196,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <li>Several small things stacking on top of one another?</li>
     </ul>
 
-    <p>That distinction matters.</p>
-    <p>Because changing five things at once may improve your score, but it does not teach you which thing mattered.</p>
-    <p>And if nothing changes, you still do not know why.</p>
+    <p>That distinction matters. Because changing five things at once may improve your score, but it does not teach you which thing mattered. And if nothing changes, you still do not know why.</p>
   </div>
 </section>
 
@@ -1209,7 +1228,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p>The things that may look small on their own but can stack together.</p>
 
     <div class="reviewers">
-      Your data is personally reviewed by <b>Rachel Taylor MSc(Hons)</b>, whose science background spans biochemistry, genetics and toxicology, and <b>Luke Taylor</b>, who specialises in human performance and physiology.
+      Your data is personally reviewed by <b>Rachel Taylor MSc(Hons)</b>, whose science background spans biochemistry, genetics and toxicology, and <b>Luke Taylor PGDip SpSciHP</b>, who specialises in human performance and physiology.
     </div>
 
     <p>Then we meet with you for 30 minutes and explain what we found in plain language.</p>
@@ -1319,9 +1338,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </ul>
         <p style="margin-top:1.2rem">That is when it may be worth measuring another layer.</p>
         <p>We don’t start with every test we know how to run. We add measurement when the previous layer leaves an important question unanswered.</p>
-        <p>That matters to us.</p>
-        <p>More data is not automatically more useful.</p>
-        <p>The right data should reduce uncertainty and make the next decision easier.</p>
+        <p>That matters to us. More data is not automatically more useful. The right data should reduce uncertainty and make the next decision easier.</p>
       </div>
     </div>
   </div>
@@ -1373,9 +1390,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="meta">
             <span class="pricetag">AUD$299</span>
           </div>
-          <p>For Oura and WHOOP users with at least 30 days of data.</p>
-          <p>We look for the patterns behind your sleep and recovery scores and give you three clear changes to test.</p>
-          <p>It is the smallest way to replace guessing with evidence.</p>
+          <p>For Oura and WHOOP users with at least 30 days of data. We look for the patterns behind your sleep and recovery scores and give you three clear changes to test. It is the smallest way to replace guessing with evidence.</p>
           <p class="depth">
             <svg viewBox="0 0 34 14" aria-hidden="true">
               <rect x="0" y="0" width="34" height="2" fill="#b8924a"/>
@@ -1397,9 +1412,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="meta">
             <span class="pricetag">Approximately AUD$2,000 + GST</span>
           </div>
-          <p>If the first layer leaves a bigger question around energy, food, stress or recovery, we add continuous glucose monitoring and read it alongside your wearable and real life over five to six weeks.</p>
-          <p>Two sensor periods let us identify the pattern, make a change, and then see whether your own data proves it worked.</p>
-          <p>The aim is not more information. It is a short list of actions that have earned their place.</p>
+          <p>If the first layer leaves a bigger question around energy, food, stress or recovery, we add continuous glucose monitoring and read it alongside your wearable and real life over five to six weeks. Two sensor periods let us identify the pattern, make a change, and then see whether your own data proves it worked. The aim is not more information. It is a short list of actions that have earned their place.</p>
           <p class="depth">
             <svg viewBox="0 0 34 14" aria-hidden="true">
               <rect x="0" y="0" width="34" height="2" fill="#b8924a"/>
@@ -1424,8 +1437,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <p>This is where we stop looking at one system and connect the whole picture: genetics, blood chemistry, hormones, glucose, sleep, recovery and the load you actually carry.</p>
           <p>Rachel reads it through biology. Luke reads it through performance.</p>
-          <p>Together, we turn it into an Executive Biological Blueprint with the changes most worth making first.</p>
-          <p>For most of our executive clients, this is the deepest measurement they need.</p>
+          <p>Together, we turn it into an Executive Biological Blueprint with the changes most worth making first. For most of our executive clients, this is the deepest measurement they need.</p>
           <p class="depth">
             <svg viewBox="0 0 34 14" aria-hidden="true">
               <rect x="0" y="0" width="34" height="2" fill="#b8924a"/>
@@ -1539,19 +1551,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <details>
       <summary>A note on when a data review is not enough<svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><use href="#i-chev"/></svg></summary>
       <div class="dbody">
-        <p>The Sleep Score Review helps you understand patterns in your sleep and recovery data.</p>
-        <p>It is not medical diagnosis or treatment.</p>
-        <p>If you snore loudly, someone has noticed that you stop breathing while asleep, or you regularly fall asleep during the day, speak with your GP first.</p>
-        <p>Those symptoms deserve proper medical assessment rather than a wearable-data review.</p>
+        <p>The Sleep Score Review helps you understand patterns in your sleep and recovery data. It is not medical diagnosis or treatment.</p>
+        <p>If you snore loudly, someone has noticed that you stop breathing while asleep, or you regularly fall asleep during the day, speak with your GP first. Those symptoms deserve proper medical assessment rather than a wearable-data review.</p>
       </div>
     </details>
 
     <details>
       <summary>What happens to your data?<svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><use href="#i-chev"/></svg></summary>
       <div class="dbody">
-        <p>We use your data only to complete your review.</p>
-        <p>We store it securely and delete it within 90 days, unless you specifically ask us to keep it.</p>
-        <p>We do not sell or share it.</p>
+        <p>We use your data only to complete your review. We store it securely and delete it within 90 days, unless you specifically ask us to keep it. We do not sell or share it.</p>
       </div>
     </details>
 
@@ -1591,11 +1599,49 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
    1. A deep link into a collapsed section has to open it, or the link is broken.
    2. Print opens every section. */
 (function(){
+  /* PHONE FOLD. Everything under a section's heading goes behind that heading,
+     so the page opens as a short scannable list. Desktop is untouched, and the
+     deck line stays outside the fold so each heading keeps its one-line teaser. */
+  function foldForPhones(){
+    if (!window.matchMedia || !window.matchMedia('(max-width:760px)').matches) return;
+    [].slice.call(document.querySelectorAll('section.s')).forEach(function(sec){
+      var wrap = sec.querySelector(':scope > .wrap, :scope > .wrap--wide');
+      if (!wrap) return;
+      var h2 = wrap.querySelector('h2');
+      if (!h2) return;
+      if (wrap.textContent.replace(/\s+/g, ' ').trim().length < 280) return;
+
+      var d = document.createElement('details');
+      d.className = 'mfold';
+      var sum = document.createElement('summary');
+      d.appendChild(sum);
+      wrap.insertBefore(d, wrap.firstChild);
+      sum.appendChild(h2);
+
+      var node = d.nextSibling;
+      while (node) { var nx = node.nextSibling; d.appendChild(node); node = nx; }
+
+      /* the deck is the one line that finishes the heading's thought, so it
+         stays visible and the closed page still says what each section is */
+      var first = sum.nextElementSibling;
+      if (first && first.classList && first.classList.contains('deck')) sum.appendChild(first);
+
+      sec.classList.add('folded');
+      sec.setAttribute('data-open', '0');
+      d.addEventListener('toggle', function(){ sec.setAttribute('data-open', d.open ? '1' : '0'); });
+    });
+  }
+  foldForPhones();
+
   function openTarget(){
     var el = location.hash && document.querySelector(location.hash);
     if (!el) return;
     var d = el.closest ? el.closest('details') : null;
     while (d) { d.open = true; d = d.parentElement && d.parentElement.closest('details'); }
+    /* the target may be the section that now holds a fold, not something inside one */
+    if (el.querySelectorAll) {
+      [].slice.call(el.querySelectorAll('details.mfold')).forEach(function(f){ f.open = true; });
+    }
     el.scrollIntoView();
   }
   window.addEventListener('hashchange', openTarget);
