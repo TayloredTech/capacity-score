@@ -111,6 +111,7 @@ h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-heigh
 #result h2,#result h3{color:var(--cream)}
 #result .wrap{max-width:42rem}
 .bandchip{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--navy-deep);background:var(--gold);border-radius:2px;padding:.3rem .7rem;margin:.8rem 0 0}
+.bandlabel{text-align:center;color:var(--cream);font-size:1.05rem;font-weight:600;margin:.55rem auto 0;max-width:30rem;line-height:1.4}
 #result .headrow{text-align:center}
 #result .headrow h2{font-size:clamp(1.8rem,5vw,2.4rem)}
 .wheelbox{position:relative;max-width:430px;margin:1.2rem auto .4rem}
@@ -241,6 +242,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p class="kicker" id="r-kicker"></p>
       <h2 id="r-heading"></h2>
       <span class="bandchip" id="r-band"></span>
+      <p class="bandlabel" id="r-bandLabel"></p>
     </div>
     <div class="wheelbox"><svg id="wheel" viewBox="0 0 440 440" role="img" aria-label=""></svg></div>
     <p class="scoremeans" id="r-scoreMeans"></p>
@@ -257,6 +259,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h3 id="r-leverHeading"></h3>
       <p id="r-leverIntro"></p>
       <p id="r-leverBody" style="color:var(--cream);font-weight:600"></p>
+    </div>
+
+    <div class="resultcard coherence">
+      <h3 id="r-cohHeading"></h3>
+      <p id="r-cohIntro"></p>
+      <p id="r-cohRead" style="color:var(--cream);font-weight:600"></p>
+    </div>
+
+    <div class="resultcard boat">
+      <h3 id="r-boatHeading"></h3>
+      <p id="r-boatBody"></p>
     </div>
 
     <div class="resultcard bridge">
@@ -313,59 +326,59 @@ const config = {
   instrument: {
     title: "Which Way Is Your Wheel Turning?",
     kicker: "The Capacity Wheel, made personal",
-    intro: "A three minute self read for senior leaders. Not your normal assessment, a mirror. Answer for the month you are actually in, not the one you intend to have. Nobody is marking this but you.",
-    howItWorks: "Sixteen statements, in four parts, one for each point of the wheel. Each runs between two honest ends: one where it drags on you, one where it lifts you. Pull the marker toward whichever is truer right now.",
+    intro: "See whether your current way of working is building your capacity or using it up. Capacity is the energy, focus and steadiness you have available for what work and life ask of you. This three minute check-in shows how your current load is affecting you, and which part of the wheel may be costing you most. Answer for the month you are actually having, not the one you wish you were having. There are no right answers.",
+    howItWorks: "You will see 16 pairs of statements across four areas: your state, your behaviour, your environment and your leadership. Move the marker toward the statement that sounds most like you in a typical month. You are looking for an honest snapshot, not a perfect score.",
     timeframeLabel: "In a typical month",
     scale: { min: 1, max: 4, labels: ["Rarely","Sometimes","Often","Almost always"] },
     parts: [
       { factor:"biology", title:"Your state", kind:"outcome",
-        lead:"Your body's state. This is the result of your behaviour and your environment, which is why you cannot change it directly.",
+        lead:"How your body and mind are responding to the load you are carrying. You can influence this, but you cannot simply tell yourself to feel better.",
         statements:[
-          "By mid-afternoon I have nothing left, even on a day I did everything right.",
-          "I wake and don't feel restored, no matter how many hours I slept.",
-          "At night my mind won't switch off. Either I can't get to sleep, or I wake and can't get back to sleep.",
-          "I achieve something, feel almost nothing, and push straight on to the next thing."],
+          "By mid-afternoon I have run out of energy, even on a day I did everything right.",
+          "I wake up tired, even when I have had enough time to sleep.",
+          "At night, my mind stays switched on. I struggle to fall asleep or get back to sleep.",
+          "When something goes well, I barely enjoy it before moving on to the next thing."],
         lifts:[
-          "My energy holds through the day and I finish with something left.",
-          "I wake genuinely restored and ready for my day.",
-          "When the day is done, I can find rest and wind down easily.",
-          "When something good happens, I can enjoy it without chasing the next thing too quickly."] },
+          "My energy lasts through the day and I still have something left by the evening.",
+          "I usually wake feeling restored and ready for the day.",
+          "At night, I can switch off, settle and sleep.",
+          "I can enjoy a win before moving on."] },
       { factor:"behaviour", title:"What you do", kind:"lever",
-        lead:"Your behaviour. One of the two things you can directly influence.",
+        lead:"The habits and choices that either rebuild your capacity or use it up. This is one of the two parts of the wheel you can change directly.",
         statements:[
-          "When I am under pressure, the things I stop doing are the ones that normally help me manage it.",
-          "Recovery is something I hope for at the end of the day, not something I have built in.",
-          "I reach for the phone in the exact moment I could have recovered.",
-          "I push through on caffeine or willpower rather than changing anything."],
+          "When pressure rises, the habits that help me are the first things I drop.",
+          "Recovery only happens if there is time left at the end of the day.",
+          "When I get a spare moment, I usually reach for my phone instead of doing something that helps me reset.",
+          "I use caffeine or willpower to keep going instead of changing what is draining me."],
         lifts:[
-          "The bigger the load, the tighter I hold on to the habits that keep me steady.",
-          "Recovery is built into my day on purpose.",
-          "When I have a spare moment, I do the thing that recharges me.",
-          "I make sure I do things that restore me regularly, rather than relying on stimulants and grit."] },
-      { factor:"environment", title:"The conditions around you", kind:"lever",
-        lead:"Your environment. The situation and the people around you, and the other thing you can influence.",
+          "When pressure rises, I protect the habits that keep me steady.",
+          "I build recovery into my day on purpose.",
+          "When I get a spare moment, I usually do something that helps me reset.",
+          "I regularly do things that restore my energy rather than relying on caffeine or willpower."] },
+      { factor:"environment", title:"What surrounds you", kind:"lever",
+        lead:"The people, pace and conditions around you. This is the other part of the wheel you can change directly.",
         statements:[
-          "I have no protected pocket of solitude that's mine and defended.",
-          "I'm reachable to almost everyone, almost all of the time.",
-          "The pace and noise around me heavily influence how I feel, rather than me deciding how I show up.",
-          "I carry more than I share with the people around me, including the ones who could help steady me."],
+          "I do not have regular time or space that is protected just for me.",
+          "Other people can reach me almost any time.",
+          "The pace or mood around me strongly affects how I feel and act.",
+          "I keep too much to myself, even from people who could support me."],
         lifts:[
-          "I have space that's genuinely mine, and I defend it.",
-          "I decide when I'm reachable, not everyone else.",
-          "I set the tone of the rooms I'm in more than they set mine.",
-          "I let the people who can help steady me know where I am at."] },
-      { factor:"leadership", title:"The calls you make", kind:"outcome",
-        lead:"How you show up for your team. Like your biology, this is heavily influenced by your behaviour and your environment.",
+          "I have regular time or space that is mine, and I protect it.",
+          "I choose when I am available and when I am not.",
+          "I can stay steady even when the room around me is busy or tense.",
+          "I tell trusted people when I am carrying too much."] },
+      { factor:"leadership", title:"How pressure shows up", kind:"outcome",
+        lead:"How pressure affects the way you lead, respond and make decisions. This is shaped by the other parts of the wheel.",
         statements:[
-          "The harder the pressure, the tighter I grip and the less I let go.",
-          "I become the bottleneck the moment {whoNeeds} me freed up.",
-          "Under load I get reactive, short or withdrawn with the people I lead, or at home.",
-          "I'm hardest on the one person I never extend any grace to. Myself."],
+          "Under pressure, I hold on tighter and find it harder to delegate.",
+          "When pressure rises, I become the person everything has to go through.",
+          "When pressure is high, I become short, reactive or withdrawn at work or at home.",
+          "I give myself less patience than I give the people I lead."],
         lifts:[
-          "Under pressure I can loosen my grip and trust the room.",
-          "When it matters most, I make sure I am freed up for the calls only I can make.",
-          "Under load I stay steady for the people I lead, and at home.",
-          "I extend myself the same grace I'd give anyone I lead."] }
+          "Under pressure, I can still delegate and trust other people.",
+          "When pressure rises, I protect my time for the decisions only I can make.",
+          "When pressure is high, I can still respond calmly at work and at home.",
+          "I give myself the same patience I give other people."] }
     ]
   },
   scoring: {
@@ -386,28 +399,45 @@ const config = {
     // all. Rachel: "I don't know what the score 64 means at all." Unlabelled it
     // reads as a mark out of 100 for you as a person, which is the opposite of
     // a mirror. One plain line, directly under the wheel, before the band read.
-    scoreMeans: "{score} out of 100 is how much of your capacity is currently working for you rather than against you. It is a reading for this month, not a grade.",
-    bandReads: {
-      Peak: "The wheel is carrying you, and carrying you well. Hold it. The work now is to protect the few things that are keeping it spinning the right way, because the wrong direction arrives quietly and by default, usually right when the load spikes.",
-      Steady: "You are at capacity. The wheel is turning the right way, but only just. That holds while nothing changes. A shift in your environment, or a step up in what your role asks, would cancel the small gain and start it turning the other way. Put one thing back that actively builds, so there is something in reserve before the next thing arrives.",
-      Conserve: "The wheel is stalling and beginning to turn back on you. This is the most useful place to be reading this, because it is early. You can feel the drag but you are not yet underneath it. One deliberate change now is worth ten later.",
-      Restore: "The wheel is spinning the wrong way and your own drive is feeding it, because the most driven people spin it fastest. This is not a discipline problem and it will not yield to gripping harder. It is a design problem, and that is good news, because design is fixable."
+    scoreMeans: "Your score summarises your answers for this month. A higher score means your current way of working is supporting you more. A lower score means it is taking more out of you. This is a snapshot, not a grade.",
+    bandLabels: {
+      Peak: "Capacity in reserve.",
+      Steady: "Holding, with limited reserve.",
+      Conserve: "Using more than you are rebuilding.",
+      Restore: "Rebuild first."
     },
-    leverIntro: "You cannot turn this wheel from the top, or order your state to improve. But two points are always within reach, and your scores show which one is dragging hardest.",
+    bandReads: {
+      Peak: "You have capacity in reserve. Your wheel is working with you. Your current habits and environment are helping you meet the load you are carrying while still leaving something in reserve. The goal now is not to change everything. It is to notice what is working and protect it, especially when pressure increases. The thing worth knowing: the wrong direction arrives quietly and by default, usually right when the load spikes. That is the moment the protecting matters.",
+      Steady: "You are holding steady, but there is not a lot to spare. Your wheel is still working with you, but parts of it are taking more than they should. You may be managing the load well today. The risk comes when work or life asks for more and there is nothing extra available. The aim now is to build some reserve before you need it.",
+      Conserve: "You are using capacity faster than you are rebuilding it. Your wheel is starting to work against you. You may still be performing well, but it is costing you more than it should. This is a useful time to act. You still have room to make deliberate changes before recovery becomes the priority.",
+      Restore: "Your current way of working is taking more than it is giving back. Your wheel is working against you. Here is the pattern, because almost nobody sees it in themselves. The people who end up here are usually the most driven ones. When the load rises, the first thing they cut is the thing that was protecting them. The walk. The sleep window. The hour that was theirs. Not the meetings, and not the work. So the drive that makes you good at this is the same drive that is spinning the wheel the wrong way. That is why pushing harder will not solve it. This is not about becoming more disciplined. Something in the way your days, recovery or environment are set up needs to change so you can start rebuilding capacity. That is a design problem, and design is fixable."
+    },
+    leverIntro: "You cannot force your energy, sleep or leadership state to improve on command. But you can change two parts of the wheel directly: what you do, and the conditions around you. Your answers show which one is costing you more right now.",
     leverPrompts: {
-      behaviour: { heading:"Push behaviour first", body:"Put one keystone back, at the same time every day, defended like a meeting you cannot move. The walk, the sleep window, the movement. Not all of them. One, this week." },
-      environment: { heading:"Push environment first", body:"Engineer one protected pocket and guard it. The early hour, the commute, the door closed, the notifications off. Built on purpose, not hoped for at the end of the day." }
+      behaviour: { heading:"Start with what you do", body:"Choose one habit that helps you recover and protect it this week. A consistent sleep window. A walk. Movement. Ten quiet minutes. Not all of them. One thing, done consistently." },
+      environment: { heading:"Start with what surrounds you", body:"Protect one block of time or space where other people cannot reach you. It might be the first hour of the day, the commute, a closed door or notifications turned off. Build it into the day instead of hoping the time appears." }
+    },
+    coherence: {
+      heading: "How even your wheel is",
+      intro: "Two people can score the same and be in completely different situations. One has four points that are all slightly strained. The other has three that are fine and one that is falling over.",
+      even: "Your four points are close together, so your wheel is turning evenly. Nothing is failing on its own. If your score is lower than you would like, it is the whole system carrying a bit too much rather than one part breaking.",
+      uneven: "One point is well out of line with the others. Most of your wheel is doing its job and one part is taking the strain. That is usually easier to fix than it feels, because you are changing one thing rather than everything. It is also the part most likely to give way first if the load rises.",
+      evenThreshold: 0.75
+    },
+    boat: {
+      heading: "Why now rather than later",
+      body: "Picture a boat leaving harbour five degrees off course. After two days you can still see where you meant to be, and the correction is small. After two weeks you are somewhere else entirely. Nothing dramatic happened on any single day. The angle never changed. Time did the work. Capacity behaves the same way. A small correction now is worth far more than a large one later, and the people who leave it longest are usually the ones who could least afford to."
     },
     bridge: {
-      heading: "What this cannot tell you",
-      body: "You can now feel which way your wheel is turning. What it cannot tell you is why. How fast you deplete, how slowly you recover, how hard the same pressure lands on you. That runs below willpower, which is why willpower never reaches it. That is the next layer down.",
-      tagline: "Not more disciplined. Better designed.",
-      ctaLabel: "Talk to us about the Capacity Audit",
+      heading: "This shows you where. It cannot tell you why.",
+      body: "The Capacity Wheel is based on what you can see and feel. It can show you where capacity appears to be getting lost, but it cannot tell you what is driving it underneath. Two people can carry the same workload and respond very differently. Sleep, recovery, glucose, stress physiology, blood chemistry and genetics can all change how that load lands. That is where we go next. Our work adds measurement to the picture so you can stop guessing about what is actually costing you capacity, and what is most worth changing first.",
+      tagline: "30 minutes. No preparation. We will help you work out whether there is anything worth measuring next, and where to start.",
+      ctaLabel: "Talk through my result",
       ctaUrl: "https://taylored.health/executive-audit/",
-      fieldGuideLabel: "New to the wheel? Read the field guide",
+      fieldGuideLabel: "I am not ready to talk yet. Show me how Taylored measures this.",
       fieldGuideUrl: "https://wheel.taylored.health/field-guide/",
       draftNote: "This is an early draft of an idea I'm still shaping in the book. If it lands for you, or if it doesn't, I'd genuinely love to hear.",
-      footnote: "A mirror to think with, not a diagnosis."
+      footnote: "A tool for reflection, not a diagnosis."
     },
     emailCapture: {
       heading: "Your read is ready",
@@ -871,6 +901,19 @@ function renderResult(r){
   const lever = C.leverPrompts[r.pushLever];
   $("r-leverHeading").textContent = lever.heading;
   $("r-leverIntro").textContent = C.leverIntro;
+  // Plain-English band label, directly under the chip (Rachel, 27 Sept 2026):
+  // "someone understands their result before they've read a paragraph".
+  $("r-bandLabel").textContent = (C.bandLabels && C.bandLabels[r.band]) || "";
+  // ★ COHERENCE IS READ, NOT SCORED. `coherence` has always been computed
+  // (it already drives the wheel wobble); `coherenceAffectsScore` stays FALSE
+  // on purpose. Turning that on multiplies every score by 0.85-1.0, which
+  // would silently restate every past result. Showing it needs no such change.
+  $("r-cohHeading").textContent = C.coherence.heading;
+  $("r-cohIntro").textContent = C.coherence.intro;
+  $("r-cohRead").textContent = (r.coherence >= C.coherence.evenThreshold)
+    ? C.coherence.even : C.coherence.uneven;
+  $("r-boatHeading").textContent = C.boat.heading;
+  $("r-boatBody").textContent = C.boat.body;
   $("r-leverBody").textContent = lever.body;
   $("r-bridgeHeading").textContent = C.bridge.heading;
   $("r-bridgeBody").textContent = C.bridge.body;
