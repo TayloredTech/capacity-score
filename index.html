@@ -124,14 +124,46 @@ h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-heigh
 #result .headrow h2{font-size:clamp(1.8rem,5vw,2.4rem)}
 .wheelbox{position:relative;max-width:430px;margin:1.2rem auto .4rem}
 .wheelbox svg{display:block;width:100%;height:auto}
-.scoremeans{font-size:.82rem;line-height:1.5;color:var(--cream-faint);text-align:center;margin:.1rem 0 .9rem;}
-.bandread{max-width:34rem;margin:0 auto;text-align:center;color:var(--cream-soft);font-size:1.02rem}
-.leak{max-width:34rem;margin:.9rem auto 0;text-align:center;font-size:.85rem;color:var(--gold);letter-spacing:.04em}
-.resultcard{max-width:34rem;margin:2.6rem auto 0;padding:1.6rem 1.5rem;background:rgba(243,239,231,.05);border:1px solid var(--rule-l);border-radius:4px}
+/* ⛔ 28 Sept 2026: these three were centred, which left them floating as
+   orphaned ragged blocks between a centred wheel and left-aligned cards. One
+   column means one left edge for everything that is prose. */
+.scoremeans{font-size:.82rem;line-height:1.5;color:var(--cream-faint);text-align:left;margin:.1rem 0 .9rem;}
+.bandread{max-width:none;margin:0;text-align:left;color:var(--cream-soft);font-size:1.02rem}
+.leak{max-width:none;margin:.9rem 0 0;text-align:left;font-size:.85rem;color:var(--gold);letter-spacing:.04em}
+/* every card fills the one column, so the rhythm never goes ragged */
+.resultcard{max-width:none;margin:2.4rem auto 0;padding:1.6rem 1.5rem;background:rgba(243,239,231,.05);border:1px solid var(--rule-l);border-radius:4px}
 .resultcard h3{font-size:1.3rem;margin-bottom:.7rem}
+.cardsub{color:var(--cream-soft);font-size:.95rem;margin:-.35rem 0 1.1rem}
+.evenline{margin-top:1.2rem;padding-top:1.1rem;border-top:1px solid var(--rule-l);color:var(--cream);font-weight:600;font-size:.95rem}
+.cohtab{margin-top:1.2rem;padding-top:1.1rem;border-top:1px solid var(--rule-l)}
+.cohtab summary{cursor:pointer;list-style:none;font-weight:700;font-size:.95rem;color:var(--gold);display:flex;align-items:center;gap:.5rem}
+.cohtab summary::-webkit-details-marker{display:none}
+.cohtab summary::before{content:'+';font-size:1.1rem;line-height:1;width:1rem;flex:none}
+.cohtab[open] summary::before{content:'\2212'}
+.cohtab summary:hover{color:var(--cream)}
+.cohtab .cohbody{margin-top:.8rem}
+/* Steady's label is the longest thing on the screen ("Come back next month and
+   see if it moved"). The button goes full width of the card and the type scales
+   down on a narrow phone so the label stays on ONE line at 375px. */
+.ctablock{margin-top:1.4rem}
+.ctablock .ctabtn{display:block;width:100%;margin-top:0;padding:.95rem .6rem;font-size:.95rem;white-space:nowrap;border:none;font-family:inherit;cursor:pointer}
+.ctablock .ctabtn.longlabel{font-size:clamp(.74rem,3.1vw,.95rem)}
+/* ⛔ a class selector setting display:block beats the browser's own
+   [hidden]{display:none}, so without this the hidden button still renders and
+   Steady showed BOTH calls to action stacked inside one gold block. */
+.ctablock .ctabtn[hidden]{display:none}
+.copynote{font-size:.85rem;color:var(--gold);margin:.7rem 0 0;min-height:1.2em}
+.quietline{margin:.55rem 0 0}
+.quietline a{color:var(--cream-soft);font-size:.88rem;text-decoration:underline;text-underline-offset:3px}
+.quietline a:hover{color:var(--gold)}
+.quietline a[hidden]{display:none}
 .resultcard p{color:var(--cream-soft);font-size:.95rem}
 .resultcard p+p{margin-top:.7rem}
-.pointlegend{display:flex;justify-content:space-between;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cream-faint);margin:.2rem 0 1rem;padding-left:calc(10px + .8rem)}
+/* the two labels were .62rem faint caps and read as furniture. Rachel asked for
+   them noticeably larger, because they are what makes the bars mean anything. */
+.pointlegend{display:flex;justify-content:space-between;font-size:.82rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin:.2rem 0 1.1rem;padding-left:calc(10px + .8rem)}
+.pointlegend .dragside{color:var(--drag-l)}
+.pointlegend .liftside{color:var(--gold)}
 /* The row label is now the plain title people answered under ("How pressure
    shows up"), which will not fit a 7.5rem column beside a bar. The bar drops to
    its own line under the label so nothing ever wraps at any width. */
@@ -153,31 +185,12 @@ h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-heigh
 .fgline a:hover{color:var(--cream)}
 .draftnote{max-width:34rem;margin:2.6rem auto 0;text-align:center;font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:1rem;color:var(--cream-soft);line-height:1.6}
 .footnote{font-size:.78rem;color:var(--cream-faint);text-align:center;margin-top:1.1rem}
+/* ⛔ 28 Sept 2026. A two-column grid used to kick in here. With four cards of
+   unequal height it left big empty holes on one side and orphaned the centred
+   paragraphs in the middle of them. One column, one rhythm, every width. */
 @media (min-width:900px){
-  #result .wrap{
-    max-width:66rem;
-    display:grid;
-    grid-template-columns:minmax(0,26rem) minmax(0,1fr);
-    grid-template-areas:
-      "wheel  head"
-      "wheel  read"
-      "wheel  leak"
-      "points lever"
-      "points bridge"
-      "note   note"
-      "foot   foot";
-    column-gap:clamp(2.5rem,5vw,4.5rem);
-    align-content:start;
-  }
-  #result .draftnote{grid-area:note}
-  #result .headrow{grid-area:head;text-align:left}
-  #result .wheelbox{grid-area:wheel;align-self:center;margin:0;width:100%;max-width:27rem}
-  #result .bandread{grid-area:read;margin:1.2rem 0 0;max-width:none;text-align:left}
-  #result .leak{grid-area:leak;margin:.9rem 0 0;max-width:none;text-align:left}
-  #result .points{grid-area:points;margin:1.8rem 0 0;max-width:none;align-self:start}
-  #result .lever{grid-area:lever}
-  #result .bridge{grid-area:bridge}
-  #result .footnote{grid-area:foot}
+  #result .wrap{max-width:44rem}
+  #result .wheelbox{margin-left:auto;margin-right:auto;max-width:27rem}
 }
 @media (max-width:480px){
   .pole{font-size:.9rem}
@@ -261,27 +274,39 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p class="bandread" id="r-read"></p>
     <p class="leak" id="r-leak"></p>
 
+    <!-- ⛔ 28 Sept 2026. This screen was a two-column grid above 900px with
+         unequal cards, which left large empty holes and orphaned centred text.
+         Rachel: "too much noise on the final end slide. It was awkwardly
+         positioned. Had too much information and wasn't intuitive enough."
+         It is now ONE column on a single vertical rhythm at every width. The
+         boat analogy card is gone. Coherence is a one-liner when the wheel is
+         even and a collapsed tab when it is not. -->
     <div class="resultcard points">
       <h3 id="r-pointsHeading"></h3>
-      <div class="pointlegend"><span>&#9664; Dragging</span><span>Lifting &#9654;</span></div>
+      <p class="cardsub" id="r-pointsSub"></p>
+      <div class="pointlegend"><span class="dragside">&#9664; Dragging</span><span class="liftside">Lifting &#9654;</span></div>
       <div id="pointRows"></div>
+      <p class="evenline" id="r-evenLine" hidden></p>
+      <details class="cohtab" id="r-cohTab" hidden>
+        <summary id="r-cohHeading"></summary>
+        <div class="cohbody">
+          <p id="r-cohIntro"></p>
+          <p id="r-cohRead" style="color:var(--cream);font-weight:600"></p>
+        </div>
+      </details>
     </div>
 
     <div class="resultcard lever">
       <h3 id="r-leverHeading"></h3>
-      <p id="r-leverIntro"></p>
       <p id="r-leverBody" style="color:var(--cream);font-weight:600"></p>
-    </div>
-
-    <div class="resultcard coherence">
-      <h3 id="r-cohHeading"></h3>
-      <p id="r-cohIntro"></p>
-      <p id="r-cohRead" style="color:var(--cream);font-weight:600"></p>
-    </div>
-
-    <div class="resultcard boat">
-      <h3 id="r-boatHeading"></h3>
-      <p id="r-boatBody"></p>
+      <p id="r-leverAction"></p>
+      <div class="ctablock">
+        <button class="ctabtn" type="button" id="r-copyBtn" hidden></button>
+        <a class="ctabtn" id="r-talkBtn" href="#" hidden></a>
+        <p class="copynote" id="r-copyNote" role="status" aria-live="polite"></p>
+        <p class="quietline"><a id="r-mailLink" href="#" hidden></a></p>
+        <p class="quietline"><a id="r-talkLink" href="#" hidden></a></p>
+      </div>
     </div>
 
     <div class="resultcard bridge">
@@ -338,7 +363,11 @@ const config = {
   // until tapped, result rows use the plain part titles. The version is stored
   // on every row, so a band-threshold change has to bump it or two rows with
   // the same score and different bands look like a bug.
-  version: "v3.5-wheel",
+  // v3.6: end screen rebuilt as one column, boat card removed, coherence is a
+  // collapsed tab only when the wheel is uneven, next steps name the reader's
+  // own weakest part, calls to action match the band, and the phone statement
+  // was replaced on both poles.
+  version: "v3.6-wheel",
   instrument: {
     title: "Which Way Is Your Wheel Turning?",
     kicker: "The Capacity Wheel, made personal",
@@ -364,12 +393,20 @@ const config = {
         statements:[
           "When pressure rises, the habits that help me are the first things I drop.",
           "Recovery only happens if there is time left at the end of the day.",
-          "When I get a spare moment, I usually reach for my phone instead of doing something that helps me reset.",
+          // ⛔ 28 Sept 2026, Rachel's wording, verbatim. The old pair named the
+          // phone ("I usually reach for my phone instead of doing something
+          // that helps me reset"). A tester spent 90 seconds on it, read it
+          // four times, said "I really don't understand this one" and "I don't
+          // think I'd do either", then answered it on the drag side, and it was
+          // one of only three answers holding his score down. The item is now
+          // about what happens to the gap, not what you reach for. Same
+          // position, same direction, copy swap on both poles only.
+          "When a gap opens up in my day, I usually fill it straight away.",
           "I use caffeine or willpower to keep going instead of changing what is draining me."],
         lifts:[
           "When pressure rises, I protect the habits that keep me steady.",
           "I build recovery into my day on purpose.",
-          "When I get a spare moment, I usually do something that helps me reset.",
+          "When a gap opens up in my day, I can leave some of it open and let myself reset.",
           "I regularly do things that restore my energy rather than relying on caffeine or willpower."] },
       { factor:"environment", title:"What surrounds you", kind:"lever",
         lead:"The people, pace and conditions around you. This is the other part of the wheel you can change directly.",
@@ -442,22 +479,60 @@ const config = {
       Conserve: "You’re using capacity faster than you’re rebuilding it. Your wheel is starting to work against you. You may still be performing well, but it is costing you more than it should. This is a useful time to act. You still have room to make deliberate changes before recovery becomes the priority.",
       Restore: "Your current way of working is taking more than it is giving back. Your wheel is working against you. Here is the pattern, because almost nobody sees it in themselves. The people who end up here are usually the most driven ones. When the load rises, the first thing they cut is the thing that was protecting them. The walk. The sleep window. The hour that was theirs. Not the meetings, and not the work. So the drive that makes you good at this is the same drive that is spinning the wheel the wrong way. That is why pushing harder will not solve it. This is not about becoming more disciplined. Something in the way your days, recovery or environment are set up needs to change so you can start rebuilding capacity. That is a design problem, and design is fixable."
     },
-    leverIntro: "You cannot force your energy, sleep or leadership state to improve on command. But you can change two parts of the wheel directly: what you do, and the conditions around you. Your answers show which one is costing you more right now.",
-    leverPrompts: {
-      behaviour: { heading:"Start with what you do.", body:"Choose one habit that helps you recover and protect it this week. A consistent sleep window. A walk. Movement. Ten quiet minutes. Not all of them. One thing, done consistently." },
-      environment: { heading:"Start with what surrounds you.", body:"Protect one block of time or space where other people cannot reach you. It might be the first hour of the day, the commute, a closed door or notifications turned off. Build it into the day instead of hoping the time appears." }
+    // ⛔ 28 Sept 2026. The explainer paragraph ("You cannot force your energy...")
+    // is GONE. Rachel asked for the action only. The next step is now keyed to
+    // the reader's OWN lowest part rather than a generic habit line, because
+    // they have just told us which one it is. Peak is the exception: its job is
+    // to keep the thing that is working, so Peak names the STRONGEST part.
+    nextSteps: {
+      heading: "What Are Your Next Steps?",
+      byBand: {
+        Peak:     "Keep what is working. Right now the part lifting you most is {high}. Name the one habit that keeps it there, and protect it when the load rises. Come back in a few months and see if it held.",
+        Steady:   "Build some reserve, and start with {low}. That is the part carrying the most drag right now.",
+        Conserve: "Protect one thing this week, and start with {low}. That is the part carrying the most drag right now. Come back in a month and see if it moved.",
+        Restore:  "Rebuild first, and start with {low}. That is the part carrying the most drag right now. Come back in a month and see if it moved."
+      },
+      // one action per part, so the step matches the part the reader is weakest in
+      byFactor: {
+        biology: "Pick one thing that changes how you feel by mid-afternoon. A fixed sleep window, or twenty minutes outside in daylight. Same time every day, and give it two weeks before you judge it.",
+        behaviour: "Put one habit back at the same time every day and defend it like a meeting you cannot move. The walk, the sleep window, the movement. One, this week.",
+        environment: "Take one block of time or space where other people cannot reach you. The first hour, the commute, a closed door, notifications off. Put it in the diary instead of hoping it appears.",
+        leadership: "Pick the one conversation each week where the pressure shows up most, and change how you go into it. Five quiet minutes beforehand, and one sentence on what you actually need from it."
+      }
     },
+    // The primary action has to match what the reader just reported. Someone at
+    // Peak or Steady told us they have no problem, so "Talk through my result"
+    // is the wrong thing to put a gold button on. It drops to a text link.
+    ctas: {
+      talkLabel: "Talk through my result",
+      // canonical, estate/registry/surface--booking-general.yaml, verified 28 Sept 2026.
+      // ⛔ NOT the Sleep Score Review schedule (fCGESrAbvRYCCNN47).
+      talkUrl: "https://calendar.app.google/rbkUhUneDWnEKRQv9",
+      shareLabel: "Share the wheel",
+      returnLabel: "Come back next month and see if it moved",
+      shareUrl: "https://wheel.taylored.health/",
+      copiedShare: "Link copied. Send it to whoever came to mind.",
+      copiedReturn: "Link copied. Put it in your calendar for a month from now.",
+      copyFailed: "Copy did not work here. The link is wheel.taylored.health",
+      mailLabel: "or email it",
+      mailSubject: "The Capacity Wheel",
+      // ⛔ NEVER "40 global leaders". The cohort is 34 of 40 in New Zealand,
+      // four countries. Rachel has ruled on this before.
+      mailBody: "I just did this. Sixteen questions, about three minutes, and it shows you which way your capacity is turning. It comes out of interviews with 40 senior leaders.\n\nhttps://wheel.taylored.health/"
+    },
+    // ⛔ 28 Sept 2026. This was an open card that showed on every result and
+    // spent three sentences explaining itself before saying anything about the
+    // reader. It now shows ONLY when the wheel is actually uneven, and then as
+    // a collapsed tab. An even wheel gets the single line below, under the map.
     coherence: {
       heading: "How even your wheel is",
       intro: "Two people can score the same and be in completely different situations. One has four points that are all slightly strained. The other has three that are fine and one that is falling over.",
-      even: "Your four points are close together, so your wheel is turning evenly. Nothing is failing on its own. If your score is lower than you would like, it is the whole system carrying a bit too much rather than one part breaking.",
+      evenLine: "Your four parts are close together, so nothing is failing on its own.",
       uneven: "One point is well out of line with the others. Most of your wheel is doing its job and one part is taking the strain. That is usually easier to fix than it feels, because you are changing one thing rather than everything. It is also the part most likely to give way first if the load rises.",
       evenThreshold: 0.75
     },
-    boat: {
-      heading: "Why now rather than later",
-      body: "Picture a boat leaving harbour five degrees off course. After two days you can still see where you meant to be, and the correction is small. After two weeks you are somewhere else entirely. Nothing dramatic happened on any single day. The angle never changed. Time did the work. Capacity behaves the same way. A small correction now is worth far more than a large one later, and the people who leave it longest are usually the ones who could least afford to."
-    },
+    // ⛔ The boat analogy card ("Why now rather than later", five degrees off
+    // course) was removed on 28 Sept 2026. Rachel cut it. Do not put it back.
     bridge: {
       heading: "This shows you where. It cannot tell you why.",
       body: "The Capacity Wheel is based on what you can see and feel. It can show you where capacity appears to be getting lost, but it cannot tell you what is driving it underneath. Two people can carry the same workload and respond very differently. Sleep, recovery, glucose, stress physiology, blood chemistry and genetics can all change how that load lands. That is where we go next. You do not need to know how deep to go. Start with the smallest layer that can answer the question in front of you. If it answers it, stop. If it raises a better question, go one layer deeper.",
@@ -487,7 +562,9 @@ const config = {
       privacyNote: "We'll use this to send your result and occasional notes from Taylored. No spam, unsubscribe any time.",
       emailRequired: true
     },
-    resultHeading: "Your wheel", scoreCaption: "Capacity score", partBreakdownHeading: "Point by point",
+    resultHeading: "Your wheel", scoreCaption: "Capacity score",
+    partBreakdownHeading: "Your Capacity Map",
+    partBreakdownSub: "What is lifting you, and what is dragging you down.",
     startButton: "Start the read", nextButton: "Next", seeResultButton: "See your wheel"
   },
   wheel: {
@@ -953,9 +1030,18 @@ function renderResult(r){
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
     document.querySelectorAll(".pointrow .bibar i").forEach((el)=>{ el.style.transform = "scaleX(1)"; });
   }));
-  const lever = C.leverPrompts[r.pushLever];
-  $("r-leverHeading").textContent = lever.heading;
-  $("r-leverIntro").textContent = C.leverIntro;
+  // ---- next steps: the reader's OWN weakest part, not a generic habit line ----
+  const titleOf = (f)=>{ const p = I.parts.find((x)=>x.factor===f); return p ? p.title : W.factorLabels[f]; };
+  const lowerFirst = (s)=> s.charAt(0).toLowerCase() + s.slice(1);
+  const NS = C.nextSteps;
+  $("r-leverHeading").textContent = NS.heading;
+  $("r-leverBody").textContent = (NS.byBand[r.band] || NS.byBand.Steady)
+    .replace("{low}", lowerFirst(titleOf(lowest[0])))
+    .replace("{high}", lowerFirst(titleOf(highest[0])));
+  // Peak's job is to hold what is working, so it gets no "fix this part" action.
+  const actionFactor = r.band === "Peak" ? null : lowest[0];
+  $("r-leverAction").textContent = actionFactor ? (NS.byFactor[actionFactor] || "") : "";
+  $("r-leverAction").hidden = !actionFactor;
   // Plain-English band label, directly under the chip (Rachel, 27 Sept 2026):
   // "someone understands their result before they've read a paragraph".
   $("r-bandLabel").textContent = (C.bandLabels && C.bandLabels[r.band]) || "";
@@ -963,13 +1049,18 @@ function renderResult(r){
   // (it already drives the wheel wobble); `coherenceAffectsScore` stays FALSE
   // on purpose. Turning that on multiplies every score by 0.85-1.0, which
   // would silently restate every past result. Showing it needs no such change.
+  // ⛔ 28 Sept 2026: an even wheel gets ONE line under the map. Only an uneven
+  // one gets the tab, and the tab opens closed.
+  const even = r.coherence >= C.coherence.evenThreshold;
+  $("r-evenLine").textContent = C.coherence.evenLine;
+  $("r-evenLine").hidden = !even;
+  $("r-cohTab").hidden = even;
+  $("r-cohTab").open = false;
   $("r-cohHeading").textContent = C.coherence.heading;
   $("r-cohIntro").textContent = C.coherence.intro;
-  $("r-cohRead").textContent = (r.coherence >= C.coherence.evenThreshold)
-    ? C.coherence.even : C.coherence.uneven;
-  $("r-boatHeading").textContent = C.boat.heading;
-  $("r-boatBody").textContent = C.boat.body;
-  $("r-leverBody").textContent = lever.body;
+  $("r-cohRead").textContent = C.coherence.uneven;
+  $("r-pointsSub").textContent = C.partBreakdownSub;
+  renderCtas(r.band);
   $("r-bridgeHeading").textContent = C.bridge.heading;
   $("r-bridgeBody").textContent = C.bridge.body;
   $("r-tagline").textContent = C.bridge.tagline;
@@ -981,6 +1072,71 @@ function renderResult(r){
   $("r-footnote").textContent = C.bridge.footnote;
   buildWheel(r);
 }
+
+/* ---------- band-matched calls to action ----------
+   ⛔ 28 Sept 2026. "Talk through my result" used to be the only road out, on a
+   gold button, for everyone. Someone who lands in Peak or Steady has just told
+   the screen they do not have a problem, so a consultation button is the wrong
+   primary action and reads as a pitch. Peak shares, Steady sets a return, and
+   only Conserve and Restore get the talk button. The talk link never
+   disappears, it just stops being the loudest thing on the screen.
+
+   ⚠ The share is COPY TO CLIPBOARD with a mailto underneath, not mailto first.
+   On most work machines the default mail client is unset and a mailto click
+   dies silently with no error the person can see. */
+function renderCtas(band){
+  const T = C.ctas;
+  const copyBtn = $("r-copyBtn"), talkBtn = $("r-talkBtn"),
+        mailLink = $("r-mailLink"), talkLink = $("r-talkLink"), note = $("r-copyNote");
+  const share = band === "Peak", ret = band === "Steady", quiet = share || ret;
+  note.textContent = "";
+
+  copyBtn.hidden = !quiet;
+  copyBtn.textContent = share ? T.shareLabel : T.returnLabel;
+  copyBtn.dataset.done = share ? T.copiedShare : T.copiedReturn;
+  // only the long label gets shrunk to stay on one line, so the short ones are
+  // not needlessly small (see .ctablock .ctabtn.longlabel)
+  copyBtn.classList.toggle("longlabel", copyBtn.textContent.length > 30);
+  talkBtn.classList.toggle("longlabel", T.talkLabel.length > 30);
+
+  talkBtn.hidden = quiet;
+  talkBtn.textContent = T.talkLabel;
+  talkBtn.href = T.talkUrl;
+  talkBtn.target = "_blank"; talkBtn.rel = "noopener";
+
+  mailLink.hidden = !share;
+  mailLink.textContent = T.mailLabel;
+  mailLink.href = "mailto:?subject=" + encodeURIComponent(T.mailSubject) + "&body=" + encodeURIComponent(T.mailBody);
+  mailLink.parentElement.hidden = !share;
+
+  talkLink.hidden = !quiet;
+  talkLink.textContent = T.talkLabel;
+  talkLink.href = T.talkUrl;
+  talkLink.target = "_blank"; talkLink.rel = "noopener";
+  talkLink.parentElement.hidden = !quiet;
+}
+
+$("r-copyBtn").addEventListener("click", function(){
+  const done = this.dataset.done || C.ctas.copiedShare;
+  const say = (msg)=>{ $("r-copyNote").textContent = msg; };
+  // navigator.clipboard is absent on http and blocked in some embedded views,
+  // so the textarea fallback is not optional.
+  const fallback = ()=>{
+    try {
+      const ta = document.createElement("textarea");
+      ta.value = C.ctas.shareUrl;
+      ta.setAttribute("readonly","");
+      ta.style.cssText = "position:fixed;top:-1000px;opacity:0";
+      document.body.appendChild(ta); ta.select();
+      const ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      say(ok ? done : C.ctas.copyFailed);
+    } catch (e) { say(C.ctas.copyFailed); }
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(C.ctas.shareUrl).then(()=>say(done)).catch(fallback);
+  } else { fallback(); }
+});
 
 function buildWheel(r){
   const svg = $("wheel");
