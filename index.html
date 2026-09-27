@@ -86,6 +86,14 @@ h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-heigh
 .knob::after{content:'';width:6px;height:6px;border-radius:50%;background:var(--drag-l);transition:background .18s}
 .knob.lift{border-color:var(--gold);background:var(--gold)}
 .knob.lift::after{background:var(--navy-deep)}
+/* ⛔ 28 Sept 2026. The marker was painted on Neutral at load, so a person who
+   genuinely sits in the middle saw a marker that looked set, pressed Next, and
+   was blocked. The only escape was moving off centre. Untouched now draws as a
+   hollow ring so the centre is visibly unselected, and a tap fills it. ⛔ Do NOT
+   "fix" this by counting an untouched centre as Neutral: skipping a page would
+   then score 50 and be read as Steady. */
+.knob.untouched{background:transparent;border-color:rgba(243,239,231,.5);border-style:dashed;box-shadow:none}
+.knob.untouched::after{background:transparent}
 .track:focus-visible .knob{box-shadow:0 0 0 3px rgba(184,146,74,.5)}
 .scale{display:flex;justify-content:space-between;font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;color:var(--cream-faint);margin-top:.55rem}
 .scale span:nth-child(2){opacity:.7}
@@ -123,14 +131,19 @@ h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-heigh
 .resultcard h3{font-size:1.3rem;margin-bottom:.7rem}
 .resultcard p{color:var(--cream-soft);font-size:.95rem}
 .resultcard p+p{margin-top:.7rem}
-.pointlegend{display:flex;justify-content:space-between;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cream-faint);margin:.2rem 0 1rem;padding-left:8.3rem}
-.pointrow{display:flex;align-items:center;gap:.8rem;padding:.55rem 0}
-.pointrow .dot{width:10px;height:10px;border-radius:50%;flex:none}
-.pointrow .nm{width:7.5rem;font-size:.86rem;font-weight:600}
-.pointrow .bibar{flex:1;position:relative;height:8px;background:var(--rule-l);border-radius:4px}
+.pointlegend{display:flex;justify-content:space-between;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cream-faint);margin:.2rem 0 1rem;padding-left:calc(10px + .8rem)}
+/* The row label is now the plain title people answered under ("How pressure
+   shows up"), which will not fit a 7.5rem column beside a bar. The bar drops to
+   its own line under the label so nothing ever wraps at any width. */
+.pointrow{display:grid;grid-template-columns:10px minmax(0,1fr) auto;grid-template-areas:"dot nm val" ". bar bar";align-items:center;column-gap:.8rem;row-gap:.5rem;padding:.7rem 0}
+.pointrow .dot{grid-area:dot;width:10px;height:10px;border-radius:50%}
+.pointrow .nm{grid-area:nm;display:block;min-width:0;font-size:.86rem;font-weight:600}
+.pointrow .nm b{display:block;font-weight:600;white-space:nowrap}
+.pointrow .nm small{display:block;font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--cream-faint);margin-top:.15rem;white-space:nowrap}
+.pointrow .bibar{grid-area:bar;position:relative;height:8px;background:var(--rule-l);border-radius:4px}
 .pointrow .bibar .mid{position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:rgba(243,239,231,.45)}
 .pointrow .bibar i{position:absolute;top:0;bottom:0;border-radius:4px;transform:scaleX(0);transition:transform 1.1s cubic-bezier(.22,.9,.35,1)}
-.pointrow .val{width:2.4rem;text-align:right;font-size:.86rem;font-weight:700;color:var(--cream)}
+.pointrow .val{grid-area:val;width:2.4rem;text-align:right;font-size:.86rem;font-weight:700;color:var(--cream)}
 .bridge{border-color:rgba(184,146,74,.45)}
 .tagline{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:1.15rem;color:var(--gold);margin-top:1rem}
 .ctabtn{display:inline-block;margin-top:1.3rem;font-weight:700;text-decoration:none;text-align:center;color:var(--navy-deep);background:var(--gold);border-radius:3px;padding:.9rem 1.9rem;transition:background .2s}
@@ -168,8 +181,7 @@ h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-heigh
 }
 @media (max-width:480px){
   .pole{font-size:.9rem}
-  .pointrow .nm{width:6rem}
-  .pointlegend{padding-left:6.8rem}
+  .pointrow .nm b{font-size:.82rem}
   .btn{padding:.9rem 1.35rem;font-size:.95rem}
   .backbtn{padding:.9rem 1rem;font-size:.85rem}
   .partnav{flex-wrap:wrap;justify-content:flex-end}
@@ -211,7 +223,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="wrap">
     <div id="partHost"></div>
     <div class="partnav">
-      <span class="hint" id="answerHint">Set every marker to carry on</span>
+      <span class="hint" id="answerHint">Tap the middle if you sit in between.</span>
       <div class="navbtns">
         <button class="backbtn" id="backBtn" type="button">Back</button>
         <button class="btn" id="nextBtn"></button>
@@ -322,7 +334,11 @@ function computeCapacity(inputs, source, config){
 /* ---------- config (inlined). Statements are the depleted pole;
    `lifts` is the parallel lifted pole for the drag-slider. ---------- */
 const config = {
-  version: "v3.4-wheel",
+  // v3.5: Peak floor 75 -> 68, new Steady band read, Neutral marker is hollow
+  // until tapped, result rows use the plain part titles. The version is stored
+  // on every row, so a band-threshold change has to bump it or two rows with
+  // the same score and different bands look like a bug.
+  version: "v3.5-wheel",
   instrument: {
     title: "Which Way Is Your Wheel Turning?",
     kicker: "The Capacity Wheel, made personal",
@@ -390,7 +406,14 @@ const config = {
     // Conserve also spanned 34-68, over a third of the scale, which is why 13
     // of the first 14 finishers all landed there. Now 50 is the FLOOR of Steady:
     // neutral reads as neutral.
-    bands: [ {name:"Restore",min:0}, {name:"Conserve",min:30}, {name:"Steady",min:50}, {name:"Peak",min:75} ],
+    // ⛔ 28 Sept 2026. Peak's floor was 75, and 75 is EXACTLY the score you get
+    // by leaning one notch toward "lifts me" on all sixteen with nothing else
+    // (16 x dragFromV(1) = 28 total drag, round(100*(64-28)/48) = 75). One lean
+    // toward drag puts you at 72. One honest Neutral puts you at 73. So Peak
+    // required a flawless sheet and everything from 50 to 74 read one paragraph
+    // written for the bottom of it. Rachel ruled 68. Re-bands exactly one of
+    // the 20 stored finishers (69, Steady -> Peak).
+    bands: [ {name:"Restore",min:0}, {name:"Conserve",min:30}, {name:"Steady",min:50}, {name:"Peak",min:68} ],
     dragBands: [ {name:"Turning with you",min:16}, {name:"Starting to slip",min:32}, {name:"Turning against you",min:48} ],
     pushLever: { compare:["behaviour","environment"], tieBreak:"behaviour" }
   },
@@ -408,7 +431,14 @@ const config = {
     },
     bandReads: {
       Peak: "You have capacity in reserve. Your wheel is working with you. Your current habits and environment are helping you meet the load you’re carrying while still leaving something in reserve. The goal now is not to change everything. It is to notice what is working and protect it, especially when pressure increases. The thing worth knowing: the wrong direction arrives quietly and by default, usually right when the load spikes. That is the moment the protecting matters.",
-      Steady: "You’re holding steady, but there isn’t a lot to spare. Your wheel is still working with you, but parts of it are taking more than they should. You may be managing the load well today. The risk comes when work or life asks for more and there is nothing extra available. The aim now is to build some reserve before you need it.",
+      // ⛔ 28 Sept 2026, approved by Rachel word for word. The old opening led
+      // with the risk ("parts of it are taking more than they should... the risk
+      // comes when work or life asks for more") and named nothing the reader had
+      // just got right. A 69 read copy written for a 50. STEADY means
+      // fractionally clockwise, a marginal gain, so it opens with what is
+      // working. ⚠ The Kit Steady sequence (2852955) hardcodes this paragraph
+      // and the v4 API cannot edit a sequence body, so it is a hand paste.
+      Steady: "Most of your answers point the right way. Your wheel is turning with you, and one or two parts are taking more than they give back. You’re managing the load well today. What you don’t have much of is spare. The work now is to put something back in reserve, before the next thing arrives that asks for it.",
       Conserve: "You’re using capacity faster than you’re rebuilding it. Your wheel is starting to work against you. You may still be performing well, but it is costing you more than it should. This is a useful time to act. You still have room to make deliberate changes before recovery becomes the priority.",
       Restore: "Your current way of working is taking more than it is giving back. Your wheel is working against you. Here is the pattern, because almost nobody sees it in themselves. The people who end up here are usually the most driven ones. When the load rises, the first thing they cut is the thing that was protecting them. The walk. The sleep window. The hour that was theirs. Not the meetings, and not the work. So the drive that makes you good at this is the same drive that is spinning the wheel the wrong way. That is why pushing harder will not solve it. This is not about becoming more disciplined. Something in the way your days, recovery or environment are set up needs to change so you can start rebuilding capacity. That is a design problem, and design is fixable."
     },
@@ -611,7 +641,11 @@ function wireSlider(el, factor, si){
     knob.classList.toggle("lift", lift);
     poleR.classList.toggle("dim", drag);
     poleL.classList.toggle("dim", lift);
-    track.setAttribute("aria-valuenow", String(v));
+    // hollow ring until this one is actually answered (see .knob.untouched)
+    const touched = rawV[factor][si] != null;
+    knob.classList.toggle("untouched", !touched);
+    if (touched) { track.setAttribute("aria-valuenow", String(v)); }
+    else { track.removeAttribute("aria-valuenow"); }
   }
   function commit(v){
     // FIVE POSITIONS, not a fluid slider (Rachel, 7 Aug: "I never needed a fully
@@ -882,8 +916,10 @@ function renderResult(r){
   // only claim a drag when the weakest axis is genuinely below the midline;
   // otherwise name the strongest lift so the line stays honest for Peak/Steady
   $("r-leak").textContent = lowest[1] < 50
+    // ⛔ 28 Sept 2026: "Lifting most right now: Environment" was read as an
+    // instruction to go and lift that area, and took twenty seconds to unpick.
     ? "Dragging hardest right now: " + W.factorLabels[lowest[0]]
-    : "Lifting most right now: " + W.factorLabels[highest[0]];
+    : "Holding you up right now: " + W.factorLabels[highest[0]];
   $("r-pointsHeading").textContent = C.partBreakdownHeading;
   // bidirectional point-by-point: centre line, fill left (drag) or right (lift), factor colour kept
   $("pointRows").innerHTML = W.factorOrder.map((f)=>{
@@ -899,9 +935,17 @@ function renderResult(r){
     // fixed target width; animate scaleX from the centre outward (origin at the centre line)
     // round only the outer/measurement end; keep the centre-line end square
     const side = lift ? `left:50%;transform-origin:left;border-radius:0 4px 4px 0;` : `right:50%;left:auto;transform-origin:right;border-radius:4px 0 0 4px;`;
+    // ⛔ 28 Sept 2026. The rows used to say Biology / Behaviour / Environment /
+    // Leadership, but people answer under "Your state", "What you do", "What
+    // surrounds you", "How pressure shows up". Changing vocabulary on the score
+    // sheet cost a reader the whole breakdown: "I don't really understand
+    // biology... leadership I don't fully understand how to move the needle."
+    // The plain title leads, the model word sits smaller underneath. The wheel
+    // diagram keeps the model words: the diagram is the authority.
+    const part = I.parts.find((p)=>p.factor===f);
     return `<div class="pointrow">
       <span class="dot" style="background:${W.factorColors[f]}"></span>
-      <span class="nm">${W.factorLabels[f]}</span>
+      <span class="nm"><b>${part ? part.title : W.factorLabels[f]}</b><small>${W.factorLabels[f]}</small></span>
       <span class="bibar"><span class="mid"></span><i style="${side}width:${w}%;background:${W.factorColors[f]}"></i></span>
       <span class="val">${sub}</span>
     </div>`;
@@ -1052,8 +1096,12 @@ if (demo !== null){
   const presets = {
     // mostly lifting, all four filled toward lift (score ~85, Peak)
     peak:     { biology:[1,1,2,1], leadership:[1,1,1,2], behaviour:[2,1,2,1], environment:[2,2,1,2] },
-    // mostly lifting with one mild drag (score ~71, Steady)
-    steady:   { biology:[1,1,2,1], leadership:[2,1,2,1], behaviour:[2,2,2,2], environment:[3,3,3,2] },
+    // mostly lifting with one part clearly dragging (score 60, Steady).
+    // ⛔ 28 Sept 2026: this preset used to total 30 drag = 71, which landed in
+    // Peak the moment Peak's floor moved to 68, so ?demo=steady showed the wrong
+    // screen. Retotalled to 35 drag = 60, mid-Steady. Any change to the band
+    // floors has to be checked against these four presets.
+    steady:   { biology:[1,2,2,2], leadership:[2,2,2,1], behaviour:[2,2,3,3], environment:[3,3,3,2] },
     // one clear lift, one mild lift, two clearly dragging (score ~48, Conserve)
     conserve: { biology:[3,2,2,2], leadership:[2,2,2,1], behaviour:[4,3,3,3], environment:[3,3,3,3] },
     // mostly dragging, all four filled toward drag (score ~21, Restore)
