@@ -1,42 +1,665 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Capacity Wheel Field Guide</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Capacity Wheel Field Guide | Taylored</title>
+<meta name="description" content="How to read your Capacity Wheel, what your state is telling you, and the smallest measured next step. From Taylored.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://wheel.taylored.health/field-guide/">
+<meta property="og:title" content="The Capacity Wheel Field Guide">
+<meta property="og:description" content="You can keep pushing through. The more useful question is what it is costing you.">
+<meta property="og:image" content="https://wheel.taylored.health/assets/og-wheel.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Capacity Wheel Field Guide">
+<meta name="twitter:description" content="You can keep pushing through. The more useful question is what it is costing you.">
+<meta name="twitter:image" content="https://wheel.taylored.health/assets/og-wheel.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='12' fill='none' stroke='%23b8924a' stroke-width='4'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- identical href to the sibling wheel page, so it is a cache hit and not a second font payload -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap');
-  :root{ --cream:#EFEDE7; --paper:#FFFFFF; --ink:#0E1114; --body:#3a4a52; --gold:#B38E5D; --gold-d:#9a784b; --navy:#1E3644; }
-  *{ box-sizing:border-box; margin:0; padding:0; }
-  body{ background:var(--cream); color:var(--body); font-family:'Manrope',Arial,sans-serif; line-height:1.65; -webkit-font-smoothing:antialiased; }
-  .page{ max-width:760px; margin:0 auto; background:var(--paper); }
-  .bar{ height:4px; background:var(--gold); }
-  .pad{ padding:52px 56px; }
-  .kicker{ font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--gold-d); margin-bottom:16px; }
-  h1{ font-family:'Playfair Display',Georgia,serif; font-weight:600; font-size:38px; line-height:1.15; color:var(--ink); }
-  h1 em{ font-style:italic; color:var(--gold); }
-  .lede{ font-size:17px; color:var(--body); margin-top:18px; }
-  h2{ font-family:'Playfair Display',Georgia,serif; font-weight:600; font-size:24px; color:var(--ink); margin:0 0 6px; }
-  .section{ border-top:1px solid #e6e0d3; padding:38px 56px; }
-  .section:first-of-type{ border-top:none; }
-  .lead-in{ font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--gold-d); margin-bottom:14px; }
-  .row{ display:flex; gap:16px; padding:14px 0; border-bottom:1px solid #f0ece1; }
-  .row:last-child{ border-bottom:none; }
-  .dot{ width:11px; height:11px; border-radius:50%; margin-top:7px; flex:none; }
-  .row .name{ font-family:'Manrope',sans-serif; font-weight:700; color:var(--ink); width:120px; flex:none; }
-  .row .desc{ font-size:15px; color:var(--body); }
-  .quote{ font-family:'Playfair Display',Georgia,serif; font-style:italic; font-size:22px; line-height:1.5; color:var(--navy); border-left:3px solid var(--gold); padding-left:22px; margin:6px 0; }
-  .state{ padding:16px 0; border-bottom:1px solid #f0ece1; }
-  .state:last-child{ border-bottom:none; }
-  .state .n{ font-family:'Manrope',sans-serif; font-weight:700; font-size:15px; letter-spacing:1px; text-transform:uppercase; }
-  .state .d{ font-size:15px; color:var(--body); margin-top:3px; }
-  .cta{ background:var(--navy); color:#fff; padding:44px 56px; text-align:center; }
-  .cta h2{ color:#fff; }
-  .cta p{ color:#c8d0d5; font-size:15px; margin:12px auto 0; max-width:460px; }
-  .cta a{ display:inline-block; margin-top:24px; background:var(--gold); color:var(--ink); font-weight:700; letter-spacing:1px; font-size:14px; text-decoration:none; padding:15px 34px; border-radius:4px; border-bottom:2px solid var(--gold-d); }
-  .foot{ padding:26px 56px; text-align:center; font-size:12px; color:#8a9299; }
-  @media print{ body{ background:#fff; } .page{ max-width:100%; } .cta a{ border:1px solid var(--gold-d); } }
-  @media (max-width:560px){ .pad,.section,.cta,.foot{ padding-left:26px; padding-right:26px; } h1{ font-size:30px; } .row{ flex-direction:column; gap:2px; } .row .name{ width:auto; } }
+/* ============================================================
+   TOKENS
+   Inherited verbatim from projects/capacity-score/index.html so the
+   two pages read as one product. Only the light reading surface is
+   added here, because that page has no long-form reading mode.
+   ============================================================ */
+:root{
+  /* from the sibling page, unchanged */
+  --navy:#1e3644; --navy-deep:#12202b; --navy-mid:#16242e;
+  --field:#1b2c37;
+  --cream:#f3efe7; --cream-soft:#cdd8db; --cream-faint:#8a9aa1;
+  --gold:#b8924a; --gold-deep:#9a784b; --sage:#7fa07a;
+  --gold-ink:#8f6f45;  /* gold for small text on paper: 4.8:1 */
+  --drag-l:#9fb0ba;
+  --rule-l:rgba(243,239,231,.16);
+  --measure:38rem;
+
+  /* light reading surface. paper and ink follow the taylored.health palette */
+  --paper:#fbf8f1;
+  --ink:#16222e;
+  --ink-soft:#42545e;   /* 7.3:1 on paper */
+  --ink-faint:#6e7d86;  /* 4.6:1 on paper */
+  --rule-d:rgba(22,34,46,.13);
+  --rule-d-soft:rgba(22,34,46,.07);
+
+  /* factor colours, exactly the ones the wheel draws with */
+  --f-biology:#7fa07a; --f-leadership:#b38e5d;
+  --f-behaviour:#d9c9a8; --f-environment:#8fb3c0;
+
+  /* the incumbent field guide's warm Restore clay, lightened until it
+     clears 4.5:1 on navy. same hue family, dark-surface safe. */
+  --clay:#c2795e;
+
+  --bar-h:3.25rem;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:calc(var(--bar-h) + 1rem);
+  -webkit-text-size-adjust:100%;
+}
+body{
+  font-family:Manrope,system-ui,sans-serif;
+  background:var(--paper);
+  color:var(--ink-soft);
+  line-height:1.65;
+  font-size:1.0625rem;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* browser surfaces, themed rather than left to the platform */
+::selection{background:rgba(184,146,74,.28);color:var(--ink)}
+.s--navy ::selection,.s--deep ::selection{background:rgba(184,146,74,.4);color:var(--cream)}
+html{scrollbar-color:var(--gold-deep) var(--cream);scrollbar-width:thin}
+::-webkit-scrollbar{width:11px;height:11px}
+::-webkit-scrollbar-track{background:var(--cream)}
+::-webkit-scrollbar-thumb{background:var(--gold-deep);border:3px solid var(--cream);border-radius:6px}
+::-webkit-scrollbar-thumb:hover{background:var(--gold)}
+input,textarea{caret-color:var(--gold-deep)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
+.s--navy :focus-visible,.s--deep :focus-visible{outline-color:var(--gold)}
+
+h1,h2,h3,h4{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-height:1.14;color:var(--ink);text-wrap:balance;letter-spacing:-.005em}
+.s--navy h1,.s--navy h2,.s--navy h3,.s--navy h4,
+.s--deep h1,.s--deep h2,.s--deep h3,.s--deep h4{color:var(--cream)}
+p{text-wrap:pretty}
+a{color:inherit}
+
+/* ============================================================
+   SKIP LINK + STICKY BAR
+   ============================================================ */
+.skip{
+  position:absolute;left:.5rem;top:-4rem;z-index:60;
+  background:var(--gold);color:var(--navy-deep);font-weight:700;font-size:.9rem;
+  padding:.6rem 1rem;border-radius:3px;text-decoration:none;transition:top .18s
+}
+.skip:focus{top:.5rem}
+
+.topbar{
+  position:sticky;top:0;z-index:50;
+  height:var(--bar-h);
+  background:rgba(18,32,43,.94);
+  backdrop-filter:saturate(1.4) blur(10px);
+  border-bottom:1px solid var(--rule-l);
+  display:flex;align-items:center;gap:1rem;
+  padding:0 clamp(.9rem,4vw,2rem);
+}
+.topbar .mark{
+  font-family:"Playfair Display",Georgia,serif;font-size:1rem;font-weight:600;
+  color:var(--cream);text-decoration:none;white-space:nowrap;flex:none
+}
+.topbar .mark em{font-style:italic;color:var(--gold)}
+.topnav{
+  margin-left:auto;display:flex;gap:.2rem;align-items:center;min-width:0;
+  overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none
+}
+.topnav::-webkit-scrollbar{display:none}
+.topnav a{
+  font-size:.82rem;font-weight:600;color:var(--cream-soft);text-decoration:none;
+  white-space:nowrap;padding:.4rem .6rem;border-radius:3px;
+  transition:color .18s,background .18s
+}
+.topnav a:hover{color:var(--cream);background:rgba(243,239,231,.07)}
+.topnav a.now{color:var(--gold)}
+@media (max-width:640px){
+  .topbar .mark{display:none}
+  .topnav{margin-left:0;width:100%;
+    -webkit-mask-image:linear-gradient(90deg,#000 88%,transparent);
+    mask-image:linear-gradient(90deg,#000 88%,transparent)}
+}
+
+/* ============================================================
+   SECTIONS
+   ============================================================ */
+.s{padding:clamp(3rem,8vw,5.5rem) clamp(1.25rem,5vw,2rem)}
+.s--paper{background:var(--paper)}
+.s--cream{background:var(--cream)}
+.s--navy{background:var(--navy-mid);color:var(--cream-soft)}
+.s--deep{background:var(--navy-deep);color:var(--cream-soft)}
+.s--navy p,.s--deep p{color:var(--cream-soft)}
+.s + .s--paper,.s--paper + .s--cream{border-top:1px solid var(--rule-d-soft)}
+
+.wrap{max-width:var(--measure);margin:0 auto}
+.wrap--wide{max-width:64rem;margin:0 auto}
+/* a diagram or a grid needs more room than a line of prose does, so it steps
+   outside the reading column once there is room for it to */
+.breakout{width:100%}
+@media (min-width:1000px){
+  .breakout{width:min(54rem,calc(100vw - 6rem));margin-left:50%;transform:translateX(-50%)}
+}
+
+h2{font-size:clamp(1.65rem,4.6vw,2.3rem);margin:0 0 .9rem}
+h3{font-size:clamp(1.2rem,3.2vw,1.45rem);margin:0 0 .5rem}
+.s p + p{margin-top:.9rem}
+.s h2 + p,.s h3 + p{margin-top:.6rem}
+.s p + h3{margin-top:2rem}
+.s p + h2,.s ul + h2,.s div + h2{margin-top:2.6rem}
+
+/* a deck is the line that sits under a heading and finishes its thought */
+.deck{
+  font-family:"Playfair Display",Georgia,serif;font-style:italic;
+  font-size:clamp(1.12rem,2.9vw,1.35rem);line-height:1.45;
+  color:var(--gold-ink);margin:0 0 1.2rem
+}
+.s--navy .deck,.s--deep .deck{color:var(--gold)}
+
+/* her copy runs in short declarative lines. this keeps them as lines. */
+.lines p{margin:0 0 .45rem}
+.lines p:last-child{margin-bottom:0}
+
+.quote{
+  font-family:"Playfair Display",Georgia,serif;font-style:italic;
+  font-size:clamp(1.25rem,3.6vw,1.6rem);line-height:1.42;color:var(--ink);
+  margin:2rem 0;padding-top:1.4rem;border-top:1px solid var(--gold-deep);
+  max-width:30rem
+}
+.s--navy .quote,.s--deep .quote{color:var(--cream);border-top-color:var(--gold)}
+
+.turn{font-size:1.05rem;color:var(--ink);font-weight:600;margin-top:1.4rem}
+.s--navy .turn,.s--deep .turn{color:var(--cream)}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  background:var(--navy-deep);color:var(--cream-soft);
+  padding:clamp(2.6rem,7vw,4.5rem) clamp(1.25rem,5vw,2rem) clamp(2.4rem,6vw,3.5rem);
+  position:relative;overflow:hidden
+}
+.hero::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(60rem 28rem at 78% -12%,rgba(184,146,74,.16),transparent 62%);
+}
+.hero > *{position:relative}
+.hwrap{max-width:64rem;margin:0 auto;position:relative}
+.hero h1{
+  font-size:clamp(2.15rem,7.2vw,3.4rem);
+  margin:0 0 1rem;max-width:16ch
+}
+.hero .deck{max-width:28ch;margin-bottom:1.6rem}
+.hero .lines p{color:var(--cream-soft);max-width:var(--measure)}
+@media (min-width:960px){
+  .hgrid{display:grid;grid-template-columns:minmax(0,23rem) minmax(0,1fr);
+    gap:0 clamp(2.5rem,5vw,4rem);align-items:start}
+  .hero .deck{margin-bottom:0}
+  .hero .lines p:first-child{margin-top:.4rem}
+}
+
+/* jump to your state */
+.jump{margin:2.2rem 0 0;padding-top:1.6rem;border-top:1px solid var(--rule-l)}
+.jump h2{
+  font-family:Manrope,sans-serif;font-size:.74rem;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--cream-faint);
+  margin:0 0 .85rem
+}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.chip{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.92rem;font-weight:600;color:var(--cream);text-decoration:none;
+  border:1px solid var(--rule-l);border-radius:2rem;padding:.5rem 1rem .5rem .8rem;
+  transition:border-color .18s,background .18s,transform .18s
+}
+.chip:hover{border-color:currentColor;background:rgba(243,239,231,.06);transform:translateY(-1px)}
+.chip .spin{width:18px;height:18px;flex:none}
+.chip--peak{color:var(--sage)}
+.chip--steady{color:var(--gold)}
+.chip--conserve{color:var(--clay)}
+.chip--restore{color:var(--drag-l)}
+
+/* contents disclosure */
+.toc{margin-top:1.6rem}
+.toc ol{list-style:none;margin:.9rem 0 0;
+  columns:2;column-gap:2rem;font-size:.92rem}
+.toc li{break-inside:avoid;margin:0 0 .45rem}
+.toc a{color:var(--cream-soft);text-decoration:none;text-underline-offset:4px;
+  text-decoration-color:var(--rule-l)}
+.toc a:hover{color:var(--gold);text-decoration:underline}
+@media (max-width:560px){.toc ol{columns:1}}
+
+/* ============================================================
+   DISCLOSURE
+   ============================================================ */
+details{border-top:1px solid var(--rule-d);}
+details:last-of-type{border-bottom:1px solid var(--rule-d)}
+.s--navy details,.s--deep details{border-color:var(--rule-l)}
+summary{
+  list-style:none;cursor:pointer;
+  display:flex;align-items:baseline;gap:1rem;
+  padding:1.15rem 0;
+  font-family:"Playfair Display",Georgia,serif;font-size:1.2rem;font-weight:600;
+  color:var(--ink);transition:color .18s
+}
+.s--navy summary,.s--deep summary{color:var(--cream)}
+summary::-webkit-details-marker{display:none}
+summary:hover{color:var(--gold-ink)}
+.s--navy summary:hover,.s--deep summary:hover{color:var(--gold)}
+summary .chev{width:14px;height:14px;flex:none;margin-left:auto;align-self:center;
+  color:var(--gold-ink);transition:transform .25s ease}
+.s--navy summary .chev,.s--deep summary .chev{color:var(--gold)}
+details[open] summary .chev{transform:rotate(180deg)}
+summary .sub{
+  font-family:Manrope,sans-serif;font-size:.85rem;font-weight:500;
+  color:var(--ink-faint);margin-left:.2rem
+}
+.s--navy summary .sub,.s--deep summary .sub{color:var(--cream-faint)}
+.dbody{padding:0 0 1.6rem}
+.dbody > :first-child{margin-top:0}
+
+/* ============================================================
+   THE WHEEL
+   ============================================================ */
+.wheelpanel{
+  background:var(--navy-mid);border-radius:5px;
+  padding:clamp(1.25rem,4vw,2.25rem) clamp(1rem,3vw,1.75rem) clamp(1.5rem,4vw,2rem);
+  margin:2.2rem 0
+}
+.wheelbox{max-width:24rem;margin:0 auto}
+.wheelbox svg{display:block;width:100%;height:auto}
+.fg-tick{stroke:rgba(243,239,231,.55);stroke-width:1.4}
+.fg-rim{fill:none;stroke:rgba(243,239,231,.55)}
+.fg-flabel{font-family:Manrope,sans-serif;font-size:13px;font-weight:700;letter-spacing:2.5px}
+.fg-micro{font-family:Manrope,sans-serif;font-size:9px;letter-spacing:3px;fill:rgba(243,239,231,.42)}
+.fg-arclabel{font-family:Manrope,sans-serif;font-size:10px;font-weight:700;letter-spacing:2.2px}
+.fg-hub{font-family:Manrope,sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;fill:rgba(243,239,231,.6)}
+
+/* the one authored moment on the page: the two arcs draw themselves once */
+.fg-arc{fill:none;stroke-linecap:round}
+.fg-arc--build{stroke:var(--gold);stroke-width:9}
+.fg-arc--erode{stroke:var(--drag-l);stroke-width:4;opacity:.75}
+.fg-head--build{fill:var(--gold)}
+.fg-head--erode{fill:var(--drag-l);opacity:.75}
+.fg-arc{stroke-dasharray:280;stroke-dashoffset:280;animation:draw 1.5s cubic-bezier(.16,.9,.3,1) .25s forwards}
+.fg-arc--erode{animation-delay:.6s}
+.fg-head--build,.fg-head--erode{opacity:0;animation:fadein .5s ease 1.5s forwards}
+.fg-head--erode{animation-delay:1.85s}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fadein{to{opacity:1}}
+
+.wheelkey{
+  display:flex;flex-wrap:wrap;gap:.6rem 1.6rem;justify-content:center;
+  margin-top:1.4rem;padding-top:1.2rem;border-top:1px solid var(--rule-l)
+}
+.wheelkey div{display:flex;align-items:center;gap:.55rem;font-size:.86rem;font-weight:600;color:var(--cream-soft)}
+.wheelkey .spin{width:20px;height:20px;flex:none}
+.wheelkey .k-build{color:var(--gold)}
+.wheelkey .k-erode{color:var(--drag-l)}
+
+/* the four hop loop */
+.loop{display:grid;gap:.75rem;margin:1.8rem 0 0;counter-reset:hop}
+@media (min-width:760px){.loop{grid-template-columns:repeat(4,1fr)}}
+.hop{
+  border-top:1px solid var(--rule-d);padding:.95rem 0 0;position:relative
+}
+.hop .pair{display:flex;align-items:center;gap:.3rem;margin-bottom:.5rem}
+.hop .pair i{width:9px;height:9px;border-radius:50%;display:block;flex:none}
+.hop .pair svg{width:13px;height:13px;color:var(--ink-faint);flex:none}
+.hop p{font-size:.92rem;line-height:1.5;margin:0;color:var(--ink-soft)}
+.hop--close p{color:var(--ink);font-weight:600}
+.hop--close{border-top-color:var(--gold-deep)}
+
+/* ============================================================
+   NEGATION STACK (score is a signal, not a grade)
+   ============================================================ */
+.nots{margin:1.4rem 0 0;list-style:none}
+.nots li{
+  display:flex;gap:.8rem;align-items:baseline;
+  padding:.65rem 0;border-top:1px solid var(--rule-d-soft);
+  color:var(--ink-faint);font-size:.98rem
+}
+.nots li svg{width:13px;height:13px;flex:none;align-self:center;color:var(--drag-l)}
+.affirm{
+  margin-top:1.6rem;padding:1.15rem 1.3rem;
+  background:rgba(184,146,74,.1);border-radius:4px;
+  font-size:1.08rem;font-weight:600;color:var(--ink)
+}
+.asks{list-style:none;margin:1.3rem 0 0}
+.asks li{
+  font-family:"Playfair Display",Georgia,serif;font-size:1.1rem;color:var(--ink);
+  padding:.5rem 0 .5rem 1.4rem;position:relative
+}
+.asks li::before{
+  content:"";position:absolute;left:0;top:1.15rem;
+  width:6px;height:6px;border-radius:50%;background:var(--gold-ink)
+}
+
+/* ============================================================
+   BANDS
+   ============================================================ */
+.bands{display:grid;gap:1rem;margin-top:2rem}
+@media (min-width:820px){.bands{grid-template-columns:1fr 1fr;gap:1.1rem}}
+.band{
+  background:rgba(243,239,231,.045);
+  border:1px solid var(--rule-l);
+  border-radius:5px;
+  padding:1.5rem clamp(1.1rem,3vw,1.6rem) 1.6rem;
+  scroll-margin-top:calc(var(--bar-h) + 1.5rem);
+  transition:border-color .3s,background .3s
+}
+.band:target{border-color:currentColor;background:rgba(243,239,231,.075)}
+.band--peak{color:var(--sage)}
+.band--steady{color:var(--gold)}
+.band--conserve{color:var(--clay)}
+.band--restore{color:var(--drag-l)}
+.bandhead{display:flex;align-items:center;gap:.7rem;margin-bottom:.15rem}
+.bandhead .spin{width:26px;height:26px;flex:none}
+.band h3{font-size:1.6rem;color:currentColor;margin:0}
+.band .deck{
+  font-size:1.05rem;color:var(--cream);font-style:normal;font-family:Manrope,sans-serif;
+  font-weight:600;margin:0 0 1rem;line-height:1.45
+}
+.band p{font-size:.97rem;color:var(--cream-soft)}
+.band .ask{
+  font-family:"Playfair Display",Georgia,serif;font-style:italic;
+  font-size:1.18rem;color:var(--cream);margin-top:.15rem;line-height:1.4
+}
+
+/* ============================================================
+   LEVERS
+   ============================================================ */
+.levers{display:grid;gap:1.25rem;margin-top:1.8rem}
+@media (min-width:760px){.levers{grid-template-columns:1fr 1fr;gap:1.75rem}}
+.lever{border-top:2px solid currentColor;padding-top:1.1rem}
+.lever--behaviour{color:#8a7a52}
+.lever--environment{color:#4f7d90}
+.lever h3{color:var(--ink);display:flex;align-items:center;gap:.6rem}
+.lever .pos{width:24px;height:24px;flex:none}
+.lever--behaviour .pos{color:#8a7a52}
+.lever--environment .pos{color:#4f7d90}
+.lever p{color:var(--ink-soft)}
+.lever .change{font-weight:600;color:var(--ink)}
+
+/* ============================================================
+   DO THE OBVIOUS THING
+   ============================================================ */
+.obvious{
+  background:var(--paper);border:1px solid var(--rule-d);border-radius:5px;
+  padding:clamp(1.4rem,4vw,2.2rem);margin-top:1.8rem
+}
+.iflist{list-style:none;margin:0}
+.iflist li{
+  display:flex;gap:.85rem;align-items:flex-start;
+  padding:.8rem 0;border-top:1px solid var(--rule-d-soft);
+  font-size:1rem;color:var(--ink-soft)
+}
+.iflist li:first-child{border-top:0;padding-top:0}
+.iflist li svg{width:15px;height:15px;flex:none;margin-top:.42rem;color:var(--gold-deep)}
+.iflist b{color:var(--ink);font-weight:600}
+
+/* ============================================================
+   THE GUESSING LOOP
+   ============================================================ */
+.guessing{
+  list-style:none;margin:1.5rem 0 0;padding-left:1.5rem;
+  border-left:1px dashed var(--rule-d)
+}
+.guessing li{
+  position:relative;padding:.5rem 0;color:var(--ink-faint);font-size:1rem
+}
+.guessing li::before{
+  content:"";position:absolute;left:-1.78rem;top:1.05rem;
+  width:7px;height:7px;border-radius:50%;
+  background:var(--paper);border:1px solid var(--ink-faint)
+}
+.forks{display:grid;gap:.9rem;margin-top:1.6rem;align-items:center}
+@media (min-width:700px){.forks{grid-template-columns:1fr auto 1fr;gap:1.4rem}}
+.fork{
+  background:var(--cream);border-radius:4px;padding:1.1rem 1.2rem;
+  font-size:.98rem;color:var(--ink)
+}
+.forks .or{
+  font-family:"Playfair Display",Georgia,serif;font-style:italic;
+  color:var(--ink-faint);text-align:center;font-size:1.05rem
+}
+
+/* ============================================================
+   WEARABLE / CAUSES
+   ============================================================ */
+.datapoints{display:flex;flex-wrap:wrap;gap:.45rem;margin:1.2rem 0 0;list-style:none}
+.datapoints li{
+  font-size:.88rem;font-weight:600;color:var(--ink);
+  background:rgba(22,34,46,.05);border-radius:2rem;padding:.35rem .9rem
+}
+.bigask{
+  font-family:"Playfair Display",Georgia,serif;font-style:italic;font-weight:600;
+  font-size:clamp(2.4rem,8vw,3.6rem);line-height:1;color:var(--gold-deep);
+  margin:2.4rem 0 1.2rem
+}
+.causes{display:flex;flex-wrap:wrap;gap:.45rem;margin:0 0 1.4rem;list-style:none}
+.causes li{
+  font-size:.92rem;color:var(--ink-soft);
+  border:1px solid var(--rule-d);border-radius:2rem;padding:.35rem .95rem
+}
+
+/* ============================================================
+   THE OFFER
+   ============================================================ */
+.offer{
+  border:1px solid var(--rule-l);border-radius:6px;
+  background:linear-gradient(180deg,rgba(243,239,231,.06),rgba(243,239,231,.02));
+  padding:clamp(1.4rem,4vw,2.4rem);margin-top:2rem
+}
+.price{
+  /* Manrope, not Playfair: Playfair sets a small raised dollar sign that reads
+     as a footnote marker at display size */
+  font-family:Manrope,sans-serif;font-weight:700;letter-spacing:-.02em;
+  font-variant-numeric:lining-nums tabular-nums;
+  font-size:clamp(2rem,6vw,2.6rem);line-height:1;color:var(--gold);
+  margin:0 0 1rem
+}
+.spec{list-style:none;display:grid;gap:.5rem;margin:0 0 1.4rem}
+@media (min-width:640px){.spec{grid-template-columns:1fr 1fr;gap:.5rem 1.6rem}}
+.spec li{
+  display:flex;gap:.65rem;align-items:flex-start;
+  font-size:.95rem;color:var(--cream-soft)
+}
+.spec li svg{width:14px;height:14px;flex:none;margin-top:.38rem;color:var(--gold)}
+.refund{
+  font-size:.92rem;color:var(--cream-faint);
+  padding-top:1.1rem;border-top:1px solid var(--rule-l)
+}
+.only{
+  font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gold);margin:0 0 1rem
+}
+.btn{
+  display:inline-flex;align-items:center;gap:.7rem;
+  font:inherit;font-weight:700;font-size:1rem;
+  color:var(--navy-deep);background:var(--gold);
+  border:0;border-radius:3px;padding:.95rem 1.9rem;
+  text-decoration:none;letter-spacing:.01em;
+  box-shadow:0 2px 10px rgba(0,0,0,.28);
+  transition:background .2s,color .2s,transform .2s,box-shadow .2s
+}
+.btn:hover{background:var(--gold-deep);color:var(--cream);transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,0,0,.34)}
+.btn:active{transform:translateY(0);box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.btn svg{width:16px;height:16px}
+.btn .tag{font-weight:600;opacity:.75}
+.btnrow{margin:1.5rem 0 1.4rem}
+
+.reviewers{
+  margin:1.5rem 0;padding:1.2rem 1.3rem;
+  background:rgba(18,32,43,.45);border-radius:4px;
+  font-size:.95rem;color:var(--cream-soft)
+}
+.reviewers b{color:var(--cream)}
+
+/* ============================================================
+   STEPS AFTER BOOKING
+   ============================================================ */
+.steps{list-style:none;counter-reset:step;margin:.4rem 0 0}
+.steps li{
+  counter-increment:step;position:relative;
+  padding:1.1rem 0 1.1rem 3rem;border-top:1px solid var(--rule-d)
+}
+.steps li:first-child{border-top:0}
+.steps li::before{
+  content:counter(step);position:absolute;left:0;top:1.05rem;
+  width:1.9rem;height:1.9rem;border-radius:50%;
+  border:1px solid var(--gold-ink);color:var(--gold-ink);
+  font-family:"Playfair Display",Georgia,serif;font-size:.95rem;
+  display:grid;place-items:center
+}
+.steps h3{font-size:1.05rem;font-family:Manrope,sans-serif;font-weight:700;margin-bottom:.3rem}
+.steps p{font-size:.96rem}
+.timing{
+  margin-top:1.3rem;padding:1rem 1.2rem;background:rgba(184,146,74,.1);
+  border-radius:4px;font-size:.95rem;color:var(--ink)
+}
+/* the steps live inside the dark offer section */
+.s--deep .steps li,.s--navy .steps li{border-top-color:var(--rule-l)}
+.s--deep .steps li::before,.s--navy .steps li::before{border-color:var(--gold);color:var(--gold)}
+.s--deep .timing,.s--navy .timing{background:rgba(184,146,74,.14);color:var(--cream)}
+.s--deep .steps h3,.s--navy .steps h3{color:var(--cream)}
+#after-booking{margin-top:2.4rem;scroll-margin-top:calc(var(--bar-h) + 1.5rem)}
+
+/* ============================================================
+   PAIRED QUESTIONS
+   ============================================================ */
+.pair2{display:grid;gap:2.2rem}
+@media (min-width:860px){.pair2{grid-template-columns:1fr 1fr;gap:3rem}}
+.pair2 > div > h2{font-size:clamp(1.45rem,3.6vw,1.85rem)}
+
+/* ============================================================
+   THE TAYLORED PATH
+   ============================================================ */
+.ladder{margin-top:2.4rem;position:relative}
+.rung{
+  position:relative;
+  display:grid;grid-template-columns:3.4rem 1fr;
+  gap:0 1.25rem;
+  padding:0 0 2.2rem;
+  --spine-x:4.02rem
+}
+@media (min-width:760px){
+  .rung{grid-template-columns:5.5rem 1fr;gap:0 2rem;--spine-x:6.5rem}
+}
+/* one continuous spine, drawn from under the numeral to the rung below */
+.rung::before{
+  content:"";position:absolute;left:var(--spine-x);top:3rem;bottom:.2rem;width:1px;
+  background:linear-gradient(180deg,rgba(184,146,74,.55),rgba(243,239,231,.1))
+}
+.rung:last-child::before{display:none}
+.rung:last-child{padding-bottom:0}
+.rung .num{
+  font-family:"Playfair Display",Georgia,serif;font-weight:600;
+  font-size:clamp(1.5rem,4.5vw,2.1rem);line-height:1;
+  color:var(--gold);opacity:.85;text-align:right;
+  padding-top:.15rem
+}
+.rung .card{
+  grid-column:2;
+  border:1px solid var(--rule-l);border-radius:5px;
+  background:rgba(243,239,231,.04);
+  padding:clamp(1.15rem,3.2vw,1.6rem)
+}
+.rung--now .card{border-color:rgba(184,146,74,.62);background:rgba(184,146,74,.08)}
+.rung--done .card{background:transparent;border-style:dashed}
+.rung h3{font-size:clamp(1.25rem,3.4vw,1.5rem);margin:0}
+.rung .promise{
+  font-family:"Playfair Display",Georgia,serif;font-style:italic;
+  font-size:1.08rem;color:var(--gold);margin:.35rem 0 .9rem
+}
+.rung p{font-size:.95rem}
+.rung p + p{margin-top:.6rem}
+.meta{
+  display:flex;flex-wrap:wrap;align-items:center;gap:.5rem .7rem;
+  margin:0 0 1rem
+}
+.pricetag{
+  font-size:.85rem;font-weight:700;letter-spacing:.02em;
+  color:var(--navy-deep);background:var(--gold);
+  border-radius:2px;padding:.3rem .65rem
+}
+.pricetag--free{background:transparent;color:var(--gold);border:1px solid rgba(184,146,74,.5)}
+.dur{font-size:.85rem;color:var(--cream-faint)}
+.flag{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:.5rem
+}
+.flag svg{width:13px;height:13px}
+.flag--done{color:var(--cream-faint)}
+.depth{display:flex;align-items:center;gap:.55rem;margin-top:1.1rem;
+  padding-top:.9rem;border-top:1px solid var(--rule-l)}
+.depth svg{width:34px;height:14px;flex:none}
+.depth span{font-size:.72rem;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--cream-faint);white-space:nowrap}
+.triggers{list-style:none;margin:.7rem 0 0}
+.triggers li{
+  font-size:.95rem;color:var(--cream-soft);padding:.25rem 0 .25rem 1.1rem;position:relative
+}
+.triggers li::before{
+  content:"";position:absolute;left:0;top:.95rem;width:5px;height:1px;background:var(--gold)
+}
+
+/* ============================================================
+   FINE PRINT + FOOTER
+   ============================================================ */
+.notready{
+  margin-top:2.4rem;padding:clamp(1.3rem,3.6vw,1.9rem);
+  background:var(--cream);border-radius:5px
+}
+.notready h3{margin-bottom:.6rem}
+.disclaimer{
+  margin-top:2.2rem;font-size:.88rem;color:var(--ink-faint);
+  padding-top:1.2rem;border-top:1px solid var(--rule-d)
+}
+.foot{
+  background:var(--navy-deep);color:var(--cream-faint);
+  padding:2.4rem clamp(1.25rem,5vw,2rem);text-align:center;font-size:.86rem
+}
+.foot .fmark{
+  font-family:"Playfair Display",Georgia,serif;font-size:1.05rem;color:var(--cream);
+  display:block;margin-bottom:.4rem
+}
+.foot .fmark em{font-style:italic;color:var(--gold)}
+.foot a{color:var(--gold);text-decoration:underline;text-underline-offset:3px}
+.foot a:hover{color:var(--cream)}
+
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation-duration:.001ms !important;animation-delay:0ms !important;transition-duration:.001ms !important}
+  .fg-arc{stroke-dashoffset:0}
+  .fg-head--build,.fg-head--erode{opacity:1}
+}
+
+@media print{
+  .topbar,.jump,.toc,.btnrow{display:none}
+  body{background:#fff;color:#000;font-size:11pt}
+  .s--navy,.s--deep,.hero,.wheelpanel,.offer,.rung .card,.band{background:#fff !important;color:#000 !important}
+  .s--navy h2,.s--deep h2,.hero h1,.band h3,.rung h3{color:#000 !important}
+  details{border:0}
+  .dbody{padding-bottom:1rem}
+}
 </style>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -51,70 +674,869 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TLRP9CF"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-  <div class="page">
-    <div class="bar"></div>
 
-    <!-- HEADER -->
-    <div class="pad">
-      <div class="kicker">The Biology of Leadership</div>
-      <h1>How to read your <em>wheel</em>.</h1>
-      <p class="lede">A short field guide to the Capacity Wheel. Not a test, not a diagnosis. A mirror to think with, so you can see which way your capacity is turning and which point to reach for first. It is an early draft of an idea I am still shaping through the book, a working hypothesis rather than a finished answer.</p>
-    </div>
+<!-- ============================================================
+     ICON SPRITE. Drawn, single 1.6 stroke weight, currentColor.
+     ============================================================ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <g id="i-check"><path d="M2.5 8.5 6 12l7.5-8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="i-chev"><path d="M2 5.5 8 11l6-5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="i-arrow"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="i-minus"><path d="M3.5 8h9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></g>
+    <g id="i-dot"><circle cx="8" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="1.6"/></g>
+  </defs>
+</svg>
 
-    <!-- THE WHEEL -->
-    <div class="section">
-      <div class="lead-in">The four points</div>
-      <h2>Your wheel has four points</h2>
-      <p style="font-size:15px; margin:8px 0 12px;">Capacity turns on four points, and <strong style="color:var(--ink);">Biology underpins all of them</strong>. You do not change your biology by force. You change it through the two points that are always within reach: <strong style="color:var(--ink);">Behaviour</strong> and <strong style="color:var(--ink);">Environment</strong>. Shift those, and your biology, and the spin, shift with them. The four are interrelated, so pull on one and the others move with it.</p>
-      <div class="row"><span class="dot" style="background:#8bab7a;"></span><span class="name">Biology</span><span class="desc">The foundation the whole wheel runs on. Your physical engine: sleep, recovery, energy, the body you are actually operating from. You reach it through the two levers below, not head-on.</span></div>
-      <div class="row"><span class="dot" style="background:#e6e2da;"></span><span class="name">Behaviour</span><span class="desc">A lever within reach. Your daily choices and habits: how you sleep and move, whether you show up for your future self, and the small decisions that compound over time.</span></div>
-      <div class="row"><span class="dot" style="background:#7fa3b5;"></span><span class="name">Environment</span><span class="desc">The other lever within reach. The conditions around you, your load and demands, and the people you spend your time with.</span></div>
-      <div class="row"><span class="dot" style="background:var(--gold);"></span><span class="name">Leadership</span><span class="desc">How the spin shows up. How you direct, and the state you set for others. The top of the wheel, which is exactly why you cannot force it directly.</span></div>
-    </div>
+<a class="skip" href="#guide">Skip to the guide</a>
 
-    <!-- DRAG VS LIFT -->
-    <div class="section">
-      <div class="lead-in">Spin is the thing</div>
-      <h2>The wheel is always turning</h2>
-      <p style="font-size:15px; margin:8px 0 16px;">Left to itself, the wheel turns <strong style="color:var(--ink);">counter-clockwise</strong>, and counter-clockwise depletes you. That is the default. Building capacity means actively spinning it the other way, <strong style="color:var(--ink);">clockwise</strong>. Every point either helps spin it clockwise (a <strong style="color:var(--ink);">lift</strong>) or lets it slip counter-clockwise (a <strong style="color:var(--ink);">drag</strong>). The Wheel reads how often each point is doing which, in a typical month.</p>
-      <div class="quote">A high drag reading is not a failing. It is a signal. It tells you which point is asking for attention first.</div>
-    </div>
+<header class="topbar">
+  <a class="mark" href="/">Capacity <em>Wheel</em></a>
+  <nav class="topnav" aria-label="Sections of this guide">
+    <a href="#the-wheel">The wheel</a>
+    <a href="#states">Your state</a>
+    <a href="#start">Where to start</a>
+    <a href="#sleep-score-review">Sleep Score Review</a>
+    <a href="#the-path">The path</a>
+  </nav>
+</header>
 
-    <!-- THE FOUR STATES -->
-    <div class="section">
-      <div class="lead-in">The four states</div>
-      <h2>What the whole wheel is doing</h2>
-      <p style="font-size:15px; margin:8px 0 14px;">Put the four points together and the wheel reads as one of four states. None is a verdict. It is the month you are actually in.</p>
-      <div class="state"><div class="n" style="color:#6f9a5c;">Peak</div><div class="d">The wheel is turning cleanly with you. Capacity is high, and the hard, high-value work you push into it compounds. Aim your biggest efforts here.</div></div>
-      <div class="state"><div class="n" style="color:var(--gold-d);">Steady</div><div class="d">Turning the right way, with a little resistance. Solid ground. Not a day to force, not a day to coast.</div></div>
-      <div class="state"><div class="n" style="color:#b8823f;">Conserve</div><div class="d">The wheel is stalling and starting to turn back on you. You can feel the drag but you are not under it yet. One deliberate change now is worth ten later.</div></div>
-      <div class="state"><div class="n" style="color:#a6604a;">Restore</div><div class="d">The wheel has turned against you and you are underneath it. The work now is recovery, not push. Protect the base and let it come back.</div></div>
-    </div>
-
-    <!-- ETHOS -->
-    <div class="section">
-      <div class="lead-in">How to use it</div>
-      <h2>You cannot turn the wheel from the top</h2>
-      <p style="font-size:15px; margin:8px 0 16px;">You cannot order your state to improve, or force good leadership out of an empty tank. But two points are always within reach: <strong style="color:var(--ink);">Behaviour</strong> and <strong style="color:var(--ink);">Environment</strong>. Change those, and your biology, the foundation, changes with them. The Wheel shows you which one is dragging hardest, so you can put one keystone back, at the same time every day, defended like a meeting you cannot move.</p>
-      <div class="quote">Not more disciplined. Better designed.</div>
-    </div>
-
-    <!-- A NOTE -->
-    <div class="section">
-      <div class="lead-in">A note</div>
-      <h2>This is a first draft</h2>
-      <p style="font-size:15px; margin:8px 0 0;">This is the first full draft of a concept I am still refining as I write the book. I am sharing it early, imperfect on purpose, because the best way to sharpen an idea is to put it in front of the people who live it. If parts of it ring true, or if they don't, I would genuinely value hearing where it sits with you and where it doesn't. That is the whole point of putting these notes out now.</p>
-    </div>
-
-    <!-- CTA -->
-    <div class="cta">
-      <h2>If you want to know why</h2>
-      <p>The Wheel shows you which way your wheel is turning. What it cannot tell you is <em>why</em>, or which actions will lift <em>your</em> wheel hardest. The most powerful lever is not the same for everyone. It runs all the way down to your individual biology, your genetics. Generic advice gives generic results. The Capacity Audit maps your own biology in detail, so you can act on what actually moves you.</p>
-      <a href="mailto:hello@taylored.health?subject=Capacity%20Audit">Learn about the Capacity Audit</a>
-    </div>
-
-    <div class="foot">Taylored Health &nbsp;&middot;&nbsp; The biology of leadership, made practical.</div>
-    <div class="bar"></div>
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="hero s--deep" id="guide">
+ <div class="hwrap">
+  <div class="hgrid">
+   <div>
+    <h1>The Capacity Wheel Field Guide</h1>
+    <p class="deck">You can keep pushing through. The more useful question is what it is costing you.</p>
+   </div>
+   <div class="lines">
+    <p>Your Capacity Wheel shows whether the way you are working and living right now is building your capacity or using it up.</p>
+    <p>Maybe you already know something is off.</p>
+    <p>You wake up tired after enough time in bed. Your energy disappears by mid-afternoon. You need more caffeine to get the same output. You are less patient than you want to be. Or everything still looks fine from the outside, but it takes more effort than it used to.</p>
+    <p>That is the part worth paying attention to.</p>
+    <p>Because the problem is rarely that you suddenly cannot perform.</p>
+    <p>It is that performing starts costing you more.</p>
+    <p>The Wheel helps you see where that may be happening, what you can change yourself, and when it is worth looking underneath the surface instead of continuing to guess.</p>
+   </div>
   </div>
+
+  <nav class="jump" aria-labelledby="jumplabel">
+    <h2 id="jumplabel">Read your state first</h2>
+    <div class="chips">
+      <a class="chip chip--peak" href="#peak">
+        <svg class="spin" viewBox="0 0 20 20" aria-hidden="true"><path d="M16.5 7A7 7 0 1 0 17 10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M17 4.5V10h-5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Peak</a>
+      <a class="chip chip--steady" href="#steady">
+        <svg class="spin" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.7" opacity=".3"/><path d="M14.9 5.1A7 7 0 0 1 17 10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M17 5.2V10h-4.8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Steady</a>
+      <a class="chip chip--conserve" href="#conserve">
+        <svg class="spin" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.7" opacity=".3"/><path d="M5.1 5.1A7 7 0 0 0 3 10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M3 5.2V10h4.8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Conserve</a>
+      <a class="chip chip--restore" href="#restore">
+        <svg class="spin" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 7A7 7 0 1 1 3 10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M3 4.5V10h5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Restore</a>
+    </div>
+  </nav>
+
+  <details class="toc">
+    <summary>Everything in this guide<svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+    <div class="dbody">
+      <ol>
+        <li><a href="#the-wheel">What do we mean by capacity?</a></li>
+        <li><a href="#score">Your score is a signal, not a grade</a></li>
+        <li><a href="#states">What your state is telling you</a></li>
+        <li><a href="#start">There are two places to start</a></li>
+        <li><a href="#obvious">Change the obvious thing first</a></li>
+        <li><a href="#guessing">When you don’t know what to change</a></li>
+        <li><a href="#your-data">Start with the data you already have</a></li>
+        <li><a href="#sleep-score-review">The Sleep Score Review</a></li>
+        <li><a href="#after-booking">What happens after you book?</a></li>
+        <li><a href="#why-sleep">Why sleep first?</a></li>
+        <li><a href="#the-path">The Taylored path</a></li>
+        <li><a href="#how-deep">You do not need to know how deep to go</a></li>
+        <li><a href="#fine-print">Limits, and what happens to your data</a></li>
+      </ol>
+    </div>
+  </details>
+ </div>
+</section>
+
+<!-- ============================================================
+     WHAT DO WE MEAN BY CAPACITY
+     ============================================================ -->
+<section class="s s--paper" id="the-wheel">
+  <div class="wrap">
+    <h2>What do we mean by capacity?</h2>
+    <div class="lines">
+      <p>Capacity is what you have available to meet the demands of your life.</p>
+      <p>It is the energy to get through the day without crawling over the line.</p>
+      <p>The ability to think clearly when the decision matters.</p>
+      <p>The ability to stay steady when the room is not.</p>
+      <p>The ability to recover well enough to do it again tomorrow.</p>
+    </div>
+    <p style="margin-top:1.4rem">We tend to treat those things as separate.</p>
+    <p>We don’t.</p>
+
+    <div class="breakout">
+    <div class="wheelpanel">
+      <div class="wheelbox">
+        <svg viewBox="0 0 440 440" role="img" aria-labelledby="wheeltitle wheeldesc">
+          <title id="wheeltitle">The Capacity Wheel</title>
+          <desc id="wheeldesc">A wheel with four points. Biology at the top, Leadership on the right, Behaviour at the bottom, Environment on the left. Biology and Leadership sit on the being half, Behaviour and Environment on the doing half. A gold arrow down the right shows the wheel turning clockwise, which builds capacity. A pale arrow down the left shows it turning anticlockwise, which erodes it.</desc>
+
+          <!-- rim, ticks, spokes -->
+          <circle class="fg-rim" cx="220" cy="220" r="100" stroke-width="1.6"/>
+          <g class="fg-tick"><line x1="220" y1="132" x2="220" y2="124"/><line x1="242.78" y1="135" x2="244.85" y2="127.27"/><line x1="264" y1="143.79" x2="268" y2="136.86"/><line x1="282.23" y1="157.77" x2="287.88" y2="152.12"/><line x1="296.21" y1="176" x2="303.14" y2="172"/><line x1="305" y1="197.22" x2="312.73" y2="195.15"/><line x1="308" y1="220" x2="316" y2="220"/><line x1="305" y1="242.78" x2="312.73" y2="244.85"/><line x1="296.21" y1="264" x2="303.14" y2="268"/><line x1="282.23" y1="282.23" x2="287.88" y2="287.88"/><line x1="264" y1="296.21" x2="268" y2="303.14"/><line x1="242.78" y1="305" x2="244.85" y2="312.73"/><line x1="220" y1="308" x2="220" y2="316"/><line x1="197.22" y1="305" x2="195.15" y2="312.73"/><line x1="176" y1="296.21" x2="172" y2="303.14"/><line x1="157.77" y1="282.23" x2="152.12" y2="287.88"/><line x1="143.79" y1="264" x2="136.86" y2="268"/><line x1="135" y1="242.78" x2="127.27" y2="244.85"/><line x1="132" y1="220" x2="124" y2="220"/><line x1="135" y1="197.22" x2="127.27" y2="195.15"/><line x1="143.79" y1="176" x2="136.86" y2="172"/><line x1="157.77" y1="157.77" x2="152.12" y2="152.12"/><line x1="176" y1="143.79" x2="172" y2="136.86"/><line x1="197.22" y1="135" x2="195.15" y2="127.27"/></g>
+          <line x1="220" y1="220" x2="220" y2="116" stroke="rgba(243,239,231,0.55)" stroke-width="2"/>
+          <line x1="220" y1="220" x2="324" y2="220" stroke="rgba(243,239,231,0.55)" stroke-width="2"/>
+          <line x1="220" y1="220" x2="220" y2="324" stroke="rgba(243,239,231,0.55)" stroke-width="2"/>
+          <line x1="220" y1="220" x2="116" y2="220" stroke="rgba(243,239,231,0.55)" stroke-width="2"/>
+          <circle cx="220" cy="116" r="5" fill="#7fa07a"/>
+          <circle cx="324" cy="220" r="5" fill="#b38e5d"/>
+          <circle cx="220" cy="324" r="5" fill="#d9c9a8"/>
+          <circle cx="116" cy="220" r="5" fill="#8fb3c0"/>
+
+          <!-- hub -->
+          <circle cx="220" cy="220" r="52" fill="#f3efe7" opacity="0.06"/>
+          <circle class="fg-rim" cx="220" cy="220" r="52" stroke-width="1"/>
+          <text class="fg-hub" x="220" y="217" text-anchor="middle">CAPACITY</text>
+          <text class="fg-hub" x="220" y="231" text-anchor="middle">WHEEL</text>
+
+          <!-- being / doing -->
+          <text class="fg-micro" x="220" y="98" text-anchor="middle">BEING</text>
+          <text class="fg-micro" x="220" y="350" text-anchor="middle">DOING</text>
+
+          <!-- the two directions -->
+          <path class="fg-arc fg-arc--build" d="M 308.35 89.01 A 158 158 0 0 1 335.55 327.76"/>
+          <path class="fg-head--build" d="M 308.35 350.99 L 346.52 337.99 L 324.58 317.53 Z"/>
+          <path class="fg-arc fg-arc--erode" d="M 104.45 327.76 A 158 158 0 0 1 131.65 89.01"/>
+          <path class="fg-head--erode" d="M 131.65 350.99 L 97.13 334.58 L 111.76 320.94 Z"/>
+
+          <path id="fg-bl" d="M 327.39 158 A 124 124 0 0 1 327.39 282" fill="none"/>
+          <text class="fg-arclabel" fill="#b8924a"><textPath href="#fg-bl" startOffset="50%" text-anchor="middle">BUILDS</textPath></text>
+          <path id="fg-el" d="M 112.61 282 A 124 124 0 0 1 112.61 158" fill="none"/>
+          <text class="fg-arclabel" fill="#9fb0ba"><textPath href="#fg-el" startOffset="50%" text-anchor="middle">ERODES</textPath></text>
+
+          <!-- the four points -->
+          <path id="fg-lp-biology" d="M 62.38 129 A 182 182 0 0 1 377.62 129" fill="none"/>
+          <text class="fg-flabel" fill="#7fa07a"><textPath href="#fg-lp-biology" startOffset="50%" text-anchor="middle">BIOLOGY</textPath></text>
+          <path id="fg-lp-leadership" d="M 311 62.38 A 182 182 0 0 1 311 377.62" fill="none"/>
+          <text class="fg-flabel" fill="#b38e5d"><textPath href="#fg-lp-leadership" startOffset="50%" text-anchor="middle">LEADERSHIP</textPath></text>
+          <path id="fg-lp-behaviour" d="M 53.72 316 A 192 192 0 0 0 386.28 316" fill="none"/>
+          <text class="fg-flabel" fill="#d9c9a8"><textPath href="#fg-lp-behaviour" startOffset="50%" text-anchor="middle">BEHAVIOUR</textPath></text>
+          <path id="fg-lp-environment" d="M 129 377.62 A 182 182 0 0 1 129 62.38" fill="none"/>
+          <text class="fg-flabel" fill="#8fb3c0"><textPath href="#fg-lp-environment" startOffset="50%" text-anchor="middle">ENVIRONMENT</textPath></text>
+        </svg>
+      </div>
+      <div class="wheelkey">
+        <div class="k-build">
+          <svg class="spin" viewBox="0 0 20 20" aria-hidden="true"><path d="M16.5 7A7 7 0 1 0 17 10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M17 4.5V10h-5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Clockwise builds
+        </div>
+        <div class="k-erode">
+          <svg class="spin" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 7A7 7 0 1 1 3 10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M3 4.5V10h5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Anticlockwise erodes
+        </div>
+      </div>
+    </div>
+
+    <div class="loop">
+      <div class="hop">
+        <div class="pair" aria-hidden="true">
+          <i style="background:var(--f-biology)"></i>
+          <svg viewBox="0 0 16 16"><use href="#i-arrow"/></svg>
+          <i style="background:var(--f-leadership)"></i>
+        </div>
+        <p>Your biology affects how you think and lead.</p>
+      </div>
+      <div class="hop">
+        <div class="pair" aria-hidden="true">
+          <i style="background:var(--f-leadership)"></i>
+          <svg viewBox="0 0 16 16"><use href="#i-arrow"/></svg>
+          <i style="background:var(--f-behaviour)"></i>
+        </div>
+        <p>How you lead affects what you do.</p>
+      </div>
+      <div class="hop">
+        <div class="pair" aria-hidden="true">
+          <i style="background:var(--f-behaviour)"></i>
+          <svg viewBox="0 0 16 16"><use href="#i-arrow"/></svg>
+          <i style="background:var(--f-environment)"></i>
+        </div>
+        <p>What you repeatedly do shapes the conditions around you.</p>
+      </div>
+      <div class="hop hop--close">
+        <div class="pair" aria-hidden="true">
+          <i style="background:var(--f-environment)"></i>
+          <svg viewBox="0 0 16 16"><use href="#i-arrow"/></svg>
+          <i style="background:var(--f-biology)"></i>
+        </div>
+        <p>Those conditions feed back into your biology.</p>
+      </div>
+    </div>
+    </div>
+
+    <p class="turn">That is the Capacity Wheel.</p>
+    <p>The question is whether it is currently working with you or against you.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     YOUR SCORE
+     ============================================================ -->
+<section class="s s--cream" id="score">
+  <div class="wrap">
+    <h2>Your score is a signal, not a grade</h2>
+    <p>Your score out of 100 summarises how you answered the sixteen questions.</p>
+    <p>A higher score means more of what you described is currently supporting your capacity. A lower score means more of it is creating drag.</p>
+
+    <ul class="nots">
+      <li><svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-minus"/></svg>It does not mean you are operating at 62% of your potential.</li>
+      <li><svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-minus"/></svg>It does not diagnose your health.</li>
+      <li><svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-minus"/></svg>And there is little value in comparing your score with somebody else’s.</li>
+    </ul>
+
+    <p class="affirm">The useful comparison is you against you.</p>
+
+    <ul class="asks">
+      <li>What does your Wheel look like now?</li>
+      <li>What happens when you change something?</li>
+      <li>What happens when the load changes?</li>
+    </ul>
+
+    <p class="turn">That is where the value starts.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     THE FOUR STATES
+     ============================================================ -->
+<section class="s s--navy" id="states">
+  <div class="wrap--wide">
+    <h2>What your state is telling you</h2>
+
+    <div class="bands">
+
+      <article class="band band--peak" id="peak">
+        <div class="bandhead">
+          <svg class="spin" viewBox="0 0 20 20" aria-hidden="true"><path d="M16.5 7A7 7 0 1 0 17 10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M17 4.5V10h-5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h3>Peak</h3>
+        </div>
+        <p class="deck">You have something in reserve.</p>
+        <p>Your current way of operating is supporting the load you are carrying.</p>
+        <p>The temptation here is to assume you have solved it.</p>
+        <p>A better question is:</p>
+        <p class="ask">What is working that you need to protect?</p>
+        <p style="margin-top:.9rem">Because capacity tends to disappear when the load rises, not when life is easy.</p>
+      </article>
+
+      <article class="band band--steady" id="steady">
+        <div class="bandhead">
+          <svg class="spin" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.7" opacity=".3"/><path d="M14.9 5.1A7 7 0 0 1 17 10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M17 5.2V10h-4.8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h3>Steady</h3>
+        </div>
+        <p class="deck">You are holding, but there is not much to spare.</p>
+        <p>Things are mostly working.</p>
+        <p>The issue is margin.</p>
+        <p>A harder quarter, disrupted sleep, more travel, pressure at home or an unexpected problem can quickly consume what is left.</p>
+        <p>This is the time to build reserve before you need it.</p>
+      </article>
+
+      <article class="band band--conserve" id="conserve">
+        <div class="bandhead">
+          <svg class="spin" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.7" opacity=".3"/><path d="M5.1 5.1A7 7 0 0 0 3 10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M3 5.2V10h4.8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h3>Conserve</h3>
+        </div>
+        <p class="deck">You are spending capacity faster than you are rebuilding it.</p>
+        <p>You may still be performing well.</p>
+        <p>That is precisely why this state is easy to ignore.</p>
+        <p>The work still gets done. People still rely on you. You can still push when required.</p>
+        <p>But more of your own energy is being used to produce the same result.</p>
+        <p>Leave that equation unchanged for long enough and it becomes your new normal.</p>
+      </article>
+
+      <article class="band band--restore" id="restore">
+        <div class="bandhead">
+          <svg class="spin" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 7A7 7 0 1 1 3 10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M3 4.5V10h5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h3>Restore</h3>
+        </div>
+        <p class="deck">The current equation is asking for more than it gives back.</p>
+        <p>This is not a sign that you need more discipline.</p>
+        <p>If pushing harder were going to fix it, it probably would have by now.</p>
+        <p>The priority is to work out what is taking so much out of you, reduce the unnecessary load, and start rebuilding.</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TWO PLACES TO START
+     ============================================================ -->
+<section class="s s--paper" id="start">
+  <div class="wrap">
+    <h2>There are two places to start</h2>
+    <p>You can influence every part of the Wheel, but two parts can be changed directly.</p>
+
+    <div class="levers breakout">
+      <div class="lever lever--behaviour">
+        <h3>
+          <svg class="pos" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".35"/><circle cx="12" cy="3.5" r="1.5" fill="currentColor" opacity=".3"/><circle cx="20.5" cy="12" r="1.5" fill="currentColor" opacity=".3"/><circle cx="12" cy="20.5" r="3" fill="currentColor"/><circle cx="3.5" cy="12" r="1.5" fill="currentColor" opacity=".3"/></svg>
+          Behaviour<span class="vh">, the point at the bottom of the wheel</span>
+        </h3>
+        <p class="change">This is what you actually do.</p>
+        <p>Your sleep habits. Movement. Fuelling. Recovery. Caffeine. Training. The phone you pick up when you finally have ten quiet minutes.</p>
+        <p>Not what you know you should do.</p>
+        <p class="change">What actually happens.</p>
+      </div>
+      <div class="lever lever--environment">
+        <h3>
+          <svg class="pos" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".35"/><circle cx="12" cy="3.5" r="1.5" fill="currentColor" opacity=".3"/><circle cx="20.5" cy="12" r="1.5" fill="currentColor" opacity=".3"/><circle cx="12" cy="20.5" r="1.5" fill="currentColor" opacity=".3"/><circle cx="3.5" cy="12" r="3" fill="currentColor"/></svg>
+          Environment<span class="vh">, the point on the left of the wheel</span>
+        </h3>
+        <p class="change">These are the conditions around you.</p>
+        <p>Your calendar. Meetings. Travel. Notifications. Workload. The people who can reach you. The space you have to think and recover.</p>
+        <p>This matters because sometimes we ask an already stretched person to become more disciplined inside an environment that keeps working against them.</p>
+        <p class="change">That is a hard way to solve the problem.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CHANGE THE OBVIOUS THING
+     ============================================================ -->
+<section class="s s--cream" id="obvious">
+  <div class="wrap">
+    <h2>Before you buy anything from us, change the obvious thing.</h2>
+    <p>If your Wheel has shown you something you already know, start there.</p>
+
+    <div class="obvious">
+      <ul class="iflist">
+        <li><svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-arrow"/></svg><span>If your sleep window has disappeared, <b>protect it</b>.</span></li>
+        <li><svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-arrow"/></svg><span>If you have no space to think, <b>make some</b>.</span></li>
+        <li><svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-arrow"/></svg><span>If you know the fourth coffee is keeping the cycle going, <b>test changing it</b>.</span></li>
+        <li><svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-arrow"/></svg><span>If your phone owns every empty minute, <b>reclaim one of them</b>.</span></li>
+      </ul>
+    </div>
+
+    <p class="quote">Do one thing, not seven.</p>
+
+    <div class="lines">
+      <p>Then notice what happens.</p>
+      <p>If that solves the problem, good.</p>
+      <p>You may not need us.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     THE EXPENSIVE PART
+     ============================================================ -->
+<section class="s s--paper" id="guessing">
+  <div class="wrap">
+    <h2>The expensive part is when you don’t know what to change.</h2>
+    <p>This is where people start wasting time.</p>
+
+    <ul class="guessing">
+      <li>You sleep eight hours and still wake tired.</li>
+      <li>You cut the afternoon coffee. Nothing obvious changes.</li>
+      <li>You take magnesium.</li>
+      <li>You stop screens before bed.</li>
+      <li>You exercise more. Then less.</li>
+      <li>You try the advice your wearable gives you.</li>
+    </ul>
+
+    <p style="margin-top:1.6rem">Eventually, one of two things happens.</p>
+
+    <div class="forks">
+      <div class="fork">You keep changing things without knowing what worked.</div>
+      <p class="or">or</p>
+      <div class="fork">You stop trying because nothing seems to make enough difference.</div>
+    </div>
+
+    <div class="lines" style="margin-top:1.8rem">
+      <p>Meanwhile, you adapt.</p>
+      <p>You get better at compensating for being tired.</p>
+      <p>You use caffeine, urgency or willpower.</p>
+      <p>The lower-energy afternoon starts feeling normal.</p>
+      <p>You stop remembering what properly restored felt like.</p>
+    </div>
+
+    <p style="margin-top:1.2rem">And the cost is bigger than feeling tired.</p>
+    <p>It can show up in your patience, training, concentration, decision-making and how much energy is left when you get home.</p>
+
+    <p class="quote">The cost is not one bad score. It is months of guessing while the same pattern keeps running.</p>
+
+    <p class="turn">That is where measurement becomes useful.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     START WITH THE DATA YOU ALREADY HAVE
+     ============================================================ -->
+<section class="s s--cream" id="your-data">
+  <div class="wrap">
+    <h2>Start with the data you already have</h2>
+    <h3>Your Oura or WHOOP is collecting more than a score.</h3>
+    <p>If you wear an Oura Ring or WHOOP, there is a good chance you already have weeks or months of useful information sitting there.</p>
+
+    <ul class="datapoints">
+      <li>Sleep timing</li>
+      <li>Resting heart rate</li>
+      <li>HRV</li>
+      <li>Recovery</li>
+      <li>Patterns across better nights and worse ones</li>
+    </ul>
+
+    <p style="margin-top:1.4rem">Your wearable is very good at showing you what happened.</p>
+    <p>The harder question is:</p>
+
+    <h3 class="bigask">Why?</h3>
+
+    <ul class="causes">
+      <li>Was it the late workout?</li>
+      <li>The afternoon coffee?</li>
+      <li>Alcohol?</li>
+      <li>Workload?</li>
+      <li>Timing?</li>
+      <li>Recovery?</li>
+      <li>Several small things stacking on top of one another?</li>
+    </ul>
+
+    <p>That distinction matters.</p>
+    <p>Because changing five things at once may improve your score, but it does not teach you which thing mattered.</p>
+    <p>And if nothing changes, you still do not know why.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     THE OFFER
+     The wheel result screen links straight here, so the id
+     sleep-score-review is load bearing. Do not rename it.
+     ============================================================ -->
+<section class="s s--deep" id="sleep-score-review">
+  <div class="wrap">
+    <h2>The smallest measured next step</h2>
+    <h3 style="font-size:clamp(1.35rem,3.6vw,1.7rem);margin-top:1.6rem">Sleep Score Review</h3>
+    <p class="deck">You already have the data. Now find out what to do with it.</p>
+
+    <p>The Sleep Score Review is the first paid step after the Capacity Wheel.</p>
+    <p>It is for people who use Oura or WHOOP, have at least 30 days of data, and keep looking at their numbers thinking:</p>
+    <p class="quote">“I can see what happened. I still don’t know what I should change.”</p>
+
+    <p>We review 30 days of your sleep and recovery data alongside how you actually live.</p>
+
+    <ul class="datapoints" style="margin-bottom:1.4rem">
+      <li style="background:rgba(243,239,231,.08);color:var(--cream)">Your routine</li>
+      <li style="background:rgba(243,239,231,.08);color:var(--cream)">Training</li>
+      <li style="background:rgba(243,239,231,.08);color:var(--cream)">Caffeine</li>
+      <li style="background:rgba(243,239,231,.08);color:var(--cream)">Alcohol</li>
+      <li style="background:rgba(243,239,231,.08);color:var(--cream)">Stress</li>
+      <li style="background:rgba(243,239,231,.08);color:var(--cream)">Sleep timing</li>
+    </ul>
+    <p>The things that may look small on their own but can stack together.</p>
+
+    <div class="reviewers">
+      Your data is personally reviewed by <b>Rachel Taylor MSc(Hons)</b>, whose science background spans biochemistry, genetics and toxicology, and <b>Luke Taylor</b>, who specialises in human performance and physiology.
+    </div>
+
+    <p>Then we meet with you for 30 minutes and explain what we found in plain language.</p>
+    <div class="lines" style="margin-top:.9rem">
+      <p>No giant report.</p>
+      <p>No pile of data you now have to interpret yourself.</p>
+    </div>
+    <p style="margin-top:.9rem">You leave with three specific things to change, and which one to start with.</p>
+    <p>Two weeks later, we look again.</p>
+    <div class="lines" style="margin-top:.9rem">
+      <p>Did anything move?</p>
+      <p>If it did, we have learned something useful.</p>
+      <p>If it didn’t, we look at why and adjust your plan at no extra cost.</p>
+    </div>
+
+    <div class="offer">
+      <p class="price">AUD$299</p>
+      <ul class="spec">
+        <li><svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-check"/></svg>30 days of Oura or WHOOP data</li>
+        <li><svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-check"/></svg>Personal data review</li>
+        <li><svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-check"/></svg>30-minute call</li>
+        <li><svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-check"/></svg>One-page plan</li>
+        <li><svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-check"/></svg>Two-week check-in</li>
+      </ul>
+      <div class="btnrow">
+        <!-- TODO before ship: point this at the real Sleep Score Review checkout.
+             It is a mailto for now on purpose. The only live product page prices
+             this review at a different number under the OSleeve brand, and sending
+             a Taylored reader from AUD$299 to a different brand at a different
+             price is the bug nobody spots until a customer does. Swap both CTAs
+             the moment the Taylored checkout exists. -->
+        <!-- ⚠ Rachel named this destination on 27 Sept. The page prices the review
+     at AUD$299 in her voice; this checkout currently shows $119 as an
+     "OSleeve customer price" with 10 places. A reader will pay less than
+     the page quoted, which is not a scam but does undo the price anchor.
+     Flagged to her. A dead mailto on a live funnel is worse than a working
+     link, so this ships and swaps when the Taylored checkout exists. -->
+        <a class="btn" href="https://osleeve.com/products/sleep-score-review" target="_blank" rel="noopener">
+          Review my sleep data
+          <svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
+      </div>
+      <p class="refund">If we cannot find at least one thing in your data worth changing, you can ask for a full refund any time up to the end of your review call.</p>
+    </div>
+
+    <details id="after-booking">
+      <summary>What happens after you book?<span class="sub">Getting started takes about 10 minutes.</span><svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+      <div class="dbody">
+        <ol class="steps">
+          <li>
+            <h3>Book your review</h3>
+            <p>Choose your review and complete a few questions about your sleep, routine and life.</p>
+          </li>
+          <li>
+            <h3>Request your data</h3>
+            <p>If you use Oura, request your data from the Oura Membership Hub as soon as you book. Oura can take up to 10 days to prepare the export.</p>
+            <p>If you use WHOOP, request your data export through WHOOP. It usually arrives within 24 hours.</p>
+          </li>
+          <li>
+            <h3>Send it to us</h3>
+            <p>Upload your file using the form we send you.</p>
+          </li>
+          <li>
+            <h3>We do the work</h3>
+            <p>Once we have your data, we review it and get your answers back to you within seven days.</p>
+          </li>
+          <li>
+            <h3>Make the changes</h3>
+            <p>You leave your call knowing the three things we think are most worth testing, and where to start.</p>
+            <p>Then we check the data again two weeks later.</p>
+          </li>
+        </ol>
+        <p class="timing">That means Oura users should generally allow around two to three weeks from booking to their call. WHOOP users can usually move through the process faster.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     WHY SLEEP / WHAT IF IT ISN'T SLEEP
+     ============================================================ -->
+<section class="s s--cream" id="why-sleep">
+  <div class="wrap--wide">
+    <div class="pair2">
+      <div>
+        <h2>Why sleep first?</h2>
+        <p>Because sleep is one of the easiest places to see the Capacity Wheel come together.</p>
+        <div class="lines" style="margin-top:.9rem">
+          <p>Your behaviour can show up there.</p>
+          <p>Your environment can show up there.</p>
+          <p>Your current biological state can show up there.</p>
+        </div>
+        <p style="margin-top:.9rem">And what happens overnight changes how much you have available the next day.</p>
+        <p>It gives us a useful first layer without immediately asking you to undergo a battery of testing.</p>
+        <p>Sometimes that layer is enough.</p>
+        <p class="turn">If it is, stop there.</p>
+      </div>
+      <div id="deeper">
+        <h2>What if it isn’t just sleep?</h2>
+        <p>Sometimes we find something useful in the sleep data and the next move is obvious.</p>
+        <p>Sometimes the data raises a bigger question.</p>
+        <ul class="asks">
+          <li>Why is your energy still falling even when sleep improves?</li>
+          <li>Why does food appear to change the way you feel so dramatically?</li>
+          <li>Why are you doing the sensible things but recovering differently from the person next to you?</li>
+        </ul>
+        <p style="margin-top:1.2rem">That is when it may be worth measuring another layer.</p>
+        <p>We don’t start with every test we know how to run. We add measurement when the previous layer leaves an important question unanswered.</p>
+        <p>That matters to us.</p>
+        <p>More data is not automatically more useful.</p>
+        <p>The right data should reduce uncertainty and make the next decision easier.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     THE TAYLORED PATH
+     ============================================================ -->
+<section class="s s--deep" id="the-path">
+  <div class="wrap--wide">
+    <h2>The Taylored path</h2>
+    <p style="max-width:var(--measure)">You do not need to choose between five services.</p>
+    <p style="max-width:var(--measure)">Each layer answers a different question.</p>
+    <p style="max-width:var(--measure)">You start with the smallest one that can answer yours.</p>
+
+    <div class="ladder">
+
+      <div class="rung rung--done">
+        <div class="num">01</div>
+        <div class="card">
+          <p class="flag flag--done"><svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-check"/></svg>Done</p>
+          <h3>Capacity Wheel</h3>
+          <p class="promise">Notice the pattern.</p>
+          <div class="meta">
+            <span class="pricetag pricetag--free">Free</span>
+            <span class="dur">Three minutes</span>
+          </div>
+          <p>It shows where capacity currently appears to be building and where it is being spent.</p>
+          <p>You have already done this part.</p>
+          <p class="depth">
+            <svg viewBox="0 0 34 14" aria-hidden="true">
+              <rect x="0" y="0" width="34" height="2" fill="#b8924a"/>
+              <rect x="0" y="3" width="34" height="2" fill="#f3efe7" opacity=".14"/>
+              <rect x="0" y="6" width="34" height="2" fill="#f3efe7" opacity=".14"/>
+              <rect x="0" y="9" width="34" height="2" fill="#f3efe7" opacity=".14"/>
+              <rect x="0" y="12" width="34" height="2" fill="#f3efe7" opacity=".14"/>
+            </svg>
+            <span><span class="vh">Measurement </span>Depth 1 of 5</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="rung rung--now">
+        <div class="num">02</div>
+        <div class="card">
+          <p class="flag"><svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-arrow"/></svg>Next step</p>
+          <h3>Sleep Score Review</h3>
+          <p class="promise">Understand the data you already own.</p>
+          <div class="meta">
+            <span class="pricetag">AUD$299</span>
+          </div>
+          <p>For Oura and WHOOP users with at least 30 days of data.</p>
+          <p>We look for the patterns behind your sleep and recovery scores and give you three clear changes to test.</p>
+          <p>It is the smallest way to replace guessing with evidence.</p>
+          <p class="depth">
+            <svg viewBox="0 0 34 14" aria-hidden="true">
+              <rect x="0" y="0" width="34" height="2" fill="#b8924a"/>
+              <rect x="0" y="3" width="34" height="2" fill="#b8924a"/>
+              <rect x="0" y="6" width="34" height="2" fill="#f3efe7" opacity=".14"/>
+              <rect x="0" y="9" width="34" height="2" fill="#f3efe7" opacity=".14"/>
+              <rect x="0" y="12" width="34" height="2" fill="#f3efe7" opacity=".14"/>
+            </svg>
+            <span><span class="vh">Measurement </span>Depth 2 of 5</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="rung">
+        <div class="num">03</div>
+        <div class="card">
+          <h3>Metabolic Audit</h3>
+          <p class="promise">Measure what your day is doing to your energy.</p>
+          <div class="meta">
+            <span class="pricetag">Approximately AUD$2,000 + GST</span>
+          </div>
+          <p>If the first layer leaves a bigger question around energy, food, stress or recovery, we add continuous glucose monitoring and read it alongside your wearable and real life over five to six weeks.</p>
+          <p>Two sensor periods let us identify the pattern, make a change, and then see whether your own data proves it worked.</p>
+          <p>The aim is not more information. It is a short list of actions that have earned their place.</p>
+          <p class="depth">
+            <svg viewBox="0 0 34 14" aria-hidden="true">
+              <rect x="0" y="0" width="34" height="2" fill="#b8924a"/>
+              <rect x="0" y="3" width="34" height="2" fill="#b8924a"/>
+              <rect x="0" y="6" width="34" height="2" fill="#b8924a"/>
+              <rect x="0" y="9" width="34" height="2" fill="#f3efe7" opacity=".14"/>
+              <rect x="0" y="12" width="34" height="2" fill="#f3efe7" opacity=".14"/>
+            </svg>
+            <span><span class="vh">Measurement </span>Depth 3 of 5</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="rung">
+        <div class="num">04</div>
+        <div class="card">
+          <h3>Executive Capacity Audit</h3>
+          <p class="promise">Build the whole picture.</p>
+          <div class="meta">
+            <span class="pricetag">AUD$12,000 + GST</span>
+            <span class="dur">Ten weeks</span>
+          </div>
+          <p>This is where we stop looking at one system and connect the whole picture: genetics, blood chemistry, hormones, glucose, sleep, recovery and the load you actually carry.</p>
+          <p>Rachel reads it through biology. Luke reads it through performance.</p>
+          <p>Together, we turn it into an Executive Biological Blueprint with the changes most worth making first.</p>
+          <p>For most of our executive clients, this is the deepest measurement they need.</p>
+          <p class="depth">
+            <svg viewBox="0 0 34 14" aria-hidden="true">
+              <rect x="0" y="0" width="34" height="2" fill="#b8924a"/>
+              <rect x="0" y="3" width="34" height="2" fill="#b8924a"/>
+              <rect x="0" y="6" width="34" height="2" fill="#b8924a"/>
+              <rect x="0" y="9" width="34" height="2" fill="#b8924a"/>
+              <rect x="0" y="12" width="34" height="2" fill="#f3efe7" opacity=".14"/>
+            </svg>
+            <span><span class="vh">Measurement </span>Depth 4 of 5</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="rung">
+        <div class="num">05</div>
+        <div class="card">
+          <h3>Private Advisory</h3>
+          <p class="promise">Stay ahead of a year that will keep changing.</p>
+          <div class="meta">
+            <span class="dur">Twelve months. Five clients each year.</span>
+          </div>
+          <p>The Private Advisory is for people carrying a year where the load will not stand still.</p>
+          <ul class="triggers">
+            <li>A transaction.</li>
+            <li>A turnaround.</li>
+            <li>A board appointment.</li>
+            <li>A travel-heavy year.</li>
+            <li>A business that is scaling faster than the person running it can recover.</li>
+          </ul>
+          <p style="margin-top:1rem">Instead of measuring once and handing you a plan, we stay with the data and recalibrate as you change.</p>
+          <p>The point is not dependence. The point is to build a system you understand well enough to eventually run yourself.</p>
+          <p class="depth">
+            <svg viewBox="0 0 34 14" aria-hidden="true">
+              <rect x="0" y="0" width="34" height="2" fill="#b8924a"/>
+              <rect x="0" y="3" width="34" height="2" fill="#b8924a"/>
+              <rect x="0" y="6" width="34" height="2" fill="#b8924a"/>
+              <rect x="0" y="9" width="34" height="2" fill="#b8924a"/>
+              <rect x="0" y="12" width="34" height="2" fill="#b8924a"/>
+            </svg>
+            <span><span class="vh">Measurement </span>Depth 5 of 5</span>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     HOW DEEP
+     ============================================================ -->
+<section class="s s--paper" id="how-deep">
+  <div class="wrap">
+    <h2>You do not need to know how deep to go.</h2>
+    <p class="deck">That is our job.</p>
+    <p>You do not need to look at your Capacity Wheel and decide that you need genetics.</p>
+    <p>You do not need to assume a poor night’s sleep means something is wrong with your metabolism.</p>
+    <p>And you do not need to spend AUD$12,000 to answer an AUD$299 question.</p>
+
+    <p class="quote">Start with the smallest layer that can answer the question in front of you.</p>
+
+    <div class="lines">
+      <p>If that answers it, stop.</p>
+      <p>If it raises a better question, go one layer deeper.</p>
+      <p>That is how we work at Taylored.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CLOSING CTA
+     ============================================================ -->
+<section class="s s--navy" id="closing">
+  <div class="wrap">
+    <h2>Your next answer may already be sitting in your data.</h2>
+    <p>If you have at least 30 days of Oura or WHOOP data but still do not know why you wake tired, why your recovery keeps dropping or what to change first, don’t collect another month of numbers and hope the answer becomes obvious.</p>
+    <p class="turn">Let us read what you already have.</p>
+
+    <div class="offer">
+      <p class="only">Oura + WHOOP only</p>
+      <ul class="spec">
+        <li><svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-check"/></svg>30 days of data</li>
+        <li><svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-check"/></svg>Personal review</li>
+        <li><svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-check"/></svg>30-minute call</li>
+        <li><svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-check"/></svg>Three changes</li>
+        <li><svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-check"/></svg>Two-week check-in</li>
+      </ul>
+      <div class="btnrow">
+        <!-- TODO before ship: same destination decision as the CTA above. -->
+        <!-- ⚠ Rachel named this destination on 27 Sept. The page prices the review
+     at AUD$299 in her voice; this checkout currently shows $119 as an
+     "OSleeve customer price" with 10 places. A reader will pay less than
+     the page quoted, which is not a scam but does undo the price anchor.
+     Flagged to her. A dead mailto on a live funnel is worse than a working
+     link, so this ships and swaps when the Taylored checkout exists. -->
+        <a class="btn" href="https://osleeve.com/products/sleep-score-review" target="_blank" rel="noopener">
+          Review my sleep data <span class="tag">AUD$299</span>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
+      </div>
+      <p class="refund">If we cannot find at least one thing worth changing, you can ask for a full refund any time up to the end of your review call.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FINE PRINT
+     ============================================================ -->
+<section class="s s--paper" id="fine-print">
+  <div class="wrap">
+    <details>
+      <summary>A note on when a data review is not enough<svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+      <div class="dbody">
+        <p>The Sleep Score Review helps you understand patterns in your sleep and recovery data.</p>
+        <p>It is not medical diagnosis or treatment.</p>
+        <p>If you snore loudly, someone has noticed that you stop breathing while asleep, or you regularly fall asleep during the day, speak with your GP first.</p>
+        <p>Those symptoms deserve proper medical assessment rather than a wearable-data review.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>What happens to your data?<svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+      <div class="dbody">
+        <p>We use your data only to complete your review.</p>
+        <p>We store it securely and delete it within 90 days, unless you specifically ask us to keep it.</p>
+        <p>We do not sell or share it.</p>
+      </div>
+    </details>
+
+    <div class="notready">
+      <h3>Not ready yet?</h3>
+      <p>Make the one change your Capacity Wheel has already shown you.</p>
+      <p>Give it enough time to notice whether it matters.</p>
+      <p>Then come back.</p>
+    </div>
+
+    <p class="quote">The aim of this work is not to make you better at following someone else’s health rules. It is to help you understand your own system well enough to make better decisions with less guesswork.</p>
+
+    <p class="disclaimer">The Capacity Wheel and Sleep Score Review are tools for reflection and performance guidance, not medical diagnosis or treatment.</p>
+  </div>
+</section>
+
+<footer class="foot">
+  <span class="fmark">The <em>Biology</em> of Leadership</span>
+  From Taylored. <a href="/">Take the Capacity Wheel</a>
+</footer>
+
+<script>
+/* Two small jobs, no dependencies.
+   1. A deep link into a collapsed section has to open it, or the link is broken.
+   2. The sticky nav marks the section you are actually in. */
+(function(){
+  function openTarget(){
+    var el = location.hash && document.querySelector(location.hash);
+    if (!el) return;
+    var d = el.closest ? el.closest('details') : null;
+    while (d) { d.open = true; d = d.parentElement && d.parentElement.closest('details'); }
+    el.scrollIntoView();
+  }
+  window.addEventListener('hashchange', openTarget);
+  if (location.hash) setTimeout(openTarget, 0);
+  window.addEventListener('beforeprint', function(){
+    document.querySelectorAll('details').forEach(function(d){ d.open = true; });
+  });
+
+  var links = [].slice.call(document.querySelectorAll('.topnav a'));
+  var targets = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (!e.isIntersecting) return;
+        var i = targets.indexOf(e.target);
+        if (i < 0) return;
+        links.forEach(function(a){ a.classList.remove('now'); });
+        links[i].classList.add('now');
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    targets.forEach(function(t){ if (t) io.observe(t); });
+  }
+})();
+</script>
 </body>
 </html>
