@@ -699,7 +699,15 @@ const config = {
     factorColors: { biology:"#7fa07a", leadership:"#b38e5d", behaviour:"#d9c9a8", environment:"#8fb3c0" },
     trackColor: "rgba(243,239,231,0.14)", hubColor: "#f3efe7", spokeColor: "rgba(243,239,231,0.55)",
     sectorSpanDegrees: 76, arcRadius: 158, arcWidth: 13,
-    spinSpeedMap: [ {score:0,dps:-14},{score:33,dps:-4},{score:45,dps:3},{score:68,dps:12},{score:85,dps:22},{score:100,dps:34} ],
+    // ⛔⛔ THE ZERO CROSSING MUST SIT ON THE BAND BOUNDARY, NOT NEAR IT.
+    // Rachel, 29 Sept 2026: "On conserve, I got a score of 44 and the wheel is
+    // rotating clockwise which isn't correct."
+    // The old map crossed from negative to positive between 33 and 45, so it
+    // turned positive at about 39.9. Conserve runs to 49. Every score from 40 to
+    // 49 was therefore a DRAINING band drawn as a BUILDING wheel, and her email
+    // said "to the left, draining capacity" beside a wheel turning right.
+    // Steady's floor is 50, so that is where the sign turns over.
+    spinSpeedMap: [ {score:0,dps:-14},{score:30,dps:-9},{score:49,dps:-1.5},{score:50,dps:1.5},{score:68,dps:12},{score:85,dps:22},{score:100,dps:34} ],
     wobble: { sensitivity:1.0, maxAngleDegrees:6, maxEccentricityPx:5, frequencyHz:0.55 },
     spinUp: { durationMs:2600, easing:"easeOutCubic", arcStaggerMs:180, countUp:true }
   },
@@ -1238,7 +1246,29 @@ const CX = 220, CY = 220;
 const polar = (r, deg) => { const a=(deg*Math.PI)/180; return [CX + r*Math.sin(a), CY - r*Math.cos(a)]; };
 function arcPath(r, a1, a2){ const [x1,y1]=polar(r,a1),[x2,y2]=polar(r,a2); return `M ${x1.toFixed(2)} ${y1.toFixed(2)} A ${r} ${r} 0 ${a2-a1>180?1:0} 1 ${x2.toFixed(2)} ${y2.toFixed(2)}`; }
 const lerp = (a,b,t)=>a+(b-a)*t;
-function speedFor(score){ const m=W.spinSpeedMap; if(score<=m[0].score) return m[0].dps; for(let i=1;i<m.length;i++) if(score<=m[i].score) return lerp(m[i-1].dps,m[i].dps,(score-m[i-1].score)/(m[i].score-m[i-1].score)); return m[m.length-1].dps; }
+function speedFor(score, band){
+  const m=W.spinSpeedMap;
+  let dps;
+  if(score<=m[0].score) dps=m[0].dps;
+  else {
+    dps=m[m.length-1].dps;
+    for(let i=1;i<m.length;i++) if(score<=m[i].score){ dps=lerp(m[i-1].dps,m[i].dps,(score-m[i-1].score)/(m[i].score-m[i-1].score)); break; }
+  }
+  // ★★★ THE SIGN COMES FROM THE BAND, exactly as the wording does in PULL.
+  // On 7 Aug 2026 the email contradicted itself because the masthead used a
+  // score threshold and the body used the band. That was fixed by tying both to
+  // the band. The PICTURE was left on a score threshold, so the same
+  // contradiction survived one layer down: correct words, wrong wheel. Tying
+  // the sign to the band makes the two disagree impossible by construction,
+  // and it holds even if someone moves a band threshold later without
+  // remembering this map exists.
+  if(band){
+    const draining = (band==="Restore" || band==="Conserve");
+    if(draining && dps>0) dps=-Math.abs(dps);
+    if(!draining && dps<0) dps=Math.abs(dps);
+  }
+  return dps;
+}
 const easings = { easeOutCubic:(t)=>1-(1-t)**3, linear:(t)=>t };
 
 function renderResult(r){
@@ -1498,7 +1528,7 @@ function buildWheel(r){
 function animateWheel(r){
   const spinner=$("spinner"), root=$("wobbleRoot"), num=$("scoreNum");
   const half=W.sectorSpanDegrees/2, R=W.arcRadius;
-  const targetV=speedFor(r.capacityScore);
+  const targetV=speedFor(r.capacityScore, r.band);
   const imbalance=(1-r.coherence)*W.wobble.sensitivity;
   const ease=easings[W.spinUp.easing]||easings.easeOutCubic;
   // the inner wheel (ticks/spokes) spins the same way the spin arrow points:
