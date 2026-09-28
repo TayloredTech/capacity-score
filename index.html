@@ -50,6 +50,11 @@ h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-heigh
 .btn:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 /* intro */
 #intro .wrap{padding-top:clamp(3rem,10vh,6rem)}
+/* the figure needs a little more room than the reading measure, but the screen
+   stays ONE column so the rhythm never goes ragged the way the end screen did */
+@media (min-width:760px){
+  #intro .wrap{max-width:46rem}
+}
 #intro h1{font-size:clamp(2.1rem,7vw,3.3rem);margin:.9rem 0 1.4rem}
 #intro .lede{font-size:1.08rem;color:var(--cream-soft);max-width:33rem}
 .carry{margin:0 0 1.8rem}
@@ -61,7 +66,45 @@ h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-heigh
 .carry button:hover{border-color:var(--cream-soft)}
 .carry button[aria-pressed="true"]{border-color:var(--gold,#b8924a);color:var(--cream,#f4efe6);
   background:rgba(184,146,74,.12)}
-#intro .how{margin:1.6rem 0 2.2rem;padding:1.2rem 0;border-top:1px solid var(--rule-l);border-bottom:1px solid var(--rule-l);font-size:.95rem;color:var(--cream-soft)}
+#intro .how{margin:1.6rem 0 1rem;padding:1.2rem 0;border-top:1px solid var(--rule-l);border-bottom:1px solid var(--rule-l);font-size:.95rem;color:var(--cream-soft)}
+#intro .how p+p{margin-top:.35rem}
+.snapshot{margin:0 0 2rem;font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:1.1rem;color:var(--gold)}
+/* the opening diagram. One wheel with a key underneath in the wheel's own
+   clockwise order, never four boxes: part of what it teaches is that the four
+   move each other. */
+/* ⛔ ONE WHEEL, NOT FOUR BOXES. Rachel: "part of what you are teaching is that
+   they affect one another." The wheel is the hero and carries the four NAMES on
+   it, in their real positions, with the gold arrows between them. The blurbs sit
+   under it in the wheel's own clockwise order, as a key to one diagram rather
+   than four cards. No borders, no boxes. */
+.model{margin:2.4rem 0 .5rem}
+.modelring{max-width:33rem;margin:0 auto}
+.modelring svg{display:block;width:100%;height:auto}
+.modelkey{margin:1.8rem 0 0;display:grid;gap:.1rem}
+.node{display:grid;gap:.1rem;padding:.7rem 0;border-top:1px solid var(--rule-l)}
+.modelkey .node:first-child{border-top:0}
+.nodename{font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;display:flex;align-items:center;gap:.45rem}
+.nodedot{width:8px;height:8px;border-radius:50%;flex:none}
+.nodeblurb{font-size:.95rem;color:var(--cream);line-height:1.45}
+.nodecue{font-size:.64rem;letter-spacing:.11em;text-transform:uppercase;color:var(--cream-faint);white-space:nowrap}
+.nodecue.lever{color:var(--gold)}
+.modelcaption{margin:1.2rem 0 0;padding-top:1rem;border-top:1px solid var(--rule-l);font-size:.85rem;color:var(--cream-faint)}
+@media (min-width:760px){
+  .modelring{max-width:37rem}
+  /* two comfortable columns so no blurb sits on a cramped measure. Reading
+     order stays clockwise: Biology, Leadership, then Behaviour, Environment. */
+  .modelkey{grid-template-columns:1fr 1fr;column-gap:2.2rem;row-gap:0}
+  .modelkey .node:nth-child(2){border-top:0}
+}
+/* 320 is the floor we support. Two display lines fell over there: the kicker's
+   tracking and the longest role option. Both fit once the tracking and the type
+   come down, and the options go full width. */
+@media (max-width:400px){
+  .kicker{font-size:.64rem;letter-spacing:.14em}
+  .carry .opts{flex-direction:column}
+  .carry button{width:100%;text-align:left;font-size:.76rem;padding-left:.7rem;padding-right:.7rem;white-space:nowrap}
+}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .brandline{margin-top:3.5rem;font-size:.8rem;color:var(--cream-faint)}
 /* diagnostic */
 .progress{height:3px;background:var(--rule-l)}
@@ -227,12 +270,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
 <section id="intro" class="screen active">
+  <!-- ⛔ 28 Sept 2026. This screen used to open with two dense paragraphs.
+       Rachel: "the user has to read two fairly dense paragraphs before they
+       have any real picture of what the Wheel is measuring." The model is now
+       SHOWN. Her steer: "closer to an interactive diagram with a little copy
+       than a landing page with explanatory text." -->
   <div class="wrap">
     <p class="brandtop">The <em>Biology</em> of Leadership</p>
     <p class="kicker" id="i-kicker"></p>
     <h1 id="i-title"></h1>
     <p class="lede" id="i-intro"></p>
+
+    <figure class="model">
+      <div class="modelring">
+        <svg id="introWheel" viewBox="0 0 440 440" role="img" aria-labelledby="introWheelDesc"></svg>
+      </div>
+      <p id="introWheelDesc" class="visually-hidden"></p>
+      <div class="modelkey" id="modelKey"></div>
+      <figcaption class="modelcaption" id="modelCaption"></figcaption>
+    </figure>
+
     <div class="how" id="i-how"></div>
+    <p class="snapshot" id="i-snapshot"></p>
     <div class="carry" id="carryHost"></div>
     <button class="btn" id="startBtn"></button>
     <p class="brandline">From Taylored. The biology of leadership, made practical.</p>
@@ -372,14 +431,35 @@ const config = {
   // until tapped, result rows use the plain part titles. The version is stored
   // on every row, so a band-threshold change has to bump it or two rows with
   // the same score and different bands look like a bug.
-  // v4.2: lifting_most reaches Kit, from the SAME derivation the screen uses.
-  // v4.1 gave the four quadrant descriptors one home in copy.quadrants.
-  version: "v4.2-wheel",
+  // v4.3: the opening screen shows the model instead of explaining it. The
+  // wheel, its clockwise connections and the four descriptors replace two dense
+  // paragraphs. v4.2 sent lifting_most to Kit from one derivation.
+  version: "v4.3-wheel",
   instrument: {
-    title: "Which Way Is Your Wheel Turning?",
+    // ⛔ 28 Sept 2026, Rachel's opening-screen spec. The old `intro` and
+    // `howItWorks` were the two dense paragraphs she cut. The model is shown
+    // by the diagram now, so the copy around it is deliberately thin.
+    title: "Which way is your wheel turning?",
     kicker: "The Capacity Wheel, made personal",
-    intro: "See whether your current way of working is building your capacity or using it up. Capacity is the energy, focus and steadiness you have available for what work and life ask of you. This three minute check-in shows how your current load is affecting you, and which part of the wheel may be costing you most. Answer for the month you are actually having, not the one you wish you were having. There are no right answers.",
-    howItWorks: "You will see 16 pairs of statements across four areas: your state, your behaviour, your environment and your leadership. Move the marker toward the statement that sounds most like you in a typical month. You are looking for an honest snapshot, not a perfect score.",
+    intro: "A 3-minute read of how your current load is affecting four parts of your capacity.",
+    howItWorks: ["16 statements. About 3 minutes.",
+                 "Answer for the month you are actually having, not the one you wish you were having."],
+    snapshot: "Not a grade. A snapshot.",
+    // The diagram. One blurb per factor, and the hub is CAPACITY, because
+    // capacity is the rotation and not a fifth handle.
+    model: {
+      hub: "Capacity",
+      hubSub: "the spin",
+      // ⛔ NO BLURBS HERE. The four descriptors live in copy.quadrants and this
+      // screen reads them from there. If you are about to type one of those
+      // four sentences a second time, that is the bug Rachel ruled against:
+      // "Let's align and stick to it."
+      // ★ READ FROM part.kind, NEVER a second list. Every part is already
+      // tagged lever or outcome in this config and that tag is what the
+      // scoring uses, so the cue cannot drift away from the model.
+      cues: { lever: "You can move this", outcome: "This reflects the load" },
+      caption: "The four affect one another. Which way the wheel turns is the whole point."
+    },
     timeframeLabel: "In a typical month",
     scale: { min: 1, max: 4, labels: ["Rarely","Sometimes","Often","Almost always"] },
     parts: [
@@ -613,7 +693,7 @@ const config = {
     resultHeading: "Your wheel", scoreCaption: "Capacity score",
     partBreakdownHeading: "Your Capacity Map",
     partBreakdownSub: "What is lifting you, and what is dragging you down.",
-    startButton: "Start the read", nextButton: "Next", seeResultButton: "See your wheel"
+    startButton: "Start the 3-minute read", nextButton: "Next", seeResultButton: "See your wheel"
   },
   wheel: {
     factorOrder: ["biology","leadership","behaviour","environment"],
@@ -642,11 +722,16 @@ const config = {
   // 300 staff is not the pitch to a two-person founding team, and until now the
   // list could not tell them apart.
   carry: {
-    label: "Before you start, who are you carrying at work right now?",
+    // ⛔ 28 Sept 2026. "Who are you carrying at work right now?" was read by a
+    // tester as doing other people's work rather than being responsible for
+    // them. Rachel's rewording. ⛔ THE KEYS DO NOT CHANGE: team / build / solo
+    // are what reach Kit as `carry`, what the row stores, and what the preview
+    // URLs accept. Only the wording a human reads has changed.
+    label: "Which best describes your role right now?",
     options: [
-      { key: "team",  label: "A team who report to me",                    whoNeeds: "my team needs" },
-      { key: "build", label: "People I build with, but nobody reports to me", whoNeeds: "the people I build with need" },
-      { key: "solo",  label: "Mostly just me",                             whoNeeds: "my clients need" },
+      { key: "team",  label: "I lead a team",                                  whoNeeds: "my team needs" },
+      { key: "build", label: "I work with others, but no one reports to me",   whoNeeds: "the people I build with need" },
+      { key: "solo",  label: "I mostly work independently",                    whoNeeds: "my clients need" },
     ],
     default: "team",
   },
@@ -666,7 +751,8 @@ const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 $("i-kicker").textContent = I.kicker;
 $("i-title").textContent = I.title;
 $("i-intro").textContent = I.intro;
-$("i-how").textContent = I.howItWorks;
+I.howItWorks.forEach((line)=>{ const el=document.createElement("p"); el.textContent=line; $("i-how").appendChild(el); });
+$("i-snapshot").textContent = I.snapshot;
 // Who are you carrying at work. Defaults to the commonest answer so it never
 // blocks the start — this funnel already leaks and a required field at the top
 // of it would cost more than the segmentation is worth. One tap to change.
@@ -1044,6 +1130,112 @@ function flushPending() {
 
 try { flushPending(); } catch {}
 
+/* ---------- the OPENING diagram ----------
+   ⛔ ONE SOURCE OF TRUTH FOR THE GEOMETRY. This draws from config.wheel
+   factorAngles and factorOrder, the same fields buildWheel() uses and the same
+   positions as the diagram published on taylored.health:
+
+     Environment 9 o'clock (270)   Biology 12 (0)   Leadership 3 (90)   Behaviour 6 (180)
+
+   polar() puts 0 at the top and increases CLOCKWISE, so walking factorOrder
+   (biology 0, leadership 90, behaviour 180, environment 270) walks the circle
+   clockwise. That is the SAME cycle as Rachel's published build direction
+   entered one handle later:
+
+     CLOCKWISE = BUILDS   Environment -> Biology -> Leadership -> Behaviour -> Environment
+
+   ⛔ The arrows are NOT decoration. Direction is the meaning
+   ([[reference_capacity_wheel_order]]), so this diagram turns clockwise
+   because the opening screen is an invitation to build, and the result wheel
+   is the thing that later tells you which way yours is actually going.
+   ⛔ Do NOT place the four by the order they are listed in a brief. Her prose
+   is not the authority on her model, the published diagram is, and a listing
+   order would put Behaviour at 3 and Leadership at 9.
+   ⛔ Do NOT draw BEING / DOING arcs here. She removed them on 15 Sept 2026. */
+function buildIntroWheel(){
+  const svg = $("introWheel");
+  if (!svg) return;
+  const R = 132, NODE = 176;
+  const order = W.factorOrder;                 // clockwise by construction
+  const ang = (f) => ((W.factorAngles[f] % 360) + 360) % 360;
+
+  // the ring the four sit on
+  let out = `<circle cx="${CX}" cy="${CY}" r="${R}" fill="none" stroke="rgba(184,146,74,.22)" stroke-width="1.5"/>`;
+
+  // ONE connector per consecutive pair, drawn clockwise with the head at the
+  // far end, so the eye is told these four move each other and which way round.
+  const GAP = 26, HEAD = 9, hw = 6.5, gold = "#b8924a";
+  for (let i = 0; i < order.length; i++){
+    const a = ang(order[i]);
+    let b = ang(order[(i + 1) % order.length]);
+    if (b <= a) b += 360;                      // always step forwards
+    const from = a + GAP, to = b - GAP;
+    out += `<path d="${arcPath(R, from, to - HEAD)}" fill="none" stroke="${gold}" stroke-opacity=".62" stroke-width="2" stroke-linecap="round"/>`;
+    const [tx, ty] = polar(R, to);
+    const [ox, oy] = polar(R + hw, to - HEAD);
+    const [ix, iy] = polar(R - hw, to - HEAD);
+    out += `<path d="M ${tx.toFixed(2)} ${ty.toFixed(2)} L ${ox.toFixed(2)} ${oy.toFixed(2)} L ${ix.toFixed(2)} ${iy.toFixed(2)} Z" fill="${gold}" fill-opacity=".85"/>`;
+  }
+
+  // the hub. Capacity is the ROTATION, not a fifth handle, so it is named at
+  // the centre and never given a spoke.
+  out += `<circle cx="${CX}" cy="${CY}" r="52" fill="rgba(184,146,74,.08)" stroke="rgba(184,146,74,.45)" stroke-width="1.5"/>`
+       + `<text x="${CX}" y="${CY - 2}" text-anchor="middle" font-family="Playfair Display,Georgia,serif" font-size="25" fill="#f3efe7">${I.model.hub}</text>`
+       + `<text x="${CX}" y="${CY + 20}" text-anchor="middle" font-family="Manrope,sans-serif" font-size="11" letter-spacing="1.6" fill="#8a9aa1">${I.model.hubSub}</text>`;
+
+  // the four handles: a dot ON the ring and the NAME just outside it, both in
+  // the svg so they scale with the diagram and never drift from the geometry.
+  // ⛔ The blurbs stay in HTML underneath: text inside an svg does not wrap, and
+  // hand-wrapping a sentence into tspans breaks the moment the wording changes.
+  out += order.map((f)=>{
+    const a = ang(f), [dx, dy] = polar(R, a), [lx, ly] = polar(NODE, a);
+    const anchor = a === 90 ? "start" : a === 270 ? "end" : "middle";
+    const dy2 = a === 0 ? -8 : a === 180 ? 18 : 5;
+    const px = a === 90 ? lx + 4 : a === 270 ? lx - 4 : lx;
+    return `<circle cx="${dx.toFixed(2)}" cy="${dy.toFixed(2)}" r="7" fill="${W.factorColors[f]}"/>`
+         + `<text x="${px.toFixed(2)}" y="${(ly + dy2).toFixed(2)}" text-anchor="${anchor}"`
+         + ` font-family="Manrope,sans-serif" font-size="14" font-weight="700" letter-spacing="2.2"`
+         + ` fill="${W.factorColors[f]}">${W.factorLabels[f].toUpperCase()}</text>`;
+  }).join("");
+
+  svg.innerHTML = out;
+
+  // ⛔ FIT THE VIEWBOX TO WHAT WAS ACTUALLY DRAWN. The side labels sit outside
+  // the 440 box and were clipped at 375px, rendering as "ONMENT" and "LEADER".
+  // Measuring the rendered content instead of guessing a wider box means nothing
+  // clips however the labels or the font change later.
+  try {
+    const bb = svg.getBBox();
+    if (bb.width > 0 && bb.height > 0) {
+      const pad = 6;
+      svg.setAttribute("viewBox",
+        (bb.x - pad).toFixed(1) + " " + (bb.y - pad).toFixed(1) + " " +
+        (bb.width + pad * 2).toFixed(1) + " " + (bb.height + pad * 2).toFixed(1));
+    }
+  } catch (e) { /* no layout yet: the 440 box still renders, just tighter */ }
+
+  // ⛔ ONE set of nodes, TWO layouts. On a wide screen they sit around the ring
+  // in their real positions, so the model reads in one look. On a phone the
+  // same nodes stack in the same clockwise order underneath it. Never a second
+  // list, because a second list is how the diagram and the words drift apart.
+  $("modelKey").innerHTML = order.map((f)=>{
+    const part = I.parts.find((x)=>x.factor === f);
+    const kind = part ? part.kind : "outcome";
+    return `<div class="node">
+      <span class="nodename" style="color:${W.factorColors[f]}">
+        <i class="nodedot" style="background:${W.factorColors[f]}"></i>${W.factorLabels[f]}</span>
+      <span class="nodeblurb">${(C.quadrants && C.quadrants[f]) || ""}</span>
+      <span class="nodecue ${kind}">${I.model.cues[kind]}</span>
+    </div>`;
+  }).join("");
+  $("modelCaption").textContent = I.model.caption;
+
+  // the diagram is the argument, so a screen reader has to get the loop too
+  $("introWheelDesc").textContent =
+    "The Capacity Wheel. Capacity sits at the centre and is the rotation. Four parts sit around it and feed each other clockwise: "
+    + order.map((f)=>W.factorLabels[f]).join(", then ") + ", and back to " + W.factorLabels[order[0]] + ".";
+}
+
 /* ---------- the wheel (unchanged dark reveal) ---------- */
 const CX = 220, CY = 220;
 const polar = (r, deg) => { const a=(deg*Math.PI)/180; return [CX + r*Math.sin(a), CY - r*Math.cos(a)]; };
@@ -1333,6 +1525,9 @@ function animateWheel(r){
   }
   requestAnimationFrame(frame);
 }
+
+// the opening diagram needs polar/arcPath/CX/CY, so it is built down here
+buildIntroWheel();
 
 /* ---------- PREVIEW URLS ----------
    ?demo=peak|steady|conserve|restore        jumps straight to that end slide
