@@ -370,10 +370,10 @@ const config = {
   // until tapped, result rows use the plain part titles. The version is stored
   // on every row, so a band-threshold change has to bump it or two rows with
   // the same score and different bands look like a bug.
-  // v3.8: preview URLs. ?demo=peak|steady|conserve|restore plus &carry=team|
-  // build|solo, each preset sitting mid-band under the current cuts, writing
-  // nothing and marked noindex. v3.7 was Rachel's Leadership rewrite.
-  version: "v3.8-wheel",
+  // v3.9: BEING and DOING removed from the result wheel. v3.8 added the
+  // preview URLs, ?demo=peak|steady|conserve|restore plus &carry=team|build|
+  // solo, each preset mid-band, writing nothing and marked noindex.
+  version: "v3.9-wheel",
   instrument: {
     title: "Which Way Is Your Wheel Turning?",
     kicker: "The Capacity Wheel, made personal",
@@ -585,7 +585,6 @@ const config = {
     factorAngles: { biology:0, leadership:90, behaviour:180, environment:270 },
     factorLabels: { biology:"Biology", leadership:"Leadership", behaviour:"Behaviour", environment:"Environment" },
     factorColors: { biology:"#7fa07a", leadership:"#b38e5d", behaviour:"#d9c9a8", environment:"#8fb3c0" },
-    axisLabels: { outcomes:"BEING", levers:"DOING" },
     trackColor: "rgba(243,239,231,0.14)", hubColor: "#f3efe7", spokeColor: "rgba(243,239,231,0.55)",
     sectorSpanDegrees: 76, arcRadius: 158, arcWidth: 13,
     spinSpeedMap: [ {score:0,dps:-14},{score:33,dps:-4},{score:45,dps:3},{score:68,dps:12},{score:85,dps:22},{score:100,dps:34} ],
@@ -1216,9 +1215,15 @@ function buildWheel(r){
     const d = flip ? `M ${polar(rl,a+60).map(v=>v.toFixed(2)).join(" ")} A ${rl} ${rl} 0 0 0 ${polar(rl,a-60).map(v=>v.toFixed(2)).join(" ")}`
                    : `M ${polar(rl,a-60).map(v=>v.toFixed(2)).join(" ")} A ${rl} ${rl} 0 0 1 ${polar(rl,a+60).map(v=>v.toFixed(2)).join(" ")}`;
     return `<path id="lp-${f}" d="${d}" fill="none"/><text font-family="Manrope,sans-serif" font-size="13" font-weight="700" letter-spacing="2.5" fill="${W.factorColors[f]}"><textPath href="#lp-${f}" startOffset="50%" text-anchor="middle">${W.factorLabels[f].toUpperCase()}</textPath></text>`; }).join("");
-  const axis = `
-    <text x="${CX}" y="${CY-122}" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="3" fill="rgba(243,239,231,.4)">${W.axisLabels.outcomes}</text>
-    <text x="${CX}" y="${CY+130}" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="3" fill="rgba(243,239,231,.4)">${W.axisLabels.levers}</text>`;
+  // ⛔⛔ BEING and DOING WERE NEVER REMOVED FROM THIS WHEEL, and Rachel has now
+  // ruled against them THREE TIMES: 15 Sept 2026 on the Icehouse deck ("Remove
+  // doing and being"), again on the field guide on 28 Sept ("remove the 'being'
+  // and 'doing' part, it clutters the image"), and again the same day on this
+  // screen ("I'm unsure why being and doing have reentered the picture"). They
+  // had not reentered anything. The two <text> elements had sat here since the
+  // first commit, so the ruling was honoured in two other renders and missed in
+  // this one. `axisLabels` is deleted from the config as well, so there is
+  // nothing left to render by accident. Do NOT reinstate them.
   svg.innerHTML = `
     <g id="wobbleRoot">
       <g id="spinner">
@@ -1231,7 +1236,7 @@ function buildWheel(r){
       <text id="scoreNum" x="${CX}" y="${CY+12}" text-anchor="middle" font-family="'Playfair Display',Georgia,serif" font-size="46" font-weight="600" fill="${W.hubColor}">0</text>
       <text x="${CX}" y="${CY+32}" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="2" fill="rgba(243,239,231,.55)">${C.scoreCaption.toUpperCase()}</text>
     </g>
-    ${spinArrow}${labels}${axis}`;
+    ${spinArrow}${labels}`;
   animateWheel(r);
 }
 
