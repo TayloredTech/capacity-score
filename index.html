@@ -370,10 +370,11 @@ const config = {
   // until tapped, result rows use the plain part titles. The version is stored
   // on every row, so a band-threshold change has to bump it or two rows with
   // the same score and different bands look like a bug.
-  // v3.9: BEING and DOING removed from the result wheel. v3.8 added the
-  // preview URLs, ?demo=peak|steady|conserve|restore plus &carry=team|build|
-  // solo, each preset mid-band, writing nothing and marked noindex.
-  version: "v3.9-wheel",
+  // v4.0: Rachel's rulings of 28 Sept. Restore's even read gets its second
+  // sentence back, the two behaviour statements say recharge not recovery, and
+  // the where/why block is her new heading and paragraph. v3.9 removed BEING
+  // and DOING from the result wheel.
+  version: "v4.0-wheel",
   instrument: {
     title: "Which Way Is Your Wheel Turning?",
     kicker: "The Capacity Wheel, made personal",
@@ -398,7 +399,12 @@ const config = {
         lead:"The habits and choices that either rebuild your capacity or use it up. This is one of the two parts of the wheel you can change directly.",
         statements:[
           "When pressure rises, the habits that help me are the first things I drop.",
-          "Recovery only happens if there is time left at the end of the day.",
+          // ⛔ 28 Sept 2026, Rachel: "Change recovery to recharge." BEHAVIOUR
+          // STATEMENTS ONLY. The word is correct and stays where it describes
+          // actual physical recovery: Conserve's "before recovery becomes the
+          // priority", Restore's "your days, recovery or environment", and the
+          // sleep and recovery data line in the emails.
+          "Recharge only happens if there is time left at the end of the day.",
           // ⛔ 28 Sept 2026, Rachel's wording, verbatim. The old pair named the
           // phone ("I usually reach for my phone instead of doing something
           // that helps me reset"). A tester spent 90 seconds on it, read it
@@ -411,7 +417,7 @@ const config = {
           "I use caffeine or willpower to keep going instead of changing what is draining me."],
         lifts:[
           "When pressure rises, I protect the habits that keep me steady.",
-          "I build recovery into my day on purpose.",
+          "I build recharge into my day on purpose.",
           "When a gap opens up in my day, I can leave some of it open and let myself reset.",
           "I regularly do things that restore my energy rather than relying on caffeine or willpower."] },
       { factor:"environment", title:"What surrounds you", kind:"lever",
@@ -541,14 +547,26 @@ const config = {
       heading: "How even your wheel is",
       intro: "Two people can score the same and be in completely different situations. One has four points that are all slightly strained. The other has three that are fine and one that is falling over.",
       evenLine: "Your four parts are close together, so nothing is failing on its own.",
+      // ⛔ 28 Sept 2026. This sentence was dropped when the coherence card
+      // became a tab, and Rachel ruled it back for RESTORE: "The old version
+      // had a second sentence that covered it. Restore it." Without it,
+      // "nothing is failing on its own" reads as reassurance sitting next to
+      // four low numbers. Recovered verbatim from the pre-a801102 `even` copy,
+      // not rewritten. ⚠ A Conserve wheel can take the same shape, so if that
+      // ever reads wrong the fix is to widen this condition, not reword it.
+      evenLineLow: "If your score is lower than you would like, it is the whole system carrying a bit too much rather than one part breaking.",
+      evenLineLowBands: ["Restore"],
       uneven: "One point is well out of line with the others. Most of your wheel is doing its job and one part is taking the strain. That is usually easier to fix than it feels, because you are changing one thing rather than everything. It is also the part most likely to give way first if the load rises.",
       evenThreshold: 0.75
     },
     // ⛔ The boat analogy card ("Why now rather than later", five degrees off
     // course) was removed on 28 Sept 2026. Rachel cut it. Do not put it back.
     bridge: {
-      heading: "This shows you where. It cannot tell you why.",
-      body: "The Capacity Wheel is based on what you can see and feel. It can show you where capacity appears to be getting lost, but it cannot tell you what is driving it underneath. Two people can carry the same workload and respond very differently. Sleep, recovery, glucose, stress physiology, blood chemistry and genetics can all change how that load lands. That is where we go next. You do not need to know how deep to go. Start with the smallest layer that can answer the question in front of you. If it answers it, stop. If it raises a better question, go one layer deeper.",
+      // ⛔ 28 Sept 2026, Rachel's wording verbatim, contraction included.
+      // ⛔ "recovery" and "genetics" were deliberately dropped from the list of
+      // measures. Do not put either back.
+      heading: "This shows you where your capacity is dragging. It can’t tell you why. We can help.",
+      body: "Two people can carry the same load and respond completely differently. Sleep, glucose, stress physiology and blood chemistry all change how it lands. Those are measurable, and that is what we do next.",
       tagline: "If you already wear an Oura or WHOOP, the next answer may be sitting in data you own. 30 days of it, personally reviewed, three changes to test.",
       ctaLabel: "Review my sleep data",
       // ⚠ PROVISIONAL DESTINATION, 27 Sept 2026. The label now promises a sleep
@@ -1070,7 +1088,8 @@ function renderResult(r){
   // ⛔ 28 Sept 2026: an even wheel gets ONE line under the map. Only an uneven
   // one gets the tab, and the tab opens closed.
   const even = r.coherence >= C.coherence.evenThreshold;
-  $("r-evenLine").textContent = C.coherence.evenLine;
+  $("r-evenLine").textContent = C.coherence.evenLine
+    + ((C.coherence.evenLineLowBands || []).indexOf(r.band) > -1 ? " " + C.coherence.evenLineLow : "");
   $("r-evenLine").hidden = !even;
   $("r-cohTab").hidden = even;
   $("r-cohTab").open = false;
