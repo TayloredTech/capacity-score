@@ -363,11 +363,11 @@ const config = {
   // until tapped, result rows use the plain part titles. The version is stored
   // on every row, so a band-threshold change has to bump it or two rows with
   // the same score and different bands look like a bug.
-  // v3.6: end screen rebuilt as one column, boat card removed, coherence is a
-  // collapsed tab only when the wheel is uneven, next steps name the reader's
-  // own weakest part, calls to action match the band, and the phone statement
-  // was replaced on both poles.
-  version: "v3.6-wheel",
+  // v3.7: Rachel rewrote the whole Leadership block. Four new pairs in her
+  // order, the self-compassion item dropped. Same factor, same count, same
+  // direction, so no stored score moves. Re-scored all 20 finishers before and
+  // after to prove it: zero rows changed.
+  version: "v3.7-wheel",
   instrument: {
     title: "Which Way Is Your Wheel Turning?",
     kicker: "The Capacity Wheel, made personal",
@@ -422,16 +422,23 @@ const config = {
           "I tell trusted people when I am carrying too much."] },
       { factor:"leadership", title:"How pressure shows up", kind:"outcome",
         lead:"How pressure affects the way you lead, respond and make decisions. This is shaped by the other parts of the wheel.",
+        // ⛔ 28 Sept 2026. Rachel rewrote this whole block herself. Verbatim,
+        // in her order: clarity and judgement, delegation and trust,
+        // bottleneck and prioritisation, relational steadiness. The
+        // self-compassion item ("I give myself less patience than I give the
+        // people I lead") is GONE. Her reason: these are properly
+        // leadership-quadrant items and the self-compassion one was not.
+        // Do not reorder and do not reword.
         statements:[
+          "Under pressure, it gets harder to separate what matters from what just feels urgent.",
           "Under pressure, I hold on tighter and find it harder to delegate.",
           "When pressure rises, I become the person everything has to go through.",
-          "When pressure is high, I become short, reactive or withdrawn at work or at home.",
-          "I give myself less patience than I give the people I lead."],
+          "Under pressure, I become short, reactive or withdrawn with the people around me."],
         lifts:[
+          "Under pressure, I can still see what matters most and make a considered call.",
           "Under pressure, I can still delegate and trust other people.",
-          "When pressure rises, I protect my time for the decisions only I can make.",
-          "When pressure is high, I can still respond calmly at work and at home.",
-          "I give myself the same patience I give other people."] }
+          "When pressure rises, I protect my attention for the decisions only I can make.",
+          "Under pressure, I stay steady enough to lead the people around me well."] }
     ]
   },
   scoring: {
@@ -628,7 +635,13 @@ function carryOption(){
   return (config.carry.options || []).find(o => o.key === carryKey) || config.carry.options[0];
 }
 // Substitutes the carry noun into any statement carrying a token. Statements
-// without one are returned untouched, which is fifteen of the sixteen.
+// without one are returned untouched, which is a no-op replace.
+// ⚠ 28 Sept 2026: {whoNeeds} is currently used by ZERO of the sixteen
+// statements, so this runs as a pass-through everywhere. The machinery stays
+// because the carry question is still asked and Rachel has not ruled on moving
+// it. ⛔ That also means the carry answer now feeds NOTHING a reader sees. It
+// is still POSTed to Kit as `carry` / `carry_label` and stored on the row, so
+// it is not dead data, it is just no longer in any sentence.
 function fillTokens(text){
   return String(text).replace(/\{whoNeeds\}/g, carryOption().whoNeeds);
 }
