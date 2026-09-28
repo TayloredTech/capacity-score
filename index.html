@@ -7,6 +7,10 @@
 <meta name="description" content="A three minute self read for senior leaders. Sixteen statements, one honest mirror: which way is your capacity wheel turning?">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://wheel.taylored.health/">
+<!-- Preview URLs (?demo=…&carry=…) are the same page with a query string. The
+     canonical points every one of them back at the clean URL, and the demo
+     block below also injects robots noindex when it runs. -->
+<link rel="canonical" href="https://wheel.taylored.health/">
 <meta property="og:title" content="Which Way Is Your Wheel Turning?">
 <meta property="og:description" content="A three minute mirror for senior leaders. The Capacity Wheel, from Taylored.">
 <meta property="og:image" content="https://wheel.taylored.health/assets/og-wheel.png">
@@ -183,6 +187,8 @@ h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-heigh
 .fgline{margin:1rem 0 0}
 .fgline a{color:var(--gold);font-weight:600;font-size:.9rem;text-decoration:underline;text-underline-offset:3px}
 .fgline a:hover{color:var(--cream)}
+/* an accidental visitor has to be able to tell this is not their result */
+.previewflag{margin:0 0 1.6rem;padding:.7rem .9rem;border:1px solid var(--gold);border-left-width:4px;border-radius:3px;background:rgba(184,146,74,.12);color:var(--cream);font-size:.86rem;line-height:1.5}
 .draftnote{max-width:34rem;margin:2.6rem auto 0;text-align:center;font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:1rem;color:var(--cream-soft);line-height:1.6}
 .footnote{font-size:.78rem;color:var(--cream-faint);text-align:center;margin-top:1.1rem}
 /* ⛔ 28 Sept 2026. A two-column grid used to kick in here. With four cards of
@@ -263,6 +269,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <section id="result" class="screen">
   <div class="wrap">
+    <p class="previewflag" id="previewFlag" hidden></p>
     <div class="headrow">
       <p class="kicker" id="r-kicker"></p>
       <h2 id="r-heading"></h2>
@@ -363,11 +370,10 @@ const config = {
   // until tapped, result rows use the plain part titles. The version is stored
   // on every row, so a band-threshold change has to bump it or two rows with
   // the same score and different bands look like a bug.
-  // v3.7: Rachel rewrote the whole Leadership block. Four new pairs in her
-  // order, the self-compassion item dropped. Same factor, same count, same
-  // direction, so no stored score moves. Re-scored all 20 finishers before and
-  // after to prove it: zero rows changed.
-  version: "v3.7-wheel",
+  // v3.8: preview URLs. ?demo=peak|steady|conserve|restore plus &carry=team|
+  // build|solo, each preset sitting mid-band under the current cuts, writing
+  // nothing and marked noindex. v3.7 was Rachel's Leadership rewrite.
+  version: "v3.8-wheel",
   instrument: {
     title: "Which Way Is Your Wheel Turning?",
     kicker: "The Capacity Wheel, made personal",
@@ -1257,29 +1263,74 @@ function animateWheel(r){
   requestAnimationFrame(frame);
 }
 
-/* dev shortcut: ?demo=peak|steady|conserve|restore — jumps straight to the dark reveal */
-const demo = new URLSearchParams(location.search).get("demo");
+/* ---------- PREVIEW URLS ----------
+   ?demo=peak|steady|conserve|restore        jumps straight to that end slide
+   &carry=team|build|solo                    sets the "who are you carrying" answer
+
+   Built 28 Sept 2026 so Rachel can see each band's end slide without taking the
+   wheel four times. Twelve combinations from two parameters, not twelve URLs.
+
+   ⛔ A PREVIEW WRITES NOTHING. It calls computeCapacity and renderResult only.
+   It never touches storeResponse, subscribeToKit or the dataLayer push, so no
+   Supabase row, no Kit subscriber, no email, and canned runs cannot land in
+   reporting as real people.
+
+   ⛔ EVERY PRESET SITS IN THE MIDDLE OF ITS BAND, NEVER ON A BOUNDARY. The old
+   steady preset totalled 30 drag = 71 and silently started rendering the Peak
+   screen the moment Peak's floor moved to 68. A preview that sits on a cut
+   lies to you the next time a cut moves. Answers are stored as NOTCHES, 0 =
+   fully lifts and 4 = fully drags, which is the real five-position slider, and
+   the drag value is 1 + 0.75 * notch. Score works out at round(100 - 1.5625K)
+   where K is the total notches across all sixteen.
+
+   Current bands and where each preset lands (checked against the live
+   computeCapacity, not by hand):
+     peak      K=11  score 83  in 68-100, 15 clear of the floor
+     steady    K=27  score 58  in 50-67,   8 clear either side
+     conserve  K=39  score 39  in 30-49,   9 clear either side
+     restore   K=54  score 16  in  0-29,  13 clear either side
+   Peak and Restore are EVEN wheels (the one-line read under the map), Steady
+   and Conserve are UNEVEN (the collapsible tab), so both branches are covered.
+
+   ⛔ If a band becomes hard to hit, change the preset, never the band. */
+const params = new URLSearchParams(location.search);
+const demo = params.get("demo");
 if (demo !== null){
-  // per-factor drag inputs (1..4, higher = more drag) chosen so each state maps to
-  // clearly VARIED, off-centre subscores — some axes lifting right, some dragging left
+  // notches per statement: 0 = fully lifts, 4 = fully drags
   const presets = {
-    // mostly lifting, all four filled toward lift (score ~85, Peak)
-    peak:     { biology:[1,1,2,1], leadership:[1,1,1,2], behaviour:[2,1,2,1], environment:[2,2,1,2] },
-    // mostly lifting with one part clearly dragging (score 60, Steady).
-    // ⛔ 28 Sept 2026: this preset used to total 30 drag = 71, which landed in
-    // Peak the moment Peak's floor moved to 68, so ?demo=steady showed the wrong
-    // screen. Retotalled to 35 drag = 60, mid-Steady. Any change to the band
-    // floors has to be checked against these four presets.
-    steady:   { biology:[1,2,2,2], leadership:[2,2,2,1], behaviour:[2,2,3,3], environment:[3,3,3,2] },
-    // one clear lift, one mild lift, two clearly dragging (score ~48, Conserve)
-    conserve: { biology:[3,2,2,2], leadership:[2,2,2,1], behaviour:[4,3,3,3], environment:[3,3,3,3] },
-    // mostly dragging, all four filled toward drag (score ~21, Restore)
-    restore:  { biology:[4,4,3,3], leadership:[4,3,3,3], behaviour:[4,4,4,3], environment:[3,3,3,3] },
+    peak:     { biology:[1,0,0,0], leadership:[1,1,1,0], behaviour:[1,1,1,0], environment:[1,1,1,1] },
+    steady:   { biology:[1,1,1,0], leadership:[1,1,1,1], behaviour:[2,2,2,2], environment:[3,3,3,3] },
+    conserve: { biology:[2,2,2,1], leadership:[3,2,2,1], behaviour:[3,3,3,3], environment:[4,3,3,2] },
+    restore:  { biology:[3,3,3,3], leadership:[4,3,3,3], behaviour:[4,4,3,3], environment:[4,4,4,3] },
   };
-  const pick = presets[demo] || presets.conserve;
-  I.parts.forEach((p)=>(answers[p.factor] = (pick[p.factor] || [2,2,2,2]).slice()));
+  const key = Object.prototype.hasOwnProperty.call(presets, demo) ? demo : "conserve";
+  const pick = presets[key];
+
+  // Her question about who they carry is still asked, so the preview sets it.
+  // ⚠ It will not change a single word on screen: {whoNeeds} is used by ZERO of
+  // the sixteen statements since the Leadership rewrite, so all three values
+  // render identically. That is a real finding about the question, not a fault
+  // in the preview. The value still reaches Kit on a real run.
+  const wanted = params.get("carry");
+  if (wanted && (config.carry.options || []).some(o => o.key === wanted)) carryKey = wanted;
+
+  // a preview must never be indexed, and the canonical in <head> already points
+  // every query-string variant back at the clean URL
+  const robots = document.createElement("meta");
+  robots.name = "robots";
+  robots.content = "noindex, nofollow";
+  document.head.appendChild(robots);
+
+  I.parts.forEach((p) => {
+    const notches = pick[p.factor] || [2,2,2,2];
+    answers[p.factor] = notches.map((n) => 1 + 0.75 * Math.max(0, Math.min(4, n)));
+  });
   result = computeCapacity(answers, "assessment", config);
   renderResult(result);
+  const flag = $("previewFlag");
+  flag.textContent = "Preview. This is an example result, not yours. Nothing on this page has been saved and no email has been sent. Band " +
+    result.band + ", score " + result.capacityScore + ", carrying: " + carryOption().label.toLowerCase() + ".";
+  flag.hidden = false;
   show("result");
 }
 </script>
