@@ -372,10 +372,9 @@ const config = {
   // until tapped, result rows use the plain part titles. The version is stored
   // on every row, so a band-threshold change has to bump it or two rows with
   // the same score and different bands look like a bug.
-  // v4.1: the four quadrant descriptors get ONE home, copy.quadrants, and the
-  // dragging/holding line now carries the descriptor so a reader knows what the
-  // quadrant IS. v4.0 was Rachel's rulings on Restore, recharge and where/why.
-  version: "v4.1-wheel",
+  // v4.2: lifting_most reaches Kit, from the SAME derivation the screen uses.
+  // v4.1 gave the four quadrant descriptors one home in copy.quadrants.
+  version: "v4.2-wheel",
   instrument: {
     title: "Which Way Is Your Wheel Turning?",
     kicker: "The Capacity Wheel, made personal",
@@ -843,6 +842,15 @@ $("emailForm").onsubmit = (ev) => {
   show("result");
 };
 
+/* ⛔ ONE DERIVATION of which part is weakest and which is strongest, 28 Sept
+   2026. The result screen and the Kit payload both need them, and they were
+   sorting the subscores separately. A second derivation is exactly how the
+   email and the screen drifted apart before, so both call this. */
+function rankFactors(r){
+  const sorted = Object.entries(r.subscores || {}).sort((a, b) => a[1] - b[1]);
+  return { sorted: sorted, lowest: sorted[0], highest: sorted[sorted.length - 1] };
+}
+
 /* ---------- Kit (ConvertKit) subscribe: email + capacity state + heaviest point ---------- */
 function subscribeToKit(email, firstName, r){
   if (!email || !config.kit || !config.kit.formId) return;
@@ -851,8 +859,12 @@ function subscribeToKit(email, firstName, r){
   // heaviest_point = the factor dragging hardest across all four (matches the reveal's
   // "Dragging hardest" line; can be Leadership/Biology). push_lever = the pushable lever
   // (behaviour/environment). The email names BOTH: name the drag, push the lever.
-  const dragged = Object.entries(r.subscores || {}).sort((a, b) => a[1] - b[1])[0];
-  const heaviest = dragged ? cap(dragged[0]) : lever;
+  const rank = rankFactors(r);
+  const heaviest = rank.lowest ? cap(rank.lowest[0]) : lever;
+  // lifting_most = the STRONGEST part. Peak's copy names it ("Right now the part
+  // lifting you most is X"), and without this field a Peak email written against
+  // it renders empty or prints the raw merge tag at every Peak subscriber.
+  const lifting = rank.highest ? cap(rank.highest[0]) : "";
   const body = new URLSearchParams();
   body.set("email_address", email);
   // Always send something. The results email greets by name with a bare
@@ -862,6 +874,10 @@ function subscribeToKit(email, firstName, r){
   body.set("fields[capacity_state]", r.band || "");
   body.set("fields[heaviest_point]", heaviest);
   body.set("fields[push_lever]", lever);
+  body.set("fields[lifting_most]", lifting);
+  // and the descriptor for it, from copy.quadrants, so the email can explain the
+  // part instead of just naming it and never re-words it locally
+  body.set("fields[lifting_most_desc]", (C.quadrants && rank.highest && C.quadrants[rank.highest[0]]) || "");
   body.set("fields[capacity_score]", String(r.capacityScore ?? ""));
   // full per-factor answer set (raw slider values), so the results portal has every answer, not just the outcome
   const detail = FACTORS.map(f => cap(f) + ": " + ((answers[f] || []).map(v => Number.isFinite(v) ? v : "-").join("/"))).join("  |  ");
@@ -1042,8 +1058,8 @@ function renderResult(r){
   $("r-band").textContent = r.band;
   $("r-scoreMeans").textContent = C.scoreMeans.replace("{score}", String(r.capacityScore));
   $("r-read").textContent = C.bandReads[r.band];
-  const sorted = Object.entries(r.subscores).sort((a,b)=>a[1]-b[1]);
-  const lowest = sorted[0], highest = sorted[sorted.length-1];
+  const rank = rankFactors(r);
+  const sorted = rank.sorted, lowest = rank.lowest, highest = rank.highest;
   // only claim a drag when the weakest axis is genuinely below the midline;
   // otherwise name the strongest lift so the line stays honest for Peak/Steady
   // ⛔ 28 Sept 2026: "Lifting most right now: Environment" was read as an
