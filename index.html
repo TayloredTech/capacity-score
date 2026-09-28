@@ -649,18 +649,15 @@ const config = {
       body: "Two people can carry the same load and respond completely differently. Sleep, glucose, stress physiology and blood chemistry all change how it lands. Those are measurable, and that is what we do next.",
       tagline: "If you already wear an Oura or WHOOP, the next answer may be sitting in data you own. 30 days of it, personally reviewed, three changes to test.",
       ctaLabel: "Review my sleep data",
-      // ⚠ PROVISIONAL DESTINATION, 27 Sept 2026. The label now promises a sleep
-      // review, so the link had to stop pointing at the executive audit page.
-      // Rachel's instruction is that the buy goes to
-      // osleeve.com/products/sleep-score-review, but that page is OSleeve-branded
-      // and currently prices the same review at $119 as an "OSleeve customer
-      // price" with 10 places, while her own field guide prices it at AUD$299.
-      // Sending someone straight from a Taylored result screen to a different
-      // brand at a different price is the kind of thing nobody notices until a
-      // customer does. So this points at the field guide, which explains the
-      // Sleep Score Review in her voice at her price and routes on from there.
-      // SWAP THIS the moment sleep.taylored.health exists.
-      ctaUrl: "https://wheel.taylored.health/field-guide/#sleep-score-review",
+      // ✅ SWAPPED 28 Sept 2026 on Rachel's instruction: "The wheels cta should
+      // go the sleep.taylored.health page." The provisional field-guide hop is
+      // gone; this is the canonical sales page (estate: surface--sleep-score-review),
+      // Taylored-branded, at her AUD$299.
+      // ⛔ DO NOT point this at osleeve.com/products/sleep-score-review. That page
+      // is OSleeve-branded and priced per market from a USD$119 base, so an
+      // Australian buyer is charged AUD$173 for the same service. Rachel: "The
+      // osleeve price is different so it can't go to osleeve."
+      ctaUrl: "https://sleep.taylored.health/",
       fieldGuideLabel: "Not ready yet? Read the field guide and see the whole path.",
       fieldGuideUrl: "https://wheel.taylored.health/field-guide/",
       draftNote: "This is an early draft of an idea I'm still shaping in the book. If it lands for you, or if it doesn't, I'd genuinely love to hear.",
