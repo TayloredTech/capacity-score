@@ -20,7 +20,9 @@
 <meta name="twitter:title" content="Which Way Is Your Wheel Turning?">
 <meta name="twitter:description" content="A three minute mirror for senior leaders. The Capacity Wheel, from Taylored.">
 <meta name="twitter:image" content="https://wheel.taylored.health/assets/og-wheel.png">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='12' fill='none' stroke='%23b8924a' stroke-width='4'/%3E%3C/svg%3E">
+<link rel="icon" href="https://taylored.health/wp-content/uploads/2026/07/taylored-favicon-150x150.png" sizes="32x32">
+<link rel="icon" href="https://taylored.health/wp-content/uploads/2026/07/taylored-favicon.png" sizes="192x192">
+<link rel="apple-touch-icon" href="https://taylored.health/wp-content/uploads/2026/07/taylored-favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
@@ -219,6 +221,17 @@ h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-heigh
 .pointrow{display:grid;grid-template-columns:10px minmax(0,1fr) auto;grid-template-areas:"dot nm val" ". bar bar";align-items:center;column-gap:.8rem;row-gap:.5rem;padding:.7rem 0}
 .pointrow .dot{grid-area:dot;width:10px;height:10px;border-radius:50%}
 .pointrow .nm{grid-area:nm;display:block;min-width:0;font-size:.86rem;font-weight:600}
+/* ⛔ THE MODEL WORD, BACK ON THE MAP. Rachel, 29 Sept 2026: "it states
+   leadership is dragging hardest right now, but on the capacity map it doesn't
+   say leadership anywhere. let's just add that as gold capitalised title before
+   the map items for all four."
+   On 28 Sept the rows deliberately DROPPED Biology/Leadership/Behaviour/
+   Environment, because a reader who answered under "Your state" could not find
+   himself in a row headed "Biology". That ruling stands and the plain title
+   still leads in bold. This puts the model word back as a small gold label
+   ABOVE it, so the "Dragging hardest right now: Leadership" line has somewhere
+   to land. Tracked labels are always capitals. */
+.pointrow .nm .fx{display:block;font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.1rem;white-space:nowrap}
 .pointrow .nm b{display:block;font-weight:600;white-space:nowrap}
 .pointrow .nm small{display:block;font-size:.72rem;font-weight:500;letter-spacing:.01em;color:var(--cream-faint);margin-top:.12rem;white-space:nowrap}
 .pointrow .bibar{grid-area:bar;position:relative;height:8px;background:var(--rule-l);border-radius:4px}
@@ -604,9 +617,15 @@ const config = {
     // is the wrong thing to put a gold button on. It drops to a text link.
     ctas: {
       talkLabel: "Talk through my result",
-      // canonical, estate/registry/surface--booking-general.yaml, verified 28 Sept 2026.
-      // ⛔ NOT the Sleep Score Review schedule (fCGESrAbvRYCCNN47).
-      talkUrl: "https://calendar.app.google/rbkUhUneDWnEKRQv9",
+      // ★ ITS OWN SCHEDULE, not the site-wide one. Rachel, 29 Sept 2026: "the
+      // link to 'talk through it' should be going to this calendar scheduling
+      // link". This is a wheel-result conversation, a different thing from the
+      // general "Book a conversation" in the site nav and footer, so it gets its
+      // own registry record rather than quietly diverging from one.
+      // canonical, estate/registry/surface--booking-wheel-result.yaml, verified 29 Sept 2026.
+      // ⛔ NOT the general booking link (rbkUhUneDWnEKRQv9), which stays on every
+      // other surface, and ⛔ NOT the Sleep Score Review schedule (fCGESrAbvRYCCNN47).
+      talkUrl: "https://calendar.app.google/p7tQZkeckHt6bG9m7",
       shareLabel: "Share the wheel",
       returnLabel: "Come back next month and see if it moved",
       shareUrl: "https://wheel.taylored.health/",
@@ -1324,7 +1343,7 @@ function renderResult(r){
     const rowDesc = desc && desc.toLowerCase() !== title.toLowerCase() ? desc : "";
     return `<div class="pointrow">
       <span class="dot" style="background:${W.factorColors[f]}"></span>
-      <span class="nm"><b>${title}</b>${rowDesc ? `<small>${rowDesc}</small>` : ""}</span>
+      <span class="nm"><span class="fx">${W.factorLabels[f]}</span><b>${title}</b>${rowDesc ? `<small>${rowDesc}</small>` : ""}</span>
       <span class="bibar"><span class="mid"></span><i style="${side}width:${w}%;background:${W.factorColors[f]}"></i></span>
       <span class="val">${sub}</span>
     </div>`;
