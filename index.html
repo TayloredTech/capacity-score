@@ -134,6 +134,8 @@ h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-heigh
 .scoremeans{font-size:.82rem;line-height:1.5;color:var(--cream-faint);text-align:left;margin:.1rem 0 .9rem;}
 .bandread{max-width:none;margin:0;text-align:left;color:var(--cream-soft);font-size:1.02rem}
 .leak{max-width:none;margin:.9rem 0 0;text-align:left;font-size:.85rem;color:var(--gold);letter-spacing:.04em}
+.leak .leaklead{display:block}
+.leak .leakdesc{display:block;margin-top:.15rem;font-size:.78rem;letter-spacing:.02em;color:var(--cream-faint)}
 /* every card fills the one column, so the rhythm never goes ragged */
 .resultcard{max-width:none;margin:2.4rem auto 0;padding:1.6rem 1.5rem;background:rgba(243,239,231,.05);border:1px solid var(--rule-l);border-radius:4px}
 .resultcard h3{font-size:1.3rem;margin-bottom:.7rem}
@@ -370,11 +372,10 @@ const config = {
   // until tapped, result rows use the plain part titles. The version is stored
   // on every row, so a band-threshold change has to bump it or two rows with
   // the same score and different bands look like a bug.
-  // v4.0: Rachel's rulings of 28 Sept. Restore's even read gets its second
-  // sentence back, the two behaviour statements say recharge not recovery, and
-  // the where/why block is her new heading and paragraph. v3.9 removed BEING
-  // and DOING from the result wheel.
-  version: "v4.0-wheel",
+  // v4.1: the four quadrant descriptors get ONE home, copy.quadrants, and the
+  // dragging/holding line now carries the descriptor so a reader knows what the
+  // quadrant IS. v4.0 was Rachel's rulings on Restore, recharge and where/why.
+  version: "v4.1-wheel",
   instrument: {
     title: "Which Way Is Your Wheel Turning?",
     kicker: "The Capacity Wheel, made personal",
@@ -592,6 +593,23 @@ const config = {
       emailLabel: "Email", nameLabel: "First name", button: "Show me my wheel",
       privacyNote: "We'll use this to send your result and occasional notes from Taylored. No spam, unsubscribe any time.",
       emailRequired: true
+    },
+    // ⛔⛔ THE ONE HOME FOR THE FOUR QUADRANT DESCRIPTORS, 28 Sept 2026.
+    // Three different descriptions of the same four parts were in play across a
+    // single journey at once, which is how a reader stops trusting the model.
+    // Every surface that describes a quadrant now reads THESE four strings and
+    // nowhere else: the opening diagram, the result rows if they ever carry a
+    // description, and the "dragging hardest / holding you up" line.
+    // Rachel, 28 Sept: "I actually like that better as a simplification and I
+    // think we should use this." The set is deliberately parallel:
+    // inside you, what you do, around you, through you.
+    // ⚠ HELD: she has not yet said whether these also replace the model words
+    // on the result rows. When she answers it is ONE edit, here.
+    quadrants: {
+      biology: "What is happening inside you",
+      behaviour: "What you do",
+      environment: "What is happening around you",
+      leadership: "What happens through you"
     },
     resultHeading: "Your wheel", scoreCaption: "Capacity score",
     partBreakdownHeading: "Your Capacity Map",
@@ -1028,11 +1046,15 @@ function renderResult(r){
   const lowest = sorted[0], highest = sorted[sorted.length-1];
   // only claim a drag when the weakest axis is genuinely below the midline;
   // otherwise name the strongest lift so the line stays honest for Peak/Steady
-  $("r-leak").textContent = lowest[1] < 50
-    // ⛔ 28 Sept 2026: "Lifting most right now: Environment" was read as an
-    // instruction to go and lift that area, and took twenty seconds to unpick.
-    ? "Dragging hardest right now: " + W.factorLabels[lowest[0]]
-    : "Holding you up right now: " + W.factorLabels[highest[0]];
+  // ⛔ 28 Sept 2026: "Lifting most right now: Environment" was read as an
+  // instruction to go and lift that area, and took twenty seconds to unpick.
+  // ⛔ The quadrant name alone does not tell anyone what the quadrant IS, so the
+  // descriptor sits under it, read from C.quadrants and from nowhere else.
+  const leakFactor = lowest[1] < 50 ? lowest[0] : highest[0];
+  $("r-leak").innerHTML =
+    '<span class="leaklead">' + (lowest[1] < 50 ? "Dragging hardest right now: " : "Holding you up right now: ")
+    + W.factorLabels[leakFactor] + '</span>'
+    + '<span class="leakdesc">' + ((C.quadrants && C.quadrants[leakFactor]) || "") + '</span>';
   $("r-pointsHeading").textContent = C.partBreakdownHeading;
   // bidirectional point-by-point: centre line, fill left (drag) or right (lift), factor colour kept
   $("pointRows").innerHTML = W.factorOrder.map((f)=>{
