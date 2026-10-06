@@ -121,7 +121,9 @@ const btn = (label, cls, fn) => { const b = el('button', cls, label); b.type = '
 const vis = q => ev(q.showWhen);
 const answered = q => { const a = answers[q.id]; return a != null && a !== '' && !(Array.isArray(a) && !a.length); };
 const visSections = () => SECTIONS.filter(s => s.questions.some(vis));
-const missing = s => s.questions.filter(q => vis(q) && !q.optional && !answered(q));
+// Luke, 7 Oct 2026: "dont make them have to answer every question". Nothing is
+// required on a question screen, so nothing is ever reported as missing.
+const missing = s => [];
 const fuShown = q => {
   const f = q.followUp; if (!f) return false;
   const a = answers[q.id]; const picked = Array.isArray(a) ? a : (a == null || a === '' ? [] : [a]);
@@ -182,7 +184,7 @@ function suggest(q){
 function qCard(q, miss){
   const c = el('div', 'q' + (miss ? ' miss' : '')); c.id = 'q-' + q.id;
   c.append(elr('div', 'qlabel', q.label));
-  if (q.optional && !/optional/i.test(q.label)) c.append(el('div', 'opt-tag', 'Optional'));
+  // Every question is optional now, so an "Optional" tag on some would imply the rest are not.
   if (q.help) c.append(elr('p', 'mute small', q.help));
   c.append(input(q));
   if (q.type === 'rating' && (q.anchorLow || q.anchorHigh)) {
@@ -237,6 +239,7 @@ function viewIntro(){
     'This is a test version of our new Performance Screen. It takes about 25 minutes.',
     "Please answer as you honestly would, and wherever a question is unclear, awkward, or could be asked better, tap 'Suggest an improvement' under it and tell us.",
     'Your answers and notes go only to Luke and Rachel at Taylored Health. This is not medical advice and nobody will diagnose anything from it.',
+    'You do not have to answer every question. Skip anything you would rather leave.',
     'Your progress is kept on this device, so you can close the page and come back to it.',
   ]) intro.append(el('p', null, t));
   return [head('ExecOS Performance Screen'), intro, f];
