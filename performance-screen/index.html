@@ -309,6 +309,10 @@ function buildRow(){
   }
   const notes = {}; for (const [k, v] of Object.entries(S.notes)) if (v && v.trim()) notes[k] = v.trim().slice(0, 4000);
   const wrap = {}; for (const [k, v] of Object.entries(S.wrap)) if (v) wrap[k] = String(v).slice(0, 6000);
+  // Active seconds per section, by section title. Stored with the wrap-up answers.
+  const st = {}; for (const sec of SPEC.sections) if (S.secSeconds && S.secSeconds[sec.id]) st[sec.title] = S.secSeconds[sec.id];
+  if (S.secSeconds && S.secSeconds.wrap) st['Wrap-up'] = S.secSeconds.wrap;
+  if (Object.keys(st).length) wrap.section_seconds = JSON.stringify(st);
   return {
     spec_version: SPEC.version, reviewer_name: S.who.name.slice(0, 200), consent: S.who.consent === true,
     answers: a, notes, wrapup: wrap, started_at: S.startedAt, submitted_at: new Date().toISOString(),
@@ -381,7 +385,13 @@ function go(){ render(); window.scrollTo(0, 0); const h = app.querySelector('h1'
 // Seconds actively spent on the questions: the tab is in view and something was touched in the last minute.
 for (const t of ['pointerdown', 'keydown', 'scroll']) addEventListener(t, () => { lastAct = Date.now(); }, {passive: true});
 setInterval(() => {
-  if ((S.step === 'q' || S.step === 'wrap') && document.visibilityState === 'visible' && Date.now() - lastAct < 60000) { S.active = (S.active || 0) + 1; if (S.active % 5 === 0) save(); }
+  if ((S.step === 'q' || S.step === 'wrap') && document.visibilityState === 'visible' && Date.now() - lastAct < 60000) {
+    S.active = (S.active || 0) + 1;
+    // The same second, credited to the section on screen, so we can see WHERE the time goes.
+    const k = S.step === 'wrap' ? 'wrap' : S.sec;
+    if (k) { S.secSeconds = S.secSeconds || {}; S.secSeconds[k] = (S.secSeconds[k] || 0) + 1; }
+    if (S.active % 5 === 0) save();
+  }
 }, 1000);
 
 if (S.step === 'done' || S.step === 'fail') S.step = 'wrap';
