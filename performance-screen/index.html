@@ -47,18 +47,31 @@ textarea{min-height:76px;resize:vertical}
 .sug textarea{min-height:64px;font-size:15px}
 button.link{background:none;border:0;padding:2px 0;color:var(--gold);font-size:14px;text-decoration:underline;text-underline-offset:3px;border-radius:4px}
 .prog{display:flex;flex-direction:column;gap:6px}
+.progtop{display:flex;flex-wrap:wrap;gap:2px 12px;justify-content:space-between;align-items:baseline}
+.savenote{font-size:12px;color:var(--mute)}.savenote.bad{color:var(--gold);font-weight:600}
 .track{height:6px;border-radius:99px;background:var(--panel2);overflow:hidden}
 .fill{height:100%;background:var(--gold);border-radius:99px;transition:width .25s ease}
 .nav{display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap}
 .nav button{flex:1 1 140px;padding:13px 16px}
 .warn{border:1px solid var(--gold);background:var(--panel2);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
 .warn .nav button{padding:10px 14px}
+[hidden]{display:none!important}
 .err{color:var(--red);font-weight:600}
 .check{display:flex;gap:10px;align-items:flex-start;font-weight:600;cursor:pointer}
 .check input{width:22px;height:22px;flex:0 0 auto;margin:1px 0 0;accent-color:var(--gold-d)}
 #copybox{min-height:160px;font-size:13px}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-weight:600;animation:stepin .3s ease}
+.mark{flex:0 0 22px;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:14px;line-height:1;margin-top:1px}
+.mark.busy{border:2px solid var(--line);border-top-color:var(--gold);animation:spin .9s linear infinite}
+.mark.done{background:var(--ok);color:#0b1a2c}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes stepin{from{opacity:0;transform:translateY(4px)}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+a.cta{display:block;text-align:center;text-decoration:none;font-weight:700;color:#0b1a2c;background:var(--gold-d);border:1px solid var(--gold);border-radius:10px;padding:13px 16px}
+a.cta:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 @media (max-width:420px){.opts.scale{gap:4px}.q,.card{padding:14px}}
-@media (prefers-reduced-motion:reduce){.fill{transition:none}}
+@media (prefers-reduced-motion:reduce){.fill{transition:none}.steps li,.mark.busy{animation:none}}
 </style>
 </head>
 <body>
@@ -80,15 +93,26 @@ const CFG = {
 // Section intros in the spec that are notes for the build team, not for the person answering.
 const HIDE_INTRO = new Set(["F", "J1", "J2"]);
 const WRAP_TIME = ['Under 15 min', '15 to 20', '20 to 30', 'Over 30'];
+// The three lines of the saving screen. Each must be TRUE when it shows as ticked: 2 and 3 only ever appear after the save has succeeded.
+const SAVE_LINES = ['Saving your answers', 'All answers received', 'Sent to Luke, who reads every one himself before your session'];
+const SAVE_DWELL = 2000, SAVE_TIMEOUT = 30000;
+const BOOK_URL = 'https://calendar.app.google/SBPrfDtq16pZh1zP8';
 
 const app = document.getElementById('app');
 const fresh = () => ({unlocked: false, step: 'gate', sec: null, who: {name: '', consent: false}, answers: {}, notes: {}, wrap: {}, startedAt: null, active: 0});
 let S = fresh();
 try { const v = localStorage.getItem(CFG.storeKey); if (v) S = Object.assign(fresh(), JSON.parse(v)); } catch {}
-const save = () => { try { localStorage.setItem(CFG.storeKey, JSON.stringify(S)); } catch {} };
+// saveOk: true only when the browser really holds what we just wrote. false when storage is blocked or full. null before the first write.
+let saveOk = null;
+const SAVE_YES = 'Saved on this device', SAVE_NO = 'Not saving on this device. Finish in one sitting.';
+const SAVE_INTRO = 'Your answers save on this device as you go. If you need to stop, close the page and open the same link on the same phone or computer to pick up where you left off.';
+function paintSave(n){ n = n || document.getElementById('save-state'); if (!n) return n; n.textContent = saveOk === true ? SAVE_YES : saveOk === false ? SAVE_NO : ''; n.className = 'savenote' + (saveOk === false ? ' bad' : ''); return n; }
+const save = () => { try { const v = JSON.stringify(S); localStorage.setItem(CFG.storeKey, v); saveOk = localStorage.getItem(CFG.storeKey) === v; } catch { saveOk = false; } paintSave(); };
+// Came back to this device part way through: say so first, instead of dropping them mid-form.
+let resume = S.unlocked === true && (S.step === 'q' || S.step === 'wrap');
 const answers = S.answers;
 const openNotes = new Set();
-let warn = false, lastAct = Date.now(), failText = '';
+let warn = false, lastAct = Date.now(), failText = '', sending = false;
 
 // Same rule shape and operators as the app's questionnaire-visibility.ts.
 function ev(c){
@@ -222,6 +246,23 @@ function viewGate(){
   };
   return [head('ExecOS Performance Screen'), f];
 }
+function viewResume(){
+  const sec = S.step === 'wrap' ? null : SECTIONS.find(x => x.id === S.sec);
+  const c = el('div', 'card'); c.id = 'resume';
+  c.append(el('p', null, "Welcome back. You're part way through, at " + (sec ? sec.title : 'Before you send') + '.'));
+  const n = el('div', 'nav'); const on = btn('Carry on', 'primary', () => { resume = false; save(); go(); }); on.id = 'carry-on';
+  const again = btn('Start again', '', () => { ask.hidden = false; again.disabled = true; yes.focus(); }); again.id = 'start-again';
+  n.append(again, on);
+  const ask = el('div', 'warn'); ask.hidden = true; ask.append(el('p', null, 'Starting again clears the answers saved on this device.'));
+  const yes = btn('Clear them and start again', '', () => {
+    for (const k of Object.keys(answers)) delete answers[k];
+    Object.assign(S, {step: 'intro', sec: null, who: {name: '', consent: false}, notes: {}, wrap: {}, startedAt: null, active: 0}); delete S.secSeconds;
+    openNotes.clear(); resume = false; save(); go();
+  }); yes.id = 'start-again-yes';
+  const an = el('div', 'nav'); an.append(yes, btn('Keep my answers', 'primary', () => { ask.hidden = true; again.disabled = false; on.focus(); })); ask.append(an);
+  c.append(n, ask);
+  return [head('ExecOS Performance Screen'), c];
+}
 function viewIntro(){
   const f = el('form', 'card'); f.noValidate = true;
   const mk = (label, type, key, ac) => { const l = el('label', 'field', label); const i = el('input'); i.type = type; i.autocomplete = ac; i.value = S.who[key] || ''; i.id = 'who-' + key; i.oninput = () => { S.who[key] = i.value; save(); }; l.append(i); return l; };
@@ -239,16 +280,16 @@ function viewIntro(){
   };
   const intro = el('div', 'wrap');
   for (const t of [
-    'This is a test version of our new Performance Screen. It takes about 25 minutes.',
-    "Please answer as you honestly would, and wherever a question is unclear, awkward, or could be asked better, tap 'Suggest an improvement' under it and tell us.",
+    "This is a test run of the questionnaire we send people before their Health Strategy Session. Answer it as yourself. It takes about 20 minutes. Under every question there's a box for suggestions, so tell us anything that's unclear or missing.",
     'Your answers and notes go only to Luke and Rachel at Taylored Health. This is not medical advice and nobody will diagnose anything from it.',
     'You do not have to answer every question. Skip anything you would rather leave.',
-    'Your progress is kept on this device, so you can close the page and come back to it.',
+    saveOk === false ? SAVE_NO : SAVE_INTRO,
   ]) intro.append(el('p', null, t));
   return [head('ExecOS Performance Screen'), intro, f];
 }
 function progress(i, n, label){
-  const p = el('div', 'prog'); p.append(el('div', 'small mute', label));
+  const p = el('div', 'prog'); const top = el('div', 'progtop'); const sn = el('span'); sn.id = 'save-state';
+  top.append(el('div', 'small mute', label), paintSave(sn)); p.append(top);
   const t = el('div', 'track'); const f = el('div', 'fill'); f.style.width = Math.round(100 * i / n) + '%'; t.append(f); p.append(t);
   t.setAttribute('role', 'progressbar'); t.setAttribute('aria-valuemin', '0'); t.setAttribute('aria-valuemax', String(n)); t.setAttribute('aria-valuenow', String(i)); t.setAttribute('aria-label', label);
   return p;
@@ -334,28 +375,60 @@ function asText(row){
 }
 async function post(row){
   for (let attempt = 0; attempt < 3; attempt++) {
+    const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), SAVE_TIMEOUT);
     try {
-      const res = await fetch(CFG.endpoint, {method: 'POST', headers: {'Content-Type': 'application/json', apikey: CFG.apiKey, Authorization: 'Bearer ' + CFG.apiKey, Prefer: 'return=minimal'}, body: JSON.stringify(row)});
+      const res = await fetch(CFG.endpoint, {method: 'POST', headers: {'Content-Type': 'application/json', apikey: CFG.apiKey, Authorization: 'Bearer ' + CFG.apiKey, Prefer: 'return=minimal'}, body: JSON.stringify(row), signal: ctl.signal});
       if (res.ok) return true;
       console.warn('[performance-screen] save refused', res.status);
       if (res.status >= 400 && res.status < 500) return false;   // will fail the same way again
-    } catch (e) { console.warn('[performance-screen] save did not reach the server'); }
+    } catch (e) {
+      console.warn('[performance-screen] save did not reach the server');
+      if (ctl.signal.aborted) return false;   // no answer in time. Not sent again, in case the first one still lands.
+    } finally { clearTimeout(timer); }
     await new Promise(r => setTimeout(r, 900 * (attempt + 1)));
   }
   return false;
 }
+const wait = ms => new Promise(r => setTimeout(r, ms));
+function viewSaving(){
+  const c = el('div', 'card'); c.id = 'saving';
+  const ul = el('ul', 'steps'); ul.id = 'steps';
+  const live = el('p', 'sr'); live.id = 'save-live'; live.setAttribute('aria-live', 'polite');
+  c.append(ul, live);
+  return [head('One moment'), c];
+}
+// One line of the saving screen. A line that is not done yet shows a spinner. The screen reader hears each line as it lands.
+function saveLine(i, done){
+  const li = el('li'); li.dataset.line = String(i + 1); li.dataset.state = done ? 'done' : 'busy';
+  const m = el('span', 'mark ' + (done ? 'done' : 'busy'), done ? '✓' : ''); m.setAttribute('aria-hidden', 'true');
+  li.append(m, el('span', null, SAVE_LINES[i]));
+  document.getElementById('steps').append(li);
+  document.getElementById('save-live').textContent = SAVE_LINES[i];
+  return li;
+}
 async function submit(b, e){
+  if (sending) return;   // a second tap must never send a second row
   if (!S.who.consent) { e.textContent = 'The consent box on the first page is not ticked. Go back to the start and tick it.'; e.hidden = false; return; }
-  b.disabled = true; b.textContent = 'Sending...'; e.hidden = true;
+  sending = true; b.disabled = true; e.hidden = true;
   const row = buildRow();
-  const ok = await post(row);
-  if (ok) { try { localStorage.removeItem(CFG.storeKey); } catch {} S = fresh(); S.step = 'done'; go(); return; }
-  failText = asText(row); S.step = 'fail'; go();
+  const saved = post(row);   // the real save starts now, before anything is drawn
+  S.step = 'saving'; go();
+  const first = saveLine(0, false);
+  const [ok] = await Promise.all([saved, wait(SAVE_DWELL)]);
+  if (!ok) { sending = false; failText = asText(row); S.step = 'fail'; go(); return; }
+  // Saved. Only from here can anything say received or sent.
+  try { localStorage.removeItem(CFG.storeKey); } catch {}
+  first.dataset.state = 'done'; first.firstChild.className = 'mark done'; first.firstChild.textContent = '✓';
+  await wait(SAVE_DWELL); saveLine(1, true);
+  await wait(SAVE_DWELL); saveLine(2, true);
+  await wait(800);
+  S = fresh(); S.step = 'done'; sending = false; go();
 }
 function viewDone(){
   const c = el('div', 'card'); c.id = 'received';
-  c.append(el('p', null, 'Your answers and notes have been received. They go only to Luke and Rachel.'), el('p', 'mute', 'You can close this page now.'));
-  return [head('Thank you'), c];
+  const a = el('a', 'cta', 'Book your session'); a.id = 'book'; a.href = BOOK_URL; a.target = '_blank'; a.rel = 'noopener';
+  c.append(el('p', null, 'He needs two to three days with them, so pick a time from then.'), a, el('p', 'mute small', "Not ready to book? That's fine. We'll be in touch."));
+  return [head('Your answers are with Luke'), c];
 }
 function viewFail(){
   const c = el('div', 'card'); c.id = 'failed';
@@ -375,7 +448,7 @@ function viewFail(){
 
 // k: refocus the control that was just used, since a re-render replaces it.
 function render(k, focusNote){
-  const v = !S.unlocked && S.step !== 'done' ? viewGate() : S.step === 'intro' ? viewIntro() : S.step === 'q' ? viewSection() : S.step === 'wrap' ? viewWrap() : S.step === 'done' ? viewDone() : S.step === 'fail' ? viewFail() : viewGate();
+  const v = !S.unlocked && S.step !== 'done' ? viewGate() : resume ? viewResume() : S.step === 'intro' ? viewIntro() : S.step === 'q' ? viewSection() : S.step === 'wrap' ? viewWrap() : S.step === 'saving' ? viewSaving() : S.step === 'done' ? viewDone() : S.step === 'fail' ? viewFail() : viewGate();
   app.replaceChildren(...v);
   if (k) {
     const sel = focusNote ? k.replace('|sug', '|note') : k;
@@ -389,7 +462,7 @@ function go(){ render(); window.scrollTo(0, 0); const h = app.querySelector('h1'
 // Seconds actively spent on the questions: the tab is in view and something was touched in the last minute.
 for (const t of ['pointerdown', 'keydown', 'scroll']) addEventListener(t, () => { lastAct = Date.now(); }, {passive: true});
 setInterval(() => {
-  if ((S.step === 'q' || S.step === 'wrap') && document.visibilityState === 'visible' && Date.now() - lastAct < 60000) {
+  if (!resume && (S.step === 'q' || S.step === 'wrap') && document.visibilityState === 'visible' && Date.now() - lastAct < 60000) {
     S.active = (S.active || 0) + 1;
     // The same second, credited to the section on screen, so we can see WHERE the time goes.
     const k = S.step === 'wrap' ? 'wrap' : S.sec;
@@ -398,7 +471,7 @@ setInterval(() => {
   }
 }, 1000);
 
-if (S.step === 'done' || S.step === 'fail') S.step = 'wrap';
+if (S.step === 'done' || S.step === 'fail' || S.step === 'saving') S.step = 'wrap';
 render();
 })();
 </script>
