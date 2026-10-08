@@ -99,7 +99,7 @@ const CFG = {
 const HIDE_INTRO = new Set(["F", "J1", "J2"]);
 const WRAP_TIME = ['Under 15 min', '15 to 20', '20 to 30', 'Over 30'];
 // The three lines of the saving screen. Each must be TRUE when it shows as ticked: 2 and 3 only ever appear after the save has succeeded.
-const SAVE_LINES = ['Saving your answers', 'All answers received', 'Sent to Luke, who reads every one himself before your session'];
+const SAVE_LINES = ['Saving your answers', 'All answers received', CLIENT ? 'Sent to our team. We read every one.' : 'Sent to Luke, who reads every one himself before your session'];
 const SAVE_DWELL = 2000, SAVE_TIMEOUT = 30000;
 const BOOK_URL = 'https://calendar.app.google/SBPrfDtq16pZh1zP8';
 
@@ -230,7 +230,7 @@ function qCard(q, miss){
   if (!CLIENT) c.append(suggest(q));
   return c;
 }
-const head = (title, eyebrow) => { const d = el('div'); d.append(el('div', 'eyebrow', eyebrow || (CLIENT ? 'Taylored Health' : 'Taylored Health · test version'))); const h = el('h1', null, title); h.tabIndex = -1; d.append(h); return d; };
+const head = (title, eyebrow) => { const d = el('div'); if (CLIENT) { const lg = document.createElement('img'); lg.src = 'https://taylored.health/wp-content/uploads/2026/08/taylored-logo-400.png'; lg.alt = 'Taylored. Health & Performance Technologies'; lg.width = 160; lg.height = 50; lg.style.cssText = 'display:block;height:auto;max-width:160px;margin:0 0 18px'; d.append(lg); } d.append(el('div', 'eyebrow', eyebrow || (CLIENT ? 'Taylored Health' : 'Taylored Health · test version'))); const h = el('h1', null, title); h.tabIndex = -1; d.append(h); return d; };
 
 function viewGate(){
   const f = el('form', 'card'); f.noValidate = true;
@@ -272,7 +272,7 @@ function viewIntro(){
   const f = el('form', 'card'); f.noValidate = true;
   const mk = (label, type, key, ac) => { const l = el('label', 'field', label); const i = el('input'); i.type = type; i.autocomplete = ac; i.value = S.who[key] || ''; i.id = 'who-' + key; i.oninput = () => { S.who[key] = i.value; save(); }; l.append(i); return l; };
   const c = el('label', 'check'); const cb = el('input'); cb.type = 'checkbox'; cb.id = 'who-consent'; cb.checked = Boolean(S.who.consent); cb.onchange = () => { S.who.consent = cb.checked; save(); };
-  c.append(cb, el('span', null, "I'm happy for Luke and Rachel to read my answers"));
+  c.append(cb, el('span', null, CLIENT ? "I'm happy for the Taylored Health team to read my answers" : "I'm happy for Luke and Rachel to read my answers"));
   const e = el('p', 'err'); e.setAttribute('role', 'alert'); e.hidden = true;
   const b = el('button', 'primary', 'Start'); b.type = 'submit';
   // The client link is reusable and has no password, so the person says who they are: first name, last name and email are needed, mobile is not.
@@ -292,9 +292,9 @@ function viewIntro(){
   const intro = el('div', 'wrap');
   if (HI) intro.append(el('p', null, 'Hi ' + HI + '.'));
   for (const t of [
-    CLIENT ? 'This questionnaire shows us where you are now, so what we build fits you. It takes about 15 minutes. Luke reads every answer himself.'
+    CLIENT ? 'This questionnaire shows us where you are now, so what we build fits you. It takes about 15 minutes. We read every answer ourselves.'
       : "This is a test run of the questionnaire we send people before their Health Strategy Session. Answer it as yourself. It takes about 15 minutes. Under every question there's a box for suggestions, so tell us anything that's unclear or missing.",
-    (CLIENT ? 'Your answers go' : 'Your answers and notes go') + ' only to Luke and Rachel at Taylored Health. This is not medical advice and nobody will diagnose anything from it.',
+    (CLIENT ? 'Your answers go only to our team' : 'Your answers and notes go only to Luke and Rachel') + ' at Taylored Health. This is not medical advice and nobody will diagnose anything from it.',
     'You do not have to answer every question. Skip anything you would rather leave.',
     saveOk === false ? SAVE_NO : SAVE_INTRO,
   ]) intro.append(el('p', null, t));
@@ -349,7 +349,7 @@ function viewWrap(){
   for (const t of WRAP_TIME) { const on = S.wrap.time === t; const b = btn(t, on ? 'on' : '', () => { S.wrap.time = on ? undefined : t; save(); render('wrap|' + t); }); b.dataset.k = 'wrap|' + t; b.setAttribute('aria-pressed', String(on)); o.append(b); }
   c1.append(o); if (!CLIENT) out.push(c1);
   // The client version asks one thing here. How long it took and what was missing are questions for reviewers.
-  for (const [k, label] of CLIENT ? [['thoughts', 'Anything else you want Luke to know?']] : [['missing', 'Was anything missing that you expected to be asked?'], ['thoughts', 'Any other thoughts?']]) {
+  for (const [k, label] of CLIENT ? [['thoughts', 'Anything else we should know?']] : [['missing', 'Was anything missing that you expected to be asked?'], ['thoughts', 'Any other thoughts?']]) {
     const c = el('div', 'q'); c.append(el('div', 'qlabel', label), el('div', 'opt-tag', 'Optional'));
     const t = el('textarea'); t.value = S.wrap[k] || ''; t.setAttribute('aria-label', label); t.id = 'wrap-' + k; t.oninput = () => { S.wrap[k] = t.value || undefined; save(); };
     c.append(t); out.push(c);
@@ -444,8 +444,8 @@ async function submit(b, e){
 function viewDone(){
   const c = el('div', 'card'); c.id = 'received';
   const a = el('a', 'cta', 'Book your session'); a.id = 'book'; a.href = BOOK_URL; a.target = '_blank'; a.rel = 'noopener';
-  c.append(el('p', null, 'He needs two to three days with them, so pick a time from then.'), a, el('p', 'mute small', "Not ready to book? That's fine. We'll be in touch."));
-  return [head('Your answers are with Luke'), c];
+  c.append(el('p', null, (CLIENT ? 'We need' : 'He needs') + ' two to three days with them, so pick a time from then.'), a, el('p', 'mute small', "Not ready to book? That's fine. We'll be in touch."));
+  return [head(CLIENT ? 'Your answers are with us' : 'Your answers are with Luke'), c];
 }
 function viewFail(){
   const c = el('div', 'card'); c.id = 'failed';
