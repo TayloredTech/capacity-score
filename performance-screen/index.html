@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <meta name="referrer" content="no-referrer">
-<title>ExecOS Performance Screen</title>
+<title>Health Strategy Questionnaire</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Manrope:wght@400;500;600;700&display=swap">
@@ -231,7 +231,7 @@ function qCard(q, miss){
   return c;
 }
 const logo = (w) => { const lg = document.createElement('img'); lg.src = 'https://taylored.health/wp-content/uploads/2026/08/taylored-logo-400.png'; lg.alt = 'Taylored. Health & Performance Technologies'; lg.width = w; lg.height = Math.round(w * 124 / 400); lg.style.cssText = 'display:block;height:auto;width:' + w + 'px;max-width:70%;margin:0 auto ' + (w > 150 ? '26px' : '16px'); return lg; };
-const head = (title, eyebrow) => { const d = el('div'); if (CLIENT) { const first = title === 'ExecOS Performance Screen'; d.append(logo(first ? 260 : 120)); if (eyebrow) { const e = el('div', 'eyebrow', eyebrow); e.style.fontSize = '15px'; d.append(e); } const h = el('h1', null, title); h.tabIndex = -1; if (first) h.style.textAlign = 'center'; d.append(h); return d; } d.append(el('div', 'eyebrow', eyebrow || 'Taylored Health · test version')); const h = el('h1', null, title); h.tabIndex = -1; d.append(h); return d; };
+const head = (title, eyebrow) => { const d = el('div'); if (CLIENT) { const first = title === 'Health Strategy Questionnaire'; d.append(logo(first ? 260 : 120)); if (eyebrow) { const e = el('div', 'eyebrow', eyebrow); e.style.fontSize = '15px'; d.append(e); } const h = el('h1', null, title); h.tabIndex = -1; if (first) h.style.textAlign = 'center'; d.append(h); return d; } d.append(el('div', 'eyebrow', eyebrow || 'Taylored Health · test version')); const h = el('h1', null, title); h.tabIndex = -1; d.append(h); return d; };
 
 function viewGate(){
   const f = el('form', 'card'); f.noValidate = true;
@@ -250,7 +250,7 @@ function viewGate(){
     if (!ok) { e.textContent = 'That password is not right. Check it and try again.'; e.hidden = false; i.select(); return; }
     S.unlocked = true; S.step = 'intro'; save(); go();
   };
-  return [head('ExecOS Performance Screen'), f];
+  return [head('Health Strategy Questionnaire'), f];
 }
 function viewResume(){
   const sec = S.step === 'wrap' ? null : SECTIONS.find(x => x.id === S.sec);
@@ -267,7 +267,7 @@ function viewResume(){
   }); yes.id = 'start-again-yes';
   const an = el('div', 'nav'); an.append(yes, btn('Keep my answers', 'primary', () => { ask.hidden = true; again.disabled = false; on.focus(); })); ask.append(an);
   c.append(n, ask);
-  return [head('ExecOS Performance Screen'), c];
+  return [head('Health Strategy Questionnaire'), c];
 }
 function viewIntro(){
   const f = el('form', 'card'); f.noValidate = true;
@@ -299,7 +299,7 @@ function viewIntro(){
     'You do not have to answer every question. Skip anything you would rather leave.',
     saveOk === false ? SAVE_NO : SAVE_INTRO,
   ]) intro.append(el('p', null, t));
-  return [head('ExecOS Performance Screen'), intro, f];
+  return [head('Health Strategy Questionnaire'), intro, f];
 }
 function progress(i, n, label){
   const p = el('div', 'prog'); const top = el('div', 'progtop'); const sn = el('span'); sn.id = 'save-state';
@@ -322,7 +322,7 @@ function viewSection(){
   // Until male or female is picked neither of those two sections counts as showing, and exactly one will.
   const total = vs.length + (answers.q4 ? 0 : 1);
   const out = [progress(i + 1, total + 1, `Section ${i + 1} of ${total}`)];
-  const h = el('div'); if (CLIENT) h.append(logo(120)); const eb = el('div', 'eyebrow', 'ExecOS Performance Screen'); if (CLIENT) eb.style.fontSize = '15px'; h.append(eb); const h2 = el('h1', null, s.title); h2.tabIndex = -1; h.append(h2); out.push(h);
+  const h = el('div'); if (CLIENT) h.append(logo(120)); const eb = el('div', 'eyebrow', 'Health Strategy Questionnaire'); if (CLIENT) eb.style.fontSize = '15px'; h.append(eb); const h2 = el('h1', null, s.title); h2.tabIndex = -1; h.append(h2); out.push(h);
   if (s.opening) out.push(elr('p', 'opening', s.opening));
   if (s.intro && !HIDE_INTRO.has(s.id)) out.push(elr('p', 'mute', s.intro));
   for (const q of s.questions.filter(vis)) out.push(qCard(q, miss.includes(q)));
@@ -344,7 +344,7 @@ function viewSection(){
   return out;
 }
 function viewWrap(){
-  const vs = visSections(); const out = [progress(vs.length + 1, vs.length + 1, 'Last step'), head('Before you send', 'ExecOS Performance Screen')];
+  const vs = visSections(); const out = [progress(vs.length + 1, vs.length + 1, 'Last step'), head('Before you send', 'Health Strategy Questionnaire')];
   const c1 = el('div', 'q'); c1.append(el('div', 'qlabel', 'Roughly how long did that take you?'));
   const o = el('div', 'opts'); o.setAttribute('role', 'group');
   for (const t of WRAP_TIME) { const on = S.wrap.time === t; const b = btn(t, on ? 'on' : '', () => { S.wrap.time = on ? undefined : t; save(); render('wrap|' + t); }); b.dataset.k = 'wrap|' + t; b.setAttribute('aria-pressed', String(on)); o.append(b); }
@@ -384,7 +384,7 @@ function buildRow(){
 }
 function asText(row){
   const L = {}; for (const s of SECTIONS) for (const q of s.questions) L[q.id] = plain(q.label);
-  const lines = ['ExecOS Performance Screen ' + (CLIENT ? '(' : 'review (') + row.spec_version + ')', 'Name: ' + row.reviewer_name, 'Started: ' + row.started_at, 'Submitted: ' + row.submitted_at, '', 'ANSWERS'];
+  const lines = ['Health Strategy Questionnaire ' + (CLIENT ? '(' : 'review (') + row.spec_version + ')', 'Name: ' + row.reviewer_name, 'Started: ' + row.started_at, 'Submitted: ' + row.submitted_at, '', 'ANSWERS'];
   for (const [k, v] of Object.entries(row.answers)) lines.push(`${k} ${L[k] || (L[k.replace('__more', '')] ? L[k.replace('__more', '')] + ' (more)' : '')}: ${Array.isArray(v) ? v.join(', ') : v}`);
   if (!CLIENT) lines.push('', 'SUGGESTIONS'); for (const [k, v] of Object.entries(row.notes)) lines.push(`${k} ${L[k] || ''}: ${v}`);
   lines.push('', 'WRAP-UP'); for (const [k, v] of Object.entries(row.wrapup)) lines.push(`${k}: ${v}`);
