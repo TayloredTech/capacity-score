@@ -83,11 +83,16 @@ a.cta:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 (() => {
 const SPEC = JSON.parse(document.getElementById('spec').textContent);
 const SECTIONS = SPEC.sections;
+// One file, two modes. /screen/ loads this same file (see screen/index.html) and runs it as the client version:
+// no password, no suggestion boxes, no test wording. Everything else is shared, so the two cannot drift apart.
+const CLIENT = /(^|\/)screen\/(index\.html)?$/.test(location.pathname);
+// Optional first name for a personal link, /screen/?n=Julia. Letters only, and only ever written as text.
+const HI = CLIENT ? ((new URLSearchParams(location.search).get('n') || '').trim().match(/^\p{L}[\p{L} '-]{0,29}$/u) || [''])[0] : '';
 const CFG = {
   endpoint: 'https://gdsdtawkigzpyseavkqp.supabase.co/rest/v1/performance_screen_reviews',
   apiKey: 'sb_publishable_9xYl5CzjcQ6cBCEmCfPs5Q_NwI7z_JQ',
   gate: ["3908a3427811a92cb0a40293e10ac1ddc89dafb531404a784d792ae61d152d39"],
-  storeKey: 'execos-performance-screen-review-' + SPEC.version,
+  storeKey: 'execos-performance-screen-' + (CLIENT ? 'client-' : 'review-') + SPEC.version,
   contact: 'luke@taylored.health',
 };
 // Section intros in the spec that are notes for the build team, not for the person answering.
@@ -99,7 +104,7 @@ const SAVE_DWELL = 2000, SAVE_TIMEOUT = 30000;
 const BOOK_URL = 'https://calendar.app.google/SBPrfDtq16pZh1zP8';
 
 const app = document.getElementById('app');
-const fresh = () => ({unlocked: false, step: 'gate', sec: null, who: {name: '', consent: false}, answers: {}, notes: {}, wrap: {}, startedAt: null, active: 0});
+const fresh = () => ({unlocked: CLIENT, step: CLIENT ? 'intro' : 'gate', sec: null, who: {name: '', consent: false}, answers: {}, notes: {}, wrap: {}, startedAt: null, active: 0});
 let S = fresh();
 try { const v = localStorage.getItem(CFG.storeKey); if (v) S = Object.assign(fresh(), JSON.parse(v)); } catch {}
 // saveOk: true only when the browser really holds what we just wrote. false when storage is blocked or full. null before the first write.
@@ -222,10 +227,10 @@ function qCard(q, miss){
   }
   const fu = followUp(q); if (fu) c.append(fu);
   if (miss) c.append(el('p', 'small err', 'Not answered yet.'));
-  c.append(suggest(q));
+  if (!CLIENT) c.append(suggest(q));
   return c;
 }
-const head = (title, eyebrow) => { const d = el('div'); d.append(el('div', 'eyebrow', eyebrow || 'Taylored Health · test version')); const h = el('h1', null, title); h.tabIndex = -1; d.append(h); return d; };
+const head = (title, eyebrow) => { const d = el('div'); d.append(el('div', 'eyebrow', eyebrow || (CLIENT ? 'Taylored Health' : 'Taylored Health · test version'))); const h = el('h1', null, title); h.tabIndex = -1; d.append(h); return d; };
 
 function viewGate(){
   const f = el('form', 'card'); f.noValidate = true;
@@ -279,9 +284,11 @@ function viewIntro(){
     S.who.name = n; S.step = 'q'; if (!S.sec) S.sec = visSections()[0].id; save(); go();
   };
   const intro = el('div', 'wrap');
+  if (HI) intro.append(el('p', null, 'Hi ' + HI + '.'));
   for (const t of [
-    "This is a test run of the questionnaire we send people before their Health Strategy Session. Answer it as yourself. It takes about 20 minutes. Under every question there's a box for suggestions, so tell us anything that's unclear or missing.",
-    'Your answers and notes go only to Luke and Rachel at Taylored Health. This is not medical advice and nobody will diagnose anything from it.',
+    CLIENT ? 'This is the questionnaire we send people before their Health Strategy Session. It takes about 15 minutes. Luke reads every answer himself before your session.'
+      : "This is a test run of the questionnaire we send people before their Health Strategy Session. Answer it as yourself. It takes about 15 minutes. Under every question there's a box for suggestions, so tell us anything that's unclear or missing.",
+    (CLIENT ? 'Your answers go' : 'Your answers and notes go') + ' only to Luke and Rachel at Taylored Health. This is not medical advice and nobody will diagnose anything from it.',
     'You do not have to answer every question. Skip anything you would rather leave.',
     saveOk === false ? SAVE_NO : SAVE_INTRO,
   ]) intro.append(el('p', null, t));
@@ -334,8 +341,9 @@ function viewWrap(){
   const c1 = el('div', 'q'); c1.append(el('div', 'qlabel', 'Roughly how long did that take you?'));
   const o = el('div', 'opts'); o.setAttribute('role', 'group');
   for (const t of WRAP_TIME) { const on = S.wrap.time === t; const b = btn(t, on ? 'on' : '', () => { S.wrap.time = on ? undefined : t; save(); render('wrap|' + t); }); b.dataset.k = 'wrap|' + t; b.setAttribute('aria-pressed', String(on)); o.append(b); }
-  c1.append(o); out.push(c1);
-  for (const [k, label] of [['missing', 'Was anything missing that you expected to be asked?'], ['thoughts', 'Any other thoughts?']]) {
+  c1.append(o); if (!CLIENT) out.push(c1);
+  // The client version asks one thing here. How long it took and what was missing are questions for reviewers.
+  for (const [k, label] of CLIENT ? [['thoughts', 'Anything else you want Luke to know?']] : [['missing', 'Was anything missing that you expected to be asked?'], ['thoughts', 'Any other thoughts?']]) {
     const c = el('div', 'q'); c.append(el('div', 'qlabel', label), el('div', 'opt-tag', 'Optional'));
     const t = el('textarea'); t.value = S.wrap[k] || ''; t.setAttribute('aria-label', label); t.id = 'wrap-' + k; t.oninput = () => { S.wrap[k] = t.value || undefined; save(); };
     c.append(t); out.push(c);
@@ -358,6 +366,8 @@ function buildRow(){
   const st = {}; for (const sec of SPEC.sections) if (S.secSeconds && S.secSeconds[sec.id]) st[sec.title] = S.secSeconds[sec.id];
   if (S.secSeconds && S.secSeconds.wrap) st['Wrap-up'] = S.secSeconds.wrap;
   if (Object.keys(st).length) wrap.section_seconds = JSON.stringify(st);
+  // How a real client's row is told apart from a reviewer's test row. The table has no column for it.
+  if (CLIENT) wrap.source = 'client';
   return {
     spec_version: SPEC.version, reviewer_name: S.who.name.slice(0, 200), consent: S.who.consent === true,
     answers: a, notes, wrapup: wrap, started_at: S.startedAt, submitted_at: new Date().toISOString(),
@@ -366,9 +376,9 @@ function buildRow(){
 }
 function asText(row){
   const L = {}; for (const s of SECTIONS) for (const q of s.questions) L[q.id] = plain(q.label);
-  const lines = ['ExecOS Performance Screen review (' + row.spec_version + ')', 'Name: ' + row.reviewer_name, 'Started: ' + row.started_at, 'Submitted: ' + row.submitted_at, '', 'ANSWERS'];
+  const lines = ['ExecOS Performance Screen ' + (CLIENT ? '(' : 'review (') + row.spec_version + ')', 'Name: ' + row.reviewer_name, 'Started: ' + row.started_at, 'Submitted: ' + row.submitted_at, '', 'ANSWERS'];
   for (const [k, v] of Object.entries(row.answers)) lines.push(`${k} ${L[k] || (L[k.replace('__more', '')] ? L[k.replace('__more', '')] + ' (more)' : '')}: ${Array.isArray(v) ? v.join(', ') : v}`);
-  lines.push('', 'SUGGESTIONS'); for (const [k, v] of Object.entries(row.notes)) lines.push(`${k} ${L[k] || ''}: ${v}`);
+  if (!CLIENT) lines.push('', 'SUGGESTIONS'); for (const [k, v] of Object.entries(row.notes)) lines.push(`${k} ${L[k] || ''}: ${v}`);
   lines.push('', 'WRAP-UP'); for (const [k, v] of Object.entries(row.wrapup)) lines.push(`${k}: ${v}`);
   lines.push('', 'DATA', JSON.stringify(row));
   return lines.join('\n');
@@ -448,7 +458,7 @@ function viewFail(){
 
 // k: refocus the control that was just used, since a re-render replaces it.
 function render(k, focusNote){
-  const v = !S.unlocked && S.step !== 'done' ? viewGate() : resume ? viewResume() : S.step === 'intro' ? viewIntro() : S.step === 'q' ? viewSection() : S.step === 'wrap' ? viewWrap() : S.step === 'saving' ? viewSaving() : S.step === 'done' ? viewDone() : S.step === 'fail' ? viewFail() : viewGate();
+  const v = !S.unlocked && S.step !== 'done' ? viewGate() : resume ? viewResume() : S.step === 'intro' ? viewIntro() : S.step === 'q' ? viewSection() : S.step === 'wrap' ? viewWrap() : S.step === 'saving' ? viewSaving() : S.step === 'done' ? viewDone() : S.step === 'fail' ? viewFail() : CLIENT ? viewIntro() : viewGate();
   app.replaceChildren(...v);
   if (k) {
     const sel = focusNote ? k.replace('|sug', '|note') : k;

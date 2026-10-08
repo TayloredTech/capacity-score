@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<title>ExecOS Performance Screen</title>
+<style>html,body{background:#0b1a2c;color:#e9eef4;margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif}p{padding:20px 16px}a{color:#cdaa6b}</style>
+</head>
+<body>
+<noscript><p>This form needs JavaScript turned on.</p></noscript>
+<script>
+// The client version of the Performance Screen. There is NO second copy of the form: this page loads
+// ../performance-screen/index.html and runs it here. That file sees the /screen/ address and switches to
+// client mode (no password, no suggestion boxes, no test wording). Change the form there, never here.
+fetch('../performance-screen/index.html')
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
+  .then(h => { document.open(); document.write(h); document.close(); })
+  .catch(() => { document.body.innerHTML = '<p>This page did not load. Check your connection and <a href="">try again</a>.</p>'; });
+</script>
+</body>
+</html>
