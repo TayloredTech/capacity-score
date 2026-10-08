@@ -35,7 +35,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
 .opts{display:flex;flex-wrap:wrap;gap:8px;min-width:0}
 .opts button{text-align:left;padding:9px 12px}
 label.field{display:flex;flex-direction:column;gap:6px;font-weight:600}
-input[type=text],input[type=email],input[type=password],input[type=number],input[type=date],textarea{font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;min-width:0}
+input[type=text],input[type=email],input[type=tel],input[type=password],input[type=number],input[type=date],textarea{font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;min-width:0}
 textarea{min-height:76px;resize:vertical}
 .opts.scale{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:6px}
 .opts.scale button{text-align:center;padding:10px 0}
@@ -275,12 +275,18 @@ function viewIntro(){
   c.append(cb, el('span', null, "I'm happy for Luke and Rachel to read my answers"));
   const e = el('p', 'err'); e.setAttribute('role', 'alert'); e.hidden = true;
   const b = el('button', 'primary', 'Start'); b.type = 'submit';
-  f.append(mk('Your name', 'text', 'name', 'name'), c, e, b);
+  // The client link is reusable and has no password, so the person says who they are: first name, last name and email are needed, mobile is not.
+  if (CLIENT) f.append(mk('First name', 'text', 'first_name', 'given-name'), mk('Last name', 'text', 'last_name', 'family-name'), mk('Email', 'email', 'email', 'email'), mk('Mobile (optional)', 'tel', 'mobile', 'tel'), c, e, b);
+  else f.append(mk('Your name', 'text', 'name', 'name'), c, e, b);
   f.onsubmit = x => {
     x.preventDefault();
-    const n = (S.who.name || '').trim();
-    const msg = !n ? 'Please add your name.' : !S.who.consent ? 'Please tick the box to continue.' : '';
+    const w = k => (S.who[k] || '').trim();
+    const n = CLIENT ? (w('first_name') + ' ' + w('last_name')).trim() : w('name');
+    const msg = CLIENT && !w('first_name') ? 'Please add your first name.' : CLIENT && !w('last_name') ? 'Please add your last name.'
+      : CLIENT && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(w('email')) ? 'Please add your email address. Check it for typos.'
+      : !n ? 'Please add your name.' : !S.who.consent ? 'Please tick the box to continue.' : '';
     if (msg) { e.textContent = msg; e.hidden = false; return; }
+    if (CLIENT) for (const k of ['first_name', 'last_name', 'email', 'mobile']) S.who[k] = w(k);
     S.who.name = n; S.step = 'q'; if (!S.sec) S.sec = visSections()[0].id; save(); go();
   };
   const intro = el('div', 'wrap');
@@ -367,7 +373,8 @@ function buildRow(){
   if (S.secSeconds && S.secSeconds.wrap) st['Wrap-up'] = S.secSeconds.wrap;
   if (Object.keys(st).length) wrap.section_seconds = JSON.stringify(st);
   // How a real client's row is told apart from a reviewer's test row. The table has no column for it.
-  if (CLIENT) wrap.source = 'client';
+  // Who they are goes in as named fields (first_name, last_name, email, mobile) so it can be carried into ExecOS when they sign up.
+  if (CLIENT) { wrap.source = 'client'; for (const k of ['first_name', 'last_name', 'email', 'mobile']) if (S.who[k]) wrap[k] = String(S.who[k]).slice(0, 200); }
   return {
     spec_version: SPEC.version, reviewer_name: S.who.name.slice(0, 200), consent: S.who.consent === true,
     answers: a, notes, wrapup: wrap, started_at: S.startedAt, submitted_at: new Date().toISOString(),
