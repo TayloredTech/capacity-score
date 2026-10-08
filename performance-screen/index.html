@@ -230,7 +230,8 @@ function qCard(q, miss){
   if (!CLIENT) c.append(suggest(q));
   return c;
 }
-const head = (title, eyebrow) => { const d = el('div'); if (CLIENT) { const lg = document.createElement('img'); lg.src = 'https://taylored.health/wp-content/uploads/2026/08/taylored-logo-400.png'; lg.alt = 'Taylored. Health & Performance Technologies'; lg.width = 160; lg.height = 50; lg.style.cssText = 'display:block;height:auto;max-width:160px;margin:0 0 18px'; d.append(lg); } d.append(el('div', 'eyebrow', eyebrow || (CLIENT ? 'Taylored Health' : 'Taylored Health · test version'))); const h = el('h1', null, title); h.tabIndex = -1; d.append(h); return d; };
+const logo = (w) => { const lg = document.createElement('img'); lg.src = 'https://taylored.health/wp-content/uploads/2026/08/taylored-logo-400.png'; lg.alt = 'Taylored. Health & Performance Technologies'; lg.width = w; lg.height = Math.round(w * 124 / 400); lg.style.cssText = 'display:block;height:auto;width:' + w + 'px;max-width:70%;margin:0 auto ' + (w > 150 ? '26px' : '16px'); return lg; };
+const head = (title, eyebrow) => { const d = el('div'); if (CLIENT) { const first = title === 'ExecOS Performance Screen'; d.append(logo(first ? 260 : 120)); if (eyebrow) { const e = el('div', 'eyebrow', eyebrow); e.style.fontSize = '15px'; d.append(e); } const h = el('h1', null, title); h.tabIndex = -1; if (first) h.style.textAlign = 'center'; d.append(h); return d; } d.append(el('div', 'eyebrow', eyebrow || 'Taylored Health · test version')); const h = el('h1', null, title); h.tabIndex = -1; d.append(h); return d; };
 
 function viewGate(){
   const f = el('form', 'card'); f.noValidate = true;
@@ -321,7 +322,7 @@ function viewSection(){
   // Until male or female is picked neither of those two sections counts as showing, and exactly one will.
   const total = vs.length + (answers.q4 ? 0 : 1);
   const out = [progress(i + 1, total + 1, `Section ${i + 1} of ${total}`)];
-  const h = el('div'); h.append(el('div', 'eyebrow', 'ExecOS Performance Screen')); const h2 = el('h1', null, s.title); h2.tabIndex = -1; h.append(h2); out.push(h);
+  const h = el('div'); if (CLIENT) h.append(logo(120)); const eb = el('div', 'eyebrow', 'ExecOS Performance Screen'); if (CLIENT) eb.style.fontSize = '15px'; h.append(eb); const h2 = el('h1', null, s.title); h2.tabIndex = -1; h.append(h2); out.push(h);
   if (s.opening) out.push(elr('p', 'opening', s.opening));
   if (s.intro && !HIDE_INTRO.has(s.id)) out.push(elr('p', 'mute', s.intro));
   for (const q of s.questions.filter(vis)) out.push(qCard(q, miss.includes(q)));
