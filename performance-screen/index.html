@@ -292,9 +292,9 @@ function viewIntro(){
   const intro = el('div', 'wrap');
   if (HI) intro.append(el('p', null, 'Hi ' + HI + '.'));
   for (const t of [
-    CLIENT ? 'This questionnaire shows us where you are now, so what we build fits you. It takes about 15 minutes. We read every answer ourselves.'
+    CLIENT ? 'Grab a coffee or a tea, sit down and take your time. It takes about 15 minutes. The more detail you give us, the better we can help you.'
       : "This is a test run of the questionnaire we send people before their Health Strategy Session. Answer it as yourself. It takes about 15 minutes. Under every question there's a box for suggestions, so tell us anything that's unclear or missing.",
-    (CLIENT ? 'Your answers go only to our team' : 'Your answers and notes go only to Luke and Rachel') + ' at Taylored Health. This is not medical advice and nobody will diagnose anything from it.',
+    CLIENT ? 'We want a clear picture of who you are, so we can support you in the way that fits you best. Your answers go only to our team at Taylored Health.' : 'Your answers and notes go only to Luke and Rachel at Taylored Health. This is not medical advice and nobody will diagnose anything from it.',
     'You do not have to answer every question. Skip anything you would rather leave.',
     saveOk === false ? SAVE_NO : SAVE_INTRO,
   ]) intro.append(el('p', null, t));
