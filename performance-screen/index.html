@@ -90,6 +90,7 @@ const CLIENT = /(^|\/)screen\/(index\.html)?$/.test(location.pathname);
 const HI = CLIENT ? ((new URLSearchParams(location.search).get('n') || '').trim().match(/^\p{L}[\p{L} '-]{0,29}$/u) || [''])[0] : '';
 const CFG = {
   endpoint: 'https://gdsdtawkigzpyseavkqp.supabase.co/rest/v1/performance_screen_reviews',
+  progress: 'https://gdsdtawkigzpyseavkqp.supabase.co/rest/v1/performance_screen_progress',
   apiKey: 'sb_publishable_9xYl5CzjcQ6cBCEmCfPs5Q_NwI7z_JQ',
   gate: ["3908a3427811a92cb0a40293e10ac1ddc89dafb531404a784d792ae61d152d39"],
   storeKey: 'execos-performance-screen-' + (CLIENT ? 'client-' : 'review-') + SPEC.version,
@@ -111,6 +112,8 @@ try { const v = localStorage.getItem(CFG.storeKey); if (v) S = Object.assign(fre
 let saveOk = null;
 const SAVE_YES = 'Saved on this device', SAVE_NO = 'Not saving on this device. Finish in one sitting.';
 const SAVE_INTRO = 'Your answers save on this device as you go. If you need to stop, close the page and open the same link on the same phone or computer to pick up where you left off.';
+// Shown on the first page whether or not the device can save, because it is what the person agrees to by pressing Start.
+const NOTE_INTRO = 'When you press Start we note your name and how far through you are, so we can check in if you get stuck. Your answers are not sent to us until you submit.';
 function paintSave(n){ n = n || document.getElementById('save-state'); if (!n) return n; n.textContent = saveOk === true ? SAVE_YES : saveOk === false ? SAVE_NO : ''; n.className = 'savenote' + (saveOk === false ? ' bad' : ''); return n; }
 const save = () => { try { const v = JSON.stringify(S); localStorage.setItem(CFG.storeKey, v); saveOk = localStorage.getItem(CFG.storeKey) === v; } catch { saveOk = false; } paintSave(); };
 // Came back to this device part way through: say so first, instead of dropping them mid-form.
@@ -262,7 +265,7 @@ function viewResume(){
   const ask = el('div', 'warn'); ask.hidden = true; ask.append(el('p', null, 'Starting again clears the answers saved on this device.'));
   const yes = btn('Clear them and start again', '', () => {
     for (const k of Object.keys(answers)) delete answers[k];
-    Object.assign(S, {step: 'intro', sec: null, who: {name: '', consent: false}, notes: {}, wrap: {}, startedAt: null, active: 0}); delete S.secSeconds;
+    Object.assign(S, {step: 'intro', sec: null, who: {name: '', consent: false}, notes: {}, wrap: {}, startedAt: null, active: 0}); delete S.secSeconds; delete S.draftId; pinged.clear();
     openNotes.clear(); resume = false; save(); go();
   }); yes.id = 'start-again-yes';
   const an = el('div', 'nav'); an.append(yes, btn('Keep my answers', 'primary', () => { ask.hidden = true; again.disabled = false; on.focus(); })); ask.append(an);
@@ -298,6 +301,7 @@ function viewIntro(){
     CLIENT ? 'We want a clear picture of who you are, so we can support you in the way that fits you best. Your answers go only to our team at Taylored Health.' : 'Your answers and notes go only to Luke and Rachel at Taylored Health. This is not medical advice and nobody will diagnose anything from it.',
     'You do not have to answer every question. Skip anything you would rather leave.',
     saveOk === false ? SAVE_NO : SAVE_INTRO,
+    NOTE_INTRO,
   ]) intro.append(el('p', null, t));
   return [head('Health Strategy Questionnaire'), intro, f];
 }
@@ -375,6 +379,8 @@ function buildRow(){
   if (Object.keys(st).length) wrap.section_seconds = JSON.stringify(st);
   // How a real client's row is told apart from a reviewer's test row. The table has no column for it.
   // Who they are goes in as named fields (first_name, last_name, email, mobile) so it can be carried into ExecOS when they sign up.
+  // Ties this finished form to its progress rows, so it stops counting as part way through.
+  if (S.draftId) wrap.draft_id = S.draftId;
   if (CLIENT) { wrap.source = 'client'; for (const k of ['first_name', 'last_name', 'email', 'mobile']) if (S.who[k]) wrap[k] = String(S.who[k]).slice(0, 200); }
   return {
     spec_version: SPEC.version, reviewer_name: S.who.name.slice(0, 200), consent: S.who.consent === true,
@@ -390,6 +396,22 @@ function asText(row){
   lines.push('', 'WRAP-UP'); for (const [k, v] of Object.entries(row.wrapup)) lines.push(`${k}: ${v}`);
   lines.push('', 'DATA', JSON.stringify(row));
   return lines.join('\n');
+}
+// Progress, not answers. Each time a section is reached, one small row says who is part way through and
+// where they are, so a form that stalls can be followed up. It carries the name, the section and nothing
+// they answered (the two hormone sections share one name here, so the row does not say which sex was picked). Never awaited and never retried: if it fails, nothing on screen changes.
+const pinged = new Set();
+function ping(){
+  try {
+    if (resume || (S.step !== 'q' && S.step !== 'wrap') || S.who.consent !== true || !S.who.name) return;
+    const vs = visSections(), i = S.step === 'wrap' ? vs.length - 1 : vs.findIndex(x => x.id === S.sec);
+    const key = S.step + '|' + S.sec; if (i < 0 || pinged.has(key)) return; pinged.add(key);
+    if (!S.draftId) { S.draftId = crypto.randomUUID(); try { localStorage.setItem(CFG.storeKey, JSON.stringify(S)); } catch {} }
+    fetch(CFG.progress, {method: 'POST', keepalive: true, headers: {'Content-Type': 'application/json', apikey: CFG.apiKey, Authorization: 'Bearer ' + CFG.apiKey, Prefer: 'return=minimal'}, body: JSON.stringify({
+      draft_id: S.draftId, name: String(S.who.name).slice(0, 200), source: CLIENT ? 'client' : 'review', spec_version: String(SPEC.version).slice(0, 40),
+      section: S.step === 'wrap' ? 'Wrap-up' : /^J\d/.test(vs[i].id) ? 'Hormones and drive' : String(vs[i].title).slice(0, 120), section_no: S.step === 'wrap' ? vs.length + 1 : i + 1, section_count: vs.length + 1, consent: true,
+    })}).catch(() => {});
+  } catch {}
 }
 async function post(row){
   for (let attempt = 0; attempt < 3; attempt++) {
@@ -475,7 +497,7 @@ function render(k, focusNote){
   }
 }
 // A change of screen: draw it, go to the top, and put focus on its heading.
-function go(){ render(); window.scrollTo(0, 0); const h = app.querySelector('h1'); if (h && S.step !== 'gate' && S.unlocked) h.focus({preventScroll: true}); }
+function go(){ render(); ping(); window.scrollTo(0, 0); const h = app.querySelector('h1'); if (h && S.step !== 'gate' && S.unlocked) h.focus({preventScroll: true}); }
 
 // Seconds actively spent on the questions: the tab is in view and something was touched in the last minute.
 for (const t of ['pointerdown', 'keydown', 'scroll']) addEventListener(t, () => { lastAct = Date.now(); }, {passive: true});
@@ -491,6 +513,7 @@ setInterval(() => {
 
 if (S.step === 'done' || S.step === 'fail' || S.step === 'saving') S.step = 'wrap';
 render();
+ping();
 })();
 </script>
 </body>
