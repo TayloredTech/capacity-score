@@ -157,7 +157,8 @@ const visSections = () => SECTIONS.filter(s => s.questions.some(vis));
 // Luke, 7 Oct 2026: "dont make them have to answer every question" (the review version: nothing is required).
 // Luke, 11 Oct 2026: on the client version "I want the majority of the questions to be compulsory... otherwise we
 // can't really help them". So a client must answer every question showing, except the free-text ones.
-const missing = s => CLIENT ? s.questions.filter(q => vis(q) && q.type !== 'longtext' && !q.optional && !answered(q)) : [];
+// Luke, 11 Oct 2026: the uncomfortable personal ones (the hormones and drive sections, J1 to J3) are not compulsory.
+const missing = s => CLIENT && !/^J\d/.test(s.id) ? s.questions.filter(q => vis(q) && q.type !== 'longtext' && !q.optional && !answered(q)) : [];
 const fuShown = q => {
   const f = q.followUp; if (!f) return false;
   const a = answers[q.id]; const picked = Array.isArray(a) ? a : (a == null || a === '' ? [] : [a]);
