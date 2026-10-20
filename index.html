@@ -3,23 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Which Way Is Your Wheel Turning? | Taylored</title>
-<meta name="description" content="A three minute self read for senior leaders. Sixteen statements, one honest mirror: which way is your capacity wheel turning?">
+<title>Are you building capacity, or spending it? | Taylored</title>
+<meta name="description" content="16 statements, built from interviews with 40 senior leaders. See which part of your capacity is dragging hardest, and the one thing to change first. About 3 minutes.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://wheel.taylored.health/">
 <!-- Preview URLs (?demo=…&carry=…) are the same page with a query string. The
      canonical points every one of them back at the clean URL, and the demo
      block below also injects robots noindex when it runs. -->
 <link rel="canonical" href="https://wheel.taylored.health/">
-<meta property="og:title" content="Which Way Is Your Wheel Turning?">
-<meta property="og:description" content="A three minute mirror for senior leaders. The Capacity Wheel, from Taylored.">
-<meta property="og:image" content="https://wheel.taylored.health/assets/og-wheel.png">
+<!-- 20 Oct 2026, Rachel approved: the link preview leads with the binary every
+     exec can answer, and carries the 40 senior leaders proof. ?v=2 on the image
+     so LinkedIn and Slack fetch the new card instead of a cached old one. -->
+<meta property="og:title" content="Are you building capacity, or spending it?">
+<meta property="og:description" content="16 statements built from interviews with 40 senior leaders. See which part is dragging, and what to change first. About 3 minutes.">
+<meta property="og:image" content="https://wheel.taylored.health/assets/og-wheel.png?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Which Way Is Your Wheel Turning?">
-<meta name="twitter:description" content="A three minute mirror for senior leaders. The Capacity Wheel, from Taylored.">
-<meta name="twitter:image" content="https://wheel.taylored.health/assets/og-wheel.png">
+<meta name="twitter:title" content="Are you building capacity, or spending it?">
+<meta name="twitter:description" content="16 statements built from interviews with 40 senior leaders. See which part is dragging, and what to change first. About 3 minutes.">
+<meta name="twitter:image" content="https://wheel.taylored.health/assets/og-wheel.png?v=2">
 <link rel="icon" href="https://taylored.health/wp-content/uploads/2026/07/taylored-favicon-150x150.png" sizes="32x32">
 <link rel="icon" href="https://taylored.health/wp-content/uploads/2026/07/taylored-favicon.png" sizes="192x192">
 <link rel="apple-touch-icon" href="https://taylored.health/wp-content/uploads/2026/07/taylored-favicon.png">
@@ -245,6 +248,22 @@ h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-heigh
 .fgline{margin:1rem 0 0}
 .fgline a{color:var(--gold);font-weight:600;font-size:.9rem;text-decoration:underline;text-underline-offset:3px}
 .fgline a:hover{color:var(--cream)}
+/* 20 Oct 2026: blurred tease at the gate, result name, hook, share card, retake */
+.teasebox{width:min(220px,62vw);margin:0 auto 1.4rem;filter:blur(7px);opacity:.75;pointer-events:none;user-select:none}
+.teasebox svg{display:block;width:100%;height:auto}
+.resultname{font-family:"Playfair Display",Georgia,serif;font-weight:600;font-size:clamp(1.7rem,6vw,2.3rem);line-height:1.15;color:var(--gold);margin:.5rem 0 0}
+#intro h1,#email h2{text-wrap:balance}
+.resultcard .hook{font-family:"Playfair Display",Georgia,serif;font-weight:600;font-size:clamp(1.35rem,4.6vw,1.65rem);line-height:1.25;color:var(--cream)!important;margin:1.5rem 0 0;padding-top:1.2rem;border-top:1px solid rgba(184,146,74,.45)}
+.resultcard .hook+.ctabtn{margin-top:1rem}
+.cardpreview{display:block;width:100%;height:auto;margin:1rem 0 0;border-radius:3px;border:1px solid var(--rule-l)}
+.sharebtns{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.1rem}
+.sharebtns .ctabtn{margin-top:0;flex:1 1 12rem;padding:.85rem 1rem}
+.ctabtn.ghost{background:transparent;color:var(--gold);border:1.5px solid var(--gold)}
+.ctabtn.ghost:hover{background:var(--gold);color:var(--navy-deep)}
+.sharenote{font-size:.82rem!important;color:var(--cream-faint)!important;margin-top:.8rem}
+.retake{margin:2rem 0 0;text-align:center;font-size:.92rem;color:var(--cream-soft)}
+.retake a{color:var(--gold);font-weight:600;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.retake a:hover{color:var(--cream)}
 /* optional post-result questions (20 Oct 2026) */
 .followup fieldset{border:0;margin:1.2rem 0 0;padding:0}
 .followup legend{font-weight:700;color:var(--cream);margin-bottom:.5rem;padding:0}
@@ -333,6 +352,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <section id="email" class="screen">
   <div class="wrap">
+    <!-- the reader's own wheel, blurred. Built with NO score text and no band,
+         so nothing of the result is in the DOM before the email is in. -->
+    <div class="teasebox" aria-hidden="true"><svg id="teaseWheel" viewBox="0 0 440 440"></svg></div>
     <p class="kicker">Almost there</p>
     <h2 id="e-heading"></h2>
     <p id="e-body"></p>
@@ -353,6 +375,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="headrow">
       <p class="kicker" id="r-kicker"></p>
       <h2 id="r-heading"></h2>
+      <p class="resultname" id="r-name"></p>
       <span class="bandchip" id="r-band"></span>
       <p class="bandlabel" id="r-bandLabel"></p>
     </div>
@@ -400,10 +423,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h3 id="r-bridgeHeading"></h3>
       <p id="r-bridgeBody"></p>
       <p class="tagline" id="r-tagline"></p>
+      <p class="hook" id="r-hook"></p>
       <a class="ctabtn" id="r-cta" href="#"></a>
       <p class="fgline"><a id="r-sleep" href="#"></a></p>
       <p class="fgline"><a id="r-fg" href="#" target="_blank" rel="noopener"></a></p>
     </div>
+
+    <div class="resultcard sharecard" id="shareCard">
+      <h3 id="sh-heading"></h3>
+      <p id="sh-body"></p>
+      <img class="cardpreview" id="sh-preview" alt="" width="1200" height="627">
+      <div class="sharebtns">
+        <a class="ctabtn" id="sh-download" href="#" download></a>
+        <a class="ctabtn ghost" id="sh-linkedin" href="#" target="_blank" rel="noopener"></a>
+      </div>
+      <p class="sharenote" id="sh-note"></p>
+    </div>
+
+    <p class="retake"><span id="r-retake"></span> <a id="r-ics" href="#" download="capacity-wheel-retake.ics"></a></p>
 
     <form class="resultcard followup" id="followupForm" novalidate>
       <h3 id="fu-heading"></h3>
@@ -453,6 +490,19 @@ function computeCapacity(inputs, source, config){
     version:config.version, totalDrag, partDrag, dragBand:bandFor(totalDrag,s.dragBands), pushLever, complete };
 }
 
+/* ---------- RESULT NAMES: the ONE home (20 Oct 2026) ----------
+   Rachel confirmed Set A as final on 20 Oct 2026 (source:
+   docs/marketing/wheel-result-names-set3-2026-10-20.md). A DISPLAY layer only:
+   the four bands, the Kit tags (Wheel: Peak etc.), the Kit field capacity_state
+   and every stored row still use Peak / Steady / Conserve / Restore. To rename,
+   edit this map and nothing else. `line` is the share line on the card. */
+const RESULT_NAMES = {
+  Peak:     { name: "The Pacesetter", line: "I'm The Pacesetter. My habits are carrying the load, and I'm protecting what built them." },
+  Steady:   { name: "The Navigator",  line: "I'm The Navigator. Holding course well, and building some spare before the next shift." },
+  Conserve: { name: "The Strategist", line: "I'm The Strategist. This month I'm spending energy where it counts and protecting the rest." },
+  Restore:  { name: "The Architect",  line: "I'm The Architect. I'm rebuilding how my weeks work so the capacity comes back." }
+};
+
 /* ---------- config (inlined). Statements are the depleted pole;
    `lifts` is the parallel lifted pole for the drag-slider. ---------- */
 const config = {
@@ -468,10 +518,14 @@ const config = {
     // ⛔ 28 Sept 2026, Rachel's opening-screen spec. The old `intro` and
     // `howItWorks` were the two dense paragraphs she cut. The model is shown
     // by the diagram now, so the copy around it is deliberately thin.
-    title: "Which way is your wheel turning?",
-    kicker: "The Capacity Wheel, made personal",
-    intro: "A 3-minute read of how your current load is affecting four parts of your capacity.",
-    howItWorks: ["16 statements. About 3 minutes.",
+    // ★ 20 Oct 2026, Rachel approved. The H1 is the binary every exec can answer
+    // in their head. Her own title stays, as the small line above it. The promise
+    // carries the proof (40 senior leaders) where a cold reader decides.
+    // ⛔ NEVER "40 global leaders": 34 of the 40 are in New Zealand.
+    title: "Are you building capacity, or spending it?",
+    kicker: "Which way is your wheel turning?",
+    intro: "16 statements, built from interviews with 40 senior leaders. See which part of your capacity is dragging hardest, and the one thing to change first.",
+    howItWorks: ["About 3 minutes.",
                  "Answer for the month you are actually having, not the one you wish you were having."],
     snapshot: "Not a grade. A snapshot.",
     // The diagram. One blurb per factor, and the hub is CAPACITY, because
@@ -688,6 +742,9 @@ const config = {
       // for ALL traffic, and any utm_* the visitor landed with rides through on
       // the link (see wheelUtm / withUtm). Price is the page's own, A$299 / NZ$349.
       tagline: "A performance scientist reads your whole picture and tells you what to change first. Online, one to one, A$299 or NZ$349.",
+      // ★ 20 Oct 2026, Rachel approved: the hook sits DIRECTLY above the gold
+      // button, large. Her heading above stays word for word.
+      hook: "Your wheel shows where. The session finds why.",
       ctaLabel: "Book your Health Strategy Session",
       ctaUrl: "https://taylored.health/strategy-session/",
       // The Sleep Score Review stays, demoted to a quiet line under the button.
@@ -705,6 +762,27 @@ const config = {
       fieldGuideUrl: "https://wheel.taylored.health/field-guide/",
       draftNote: "This is an early draft of an idea I'm still shaping in the book. If it lands for you, or if it doesn't, I'd genuinely love to hear.",
       footnote: "A tool for reflection, not a diagnosis."
+    },
+    // ★ 20 Oct 2026. The share card carries the result NAME and share line,
+    // never the score. LinkedIn's share-offsite takes a URL only, so the post
+    // links the wheel and the card is a download the reader can attach.
+    share: {
+      heading: "Share your result",
+      body: "Your card shows your result name, never your score.",
+      downloadLabel: "Download your card",
+      linkedinLabel: "Share on LinkedIn",
+      linkedinNote: "LinkedIn shares the link to the wheel. Add your card to the post if you want it to show.",
+      url: "https://wheel.taylored.health/",
+      fileName: "capacity-wheel-result.png"
+    },
+    // ★ 20 Oct 2026. No reminder email is scheduled from here. The calendar
+    // file is the reader's own reminder, 90 days out.
+    retake: {
+      line: "Retake in 90 days and see if it moved.",
+      calendarLabel: "Add a reminder to your calendar",
+      days: 90,
+      eventTitle: "Retake the Capacity Wheel",
+      eventBody: "Ninety days on. Take the Capacity Wheel again and see if it moved. https://wheel.taylored.health/"
     },
     // ★ 20 Oct 2026, Rachel: "Add the old quiz' 'who pays for your capacity
     // uplift?' and top priority questions." OPTIONAL and AFTER the reveal, so
@@ -729,9 +807,11 @@ const config = {
       needOne: "Pick at least one answer first.",
       saved: "Thanks. That is saved."
     },
+    // ★ 20 Oct 2026, Rachel approved: the gate teases the reader's OWN wheel,
+    // blurred, with no score and no band anywhere in the page until they submit.
     emailCapture: {
-      heading: "Your read is ready",
-      body: "Tell us where to send it and we'll keep a copy for you. You'll see it on screen right away.",
+      heading: "Your wheel is turning. One part is doing most of the dragging.",
+      body: "Enter your email to see which one, your result name, and the one thing to change first. A copy lands in your inbox, and you'll see it on screen right away.",
       emailLabel: "Email", nameLabel: "First name", button: "Show me my wheel",
       privacyNote: "We'll use this to send your result and occasional notes from Taylored. No spam, unsubscribe any time.",
       emailRequired: true
@@ -1005,7 +1085,13 @@ $("nextBtn").onclick = () => {
   const p = I.parts[partIdx];
   if (answers[p.factor].some((v)=>!Number.isFinite(v))) { $("answerHint").classList.add("show"); return; }
   if (partIdx < I.parts.length - 1) { partIdx++; renderPart(); scrollTo(0,0); }
-  else { $("progbar").style.transform = "scaleX(1)"; show("email"); $("fname").focus(); }
+  else {
+    $("progbar").style.transform = "scaleX(1)";
+    // The tease is the reader's own wheel (direction, speed, wobble), blurred,
+    // drawn with tease:true so no score number and no band reach the DOM.
+    try { buildWheel(computeCapacity(answers, "assessment", config), { svgId: "teaseWheel", prefix: "t-", tease: true }); } catch (e) {}
+    show("email"); $("fname").focus();
+  }
 };
 
 let result = null;
@@ -1028,6 +1114,8 @@ $("emailForm").onsubmit = (ev) => {
       has_email: Boolean(email),
     });
   } catch (e) {}
+  // stop the gate's blurred tease loop, the screen behind it is gone
+  if (animateWheel.tokens) animateWheel.tokens["t-"] = null;
   renderResult(result);
   show("result");
 };
@@ -1381,6 +1469,7 @@ function renderResult(r){
   $("r-kicker").textContent = C.scoreCaption;
   $("r-heading").textContent = C.resultHeading;
   $("r-band").textContent = r.band;
+  $("r-name").textContent = (RESULT_NAMES[r.band] || {}).name || "";
   $("r-scoreMeans").textContent = C.scoreMeans.replace("{score}", String(r.capacityScore));
   $("r-read").textContent = C.bandReads[r.band];
   const rank = rankFactors(r);
@@ -1473,8 +1562,11 @@ function renderResult(r){
   $("r-bridgeHeading").textContent = C.bridge.heading;
   $("r-bridgeBody").textContent = C.bridge.body;
   $("r-tagline").textContent = C.bridge.tagline;
+  $("r-hook").textContent = C.bridge.hook;
   $("r-cta").textContent = C.bridge.ctaLabel;
   $("r-cta").href = withUtm(C.bridge.ctaUrl);
+  renderShare(r);
+  renderRetake();
   $("r-sleep").textContent = C.bridge.sleepLabel;
   $("r-sleep").href = C.bridge.sleepUrl;
   renderFollowup();
@@ -1483,6 +1575,133 @@ function renderResult(r){
   $("r-draftnote").textContent = C.bridge.draftNote;
   $("r-footnote").textContent = C.bridge.footnote;
   buildWheel(r);
+}
+
+/* ---------- share card (20 Oct 2026) ----------
+   Drawn on a canvas in the browser, 1200 x 627 (LinkedIn's link-image size).
+   ⛔ NAME AND SHARE LINE ONLY, NEVER THE SCORE. A senior leader will post a
+   type, rarely a number, and never a low number. The wheel on the card shows
+   direction only, from the band, the same rule as the result wheel. */
+function renderShare(r){
+  const S = C.share, RN = RESULT_NAMES[r.band];
+  const card = $("shareCard");
+  if (!RN) { card.hidden = true; return; }
+  card.hidden = false;
+  $("sh-heading").textContent = S.heading;
+  $("sh-body").textContent = S.body;
+  $("sh-download").textContent = S.downloadLabel;
+  $("sh-download").setAttribute("download", S.fileName);
+  $("sh-linkedin").textContent = S.linkedinLabel;
+  $("sh-linkedin").href = "https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(S.url);
+  $("sh-note").textContent = S.linkedinNote;
+  $("sh-preview").alt = "Your result card: " + RN.name + ". " + RN.line;
+  const fonts = (document.fonts && document.fonts.load)
+    ? Promise.all([
+        document.fonts.load('600 96px "Playfair Display"'),
+        document.fonts.load('500 30px Manrope'),
+        document.fonts.load('700 20px Manrope')
+      ]).catch(()=>{})
+    : Promise.resolve();
+  fonts.then(() => {
+    const cv = drawShareCard(r.band, RN);
+    const done = (url) => { $("sh-preview").src = url; $("sh-download").href = url; };
+    if (cv.toBlob) cv.toBlob(b => done(b ? URL.createObjectURL(b) : cv.toDataURL("image/png")), "image/png");
+    else done(cv.toDataURL("image/png"));
+  });
+  $("sh-download").onclick = () => {
+    try { window.dataLayer = window.dataLayer || []; window.dataLayer.push({ event: "wheel_card_download", capacity_state: r.band }); } catch (e) {}
+  };
+  $("sh-linkedin").onclick = () => {
+    try { window.dataLayer = window.dataLayer || []; window.dataLayer.push({ event: "wheel_share_linkedin", capacity_state: r.band }); } catch (e) {}
+  };
+}
+
+function drawShareCard(band, RN){
+  const Wd = 1200, Ht = 627;
+  const cv = document.createElement("canvas");
+  cv.width = Wd; cv.height = Ht;
+  const x = cv.getContext("2d");
+  const g = x.createLinearGradient(0, 0, Wd, Ht);
+  g.addColorStop(0, "#1e3644"); g.addColorStop(1, "#12202b");
+  x.fillStyle = g; x.fillRect(0, 0, Wd, Ht);
+  x.textBaseline = "alphabetic";
+  const track = (px) => { try { x.letterSpacing = px + "px"; } catch (e) {} };
+  // kicker
+  x.fillStyle = "#b8924a"; x.font = '700 20px Manrope, sans-serif'; track(5);
+  x.fillText("THE BIOLOGY OF LEADERSHIP", 80, 130);
+  track(0);
+  x.fillStyle = "#cdd8db"; x.font = '500 24px Manrope, sans-serif';
+  x.fillText("My Capacity Wheel result", 80, 178);
+  // the name
+  x.fillStyle = "#f3efe7"; x.font = '600 84px "Playfair Display", Georgia, serif';
+  x.fillText(RN.name, 76, 280);
+  // the share line, wrapped to the left column
+  x.fillStyle = "#cdd8db"; x.font = '500 29px Manrope, sans-serif';
+  const words = RN.line.split(" "), maxW = 620, lh = 42;
+  let line = "", y = 352;
+  words.forEach((w) => {
+    const t = line ? line + " " + w : w;
+    if (x.measureText(t).width > maxW && line) { x.fillText(line, 80, y); line = w; y += lh; }
+    else line = t;
+  });
+  if (line) x.fillText(line, 80, y);
+  // footer
+  x.fillStyle = "#b8924a"; x.font = '700 24px Manrope, sans-serif';
+  x.fillText("wheel.taylored.health", 80, 560);
+  x.fillStyle = "#8a9aa1"; x.font = '500 22px Manrope, sans-serif';
+  const urlW = (x.font = '700 24px Manrope, sans-serif', x.measureText("wheel.taylored.health").width);
+  x.font = '500 22px Manrope, sans-serif';
+  x.fillText("·   Which way is your wheel turning?", 80 + urlW + 18, 560);
+  // the wheel: ring, four parts, ONE arrow in the band's direction
+  const cx = 945, cy = 300, R = 150;
+  const pt = (rad, deg) => { const a = (deg - 90) * Math.PI / 180; return [cx + rad * Math.cos(a), cy + rad * Math.sin(a)]; };
+  x.strokeStyle = "rgba(243,239,231,.18)"; x.lineWidth = 2;
+  x.beginPath(); x.arc(cx, cy, 100, 0, Math.PI * 2); x.stroke();
+  W.factorOrder.forEach((f) => {
+    const a = W.factorAngles[f], [px, py] = pt(100, a);
+    x.strokeStyle = "rgba(243,239,231,.45)"; x.lineWidth = 2;
+    x.beginPath(); x.moveTo(cx, cy); x.lineTo(px, py); x.stroke();
+    x.fillStyle = W.factorColors[f]; x.beginPath(); x.arc(px, py, 7, 0, Math.PI * 2); x.fill();
+  });
+  x.fillStyle = "rgba(243,239,231,.08)"; x.beginPath(); x.arc(cx, cy, 44, 0, Math.PI * 2); x.fill();
+  const building = band === "Peak" || band === "Steady", marginal = band === "Steady";
+  const gap = 38, headDeg = 13, span = marginal ? 70 : 360 - 2 * gap - headDeg;
+  const lead = building ? 360 - gap : gap;
+  const a0 = building ? lead - headDeg - span : lead + headDeg, a1 = building ? lead - headDeg : lead + headDeg + span;
+  const toRad = (d) => (d - 90) * Math.PI / 180;
+  x.strokeStyle = "#b8924a"; x.lineWidth = 12; x.lineCap = "round";
+  x.beginPath(); x.arc(cx, cy, R, toRad(a0), toRad(a1)); x.stroke();
+  const base = building ? lead - headDeg : lead + headDeg;
+  const [tx, ty] = pt(R, lead), [ox, oy] = pt(R + 16, base), [ix, iy] = pt(R - 16, base);
+  x.fillStyle = "#b8924a"; x.beginPath(); x.moveTo(tx, ty); x.lineTo(ox, oy); x.lineTo(ix, iy); x.closePath(); x.fill();
+  return cv;
+}
+
+/* ---------- 90-day retake (20 Oct 2026) ----------
+   The line, plus an all-day calendar event 90 days out that the reader keeps
+   in their own calendar. Nothing is scheduled on our side. */
+function renderRetake(){
+  const T = C.retake;
+  $("r-retake").textContent = T.line;
+  const d = new Date(); d.setDate(d.getDate() + T.days);
+  const e = new Date(d); e.setDate(e.getDate() + 1);
+  const ymd = (t) => t.getFullYear() + String(t.getMonth() + 1).padStart(2, "0") + String(t.getDate()).padStart(2, "0");
+  const now = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d+/, "");
+  const esc = (s) => String(s).replace(/([,;\\])/g, "\\$1");
+  const ics = [
+    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Taylored//Capacity Wheel//EN", "CALSCALE:GREGORIAN",
+    "BEGIN:VEVENT",
+    "UID:wheel-retake-" + Date.now() + "@wheel.taylored.health",
+    "DTSTAMP:" + now,
+    "DTSTART;VALUE=DATE:" + ymd(d), "DTEND;VALUE=DATE:" + ymd(e),
+    "SUMMARY:" + esc(T.eventTitle),
+    "DESCRIPTION:" + esc(T.eventBody),
+    "URL:https://wheel.taylored.health/",
+    "END:VEVENT", "END:VCALENDAR"
+  ].join("\r\n");
+  const a = $("r-ics");
+  a.textContent = T.calendarLabel;
+  a.href = "data:text/calendar;charset=utf-8," + encodeURIComponent(ics);
 }
 
 /* ---------- band-matched calls to action ----------
@@ -1610,13 +1829,18 @@ $("r-copyBtn").addEventListener("click", function(){
   } else { fallback(); }
 });
 
-function buildWheel(r){
-  const svg = $("wheel");
+function buildWheel(r, opts){
+  // opts (20 Oct 2026): the email-gate tease draws the same wheel into its own
+  // svg with prefixed ids, and with tease:true it leaves out the score text and
+  // the aria label, so the gate never carries the result in its markup.
+  opts = opts || {};
+  const P = opts.prefix || "", tease = !!opts.tease;
+  const svg = $(opts.svgId || "wheel");
   // the arrow IS the meaning, so a screen reader has to get the direction too
   const spinWord = r.band === "Peak" ? "turning forwards"
     : r.band === "Steady" ? "turning forwards, only just"
     : "turning backwards";
-  svg.setAttribute("aria-label", `Capacity wheel. Score ${r.capacityScore} out of 100, band ${r.band}, ${spinWord}.`);
+  if (!tease) svg.setAttribute("aria-label", `Capacity wheel. Score ${r.capacityScore} out of 100, band ${r.band}, ${spinWord}.`);
   const half = W.sectorSpanDegrees/2, R = W.arcRadius;
   const spokes = W.factorOrder.map((f)=>{ const a=W.factorAngles[f]; const [x2,y2]=polar(104,a);
     return `<line x1="${CX}" y1="${CY}" x2="${x2}" y2="${y2}" stroke="${W.spokeColor}" stroke-width="2"/><circle cx="${x2}" cy="${y2}" r="5" fill="${W.factorColors[f]}"/>`; }).join("");
@@ -1668,7 +1892,7 @@ function buildWheel(r){
   const labels = W.factorOrder.map((f)=>{ const a=((W.factorAngles[f]%360)+360)%360; const flip=a>90&&a<270; const rl=R+(flip?34:24);
     const d = flip ? `M ${polar(rl,a+60).map(v=>v.toFixed(2)).join(" ")} A ${rl} ${rl} 0 0 0 ${polar(rl,a-60).map(v=>v.toFixed(2)).join(" ")}`
                    : `M ${polar(rl,a-60).map(v=>v.toFixed(2)).join(" ")} A ${rl} ${rl} 0 0 1 ${polar(rl,a+60).map(v=>v.toFixed(2)).join(" ")}`;
-    return `<path id="lp-${f}" d="${d}" fill="none"/><text font-family="Manrope,sans-serif" font-size="13" font-weight="700" letter-spacing="2.5" fill="${W.factorColors[f]}"><textPath href="#lp-${f}" startOffset="50%" text-anchor="middle">${W.factorLabels[f].toUpperCase()}</textPath></text>`; }).join("");
+    return `<path id="${P}lp-${f}" d="${d}" fill="none"/><text font-family="Manrope,sans-serif" font-size="13" font-weight="700" letter-spacing="2.5" fill="${W.factorColors[f]}"><textPath href="#${P}lp-${f}" startOffset="50%" text-anchor="middle">${W.factorLabels[f].toUpperCase()}</textPath></text>`; }).join("");
   // ⛔⛔ BEING and DOING WERE NEVER REMOVED FROM THIS WHEEL, and Rachel has now
   // ruled against them THREE TIMES: 15 Sept 2026 on the Icehouse deck ("Remove
   // doing and being"), again on the field guide on 28 Sept ("remove the 'being'
@@ -1679,32 +1903,36 @@ function buildWheel(r){
   // this one. `axisLabels` is deleted from the config as well, so there is
   // nothing left to render by accident. Do NOT reinstate them.
   svg.innerHTML = `
-    <g id="wobbleRoot">
-      <g id="spinner">
+    <g id="${P}wobbleRoot">
+      <g id="${P}spinner">
         <circle cx="${CX}" cy="${CY}" r="100" fill="none" stroke="${W.spokeColor}" stroke-width="1.6"/>
         ${ticks}${spokes}
         <circle cx="${CX}" cy="${CY-100}" r="3" fill="${W.hubColor}"/>
       </g>
       <circle cx="${CX}" cy="${CY}" r="52" fill="${W.hubColor}" opacity="0.06"/>
       <circle cx="${CX}" cy="${CY}" r="52" fill="none" stroke="${W.spokeColor}" stroke-width="1"/>
-      <text id="scoreNum" x="${CX}" y="${CY+12}" text-anchor="middle" font-family="'Playfair Display',Georgia,serif" font-size="46" font-weight="600" fill="${W.hubColor}">0</text>
-      <text x="${CX}" y="${CY+32}" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="2" fill="rgba(243,239,231,.55)">${C.scoreCaption.toUpperCase()}</text>
+      ${tease ? "" : `<text id="scoreNum" x="${CX}" y="${CY+12}" text-anchor="middle" font-family="'Playfair Display',Georgia,serif" font-size="46" font-weight="600" fill="${W.hubColor}">0</text>
+      <text x="${CX}" y="${CY+32}" text-anchor="middle" font-family="Manrope,sans-serif" font-size="9" letter-spacing="2" fill="rgba(243,239,231,.55)">${C.scoreCaption.toUpperCase()}</text>`}
     </g>
     ${spinArrow}${labels}`;
-  animateWheel(r);
+  animateWheel(r, P);
 }
 
-function animateWheel(r){
-  const spinner=$("spinner"), root=$("wobbleRoot"), num=$("scoreNum");
+function animateWheel(r, P){
+  P = P || "";
+  const spinner=$(P+"spinner"), root=$(P+"wobbleRoot"), num=P ? null : $("scoreNum");
+  // a tease redraw replaces the svg, so the old loop must stop, not pile up
+  const token = (animateWheel.tokens = animateWheel.tokens || {})[P] = {};
   const half=W.sectorSpanDegrees/2, R=W.arcRadius;
   const targetV=speedFor(r.capacityScore, r.band);
   const imbalance=(1-r.coherence)*W.wobble.sensitivity;
   const ease=easings[W.spinUp.easing]||easings.easeOutCubic;
   // the inner wheel (ticks/spokes) spins the same way the spin arrow points:
   // clockwise when building, counter-clockwise when depleting; count-up on the score.
-  if(reducedMotion){ num.textContent=r.capacityScore; return; }
+  if(reducedMotion){ if(num) num.textContent=r.capacityScore; return; }
   let angle=0,last=performance.now(),start=last;
   function frame(now){
+    if(animateWheel.tokens[P] !== token) return;
     const dt=(now-last)/1000; last=now;
     const elapsed=now-start;
     const p=Math.min(1,elapsed/W.spinUp.durationMs);
@@ -1716,7 +1944,7 @@ function animateWheel(r){
     const arad=(angle*Math.PI)/180;
     root.setAttribute("transform",`translate(${(ecc*Math.sin(arad)).toFixed(2)} ${(-ecc*Math.cos(arad)).toFixed(2)})`);
     spinner.setAttribute("transform",`rotate(${(angle+wob).toFixed(2)} ${CX} ${CY})`);
-    if(W.spinUp.countUp) num.textContent=Math.round(r.capacityScore*ease(Math.min(1,p*1.15)));
+    if(W.spinUp.countUp && num) num.textContent=Math.round(r.capacityScore*ease(Math.min(1,p*1.15)));
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
