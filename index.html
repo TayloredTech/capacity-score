@@ -245,6 +245,12 @@ h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-heigh
 .fgline{margin:1rem 0 0}
 .fgline a{color:var(--gold);font-weight:600;font-size:.9rem;text-decoration:underline;text-underline-offset:3px}
 .fgline a:hover{color:var(--cream)}
+/* optional post-result questions (20 Oct 2026) */
+.followup fieldset{border:0;margin:1.2rem 0 0;padding:0}
+.followup legend{font-weight:700;color:var(--cream);margin-bottom:.5rem;padding:0}
+.followup label{display:flex;gap:.6rem;align-items:flex-start;margin:.45rem 0;cursor:pointer;line-height:1.45}
+.followup input[type=radio]{accent-color:var(--gold);margin-top:.25rem;flex:none}
+.followup .ctabtn{border:0;cursor:pointer;font:inherit;font-weight:700}
 /* an accidental visitor has to be able to tell this is not their result */
 .previewflag{margin:0 0 1.6rem;padding:.7rem .9rem;border:1px solid var(--gold);border-left-width:4px;border-radius:3px;background:rgba(184,146,74,.12);color:var(--cream);font-size:.86rem;line-height:1.5}
 .draftnote{max-width:34rem;margin:2.6rem auto 0;text-align:center;font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:1rem;color:var(--cream-soft);line-height:1.6}
@@ -395,8 +401,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p id="r-bridgeBody"></p>
       <p class="tagline" id="r-tagline"></p>
       <a class="ctabtn" id="r-cta" href="#"></a>
+      <p class="fgline"><a id="r-sleep" href="#"></a></p>
       <p class="fgline"><a id="r-fg" href="#" target="_blank" rel="noopener"></a></p>
     </div>
+
+    <form class="resultcard followup" id="followupForm" novalidate>
+      <h3 id="fu-heading"></h3>
+      <p id="fu-body"></p>
+      <fieldset><legend id="fu-fundingLabel"></legend><div id="fu-funding"></div></fieldset>
+      <fieldset><legend id="fu-priorityLabel"></legend><div id="fu-priority"></div></fieldset>
+      <button class="ctabtn" type="submit" id="fu-btn"></button>
+      <p class="copynote" id="fu-note" role="status" aria-live="polite"></p>
+    </form>
     <p class="draftnote" id="r-draftnote"></p>
     <p class="footnote" id="r-footnote"></p>
   </div>
@@ -666,8 +682,16 @@ const config = {
       // measures. Do not put either back.
       heading: "This shows you where your capacity is dragging. It can’t tell you why. We can help.",
       body: "Two people can carry the same load and respond completely differently. Sleep, glucose, stress physiology and blood chemistry all change how it lands. Those are measurable, and that is what we do next.",
-      tagline: "If you already wear an Oura or WHOOP, the next answer may be sitting in data you own. 30 days of it, personally reviewed, three changes to test.",
-      ctaLabel: "Review my sleep data",
+      // ★ 20 Oct 2026, Rachel: "Yes, update the Wheel's CTA to the strategy
+      // session" then "The wheel CTA should be the strategy session anyway, not
+      // just linkedin." So the gold button goes to the Health Strategy Session
+      // for ALL traffic, and any utm_* the visitor landed with rides through on
+      // the link (see wheelUtm / withUtm). Price is the page's own, A$299 / NZ$349.
+      tagline: "A performance scientist reads your whole picture and tells you what to change first. Online, one to one, A$299 or NZ$349.",
+      ctaLabel: "Book your Health Strategy Session",
+      ctaUrl: "https://taylored.health/strategy-session/",
+      // The Sleep Score Review stays, demoted to a quiet line under the button.
+      sleepLabel: "Already wear an Oura or WHOOP? Have your sleep data reviewed instead.",
       // ✅ SWAPPED 28 Sept 2026 on Rachel's instruction: "The wheels cta should
       // go the sleep.taylored.health page." The provisional field-guide hop is
       // gone; this is the canonical sales page (estate: surface--sleep-score-review),
@@ -676,11 +700,34 @@ const config = {
       // is OSleeve-branded and priced per market from a USD$119 base, so an
       // Australian buyer is charged AUD$173 for the same service. Rachel: "The
       // osleeve price is different so it can't go to osleeve."
-      ctaUrl: "https://sleep.taylored.health/",
+      sleepUrl: "https://sleep.taylored.health/",
       fieldGuideLabel: "Not ready yet? Read the field guide and see the whole path.",
       fieldGuideUrl: "https://wheel.taylored.health/field-guide/",
       draftNote: "This is an early draft of an idea I'm still shaping in the book. If it lands for you, or if it doesn't, I'd genuinely love to hear.",
       footnote: "A tool for reflection, not a diagnosis."
+    },
+    // ★ 20 Oct 2026, Rachel: "Add the old quiz' 'who pays for your capacity
+    // uplift?' and top priority questions." OPTIONAL and AFTER the reveal, so
+    // they never stand between anyone and their result. Option wording is the
+    // old Typeform quiz's, cleaned of its markdown asterisks and dash. Saved to
+    // Supabase capacity_followups (see storeFollowup), keyed to the result row.
+    followup: {
+      heading: "Two quick questions",
+      body: "Optional. Your answers help us point you to the right next step.",
+      fundingLabel: "Who pays for your capacity uplift?",
+      funding: [
+        { key: "self",    label: "I pay for it myself" },
+        { key: "company", label: "My company or board sponsors it" }
+      ],
+      priorityLabel: "What is your top priority right now?",
+      priority: [
+        { key: "energy",      label: "I want to rebuild consistent energy and balance for life and work." },
+        { key: "performance", label: "I want to lead at a higher level by upgrading my physical and cognitive performance, with real data." },
+        { key: "reset",       label: "I need a structured reset to regain control and calm." }
+      ],
+      button: "Save my answers",
+      needOne: "Pick at least one answer first.",
+      saved: "Thanks. That is saved."
     },
     emailCapture: {
       heading: "Your read is ready",
@@ -761,6 +808,8 @@ const config = {
   },
   storage: {
     endpoint: "https://gdsdtawkigzpyseavkqp.supabase.co/rest/v1/capacity_responses",
+    // anon INSERT only, like capacity_responses (created 20 Oct 2026)
+    followupEndpoint: "https://gdsdtawkigzpyseavkqp.supabase.co/rest/v1/capacity_followups",
     apiKey: "sb_publishable_9xYl5CzjcQ6cBCEmCfPs5Q_NwI7z_JQ",
     localStorageKey: "capacity-score-responses"
   },
@@ -770,6 +819,36 @@ const config = {
 const C = config.copy, I = config.instrument, W = config.wheel;
 const $ = (id) => document.getElementById(id);
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- UTM: kept from landing to result (20 Oct 2026) ----------
+   Read once on load. If the landing URL carries any utm_*, that set wins and is
+   kept in sessionStorage, so a reload mid-quiz does not lose it. Used for the
+   Supabase row, the Kit fields and the strategy-session link. */
+const UTM_KEYS = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term"];
+const wheelUtm = (function(){
+  const KEY = "wheel_utm_v1";
+  const q = new URLSearchParams(location.search), got = {};
+  UTM_KEYS.forEach(k => { const v = q.get(k); if (v) got[k] = v.slice(0, 200); });
+  try {
+    if (Object.keys(got).length) { sessionStorage.setItem(KEY, JSON.stringify(got)); return got; }
+    return JSON.parse(sessionStorage.getItem(KEY) || "{}") || {};
+  } catch (e) { return got; }
+})();
+function withUtm(url){
+  try {
+    const u = new URL(url);
+    Object.keys(wheelUtm).forEach(k => u.searchParams.set(k, wheelUtm[k]));
+    return u.toString();
+  } catch (e) { return url; }
+}
+// Client-made id for the result row, so the optional follow-up answers can
+// point back at it without the anon key ever needing to read the table.
+function newId(){
+  if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+  return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
+    (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16));
+}
+let responseId = null, responseEmail = null;
 
 /* ---------- populate chrome ---------- */
 $("i-kicker").textContent = I.kicker;
@@ -935,6 +1014,7 @@ $("emailForm").onsubmit = (ev) => {
   const email = $("femail").value.trim();
   if (C.emailCapture.emailRequired && !/.+@.+\..+/.test(email)) { $("femail").focus(); $("femail").style.borderColor = "var(--gold)"; return; }
   result = computeCapacity(answers, "assessment", config);
+  responseId = newId(); responseEmail = email || null;
   storeResponse(email, $("fname").value.trim(), result);
   subscribeToKit(email, $("fname").value.trim(), result);
   // Real completions only. The demo preset path further down must never push this,
@@ -1071,6 +1151,10 @@ function subscribeToKit(email, firstName, r){
   };
   body.set("fields[carry]", carryKey);
   body.set("fields[carry_label]", carryOption().label);
+  // Kit fields created 20 Oct 2026. Only set when present, so a re-take
+  // without a UTM does not wipe the source someone first arrived from.
+  if (wheelUtm.utm_source) body.set("fields[utm_source]", wheelUtm.utm_source);
+  if (wheelUtm.utm_campaign) body.set("fields[utm_campaign]", wheelUtm.utm_campaign);
   var stateTag = KIT_STATE_TAGS[r.band];
   if (stateTag) body.set("tags[]", stateTag);
   fetch(`https://app.kit.com/forms/${config.kit.formId}/subscriptions`, {
@@ -1094,6 +1178,8 @@ function storeResponse(email, firstName, r){
     carry: carryKey,
     config_version: config.version, user_agent: navigator.userAgent.slice(0,300),
   };
+  if (responseId) row.id = responseId;
+  UTM_KEYS.forEach(k => { row[k] = wheelUtm[k] || null; });
   try {
     const key = config.storage.localStorageKey;
     const prev = JSON.parse(localStorage.getItem(key) || "[]");
@@ -1119,7 +1205,8 @@ function postWithRetry(row, attempt) {
     headers: { "Content-Type":"application/json", apikey: config.storage.apiKey, Authorization: "Bearer "+config.storage.apiKey, Prefer:"return=minimal" },
     body: JSON.stringify(row),
   }).then(res => {
-    if (res.ok) return;
+    // 409 = this id already landed on an earlier attempt, so it is saved
+    if (res.ok || res.status === 409) return;
     return res.text().then(t => {
       console.error("[capacity] store failed", res.status, t);
       // A 4xx is our bug and will fail identically on retry, so park it at once.
@@ -1387,7 +1474,10 @@ function renderResult(r){
   $("r-bridgeBody").textContent = C.bridge.body;
   $("r-tagline").textContent = C.bridge.tagline;
   $("r-cta").textContent = C.bridge.ctaLabel;
-  $("r-cta").href = C.bridge.ctaUrl;
+  $("r-cta").href = withUtm(C.bridge.ctaUrl);
+  $("r-sleep").textContent = C.bridge.sleepLabel;
+  $("r-sleep").href = C.bridge.sleepUrl;
+  renderFollowup();
   $("r-fg").textContent = C.bridge.fieldGuideLabel;
   $("r-fg").href = C.bridge.fieldGuideUrl;
   $("r-draftnote").textContent = C.bridge.draftNote;
@@ -1437,6 +1527,66 @@ function renderCtas(band){
   talkLink.target = "_blank"; talkLink.rel = "noopener";
   talkLink.parentElement.hidden = !quiet;
 }
+
+/* ---------- optional follow-up questions (Rachel, 20 Oct 2026) ----------
+   Shown under the result, never before it. Nothing is required. One insert per
+   save into capacity_followups, carrying the result row's id + email so it
+   joins back to capacity_responses. */
+function renderFollowup(){
+  const F = C.followup;
+  $("fu-heading").textContent = F.heading;
+  $("fu-body").textContent = F.body;
+  $("fu-fundingLabel").textContent = F.fundingLabel;
+  $("fu-priorityLabel").textContent = F.priorityLabel;
+  const opts = (name, list) => list.map(o =>
+    `<label><input type="radio" name="${name}" value="${o.key}"><span></span></label>`).join("");
+  $("fu-funding").innerHTML = opts("fu_funding", F.funding);
+  $("fu-priority").innerHTML = opts("fu_priority", F.priority);
+  // labels set as text, never as HTML
+  [["fu-funding", F.funding], ["fu-priority", F.priority]].forEach(([id, list]) => {
+    $(id).querySelectorAll("label span").forEach((s, i) => { s.textContent = list[i].label; });
+  });
+  $("fu-btn").textContent = F.button;
+  $("fu-btn").disabled = false;
+  $("fu-note").textContent = "";
+}
+
+$("followupForm").addEventListener("submit", function(ev){
+  ev.preventDefault();
+  const F = C.followup;
+  const pick = (name, list) => {
+    const el = this.querySelector(`input[name="${name}"]:checked`);
+    const o = el && list.find(x => x.key === el.value);
+    return o ? o.label : null;
+  };
+  const funding = pick("fu_funding", F.funding), priority = pick("fu_priority", F.priority);
+  if (!funding && !priority) { $("fu-note").textContent = F.needOne; return; }
+  // a demo preview has no result row behind it and must never write
+  if (!responseId || !config.storage.followupEndpoint) {
+    $("fu-note").textContent = "Preview. Nothing was saved."; return;
+  }
+  const row = {
+    response_id: responseId, email: responseEmail, funding: funding, top_priority: priority,
+    utm_source: wheelUtm.utm_source || null, utm_campaign: wheelUtm.utm_campaign || null,
+    config_version: config.version,
+  };
+  $("fu-btn").disabled = true;
+  const send = (attempt) => fetch(config.storage.followupEndpoint, {
+    method: "POST",
+    headers: { "Content-Type":"application/json", apikey: config.storage.apiKey, Authorization: "Bearer "+config.storage.apiKey, Prefer:"return=minimal" },
+    body: JSON.stringify(row),
+  }).then(res => {
+    if (!res.ok) throw new Error("status " + res.status);
+    $("fu-note").textContent = F.saved;
+    try { window.dataLayer = window.dataLayer || []; window.dataLayer.push({ event: "wheel_followup" }); } catch (e) {}
+  }).catch(e => {
+    console.error("[capacity] followup failed", e);
+    if (attempt < 2) return setTimeout(() => send(attempt + 1), 800 * (attempt + 1));
+    $("fu-btn").disabled = false;
+    $("fu-note").textContent = "That did not save. Please try again.";
+  });
+  send(0);
+});
 
 $("r-copyBtn").addEventListener("click", function(){
   const done = this.dataset.done || C.ctas.copiedShare;
