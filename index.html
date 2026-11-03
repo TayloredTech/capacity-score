@@ -790,9 +790,12 @@ const config = {
     // old Typeform quiz's, cleaned of its markdown asterisks and dash. Saved to
     // Supabase capacity_followups (see storeFollowup), keyed to the result row.
     followup: {
-      heading: "Two quick questions",
+      // Rachel, 4 Nov 2026: Peak and Steady are already doing well, so they
+      // get no follow-up. Conserve and Restore get the support framing.
+      bands: ["Conserve", "Restore"],
+      heading: "It looks like you may need some support",
       body: "Optional. Your answers help us point you to the right next step.",
-      fundingLabel: "Who pays for your capacity uplift?",
+      fundingLabel: "Who would normally pay for your professional capacity uplift?",
       funding: [
         { key: "self",    label: "I pay for it myself" },
         { key: "company", label: "My company or board sponsors it" }
@@ -1482,7 +1485,7 @@ function renderResult(r){
   // descriptor sits under it, read from C.quadrants and from nowhere else.
   const leakFactor = lowest[1] < 50 ? lowest[0] : highest[0];
   $("r-leak").innerHTML =
-    '<span class="leaklead">' + (lowest[1] < 50 ? "Dragging hardest right now: " : "Holding you up right now: ")
+    '<span class="leaklead">' + (lowest[1] < 50 ? "Dragging hardest right now: " : "Your biggest strength right now: ")
     + W.factorLabels[leakFactor] + '</span>'
     + '<span class="leakdesc">' + ((C.quadrants && C.quadrants[leakFactor]) || "") + '</span>';
   $("r-pointsHeading").textContent = C.partBreakdownHeading;
@@ -1569,7 +1572,7 @@ function renderResult(r){
   renderRetake();
   $("r-sleep").textContent = C.bridge.sleepLabel;
   $("r-sleep").href = C.bridge.sleepUrl;
-  renderFollowup();
+  renderFollowup(r);
   $("r-fg").textContent = C.bridge.fieldGuideLabel;
   $("r-fg").href = C.bridge.fieldGuideUrl;
   $("r-draftnote").textContent = C.bridge.draftNote;
@@ -1751,8 +1754,9 @@ function renderCtas(band){
    Shown under the result, never before it. Nothing is required. One insert per
    save into capacity_followups, carrying the result row's id + email so it
    joins back to capacity_responses. */
-function renderFollowup(){
+function renderFollowup(r){
   const F = C.followup;
+  $("followupForm").hidden = !F.bands.includes(r.band);
   $("fu-heading").textContent = F.heading;
   $("fu-body").textContent = F.body;
   $("fu-fundingLabel").textContent = F.fundingLabel;
