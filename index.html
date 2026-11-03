@@ -1153,6 +1153,8 @@ function subscribeToKit(email, firstName, r){
   // escapes the quotes inside them), so an empty value would read "Hi ,".
   body.set("fields[first_name]", firstName || "there");
   body.set("fields[capacity_state]", r.band || "");
+  // Mid-sentence in the Kit emails ("came back the Pacesetter"), so lower-case "the".
+  body.set("fields[result_name]", ((RESULT_NAMES[r.band] || {}).name || "").replace(/^The /, "the "));
   body.set("fields[heaviest_point]", heaviest);
   body.set("fields[push_lever]", lever);
   body.set("fields[lifting_most]", lifting);
